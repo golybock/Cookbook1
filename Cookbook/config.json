@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "CookbookDB": "host=127.0.0.1;port=5432;Username=admin;Password=admin;Database=Cookbook;"
+  }
+}

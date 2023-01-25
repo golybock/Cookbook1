@@ -1,0 +1,51 @@
+﻿<Page x:Class="Cookbook.Pages.RecipesPage.RecipesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Cookbook.Pages.RecipesPage"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      mc:Ignorable="d"
+      Title="RecipesPage">
+    <Grid>
+        <ListBox Name="RecipesListBox" MouseDoubleClick="RecipesListBox_OnMouseDoubleClick">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Name="ElementBorder" BorderThickness="1" CornerRadius="10" Background="LightGray">
+                        
+                        <Border.ContextMenu>
+                            <ContextMenu>
+                                
+                                <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick">
+                                    <MenuItem.Icon>
+                                        <Image Source="../../Resources/MenuIcons/DeleteIcon.png"></Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                                <MenuItem Header="Изменить" Name="EditMenuItem" Click="EditMenuItem_OnClick">
+                                    <MenuItem.Icon>
+                                        <Image Source="../../Resources/MenuIcons/EditIcon.png"></Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                            </ContextMenu>
+                        </Border.ContextMenu>
+                        
+                        <WrapPanel MinWidth="210" ItemHeight="160" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <Image Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Source="{Binding ImagePath}"></Image>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Margin="5" TextWrapping="Wrap" Text="{Binding Name}" FontStretch="Medium"></TextBlock>
+                                <TextBlock LineHeight="25" MaxWidth="250" MaxHeight="140" Margin="5" TextWrapping="Wrap" Text="{Binding Description}"></TextBlock>
+                            </StackPanel>
+                        </WrapPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Page>

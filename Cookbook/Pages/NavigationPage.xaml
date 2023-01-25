@@ -1,0 +1,47 @@
+﻿<Page x:Class="Cookbook.Pages.NavigationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Cookbook.Pages"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      mc:Ignorable="d"
+      Title="NavigationPage"
+      Loaded="NavigationPage_OnLoaded">
+    <Grid ShowGridLines="True">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.1 cm"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <ui:CommandBar Grid.Row="0" Background="LightBlue">
+            
+            <ui:CommandBar.Content>
+                
+                <StackPanel Orientation="Horizontal">
+                    <ui:AppBarButton Name="BackButton" Click="BackButton_OnClick" Visibility="Collapsed" Icon="Back" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <ui:AutoSuggestBox
+                        Margin="5"
+                        Width="150"
+                        HorizontalAlignment="Stretch"
+                        PlaceholderText="Search"
+                        QueryIcon="Find" />
+                </StackPanel>
+                
+
+                
+            </ui:CommandBar.Content>
+            
+            <ui:AppBarSeparator/>
+            
+            <ui:AppBarButton Click="HomeButton_OnClick" Name="HomeButton" Icon="Home" Label="Home" VerticalContentAlignment="Center"/>
+            <ui:AppBarButton Click="FavoriteButton_OnClick" Name="FavoriteButton" Icon="Favorite" Label="Liked"></ui:AppBarButton>
+            <ui:AppBarButton Click="ProfilePage_OnClick" Name="ProfilePage" Icon="Contact" Label="Профиль"></ui:AppBarButton>
+            <ui:AppBarButton Click="AddRecipeButton_OnClick" Name="AddRecipeButton" Icon="Add" Label="Создать"></ui:AppBarButton>
+        </ui:CommandBar>
+        
+        <Frame Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"></Frame>
+        
+    </Grid>
+</Page>
