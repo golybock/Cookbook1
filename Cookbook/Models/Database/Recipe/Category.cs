@@ -1,4 +1,4 @@
-﻿namespace Cookbook.Models.Database.Client;
+﻿namespace Cookbook.Models.Database.Recipe;
 
 public partial class Category
 {

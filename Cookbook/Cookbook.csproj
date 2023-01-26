@@ -39,12 +39,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Database\Interfaces\Client" />
-      <Folder Include="Database\Interfaces\Recipe" />
-      <Folder Include="Database\Repositories\Client" />
       <Folder Include="Database\Repositories\Recipe" />
-      <Folder Include="Database\Services\Client" />
-      <Folder Include="Database\Services\Recipe" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="appsettings.json" />
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
