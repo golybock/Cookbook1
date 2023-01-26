@@ -4,26 +4,29 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Cookbook.Models;
+using Cookbook.Database.Services.Client;
 using Cookbook.Models.Database.Client;
+using Cookbook.Models.Login;
+
 namespace Cookbook.Pages.LoginRegister;
 
 public partial class LoginPage : Page
 {
-    // private LoginService _loginService;
+    private ClientService _clientService;
     private string _login;
     private string _password;
     private bool _hasError;
     
     public LoginPage()
     {
-        // _loginService = new LoginService();
+        _clientService = new ClientService();
         InitializeComponent();
     }
 
     private void GuestButton_OnClick(object sender, RoutedEventArgs e)
     {
-        NavigationService.Navigate(new NavigationPage());
+        if (NavigationService != null) 
+            NavigationService.Navigate(new NavigationPage());
     }
 
     private void LoginButton_OnClick(object sender, RoutedEventArgs e)
@@ -31,33 +34,34 @@ public partial class LoginPage : Page
         Login();
     }
 
-    private void Login()
+    private async void Login()
     {
         // получаем информацию со страницы
         GetInfo();
         
         // выполняем авторизацию
-        // LoginResult loginResult = _loginService.Login(_login, _password);
+        LoginResult loginResult = await _clientService.Login(_login, _password);
         
         // проверяем результат 
-        // if (loginResult.Result)
-        // {
-        //     SuccessfulLogin(loginResult.Client);
-        // }
-        // else
-        // {
-        //     // сохраняем статус
-        //     _hasError = true;
-        //     
-        //     ShowErrorByCode(loginResult);
-        // }
+        if (loginResult.Result)
+        {
+            SuccessfulLogin(loginResult.Client);
+        }
+        else
+        {
+            // сохраняем статус
+            _hasError = true;
+            
+            ShowErrorByCode(loginResult);
+        }
     }
 
     private void SuccessfulLogin(Client client)
     {
         // переход на основную страницу
-        NavigationService.Navigate(new NavigationPage());
-            
+        if (NavigationService != null) 
+            NavigationService.Navigate(new NavigationPage());
+
         // очищаем данные
         ClearInput();
     }
@@ -161,9 +165,11 @@ public partial class LoginPage : Page
         GetInfo();
         
         if(_login != String.Empty)
-            NavigationService.Navigate(new RegisterPage(_login));
-        else
+        {
+            if (NavigationService != null) 
+                NavigationService.Navigate(new RegisterPage(_login));
+        }
+        else if (NavigationService != null) 
             NavigationService.Navigate(new RegisterPage());
-
     }
 }

@@ -9,14 +9,14 @@ namespace Cookbook.Database.Repositories;
 public class MainDbClass
 {
     private string? _connectionString;
-    public NpgsqlConnection _connection;
+    public NpgsqlConnection connection;
     
     public MainDbClass()
     {
         GetConnectionString();
         
         if (_connectionString != null)
-            _connection = new NpgsqlConnection(_connectionString);
+            connection = new NpgsqlConnection(_connectionString);
         else
             throw new Exception("Error connection");
 
@@ -37,7 +37,7 @@ public class MainDbClass
     {
         try
         {
-            _connection.Open();
+            connection.Open();
             return true;
         }
         catch
@@ -47,7 +47,7 @@ public class MainDbClass
         }
         finally
         {
-            _connection.Close();
+            connection.Close();
         }
     }
 

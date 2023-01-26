@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
 
-namespace Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
+namespace Cookbook.Database.Services.Interfaces.Client;
 
-public interface IClientImageRepository
+public interface IClientImageService
 {
     public Task<ClientImage?> GetClientImageAsync(int id);
     public Task<ClientImage?> GetClientImageByClientIdAsync(int clientId);

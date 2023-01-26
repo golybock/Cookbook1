@@ -6,9 +6,9 @@ namespace Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
 
 public interface IClientSubRepository
 {
-    public ClientSub GetClientSub(int id);
-    public List<ClientImage> GetClientSubs(int clientId);
-    public CommandResult AddClientSub(ClientSub clientSub);
-    public CommandResult UpdateClientSub(ClientSub clientSub);
-    public CommandResult DeleteClientSub(int id);
+    public ClientSub GetClientSubAsync(int id);
+    public List<ClientImage> GetClientSubsAsync(int clientId);
+    public CommandResult AddClientSubAsync(ClientSub clientSub);
+    public CommandResult UpdateClientSubAsync(ClientSub clientSub);
+    public CommandResult DeleteClientSubAsync(int id);
 }

@@ -6,9 +6,9 @@ namespace Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
 
 public interface IClientFavoriteRepository
 {
-    public FavoriteRecipe GetFavoriteRecipe(int id);
-    public List<FavoriteRecipe> GetFavoriteRecipes(int clientId);
-    public CommandResult AddFavoriteRecipe(FavoriteRecipe favoriteRecipe);
-    public CommandResult UpdateFavoriteRecipe(FavoriteRecipe favoriteRecipe);
-    public CommandResult DeleteFavoriteClient(int id);
+    public FavoriteRecipe GetFavoriteRecipeAsync(int id);
+    public List<FavoriteRecipe> GetFavoriteRecipesAsync(int clientId);
+    public CommandResult AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe);
+    public CommandResult UpdateFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe);
+    public CommandResult DeleteFavoriteClientAsync(int id);
 }
