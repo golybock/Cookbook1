@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
 
-namespace Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
+namespace Cookbook.Database.Services.Interfaces.Client;
 
-public interface IClientSubRepository
+public interface IClientSubService
 {
     public Task<ClientSub> GetClientSubAsync(int id);
     public Task<List<ClientSub>> GetClientSubsAsync(int clientId);
