@@ -392,3 +392,5 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\refint\C
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.pdb
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.genruntimeconfig.cache
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\ref\Cookbook.dll
+C:\Coding\C#\Finally\Cookbook\Cookbook\bin\Debug\net7.0-windows\appsettings.json
+C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_Content.g.cs

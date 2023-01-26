@@ -40,7 +40,8 @@
 
     <ItemGroup>
       <Folder Include="Database\Repositories\Recipe" />
-      <Folder Include="Database\Services\Interfaces\Recipe" />
+      <Folder Include="Database\Services\Interfaces\Recipe\Ingredients" />
+      <Folder Include="Database\Services\Interfaces\Recipe\Review" />
     </ItemGroup>
 
     <ItemGroup>

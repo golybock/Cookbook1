@@ -1,4 +1,4 @@
-﻿namespace Cookbook.Models.Database.Recipe;
+﻿namespace Cookbook.Models.Database;
 
 public static class CommandResults
 {
