@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cookbook.Models;
 using Cookbook.Models.Database;
 using Cookbook.Models.Login;
 using ClientModel = Cookbook.Models.Database.Client.Client;
 
-namespace Cookbook.Database.Services.Interfaces.Client;
+namespace Cookbook.Database.Services.Interfaces.ClientInterfaces;
 
 public interface IClientService
 {

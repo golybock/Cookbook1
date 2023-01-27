@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 
-namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
+namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 
-public interface IRecipeStatsRepository
+public interface IRecipeStatsService
 {
     public Task<RecipeStats> GetRecipeStatsAsync(int id);
     public Task<RecipeStats> GetRecipeStatsByRecipeAsync(int recipeId);

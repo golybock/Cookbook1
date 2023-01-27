@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 
-namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
+namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 
-public interface ICategoryRepository
+public interface ICategoryService
 {
     public Task<Category> GetCategoryAsync(int id);
     public Task<CommandResult> AddCategoryAsync(Category category);

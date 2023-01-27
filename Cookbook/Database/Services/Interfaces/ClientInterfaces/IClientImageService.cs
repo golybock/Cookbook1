@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
 
-namespace Cookbook.Database.Services.Interfaces.Client;
+namespace Cookbook.Database.Services.Interfaces.ClientInterfaces;
 
 public interface IClientImageService
 {
