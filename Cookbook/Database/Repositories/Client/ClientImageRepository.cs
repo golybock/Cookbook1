@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
-using Cookbook.Models.Database.Recipe;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Client;
