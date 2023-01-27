@@ -12,5 +12,5 @@ public interface IReviewRepository
     public Task<List<Review>> GetReviewsAsync(int recipeId);
     public Task<CommandResult> AddReviewAsync(Review review);
     public Task<CommandResult> UpdateReviewAsync(Review review);
-    public Task<CommandResult> DeleteReviewAsync(Review review);
+    public Task<CommandResult> DeleteReviewAsync(int id);
 }
