@@ -12,5 +12,5 @@ public interface IRecipeStatsRepository
     public Task<List<RecipeStats>> GetRecipeStatsAsync();
     public Task<CommandResult> AddRecipeStatsAsync(RecipeStats recipeStats);
     public Task<CommandResult> UpdateRecipeStatsAsync(RecipeStats recipeStats);
-    public Task<CommandResult> DeleteRecipeStatsAsync(RecipeStats recipeStats);
+    public Task<CommandResult> DeleteRecipeStatsAsync(int id);
 }

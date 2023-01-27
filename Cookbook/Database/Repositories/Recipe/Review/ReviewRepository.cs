@@ -88,7 +88,6 @@ public class ReviewRepository : MainDbClass, IReviewRepository
 
     public async Task<CommandResult> AddReviewAsync(ReviewModel review)
     {
-        
         CommandResult result;
         connection.Open();
         try
