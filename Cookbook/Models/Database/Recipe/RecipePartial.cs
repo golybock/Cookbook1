@@ -1,10 +1,13 @@
-﻿namespace Cookbook.Models.Database.Recipe;
+﻿using System;
 
-public class RecipePartial
+namespace Cookbook.Models.Database.Recipe;
+
+public partial class Recipe
 {
+    private string? _imagePath;
     public string? ImagePath
     {
-        get => ImagePath ?? "../../Resources/not_found_image.png";
-        set => ImagePath = value;
+        get => String.IsNullOrEmpty(_imagePath) ? "../../Resources/not_found_image.png" : _imagePath;
+        set => _imagePath = value;
     }
 }

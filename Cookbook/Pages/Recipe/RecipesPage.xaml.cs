@@ -1,23 +1,27 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Cookbook.Database;
-using Cookbook.Models.Database.Recipe;
-using Cookbook.Pages.Recipe;
+using Cookbook.Database.Services.Recipe;
+using Cookbook.Pages.RecipesPage;
 
-namespace Cookbook.Pages.RecipesPage;
+namespace Cookbook.Pages.Recipe;
 
 public partial class RecipesPage : Page
 {
-    // private CookbookContext _context = new CookbookContext();
-    
+    private readonly RecipeService _recipeService;
+
     public RecipesPage()
     {
+        _recipeService = new RecipeService();
         InitializeComponent();
-        // RecipesListBox.ItemsSource = _context.Recipes.ToList();
+        LoadRecipes();
     }
 
+    private async void LoadRecipes()
+    {
+        RecipesGridView.ItemsSource = await _recipeService.GetRecipesAsync();
+    }
+    
     private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
         var accept = 
@@ -35,12 +39,16 @@ public partial class RecipesPage : Page
 
     private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
-        NavigationService.Navigate(new AddEditRecipePage(RecipesListBox.SelectedItem as Models.Database.Recipe.Recipe));
+        if (NavigationService != null)
+            NavigationService.Navigate(
+                new AddEditRecipePage(RecipesGridView.SelectedItem as Models.Database.Recipe.Recipe));
     }
 
     private void RecipesListBox_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        if(RecipesListBox.SelectedItem != null)
-            NavigationService.Navigate(new RecipePage(RecipesListBox.SelectedItem as Models.Database.Recipe.Recipe));
+        if(RecipesGridView.SelectedItem != null)
+            if (NavigationService != null)
+                NavigationService.Navigate(
+                    new RecipePage(RecipesGridView.SelectedItem as Models.Database.Recipe.Recipe));
     }
 }

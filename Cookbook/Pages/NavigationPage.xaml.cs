@@ -29,7 +29,7 @@ public partial class NavigationPage : Page
     {
         ClearNavigationService();
         BackButton.Visibility = Visibility.Collapsed;
-        MainFrame.NavigationService.Navigate(new RecipesPage.RecipesPage());
+        MainFrame.NavigationService.Navigate(new Recipe.RecipesPage());
     
     }
 
@@ -37,7 +37,7 @@ public partial class NavigationPage : Page
     {
 
         BackButton.Visibility = Visibility.Visible;
-        MainFrame.NavigationService.Navigate(new RecipesPage.RecipesPage());
+        MainFrame.NavigationService.Navigate(new Recipe.RecipesPage());
 }
 
     private void ProfilePage_OnClick(object sender, RoutedEventArgs e)
@@ -57,7 +57,7 @@ public partial class NavigationPage : Page
     private void NavigationPage_OnLoaded(object sender, RoutedEventArgs e)
     {
         NavigationService.RemoveBackEntry();
-        MainFrame.NavigationService.Navigate(new RecipesPage.RecipesPage());
+        MainFrame.NavigationService.Navigate(new Recipe.RecipesPage());
     }
 
     private void ClearNavigationService()

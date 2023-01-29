@@ -35,7 +35,9 @@
       <None Remove="Resources\MenuIcons\EditIcon.png" />
       <Resource Include="Resources\MenuIcons\EditIcon.png" />
       <None Remove="Resources\not_found_image.png" />
-      <Resource Include="Resources\not_found_image.png" />
+      <Resource Include="Resources\not_found_image.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
     <ItemGroup>
