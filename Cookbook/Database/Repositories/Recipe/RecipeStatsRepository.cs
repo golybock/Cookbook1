@@ -115,30 +115,6 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
 
     public async Task<CommandResult> DeleteRecipeStatsAsync(int id)
     {
-        CommandResult result;
-        connection.Open();
-        try
-        {
-            string query = $"delete from recipe_stats where recipe_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
-            {
-                Parameters =
-                {
-                    new() { Value = id },
-                }
-            };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
-            return result;
-        }
-        catch(Exception e)
-        {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-            return result;
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
+        return await DeleteAsync("recipe_stats", id);
     }
 }

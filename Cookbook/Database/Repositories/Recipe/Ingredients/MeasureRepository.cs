@@ -84,7 +84,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
                     new() { Value = measure.Id },
                     new() { Value = measure.Name }
                 }
-            }; 
+            };
             result = CommandResults.Successfully;
             result.ValueId = await cmd.ExecuteNonQueryAsync();
             return result;
@@ -133,30 +133,6 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
 
     public async Task<CommandResult> DeleteMeasureAsync(int id)
     {
-        CommandResult result;
-        connection.Open();
-        try
-        {
-            string query = $"delete from measure where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
-            {
-                Parameters =
-                {
-                    new() { Value = id },
-                }
-            };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
-            return result;
-        }
-        catch(Exception e)
-        {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-            return result;
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
+        return await DeleteAsync("measure", id);
     }
 }

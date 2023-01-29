@@ -154,30 +154,6 @@ public class ReviewRepository : MainDbClass, IReviewRepository
 
     public async Task<CommandResult> DeleteReviewAsync(int id)
     {
-        CommandResult result;
-        connection.Open();
-        try
-        {
-            string query = $"delete from review where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
-            {
-                Parameters =
-                {
-                    new() { Value = id },
-                }
-            };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
-            return result;
-        }
-        catch(Exception e)
-        {
-            result = CommandResults.BadRequest;
-            result.Description = e.ToString();
-            return result;
-        }
-        finally
-        {
-            await connection.CloseAsync();
-        }
+       return await DeleteAsync("review", id);
     }
 }
