@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
@@ -8,33 +9,40 @@ namespace Cookbook.Database.Services.Recipe;
 
 public class RecipeIngredientService : IRecipeIngredientService
 {
+    private readonly RecipeIngredientRepository _recipeIngredientRepository;
+
+    public RecipeIngredientService()
+    {
+        _recipeIngredientRepository = new RecipeIngredientRepository();
+    }
+    
     public Task<RecipeIngredient> GetRecipeIngredientAsync(int id)
     {
-        throw new System.NotImplementedException();
+        return _recipeIngredientRepository.GetRecipeIngredientAsync(id);
     }
 
-    public Task<RecipeIngredient> GetRecipeIngredientByRecipeAsync(int recipeId)
+    public Task<List<RecipeIngredient>> GetRecipeIngredientByRecipeAsync(int recipeId)
     {
-        throw new System.NotImplementedException();
+        return _recipeIngredientRepository.GetRecipeIngredientByRecipeAsync(recipeId);
     }
 
-    public Task<List<RecipeIngredient>> GetRecipeIngredientAsync()
+    public Task<List<RecipeIngredient>> GetRecipeIngredientsAsync()
     {
-        throw new System.NotImplementedException();
+        return _recipeIngredientRepository.GetRecipeIngredientsAsync();
     }
 
     public Task<CommandResult> AddRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
-        throw new System.NotImplementedException();
+        return _recipeIngredientRepository.AddRecipeIngredientAsync(recipeIngredient);
     }
 
     public Task<CommandResult> UpdateRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
-        throw new System.NotImplementedException();
+        return _recipeIngredientRepository.UpdateRecipeIngredientAsync(recipeIngredient);
     }
 
-    public Task<CommandResult> DeleteRecipeIngredientAsync(RecipeIngredient recipeIngredient)
+    public Task<CommandResult> DeleteRecipeIngredientAsync(int id)
     {
-        throw new System.NotImplementedException();
+        return _recipeIngredientRepository.DeleteRecipeIngredientAsync(id);
     }
 }

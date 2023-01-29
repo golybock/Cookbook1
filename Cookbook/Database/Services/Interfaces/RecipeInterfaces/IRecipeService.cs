@@ -12,5 +12,5 @@ public interface IRecipeService
     public Task<List<RecipeModel>> GetClientRecipesAsync(int clientId);
     public Task<CommandResult> AddRecipeAsync(RecipeModel recipe);
     public Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe);
-    public Task<CommandResult> DeleteRecipeAsync(RecipeModel recipe);
+    public Task<CommandResult> DeleteRecipeAsync(int id);
 }

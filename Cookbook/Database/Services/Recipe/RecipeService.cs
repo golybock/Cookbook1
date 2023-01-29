@@ -1,39 +1,48 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 using Cookbook.Models.Database;
+using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.Database.Services.Recipe;
 
 public class RecipeService : IRecipeService
 {
-    public Task<Models.Database.Recipe.Recipe> GetRecipeAsync(int id)
+    private readonly RecipeRepository _recipeRepository;
+
+    public RecipeService()
     {
-        throw new System.NotImplementedException();
+        _recipeRepository = new RecipeRepository();
+    }
+    
+    public Task<RecipeModel> GetRecipeAsync(int id)
+    {
+        return _recipeRepository.GetRecipeAsync(id);
     }
 
-    public Task<List<Models.Database.Recipe.Recipe>> GetRecipesAsync()
+    public Task<List<RecipeModel>> GetRecipesAsync()
     {
-        throw new System.NotImplementedException();
+        return _recipeRepository.GetRecipesAsync();
     }
 
-    public Task<List<Models.Database.Recipe.Recipe>> GetClientRecipesAsync(int clientId)
+    public Task<List<RecipeModel>> GetClientRecipesAsync(int clientId)
     {
-        throw new System.NotImplementedException();
+        return _recipeRepository.GetClientRecipesAsync(clientId);
     }
 
-    public Task<CommandResult> AddRecipeAsync(Models.Database.Recipe.Recipe recipe)
+    public Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
     {
-        throw new System.NotImplementedException();
+        return _recipeRepository.AddRecipeAsync(recipe);
     }
 
-    public Task<CommandResult> UpdateRecipeAsync(Models.Database.Recipe.Recipe recipe)
+    public Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe)
     {
-        throw new System.NotImplementedException();
+        return _recipeRepository.UpdateRecipeAsync(recipe);
     }
 
-    public Task<CommandResult> DeleteRecipeAsync(Models.Database.Recipe.Recipe recipe)
+    public Task<CommandResult> DeleteRecipeAsync(int id)
     {
-        throw new System.NotImplementedException();
+        return _recipeRepository.DeleteRecipeAsync(id);
     }
 }

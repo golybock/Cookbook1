@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
@@ -8,33 +9,30 @@ namespace Cookbook.Database.Services.Recipe;
 
 public class RecipeStatsService : IRecipeStatsService
 {
+    private readonly RecipeStatsRepository _recipeStatsRepository;
+
+    public RecipeStatsService()
+    {
+        _recipeStatsRepository = new RecipeStatsRepository();
+    }
+    
     public Task<RecipeStats> GetRecipeStatsAsync(int id)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public Task<RecipeStats> GetRecipeStatsByRecipeAsync(int recipeId)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Task<List<RecipeStats>> GetRecipeStatsAsync()
-    {
-        throw new System.NotImplementedException();
+        return _recipeStatsRepository.GetRecipeStatsAsync(id);
     }
 
     public Task<CommandResult> AddRecipeStatsAsync(RecipeStats recipeStats)
     {
-        throw new System.NotImplementedException();
+        return _recipeStatsRepository.AddRecipeStatsAsync(recipeStats);
     }
 
     public Task<CommandResult> UpdateRecipeStatsAsync(RecipeStats recipeStats)
     {
-        throw new System.NotImplementedException();
+        return _recipeStatsRepository.UpdateRecipeStatsAsync(recipeStats);
     }
 
-    public Task<CommandResult> DeleteRecipeStatsAsync(RecipeStats recipeStats)
+    public Task<CommandResult> DeleteRecipeStatsAsync(int id)
     {
-        throw new System.NotImplementedException();
+        return _recipeStatsRepository.DeleteRecipeStatsAsync(id);
     }
 }

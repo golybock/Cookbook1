@@ -8,9 +8,7 @@ namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 public interface IRecipeStatsService
 {
     public Task<RecipeStats> GetRecipeStatsAsync(int id);
-    public Task<RecipeStats> GetRecipeStatsByRecipeAsync(int recipeId);
-    public Task<List<RecipeStats>> GetRecipeStatsAsync();
     public Task<CommandResult> AddRecipeStatsAsync(RecipeStats recipeStats);
     public Task<CommandResult> UpdateRecipeStatsAsync(RecipeStats recipeStats);
-    public Task<CommandResult> DeleteRecipeStatsAsync(RecipeStats recipeStats);
+    public Task<CommandResult> DeleteRecipeStatsAsync(int id);
 }
