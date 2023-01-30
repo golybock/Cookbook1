@@ -142,8 +142,66 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         }
     }
 
-    public async Task<CommandResult> DeleteFavoriteClientAsync(int id)
+    public async Task<CommandResult> DeleteFavoriteRecipeAsync(int id)
     {
         return await DeleteAsync("favorite_recipes", id);
+    }
+
+    public async Task<CommandResult> DeleteFavoriteRecipeByRecipe(int recipeId)
+    {
+        CommandResult result;
+        connection.Open();
+        try
+        {
+            string query = $"delete from favorite_recipes where recipe_id = $1";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            {
+                Parameters =
+                {
+                    new() { Value = recipeId },
+                }
+            };
+            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            return result;
+        }
+        catch(Exception e)
+        {
+            result = CommandResults.BadRequest;
+            result.Description = e.ToString();
+            return result;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+    }
+
+    public async Task<CommandResult> DeleteFavoriteRecipeByClient(int clientId)
+    {
+        CommandResult result;
+        connection.Open();
+        try
+        {
+            string query = $"delete from favorite_recipes where client_id = $1";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            {
+                Parameters =
+                {
+                    new() { Value = clientId },
+                }
+            };
+            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            return result;
+        }
+        catch(Exception e)
+        {
+            result = CommandResults.BadRequest;
+            result.Description = e.ToString();
+            return result;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
     }
 }

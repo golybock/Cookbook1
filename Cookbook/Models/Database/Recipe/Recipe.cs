@@ -23,15 +23,17 @@ public partial class Recipe
 
     public int CookingTime { get; set; }
 
-    public virtual Client.Client Client { get; set; } = null!;
+    public Client.Client Client { get; set; } = null!;
 
-    public virtual List<RecipeCategory> RecipeCategories { get; } = new List<RecipeCategory>();
+    public List<RecipeCategory> RecipeCategories { get; set; } = new List<RecipeCategory>();
 
-    public virtual List<RecipeIngredient> RecipeIngredients { get; } = new List<RecipeIngredient>();
+    public List<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 
-    public virtual RecipeStats? RecipeStat { get; set; }
+    public List<RecipeImage> RecipeImages { get; set; } = new List<RecipeImage>();
 
-    public virtual RecipeType RecipeType { get; set; } = null!;
+    public RecipeStats? RecipeStat { get; set; }
 
-    public virtual List<Review.Review> Reviews { get; } = new List<Review.Review>();
+    public RecipeType RecipeType { get; set; } = null!;
+
+    public List<Review.Review> Reviews { get; set; } = new List<Review.Review>();
 }

@@ -16,28 +16,33 @@ public class ReviewService : IReviewService
         _reviewRepository = new ReviewRepository();
     }
     
-    public Task<ReviewModel> GetReviewAsync(int id)
+    public async Task<ReviewModel> GetReviewAsync(int id)
     {
-        return _reviewRepository.GetReviewAsync(id);
+        return await _reviewRepository.GetReviewAsync(id);
     }
 
-    public Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
+    public async Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
     {
-        return _reviewRepository.GetReviewsAsync(recipeId);
+        return await _reviewRepository.GetReviewsAsync(recipeId);
     }
 
-    public Task<CommandResult> AddReviewAsync(ReviewModel review)
+    public async Task<List<ReviewModel>> GetClientReviewAsync(int clientId)
     {
-        return _reviewRepository.AddReviewAsync(review);
+        return await _reviewRepository.GetClientReviewAsync(clientId);
     }
 
-    public Task<CommandResult> UpdateReviewAsync(ReviewModel review)
+    public async Task<CommandResult> AddReviewAsync(ReviewModel review)
     {
-        return _reviewRepository.UpdateReviewAsync(review);
+        return await _reviewRepository.AddReviewAsync(review);
     }
 
-    public Task<CommandResult> DeleteReviewAsync(int id)
+    public async Task<CommandResult> UpdateReviewAsync(ReviewModel review)
     {
-        return _reviewRepository.DeleteReviewAsync(id);
+        return await _reviewRepository.UpdateReviewAsync(review);
+    }
+
+    public async Task<CommandResult> DeleteReviewAsync(int id)
+    {
+        return await _reviewRepository.DeleteReviewAsync(id);
     }
 }

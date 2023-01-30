@@ -19,7 +19,7 @@ public partial class RecipesPage : Page
 
     private async void LoadRecipes()
     {
-        RecipesGridView.ItemsSource = await _recipeService.GetRecipesAsync();
+        // RecipesGridView.ItemsSource = await _recipeService.GetRecipesAsync();
     }
     
     private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)

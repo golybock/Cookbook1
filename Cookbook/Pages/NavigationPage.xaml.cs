@@ -12,10 +12,11 @@ namespace Cookbook.Pages;
 
 public partial class NavigationPage : Page
 {
-    private Client _client;
+    private readonly Client _client;
 
     public NavigationPage()
     {
+        _client = new Client();
         InitializeComponent();
     }
     

@@ -17,6 +17,8 @@ namespace Cookbook
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
             CreateFolderForImages();
+            CreateFolderForClientImages();
+            CreateFolderForRecipeImages();
         }
 
         private void CreateFolderForImages()
@@ -32,7 +34,36 @@ namespace Cookbook
             {
                 // nothing
             }
+        }
 
+        private void CreateFolderForRecipeImages()
+        {
+            string path = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes";
+            
+            try
+            {
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+            }
+            catch
+            {
+                // nothing
+            }
+        }
+
+        private void CreateFolderForClientImages()
+        {
+            string path = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients";
+            
+            try
+            {
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+            }
+            catch
+            {
+                // nothing
+            }
         }
         
     }

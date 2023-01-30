@@ -10,6 +10,7 @@ public interface IReviewRepository
 {
     public Task<Review> GetReviewAsync(int id);
     public Task<List<Review>> GetReviewsAsync(int recipeId);
+    public Task<List<Review>> GetClientReviewAsync(int clientId);
     public Task<CommandResult> AddReviewAsync(Review review);
     public Task<CommandResult> UpdateReviewAsync(Review review);
     public Task<CommandResult> DeleteReviewAsync(int id);

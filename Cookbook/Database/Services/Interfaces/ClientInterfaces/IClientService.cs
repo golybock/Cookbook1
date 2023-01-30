@@ -8,8 +8,6 @@ namespace Cookbook.Database.Services.Interfaces.ClientInterfaces;
 
 public interface IClientService
 {
-    public Task<LoginResult> Login(ClientModel client);
-    public Task<LoginResult> Login(string login, string password);
     public Task<ClientModel?> GetClientAsync(int id);
     public Task<ClientModel?> GetClientAsync(string login);
     public Task<List<ClientModel>> GetClientsAsync();

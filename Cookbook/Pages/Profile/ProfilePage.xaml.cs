@@ -13,7 +13,7 @@ public partial class ProfilePage : Page
         _client = new Client();
         DataContext = _client;
         InitializeComponent();
-        ContentFrame.NavigationService.Navigate(new Recipe.RecipesPage());
+        // ContentFrame.NavigationService.Navigate(new Recipe.RecipesPage());
     }
 
     public ProfilePage(Client client)
@@ -21,7 +21,7 @@ public partial class ProfilePage : Page
         _client = client;
         DataContext = _client;
         InitializeComponent();
-        ContentFrame.NavigationService.Navigate(new Recipe.RecipesPage());
+        // ContentFrame.NavigationService.Navigate(new Recipe.RecipesPage());
     }
     
 }

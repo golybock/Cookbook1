@@ -151,6 +151,8 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
             }; 
             result = CommandResults.Successfully;
             result.ValueId = await cmd.ExecuteNonQueryAsync();
+            recipe.Id = result.ValueId;
+            result.Value = recipe;
             return result;
         }
         catch(Exception e)

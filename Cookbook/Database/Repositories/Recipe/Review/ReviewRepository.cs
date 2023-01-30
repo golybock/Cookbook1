@@ -86,6 +86,45 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
     }
 
+    public async Task<List<ReviewModel>> GetClientReviewAsync(int clientId)
+    {
+        connection.Open();
+        try
+        {
+            List<ReviewModel> reviews = new List<ReviewModel>();
+            string query = $"select * from review where client_id = $1";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            {
+                Parameters = { new() { Value = clientId} }
+            };
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                ReviewModel review = new ReviewModel();
+                review.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                review.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
+                review.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
+                review.Grade = reader.GetInt32(reader.GetOrdinal("grade"));
+                var description = reader.GetValue(reader.GetOrdinal("description"));
+                review.Description = description == DBNull.Value ? null : description.ToString();
+                review.IsAnonymous = reader.GetBoolean(reader.GetOrdinal("is_anonymous"));
+                review.DateOfAdding = reader.GetDateTime(reader.GetOrdinal("date_of_adding"));
+                reviews.Add(review);
+            }
+            
+            return reviews;
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+    }
+
     public async Task<CommandResult> AddReviewAsync(ReviewModel review)
     {
         CommandResult result;

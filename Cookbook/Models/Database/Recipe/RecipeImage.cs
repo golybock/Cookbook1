@@ -6,7 +6,7 @@ public class RecipeImage
 
     public int RecipeId { get; set; }
 
-    public string ImagePath { get; set; } = null!;
+    public string? ImagePath { get; set; } = null!;
 
     public int ImageNumber { get; set; }
 }

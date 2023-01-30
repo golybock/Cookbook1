@@ -7,6 +7,7 @@ using System.Windows.Media;
 using Cookbook.Database.Services.Client;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Login;
+using ClientService = Cookbook.Database.Services.ClientService;
 
 namespace Cookbook.Pages.LoginRegister;
 
@@ -45,7 +46,8 @@ public partial class LoginPage : Page
         // проверяем результат 
         if (loginResult.Result)
         {
-            SuccessfulLogin(loginResult.Client);
+            if (loginResult.Client != null)
+                SuccessfulLogin(loginResult.Client);
         }
         else
         {
@@ -60,7 +62,7 @@ public partial class LoginPage : Page
     {
         // переход на основную страницу
         if (NavigationService != null) 
-            NavigationService.Navigate(new NavigationPage());
+            NavigationService.Navigate(new NavigationPage(client));
 
         // очищаем данные
         ClearInput();

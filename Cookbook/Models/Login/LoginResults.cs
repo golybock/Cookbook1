@@ -1,6 +1,4 @@
-﻿using Cookbook.Models.Login;
-
-namespace Cookbook.Models;
+﻿namespace Cookbook.Models.Login;
 
 public static class LoginResults
 {
