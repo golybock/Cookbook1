@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Cookbook.Database.Services;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Register;
 using Microsoft.Win32;
@@ -15,18 +17,18 @@ public partial class RegisterPage : Page
 {
     private Client _client;
     private bool _hasError;
-    // private RegisterService _registerService;
+    private ClientService _clientService;
     
     public RegisterPage()
     {
-        // _registerService = new RegisterService();
+        _clientService = new ClientService();
         _client = new Client();
         InitializeComponent();
     }
     
     public RegisterPage(string login)
     {
-        // _registerService = new RegisterService();
+        _clientService = new ClientService();
         _client = new Client() { Login = login };
         InitializeComponent();
     }
@@ -77,7 +79,8 @@ public partial class RegisterPage : Page
     private void SetImage(string path)
     {
         // сохраняем путь в объекте
-        // _client.SetImagePath(path);
+        _client.ImagePath = path;
+        _client.ClientImages.Add(new ClientImage(){ImagePath = path});
         // отображаем изображение
         PersonPicture.ProfilePicture = new BitmapImage(new Uri(_client.ImagePath));
     }
@@ -93,40 +96,37 @@ public partial class RegisterPage : Page
         Register();
     }
 
-    private void Register()
+    private async Task Register()
     {
         _client.Password = PasswordBox.Password;
         
-        // RegisterResult result =
-        //     _registerService.Register(
-        //         _client, new ClientImage() {ImagePath = _client.ImagePath}
-        //     );
+        RegisterResult result = await _clientService.Register(_client);
         
-        // if (result.Result)
-        // {
-        //     if (NavigationService != null) 
-        //         NavigationService.Navigate(new NavigationPage(_client));
-        // }
-        // else
-        // {
-        //     if (result.Code == 101)
-        //     {
-        //         InvalidLogin(result.Description);
-        //     }
-        //     else if (result.Code == 102)
-        //     {
-        //         InvalidPassword(result.PasswordResult.Description);
-        //     }
-        //     else if (result.Code == 103)
-        //     {
-        //         InvalidData(result.Description);
-        //     }
-        //     else
-        //     {
-        //         ShowError("Неизвестная ошибка");
-        //     }
-        //     
-        // }
+        if (result.Result)
+        {
+            if (NavigationService != null) 
+                NavigationService.Navigate(new NavigationPage(_client));
+        }
+        else
+        {
+            if (result.Code == 101)
+            {
+                InvalidLogin(result.Description);
+            }
+            else if (result.Code == 102)
+            {
+                InvalidPassword(result.PasswordResult.Description);
+            }
+            else if (result.Code == 103)
+            {
+                InvalidData(result.Description);
+            }
+            else
+            {
+                ShowError("Неизвестная ошибка");
+            }
+            
+        }
 
     }
     

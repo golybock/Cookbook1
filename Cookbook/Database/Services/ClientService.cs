@@ -3,13 +3,15 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Cookbook.Database.Services.Client;
+using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe.Review;
 using Cookbook.Models.Login;
+using Cookbook.Models.Register;
 using ClientModel = Cookbook.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services;
 
-public class ClientService
+public class ClientService : IClientService
 {
     private readonly Client.ClientService _clientService;
     private readonly RecipeService _recipeService;
@@ -56,6 +58,11 @@ public class ClientService
         result.Client = currentClient;
         
         return result;
+    }
+
+    public Task<RegisterResult> Register(ClientModel client)
+    {
+        throw new NotImplementedException();
     }
 
     private async Task GetClientInfo(ClientModel? client)
