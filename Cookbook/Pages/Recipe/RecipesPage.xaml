@@ -11,15 +11,22 @@
         <ui:GridView Name="RecipesGridView">
             <ui:GridView.ItemTemplate>
                     <DataTemplate>
-            
-                            <WrapPanel MinWidth="160" MinHeight="160" MaxHeight="300" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                <Image Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Source="{Binding ImagePath}"></Image>
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Margin="5" TextWrapping="Wrap" Text="{Binding Name}" FontStretch="Medium"></TextBlock>
-                                    <TextBlock LineHeight="25" MaxHeight="140" Margin="5" TextWrapping="Wrap" Text="{Binding Description}"></TextBlock>
-                                </StackPanel>
-                            </WrapPanel>
-            
+                        <Grid Background="Blue">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Image Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Source="{Binding ImagePath}"></Image>
+
+                            <TextBlock Grid.Column="1" Margin="5" TextWrapping="Wrap" Text="{Binding Name}" FontStretch="Medium"></TextBlock>
+                            
+                            <!-- <StackPanel Grid.Column="1" Orientation="Vertical"> -->
+                            <!--      -->
+                            <!--     <TextBlock LineHeight="25" MaxHeight="140" Margin="5" TextWrapping="Wrap" Text="{Binding Description}"></TextBlock> -->
+                            <!-- </StackPanel> -->
+                            
+                        </Grid>
                     </DataTemplate>
             </ui:GridView.ItemTemplate> 
         </ui:GridView>
