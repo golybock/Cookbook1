@@ -84,10 +84,18 @@ public class RecipeService : IRecipeService
                 await recipeStats;
                 await recipeIngredients;
                 await recipeCategories;
+                
+                commandResult = CommandResults.Successfully;
+            }
+            else
+            {
+                commandResult = CommandResults.BadRequest;
             }
 
             return commandResult;
         }
+        commandResult = CommandResults.BadRequest;
+        
         return commandResult;
     }
 

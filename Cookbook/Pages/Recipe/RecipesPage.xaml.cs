@@ -39,16 +39,16 @@ public partial class RecipesPage : Page
 
     private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
-        if (NavigationService != null)
-            NavigationService.Navigate(
-                new AddEditRecipePage(RecipesGridView.SelectedItem as Models.Database.Recipe.Recipe));
+        // if (NavigationService != null)
+        //     NavigationService.Navigate(
+        //         new AddEditRecipePage(RecipesGridView.SelectedItem as Models.Database.Recipe.Recipe));
     }
 
     private void RecipesListBox_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        if(RecipesGridView.SelectedItem != null)
-            if (NavigationService != null)
-                NavigationService.Navigate(
-                    new RecipePage(RecipesGridView.SelectedItem as Models.Database.Recipe.Recipe));
+        // if(RecipesGridView.SelectedItem != null)
+        //     if (NavigationService != null)
+        //         NavigationService.Navigate(
+        //             new RecipePage(RecipesGridView.SelectedItem as Models.Database.Recipe.Recipe));
     }
 }
