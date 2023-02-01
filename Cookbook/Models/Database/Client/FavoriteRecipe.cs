@@ -12,7 +12,4 @@ public partial class FavoriteRecipe
 
     public DateTime DateOfAdding { get; set; }
 
-    public virtual Database.Client.Client Client { get; set; } = null!;
-
-    public virtual Recipe.Recipe Recipe { get; set; } = null!;
 }

@@ -22,8 +22,7 @@ public partial class Recipe
     public int PortionCount { get; set; }
 
     public int CookingTime { get; set; }
-
-    public Client.Client Client { get; set; } = null!;
+    
 
     public List<RecipeCategory> RecipeCategories { get; set; } = new List<RecipeCategory>();
 

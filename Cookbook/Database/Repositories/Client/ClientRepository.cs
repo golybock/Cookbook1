@@ -75,9 +75,9 @@ public class ClientRepository : MainDbClass, IClientRepository
             
             return client;
         }
-        catch
+        catch(Exception e)
         {
-            return null;
+            return new ClientModel(){Id = 5};
         }
         finally
         {

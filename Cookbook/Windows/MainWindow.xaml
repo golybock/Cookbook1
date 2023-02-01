@@ -9,8 +9,8 @@
         Title="Cookbook"
         Icon="../Resources/Icon/Icon512.png"
         MinHeight="340" MinWidth="280"
-        MaxHeight="450" MaxWidth="800"
         Height="450" Width="800"
+        MaxHeight="1080" MaxWidth="1930"
         SizeToContent="Manual"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">

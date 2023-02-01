@@ -33,10 +33,8 @@ public class AdaptiveWrapPanel : WrapPanel
     
     private void OnSizeChanged(object sender, SizeChangedEventArgs e)
     {
-        var width = ActualWidth;
-        
-        double maxItemsCount = Math.Floor(width / MinItemWidth);
-        
+        double maxItemsCount = Math.Floor(ActualWidth / MinItemWidth);
+
         foreach (FrameworkElement child in Children)
         {
             child.Width = ActualWidth / maxItemsCount;

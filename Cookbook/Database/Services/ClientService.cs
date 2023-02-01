@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe.Review;
+using Cookbook.Models.Database.Client;
 using Cookbook.Models.Login;
 using Cookbook.Models.Register;
+using Cookbook.Models.Register.Password;
 using ClientModel = Cookbook.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services;
@@ -60,9 +63,38 @@ public class ClientService : IClientService
         return result;
     }
 
-    public Task<RegisterResult> Register(ClientModel client)
+    public async Task<RegisterResult> Register(ClientModel client)
     {
-        throw new NotImplementedException();
+        if (client.Login == String.Empty &&
+            client.Password == string.Empty)
+            return RegisterResults.InvalidData;
+        
+        PasswordResult passwordResult = PasswordValidate(client.Password);
+        
+        if (!passwordResult.Result)
+        {
+            return new RegisterResult()
+            {
+                Code = 102, Result = false,
+                PasswordResult = passwordResult,
+                Description = "Неверный пароль"
+            };
+        }
+
+        if (!LoginValid(client.Login))
+            return RegisterResults.InvalidLogin;
+        
+        client.Password = Hash(client.Password);
+
+        client.Id = _clientService.AddClientAsync(client).Id;
+
+        ClientImage clientImage = new ClientImage();
+
+        clientImage.ClientId = client.Id;
+
+        await _clientImageService.AddClientImageAsync(clientImage);
+
+        return RegisterResults.Successfully;
     }
 
     private async Task GetClientInfo(ClientModel? client)
@@ -89,6 +121,67 @@ public class ClientService : IClientService
         
         using var sha1 = new SHA1Managed();
         return BitConverter.ToString(sha1.ComputeHash(Encoding.UTF8.GetBytes(stringToHash)));
+    }
+    
+    public PasswordResult PasswordValidate(string password)
+    {
+        if (!PasswordNotNull(password))
+            return PasswordResults.EmptyPassword;
+        
+        if(!PasswordHasDigit(password))
+            return PasswordResults.NeedDigit;
+
+        if (!PasswordHasSymbol(password))
+            return PasswordResults.NeedSymbol;
+
+        if (!PasswordHasUpper(password))
+            return PasswordResults.NeedUpper;
+
+        if (!PasswordLengthValid(password))
+            return PasswordResults.NeedLength;
+        
+        
+        return PasswordResults.Successfully;
+
+    }
+    
+    public bool PasswordValid(string password)
+    {
+        return PasswordNotNull(password) &&
+               PasswordHasDigit(password) &&
+               PasswordHasSymbol(password) &&
+               PasswordHasUpper(password) &&
+               PasswordLengthValid(password);
+    }
+
+    private bool PasswordNotNull(string password)
+    {
+        return !string.IsNullOrEmpty(password);
+    }
+
+    private bool PasswordHasDigit(string password)
+    {
+        return password.Any(char.IsDigit);
+    }
+
+    private bool PasswordHasUpper(string password)
+    {
+        return password.Any(char.IsUpper);
+    }
+
+    private bool PasswordLengthValid(string password)
+    {
+        return password.Length >= 8;
+    }
+
+    private bool PasswordHasSymbol(string password)
+    {
+        return password.Any(char.IsPunctuation);
+    }
+
+    private bool LoginValid(string login)
+    {
+        return _clientService.GetClientAsync(login).Id == 0;
     }
 
 }
