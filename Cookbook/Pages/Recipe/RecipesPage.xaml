@@ -3,52 +3,62 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:Cookbook.Pages.RecipesPage"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:ag="clr-namespace:Cookbook.AdaptiveWrap"
       mc:Ignorable="d"
       Title="RecipesPage">
     <Grid>
-        <ListBox Name="RecipesListBox" MouseDoubleClick="RecipesListBox_OnMouseDoubleClick">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ag:AdaptiveWrapPanel ItemHeight="160" MinItemWidth="240">
+        
+        
+        <ui:SimpleStackPanel Orientation="Vertical">
+            
+            <ListBox Name="RecipesListBox" MouseDoubleClick="RecipesListBox_OnMouseDoubleClick">
+                
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ag:AdaptiveWrapPanel ItemHeight="160" MinItemWidth="240"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Name="ElementBorder" BorderThickness="2" BorderBrush="Bisque" CornerRadius="10" Background="Transparent">
+                            
+                            <Border.ContextMenu>
+                                <ContextMenu>
+                            
+                                    <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick">
+                                        <MenuItem.Icon>
+                                            <Image Source="../../Resources/MenuIcons/DeleteIcon.png"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                            
+                                    <MenuItem Header="Изменить" Name="EditMenuItem" Click="EditMenuItem_OnClick">
+                                        <MenuItem.Icon>
+                                            <Image Source="../../Resources/MenuIcons/EditIcon.png"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                            
+                                </ContextMenu>
+                            </Border.ContextMenu>
+                            
+                            <Border.Child>
+                                <StackPanel Margin="5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Image Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Source="{Binding ImagePath}"/>
+                                    <StackPanel Margin="10" Orientation="Vertical">
+                                        <TextBlock Margin="5" TextWrapping="Wrap" Text="{Binding Name}" FontStretch="Medium"/>
+                                        <TextBlock LineHeight="25" MaxHeight="140" Margin="5" TextWrapping="Wrap" Text="{Binding Description}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border.Child>
+                            
+                        </Border>
 
-                    </ag:AdaptiveWrapPanel>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Background="Blue" Margin="5" MinWidth="320" MinHeight="160" MaxHeight="300" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                        <!-- <Border Name="ElementBorder" BorderThickness="1" CornerRadius="10" Background="LightGray"> -->
-                        <!--      -->
-                        <!--     <Border.ContextMenu> -->
-                        <!--         <ContextMenu> -->
-                        <!-- -->
-                        <!--             <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick"> -->
-                        <!--                 <MenuItem.Icon> -->
-                        <!--                     <Image Source="../../Resources/MenuIcons/DeleteIcon.png"></Image> -->
-                        <!--                 </MenuItem.Icon> -->
-                        <!--             </MenuItem> -->
-                        <!-- -->
-                        <!--             <MenuItem Header="Изменить" Name="EditMenuItem" Click="EditMenuItem_OnClick"> -->
-                        <!--                 <MenuItem.Icon> -->
-                        <!--                     <Image Source="../../Resources/MenuIcons/EditIcon.png"></Image> -->
-                        <!--                 </MenuItem.Icon> -->
-                        <!--             </MenuItem> -->
-                        <!-- -->
-                        <!--         </ContextMenu> -->
-                        <!--     </Border.ContextMenu> -->
-                        <!--      -->
-                        <!-- </Border> -->
-                        <Image Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Source="{Binding ImagePath}"></Image>
-                        <StackPanel Margin="10" Orientation="Vertical">
-                            <TextBlock Margin="5" TextWrapping="Wrap" Text="{Binding Name}" FontStretch="Medium"></TextBlock>
-                            <TextBlock LineHeight="25" MaxHeight="140" Margin="5" TextWrapping="Wrap" Text="{Binding Description}"></TextBlock>
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ui:SimpleStackPanel>
+        
+        
     </Grid>
 </Page>

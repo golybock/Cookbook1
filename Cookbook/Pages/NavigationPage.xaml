@@ -8,40 +8,30 @@
       mc:Ignorable="d"
       Title="NavigationPage"
       Loaded="NavigationPage_OnLoaded">
-    <Grid ShowGridLines="True">
+    <Grid>
         
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1.1 cm"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        
-        <ui:CommandBar Grid.Row="0" Background="LightBlue">
+        <ui:NavigationView x:Name="NavigationView"
+            IsBackButtonVisible="Collapsed"
+            PaneDisplayMode="LeftCompact"
+            ItemInvoked="NavigationView_OnItemInvoked"
+            BackRequested="NavigationView_OnBackRequested"
+            IsBackEnabled="{Binding ElementName=MainFrame, Path=CanGoBack}"
+            >
             
-            <ui:CommandBar.Content>
-                
-                <StackPanel Orientation="Horizontal">
-                    <ui:AppBarButton Name="BackButton" Click="BackButton_OnClick" Visibility="Collapsed" Icon="Back" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <ui:AutoSuggestBox
-                        Margin="5"
-                        Width="150"
-                        HorizontalAlignment="Stretch"
-                        PlaceholderText="Search"
-                        QueryIcon="Find" />
-                </StackPanel>
-                
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem Tag="HomePage" Content="Home" Icon="Home"/>
+                <ui:NavigationViewItem Tag="ProfilePage" Content="Profile" Icon="Contact"/>
+                <ui:NavigationViewItem Tag="SubsPage" Content="Subs" Icon="People"></ui:NavigationViewItem>
+                <ui:NavigationViewItem Tag="LikesPage" Content="Liked" Icon="Favorite"/>
+                <ui:NavigationViewItem Tag="AddPostPage" Content="AddPost" Icon="Add"/>
+            </ui:NavigationView.MenuItems>
+            
+            <ui:NavigationView.Content>
+                <Frame x:Name="MainFrame"
+                       NavigationUIVisibility="Hidden"/>
+            </ui:NavigationView.Content>
+            
+        </ui:NavigationView>
 
-                
-            </ui:CommandBar.Content>
-            
-            <ui:AppBarSeparator/>
-            
-            <ui:AppBarButton Click="HomeButton_OnClick" Name="HomeButton" Icon="Home" Label="Home" VerticalContentAlignment="Center"/>
-            <ui:AppBarButton Click="FavoriteButton_OnClick" Name="FavoriteButton" Icon="Favorite" Label="Liked"></ui:AppBarButton>
-            <ui:AppBarButton Click="ProfilePage_OnClick" Name="ProfilePage" Icon="Contact" Label="Профиль"></ui:AppBarButton>
-            <ui:AppBarButton Click="AddRecipeButton_OnClick" Name="AddRecipeButton" Icon="Add" Label="Создать"></ui:AppBarButton>
-        </ui:CommandBar>
-        
-        <Frame Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"></Frame>
-        
     </Grid>
 </Page>
