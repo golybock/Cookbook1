@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
+using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.Views.Recipe;
 

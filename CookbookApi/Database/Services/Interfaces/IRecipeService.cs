@@ -1,5 +1,5 @@
 ﻿using Cookbook.Models.Database;
-using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
+using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace CookbookApi.Database.Services.Interfaces;
 

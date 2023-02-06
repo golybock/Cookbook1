@@ -6,7 +6,7 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:local="clr-namespace:Cookbook.Pages.Profile"
       mc:Ignorable="d"
-      Title="ProfilePage">
+      Title="Профиль">
     <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
         <Grid>
             

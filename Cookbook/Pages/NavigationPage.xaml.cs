@@ -61,8 +61,10 @@ public partial class NavigationPage : Page
 
     private void NavigationPage_OnLoaded(object sender, RoutedEventArgs e)
     {
-        NavigationService.RemoveBackEntry();
-        MainFrame.NavigationService.Navigate(new Recipe.RecipesPage());
+        if (NavigationService != null) 
+            NavigationService.RemoveBackEntry();
+        
+        MainFrame.NavigationService.Navigate(new MainPage());
     }
 
     private void ClearNavigationService()
@@ -75,12 +77,6 @@ public partial class NavigationPage : Page
             }
         }
     }
-
-    // private void AddRecipeButton_OnClick(object sender, RoutedEventArgs e)
-    // {
-    //     BackButton.Visibility = Visibility.Visible;
-    //     MainFrame.NavigationService.Navigate(new AddEditRecipePage());
-    // }
 
     private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
@@ -103,19 +99,23 @@ public partial class NavigationPage : Page
         if (string.IsNullOrWhiteSpace(view))
             return false;
         
-        MainFrame.Navigate(new ProfilePage(_client));
+        MainFrame.Navigate(GetPage(view));
         
         return true;
     }
 
     private Page? GetPage(string pageName)
     {
-        if (pageName == "Home")
-            return new Recipe.RecipesPage();
-        if (pageName == "Profile")
+        if (pageName == "MainPage")
+            return new MainPage();
+        if (pageName == "ProfilePage")
             return new ProfilePage(_client);
-        if (pageName == "Add")
+        if (pageName == "SubsPage")
+            return new SubsPage();
+        if (pageName == "AddPostPage")
             return new AddEditRecipePage();
+        if (pageName == "FavoritePostsPage")
+            return new FavoritePostsPage();
 
         return null;
     }

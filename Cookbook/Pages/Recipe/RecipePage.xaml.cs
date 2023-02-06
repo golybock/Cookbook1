@@ -5,9 +5,9 @@ namespace Cookbook.Pages.RecipesPage;
 
 public partial class RecipePage : Page
 {
-    private Models.Database.Recipe.Recipe _recipe;
+    private global::Models.Models.Database.Recipe.Recipe _recipe;
     
-    public RecipePage(Models.Database.Recipe.Recipe recipe)
+    public RecipePage(global::Models.Models.Database.Recipe.Recipe recipe)
     {
         _recipe = recipe;
         InitializeComponent();

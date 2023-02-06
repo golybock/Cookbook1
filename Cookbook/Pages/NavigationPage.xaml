@@ -11,18 +11,17 @@
     <Grid>
         
         <ui:NavigationView x:Name="NavigationView"
-            IsBackButtonVisible="Collapsed"
-            PaneDisplayMode="LeftCompact"
-            ItemInvoked="NavigationView_OnItemInvoked"
-            BackRequested="NavigationView_OnBackRequested"
-            IsBackEnabled="{Binding ElementName=MainFrame, Path=CanGoBack}"
-            >
+                           IsBackButtonVisible="Collapsed"
+                           PaneDisplayMode="LeftCompact"
+                            ItemInvoked="NavigationView_OnItemInvoked"
+                            BackRequested="NavigationView_OnBackRequested"
+                            IsBackEnabled="{Binding ElementName=MainFrame, Path=CanGoBack}">
             
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Tag="HomePage" Content="Home" Icon="Home"/>
+                <ui:NavigationViewItem Tag="MainPage" Content="Home" Icon="Home"/>
                 <ui:NavigationViewItem Tag="ProfilePage" Content="Profile" Icon="Contact"/>
                 <ui:NavigationViewItem Tag="SubsPage" Content="Subs" Icon="People"></ui:NavigationViewItem>
-                <ui:NavigationViewItem Tag="LikesPage" Content="Liked" Icon="Favorite"/>
+                <ui:NavigationViewItem Tag="FavoritePostsPage" Content="Liked" Icon="Favorite"/>
                 <ui:NavigationViewItem Tag="AddPostPage" Content="AddPost" Icon="Add"/>
             </ui:NavigationView.MenuItems>
             
@@ -30,6 +29,10 @@
                 <Frame x:Name="MainFrame"
                        NavigationUIVisibility="Hidden"/>
             </ui:NavigationView.Content>
+            
+            <ui:NavigationView.Header>
+                <TextBlock Text="{Binding Path=Content.Title, ElementName=MainFrame}"></TextBlock>
+            </ui:NavigationView.Header>
             
         </ui:NavigationView>
 

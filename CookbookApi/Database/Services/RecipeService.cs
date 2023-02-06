@@ -1,10 +1,9 @@
-﻿using Cookbook.Database.Services.Interfaces;
-using Cookbook.Models.Database;
+﻿using Cookbook.Models.Database;
 using CookbookApi.Database.Services.Client;
 using CookbookApi.Database.Services.Interfaces;
 using CookbookApi.Database.Services.Recipe;
 using CookbookApi.Database.Services.Recipe.Review;
-using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
+using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace CookbookApi.Database.Services;
 

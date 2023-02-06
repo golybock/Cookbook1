@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cookbook.Models.Database.Recipe;
+﻿namespace Models.Models.Database.Recipe;
 
 public partial class Recipe
 {
@@ -10,4 +8,7 @@ public partial class Recipe
         get => String.IsNullOrEmpty(_imagePath) ? "../../Resources/not_found_image.png" : _imagePath;
         set => _imagePath = value;
     }
+    
+    public string? Category { get; set; }
+    public bool? IsLiked { get; set; } = false;
 }

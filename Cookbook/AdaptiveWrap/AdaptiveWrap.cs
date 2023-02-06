@@ -44,7 +44,6 @@ public class AdaptiveWrapPanel : WrapPanel
     private void OnSizeChanged(object sender, SizeChangedEventArgs e)
     {
         double maxItemsInLine = Math.Floor(ActualWidth / MinItemWidth);
-        double maxItemsCount = maxItemsInLine * Lines; 
 
         if (maxItemsInLine > 0)
         {
@@ -57,7 +56,7 @@ public class AdaptiveWrapPanel : WrapPanel
         {
             foreach (FrameworkElement child in Children)
             {
-                child.Width = MinItemWidth;
+                child.Width = MinItemWidth + 25;
             } 
         }
 

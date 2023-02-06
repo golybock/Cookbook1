@@ -394,7 +394,6 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\ref\Cookbook.dll
 C:\Coding\C#\Finally\Cookbook\Cookbook\bin\Debug\net7.0-windows\appsettings.json
 C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_Content.g.cs
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\AdaptiveGrid.dll
 C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.baml
 C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.g.cs
@@ -404,3 +403,18 @@ C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.g
 C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.baml
 C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.g.cs
 C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Models.dll
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Models.pdb
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Resources\heart256.png
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Resources\not_found_image.png
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\SubsPage.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\SubsPage.baml

@@ -1,7 +1,7 @@
 ﻿using Cookbook.Models.Database;
 using CookbookApi.Database.Repositories.Interfaces.RecipeInterfaces;
 using Npgsql;
-using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
+using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace CookbookApi.Database.Repositories.Recipe;
 

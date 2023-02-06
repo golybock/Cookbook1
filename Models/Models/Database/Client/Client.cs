@@ -26,7 +26,7 @@ public partial class Client
 
     public List<FavoriteRecipe> FavoriteRecipes { get; set; } = new List<FavoriteRecipe>();
 
-    public List<Recipe.Recipe> Recipes { get; set; } = new List<Recipe.Recipe>();
+    public List<global::Models.Models.Database.Recipe.Recipe> Recipes { get; set; } = new List<global::Models.Models.Database.Recipe.Recipe>();
 
     public List<Review> Reviews { get; set; } = new List<Review>();
 }

@@ -6,16 +6,16 @@ namespace Cookbook.Pages.Recipe;
 public partial class AddEditRecipePage : Page
 {
     // private CookbookContext _context = new CookbookContext();
-    private Models.Database.Recipe.Recipe _recipe;
+    private global::Models.Models.Database.Recipe.Recipe _recipe;
     
     public AddEditRecipePage()
     {
         InitializeComponent();
-        _recipe = new Models.Database.Recipe.Recipe();
+        _recipe = new global::Models.Models.Database.Recipe.Recipe();
         DataContext = _recipe;
     }
     
-    public AddEditRecipePage(Models.Database.Recipe.Recipe recipe)
+    public AddEditRecipePage(global::Models.Models.Database.Recipe.Recipe recipe)
     {
         InitializeComponent();
         _recipe = recipe;

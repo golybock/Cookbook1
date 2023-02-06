@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Cookbook.Models.Database.Recipe;
 
-namespace Cookbook.Models.Database.Recipe;
+namespace Models.Models.Database.Recipe;
 
 public partial class Recipe
 {
@@ -23,7 +22,6 @@ public partial class Recipe
 
     public int CookingTime { get; set; }
     
-
     public List<RecipeCategory> RecipeCategories { get; set; } = new List<RecipeCategory>();
 
     public List<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
@@ -34,5 +32,5 @@ public partial class Recipe
 
     public RecipeType RecipeType { get; set; } = null!;
 
-    public List<Review.Review> Reviews { get; set; } = new List<Review.Review>();
+    public List<Cookbook.Models.Database.Recipe.Review.Review> Reviews { get; set; } = new List<Cookbook.Models.Database.Recipe.Review.Review>();
 }
