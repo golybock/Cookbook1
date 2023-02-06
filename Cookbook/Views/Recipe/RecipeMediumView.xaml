@@ -21,7 +21,7 @@
             BorderThickness="3"
             Background="PapayaWhip">
             
-            <Grid ShowGridLines="True">
+            <Grid>
                 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50*"/>
