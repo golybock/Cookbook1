@@ -49,17 +49,25 @@
                                      Margin="25">
                        <TextBlock 
                             Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}"/>
+                       
                        <TextBlock Text="{Binding Category, FallbackValue=Категория, TargetNullValue=Категория}"
                                   FontSize="26"
                                   FontWeight="Heavy"/>
+                    
                 </ui:SimpleStackPanel>
+
+                <ui:RatingControl Grid.Row="2"
+                                  Grid.Column="0"
+                                  Value="{Binding Rating, TargetNullValue = -1}"
+                                  IsReadOnly="True"/>
+
                 
-                <TextBlock Grid.Row="2"
-                           Grid.Column="0"
-                           Text="{Binding Time, FallbackValue=Время}"
-                           FontSize="16"
-                           VerticalAlignment="Center"
-                           Margin="40,0,0,0"/>
+                <!-- <TextBlock Grid.Row="2" -->
+                <!--            Grid.Column="0" -->
+                <!--            Text="{Binding Time, FallbackValue=Время}" -->
+                <!--            FontSize="16" -->
+                <!--            VerticalAlignment="Center" -->
+                <!--            Margin="40,0,0,0"/> -->
                 
                 <Border Name="LikeButton" 
                         Grid.Column="1"

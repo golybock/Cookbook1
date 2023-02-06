@@ -11,4 +11,5 @@ public partial class Recipe
     
     public string? Category { get; set; }
     public bool? IsLiked { get; set; } = false;
+    public int? Rating { get; set; }
 }
