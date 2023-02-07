@@ -7,6 +7,7 @@
       xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
       Title="Редактирование поста">
+    
     <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
         
         <Grid ShowGridLines="True">

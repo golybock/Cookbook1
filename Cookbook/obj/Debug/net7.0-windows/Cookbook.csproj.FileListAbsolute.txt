@@ -632,3 +632,5 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\refint\Cookbook.dll
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.pdb
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.genruntimeconfig.cache
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\ref\Cookbook.dll
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipesListView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipesListView.baml

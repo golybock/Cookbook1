@@ -9,54 +9,5 @@
       xmlns:adaptiveWrap="clr-namespace:Cookbook.AdaptiveWrap"
       mc:Ignorable="d"
       Title="Рецепты">
-    <ScrollViewer>
-        <ui:SimpleStackPanel Orientation="Vertical">
-            
-            <ListBox Name="RecipesListBox"
-                     SelectionMode="Single"
-                     ItemContainerStyle="{StaticResource CardListBoxStyle}">
-                
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <adaptiveWrap:AdaptiveWrapPanel MinItemWidth="250" HorizontalAlignment="Center"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        
-                        <Border>
-                            
-                            <Border.ContextMenu>
-                                
-                                <ContextMenu>
-                                    
-                                    <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick">
-                                        <MenuItem.Icon>
-                                            <Image Source="../../Resources/MenuIcons/DeleteIcon.png"></Image>
-                                        </MenuItem.Icon>
-
-                                    </MenuItem>
-                            
-                                    <MenuItem Header="Изменить" Name="EditMenuItem" Click="EditMenuItem_OnClick">
-                                        <MenuItem.Icon>
-                                            <Image Source="../../Resources/MenuIcons/EditIcon.png"></Image>
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-
-                                </ContextMenu>
-
-                            </Border.ContextMenu>
-                            
-                            <Border.Child>
-                                <mv:RecipeMediumView Height="400"/>
-                            </Border.Child>
-                            
-                        </Border>
-
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ui:SimpleStackPanel>
-    </ScrollViewer>
+   <mv:RecipesListView/>
 </Page>

@@ -10,6 +10,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemeResources />
                 <ui:XamlControlsResources>
+                    
                     <Style x:Key="CardListBoxStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}" >
                         <Setter Property="Template">
                             <Setter.Value>
@@ -49,6 +50,7 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
+                    
                 </ui:XamlControlsResources>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Cookbook.Database.Services;
+using Microsoft.Xaml.Behaviors.Core;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.Pages;
@@ -10,34 +14,44 @@ namespace Cookbook.Pages;
 public partial class MainPage : Page
 {
     private RecipeService _recipeService;
-    private List<RecipeModel> _recipes;
-    private ListBox _recipesListBox;
+    public List<RecipeModel> Recipes { get; set; }
 
     public MainPage()
     {
         _recipeService = new RecipeService();
-        _recipes = new List<RecipeModel>();
+        
+        GetRecipes();
         
         InitializeComponent();
+    }
 
-        _recipesListBox = RecipesListBox;
+    private async void GetRecipes()
+    {
+        Recipes = await _recipeService.GetRecipesAsync();
         
-        LoadRecipes();
+        DataContext = this;
     }
-
-    private async Task LoadRecipes()
-    {
-        _recipes = await _recipeService.GetRecipesAsync();
-        _recipesListBox.ItemsSource = _recipes;
-    }
-
-    private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
-    {
-        throw new System.NotImplementedException();
-    }
-
+    
     private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
         throw new System.NotImplementedException();
     }
+    
+    public class DeleteOnClick : ICommand
+    {
+        public bool CanExecute(object? parameter)
+        {
+            MessageBox.Show("Aboba");
+            return true;
+        }
+
+        public void Execute(object? parameter)
+        {
+            MessageBox.Show("Aboba");
+            return;
+        }
+
+        public event EventHandler? CanExecuteChanged;
+    }
+    
 }
