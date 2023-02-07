@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
-using Cookbook.Database;
+using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
-namespace Cookbook.Pages.RecipesPage;
+namespace Cookbook.Pages.Recipe;
 
 public partial class RecipePage : Page
 {
-    private global::Models.Models.Database.Recipe.Recipe _recipe;
+    private readonly RecipeModel _recipe;
     
-    public RecipePage(global::Models.Models.Database.Recipe.Recipe recipe)
+    public RecipePage(RecipeModel recipe)
     {
         _recipe = recipe;
         InitializeComponent();

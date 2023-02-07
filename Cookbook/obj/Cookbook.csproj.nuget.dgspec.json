@@ -49,6 +49,10 @@
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "dependencies": {
+            "MahApps.Metro": {
+              "target": "Package",
+              "version": "[2.4.9, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[7.0.0, )"

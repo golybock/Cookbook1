@@ -2011,6 +2011,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0-windows7.0": [
+      "MahApps.Metro >= 2.4.9",
       "Microsoft.Extensions.Configuration >= 7.0.0",
       "Microsoft.Extensions.Configuration.FileExtensions >= 7.0.0",
       "Microsoft.Extensions.Configuration.Json >= 7.0.0",
@@ -2070,6 +2071,10 @@
       "net7.0-windows7.0": {
         "targetAlias": "net7.0-windows",
         "dependencies": {
+          "MahApps.Metro": {
+            "target": "Package",
+            "version": "[2.4.9, )"
+          },
           "Microsoft.Extensions.Configuration": {
             "target": "Package",
             "version": "[7.0.0, )"

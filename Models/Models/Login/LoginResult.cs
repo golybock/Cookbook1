@@ -1,4 +1,5 @@
 ﻿using Cookbook.Models.Database.Client;
+using Client = Models.Models.Database.Client.Client;
 
 namespace Models.Models.Login;
 

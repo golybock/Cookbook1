@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "Cookbook/1.0.0": {
         "dependencies": {
+          "MahApps.Metro": "2.4.9",
           "Microsoft.Extensions.Configuration": "7.0.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "7.0.0",
           "Microsoft.Extensions.Configuration.Json": "7.0.0",

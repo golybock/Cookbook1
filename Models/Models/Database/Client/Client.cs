@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Cookbook.Models.Database.Client;
 using Cookbook.Models.Database.Recipe.Review;
 
-namespace Cookbook.Models.Database.Client;
+namespace Models.Models.Database.Client;
 
 public partial class Client
 {
@@ -18,7 +17,7 @@ public partial class Client
 
     public DateTime DateOfRegistration { get; set; }
     
-    public List<ClientImage?> ClientImages { get; set; } = new List<ClientImage>();
+    public List<ClientImage> ClientImages { get; set; } = new List<ClientImage>();
 
     public List<ClientSub> ClientSubOnClients { get; set; } = new List<ClientSub>();
 

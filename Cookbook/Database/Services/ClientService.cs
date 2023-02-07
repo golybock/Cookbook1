@@ -11,7 +11,7 @@ using Cookbook.Models.Login;
 using Cookbook.Models.Register;
 using Cookbook.Models.Register.Password;
 using Models.Models.Login;
-using ClientModel = Cookbook.Models.Database.Client.Client;
+using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services;
 

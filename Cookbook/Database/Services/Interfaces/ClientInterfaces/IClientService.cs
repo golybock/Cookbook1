@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Login;
-using ClientModel = Cookbook.Models.Database.Client.Client;
+using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services.Interfaces.ClientInterfaces;
 

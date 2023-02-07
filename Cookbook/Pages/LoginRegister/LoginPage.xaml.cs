@@ -8,6 +8,7 @@ using Cookbook.Database.Services.Client;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Login;
 using Models.Models.Login;
+using Client = Models.Models.Database.Client.Client;
 using ClientService = Cookbook.Database.Services.ClientService;
 
 namespace Cookbook.Pages.LoginRegister;
