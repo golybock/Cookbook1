@@ -22,3 +22,15 @@ C:\Users\arshi\RiderProjects\Cookbook\Models\obj\Debug\net7.0\Models.dll
 C:\Users\arshi\RiderProjects\Cookbook\Models\obj\Debug\net7.0\refint\Models.dll
 C:\Users\arshi\RiderProjects\Cookbook\Models\obj\Debug\net7.0\Models.pdb
 C:\Users\arshi\RiderProjects\Cookbook\Models\obj\Debug\net7.0\ref\Models.dll
+C:\Coding\C#\Cookbook\Models\bin\Debug\net7.0\Models.deps.json
+C:\Coding\C#\Cookbook\Models\bin\Debug\net7.0\Models.dll
+C:\Coding\C#\Cookbook\Models\bin\Debug\net7.0\Models.pdb
+C:\Coding\C#\Cookbook\Models\obj\Debug\net7.0\Models.csproj.AssemblyReference.cache
+C:\Coding\C#\Cookbook\Models\obj\Debug\net7.0\Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Coding\C#\Cookbook\Models\obj\Debug\net7.0\Models.AssemblyInfoInputs.cache
+C:\Coding\C#\Cookbook\Models\obj\Debug\net7.0\Models.AssemblyInfo.cs
+C:\Coding\C#\Cookbook\Models\obj\Debug\net7.0\Models.csproj.CoreCompileInputs.cache
+C:\Coding\C#\Cookbook\Models\obj\Debug\net7.0\Models.dll
+C:\Coding\C#\Cookbook\Models\obj\Debug\net7.0\refint\Models.dll
+C:\Coding\C#\Cookbook\Models\obj\Debug\net7.0\Models.pdb
+C:\Coding\C#\Cookbook\Models\obj\Debug\net7.0\ref\Models.dll

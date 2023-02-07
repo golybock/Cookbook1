@@ -43,8 +43,6 @@
                     
                 </Viewbox>
                 
-                
-                
                 <StackPanel Grid.Column="1"
                             Orientation="Vertical"
                             VerticalAlignment="Center"
@@ -155,28 +153,41 @@
                 
                 <TextBox Grid.Row="1" 
                          Grid.Column="1"
+                         ui:ControlHelper.PlaceholderText="Текст рецепта"
+                         TextWrapping="Wrap"
                          MinWidth="300"
                          Margin="20"/>
-                    
                 
+                <StackPanel Grid.Column="2"
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    
+                    <Button Name="PreviewButton"
+                            Content="Предпросмотр"
+                            Click="PreviewButton_OnClick">
+                        
+                        <Button.ToolTip>
+                            <ToolTip Background="Transparent"
+                                     BorderBrush="Transparent">
+                                
+                                <recipe:RecipeMediumView x:Name="MediumPreview"
+                                                         ui:ControlHelper.Header="Предпросмотр"
+                                                         Height="400"/>
+                                
+                            </ToolTip>
+                        </Button.ToolTip>
+                        
+                    </Button>
+                    
+                    <Button Name="ClearButton"
+                            Content="Очистить"
+                            ToolTip="Очистить все"
+                            Click="ClearButton_OnClick"/>
+                    
+                </StackPanel>
                 
             </Grid>
-            
-
-            
-            
-            <!-- Перенести во вспылвающее окно предпросмотра -->
-            
-            <!-- <StackPanel Grid.Row="1"  -->
-            <!--             Orientation="Horizontal" -->
-            <!--             HorizontalAlignment="Center"> -->
-            <!--      -->
-            <!--     <recipe:RecipeMediumView x:Name="MediumPreview" -->
-            <!--                              ui:ControlHelper.Header="Предпросмотр" -->
-            <!--                              Height="400"/> -->
-            <!--      -->
-            <!--      -->
-            <!-- </StackPanel> -->
             
             <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,0,0" HorizontalAlignment="Center">
                 <!-- основной блок для ввода -->

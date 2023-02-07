@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using ModernWpf.Controls;
+using Page = System.Windows.Controls.Page;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.Pages.Recipe;
@@ -7,40 +9,27 @@ namespace Cookbook.Pages.Recipe;
 public partial class AddEditRecipePage : Page
 {
     // private CookbookContext _context = new CookbookContext();
-    private RecipeModel _recipe;
+    public RecipeModel Recipe;
     
     public AddEditRecipePage()
     {
         InitializeComponent();
-        _recipe = new RecipeModel();
-        DataContext = _recipe;
+        Recipe = new RecipeModel();
+        DataContext = Recipe;
+        MediumPreview.DataContext = Recipe;
     }
     
     public AddEditRecipePage(RecipeModel recipe)
     {
         InitializeComponent();
-        _recipe = recipe;
-        DataContext = _recipe;
+        Recipe = recipe;
+        DataContext = Recipe;
+        MediumPreview.DataContext = Recipe;
     }
 
     private void AddButton_OnClick(object sender, RoutedEventArgs e)
     {
-        // RefreshInput();
-        //
-        // try
-        // {
-        //     _recipe.ClientId = 1;
-        //     _recipe.RecipeTypeId = 1;
-        //     _context.Recipes.Add(_recipe);
-        //     _context.SaveChanges();
-        //     _recipe = new Recipe();
-        //     DataContext = _recipe;
-        // }
-        // catch (Exception exception)
-        // {
-        //     string error = Validation.GetErrors(NameTextBox)[0].ErrorContent.ToString();
-        //     OutError(error);
-        // }
+
     }
 
     private void OutError(string error)
@@ -60,4 +49,38 @@ public partial class AddEditRecipePage : Page
     {
         ClearError();
     }
+
+    private void ClearButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        ShowAcceptDialog();
+    }
+
+    private void PreviewButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        // ворк
+    }
+
+    private void ClearPage()
+    {
+        Recipe = new RecipeModel();
+        DataContext = Recipe;
+    }
+
+    private async void ShowAcceptDialog()
+    {
+        ContentDialog acceptDialog = new ContentDialog()
+        {
+            Title = "Очистка ввода",
+            Content = "Вы уверены, что хотите очистить все введенные данные?",
+            CloseButtonText = "Отмена",
+            PrimaryButtonText = "Очистить",
+            DefaultButton = ContentDialogButton.Primary
+        };
+        
+        ContentDialogResult result = await acceptDialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+            ClearPage();
+        
+    } 
 }
