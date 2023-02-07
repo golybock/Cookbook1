@@ -410,9 +410,12 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Re
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.baml
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Resources\heart256.png
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Resources\not_found_image.png
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\SubsPage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\SubsPage.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Settings\SettingsPage.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Settings\SettingsPage.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Resources\not_found_image.png
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Resources\heart256.png
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Resources\sirniki.png

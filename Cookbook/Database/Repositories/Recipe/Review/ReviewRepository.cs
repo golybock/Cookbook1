@@ -47,6 +47,36 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
     }
 
+    public async Task<decimal> GetAvgRatingByRecipe(int recipeId)
+    {
+        connection.Open();
+        decimal avg = 0;
+        try
+        {
+            string query = $"select avg(grade) from review where recipe_id = $1";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            {
+                Parameters = { new() { Value = recipeId} }
+            };
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                avg = reader.GetDecimal(reader.GetOrdinal("avg"));
+            }   
+            
+            return avg;
+        }
+        catch
+        {
+            return avg;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+    }
+
     public async Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
     {
         connection.Open();

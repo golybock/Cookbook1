@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Review;
@@ -8,6 +9,7 @@ namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces.ReviewInterface
 public interface IReviewService
 {
     public Task<Review> GetReviewAsync(int id);
+    public Task<decimal> GetAvgRatingByRecipe(int recipeId);
     public Task<List<Review>> GetReviewsAsync(int recipeId);
     public Task<List<Review>> GetClientReviewAsync(int clientId);
     public Task<CommandResult> AddReviewAsync(Review review);

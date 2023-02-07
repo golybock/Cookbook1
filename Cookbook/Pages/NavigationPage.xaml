@@ -13,9 +13,8 @@
         <ui:NavigationView x:Name="NavigationView"
                            IsBackButtonVisible="Collapsed"
                            PaneDisplayMode="LeftCompact"
-                            ItemInvoked="NavigationView_OnItemInvoked"
-                            BackRequested="NavigationView_OnBackRequested"
-                            IsBackEnabled="{Binding ElementName=MainFrame, Path=CanGoBack}">
+                           ItemInvoked="NavigationView_OnItemInvoked"
+                           IsBackEnabled="{Binding ElementName=MainFrame, Path=CanGoBack}">
             
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem Tag="MainPage" Content="Home" Icon="Home"/>

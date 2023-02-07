@@ -13,6 +13,11 @@ public partial class RecipeMediumView : UserControl
         InitializeComponent();
     }
 
+    public RecipeMediumView(RecipeModel recipe)
+    {
+        DataContext = recipe;
+    }
+
     // private void LikeButton_OnMouseDown(object sender, MouseButtonEventArgs e)
     // {
     //     if (_recipe != null)

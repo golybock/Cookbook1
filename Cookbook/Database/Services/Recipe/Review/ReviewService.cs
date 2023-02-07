@@ -21,6 +21,11 @@ public class ReviewService : IReviewService
         return await _reviewRepository.GetReviewAsync(id);
     }
 
+    public async Task<decimal> GetAvgRatingByRecipe(int recipeId)
+    {
+        return await _reviewRepository.GetAvgRatingByRecipe(recipeId);
+    }
+
     public async Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
     {
         return await _reviewRepository.GetReviewsAsync(recipeId);

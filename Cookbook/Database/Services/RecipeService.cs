@@ -7,6 +7,7 @@ using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe;
 using Cookbook.Database.Services.Recipe.Review;
 using Cookbook.Models.Database;
+using Cookbook.Models.Database.Recipe;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.Database.Services;
@@ -20,6 +21,7 @@ public class RecipeService : IRecipeService
     private readonly RecipeStatsService _recipeStatsService;
     private readonly RecipeIngredientService _recipeIngredientService;
     private readonly ReviewService _reviewService;
+    private readonly CategoryService _categoryService;
 
     public RecipeService()
     {
@@ -30,28 +32,58 @@ public class RecipeService : IRecipeService
         _recipeIngredientService = new RecipeIngredientService();
         _reviewService = new ReviewService();
         _clientFavService = new ClientFavService();
+        _categoryService = new CategoryService();
     }
 
     public async Task<RecipeModel> GetRecipeAsync(int id)
     {
         var recipe = await _recipeService.GetRecipeAsync(id);
-        recipe.RecipeStat = await _recipeStatsService.GetRecipeStatsAsync(id);
-        recipe.RecipeCategories = await _recipeCategoryService.GetRecipeCategoriesAsync(id);
-        recipe.Reviews = await _reviewService.GetReviewsAsync(id);
-        recipe.RecipeIngredients = await _recipeIngredientService.GetRecipeIngredientByRecipeAsync(id);
+        var recipeStat = _recipeStatsService.GetRecipeStatsAsync(id);
+        var recipeCategories = _recipeCategoryService.GetRecipeCategoriesAsync(id);
+        var recipeReviews = _reviewService.GetReviewsAsync(id);
+        var recipeIngredients = _recipeIngredientService.GetRecipeIngredientByRecipeAsync(id);
+        var recipeRating = _reviewService.GetAvgRatingByRecipe(id);
+        var category = GetRecipeMainCategoryAsync(recipe.Id);
+
+        recipe.RecipeStat = await recipeStat;
+        recipe.RecipeCategories = await recipeCategories;
+        recipe.Reviews = await recipeReviews;
+        recipe.RecipeIngredients = await recipeIngredients;
+        recipe.Rating = await recipeRating;
+        recipe.Category = await category;
+        
         return recipe;
     }
 
     public async Task<List<RecipeModel>> GetRecipesAsync()
     {
-        return await _recipeService.GetRecipesAsync();
+        var recipes = await _recipeService.GetRecipesAsync();
+
+        foreach (var recipe in recipes)
+        {
+            recipe.Rating =
+                await _reviewService.GetAvgRatingByRecipe(recipe.Id);
+
+            recipe.Category =
+                await GetRecipeMainCategoryAsync(recipe.Id);
+        }
+
+        return recipes;
+    }
+
+    public async Task<string> GetRecipeMainCategoryAsync(int recipeId)
+    {
+        var recipeCategory = await _recipeCategoryService.GetRecipeMainCategoryAsync(recipeId);
+        var category = await _categoryService.GetCategoryAsync(recipeCategory.Id);
+
+        return category.Name;
     }
 
     public async Task<List<RecipeModel>> GetClientRecipes(int clientId)
     {
         return await _recipeService.GetClientRecipesAsync(clientId);
     }
-
+    
     public async Task<List<RecipeModel>> GetClientFavRecipes(int clientId)
     {
         List<RecipeModel> recipes = new List<RecipeModel>();
@@ -101,7 +133,7 @@ public class RecipeService : IRecipeService
 
     public async Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe)
     {
-        throw new System.NotImplementedException();
+        return await _recipeService.UpdateRecipeAsync(recipe);
     }
 
 

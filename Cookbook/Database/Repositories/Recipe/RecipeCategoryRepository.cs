@@ -49,8 +49,11 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         try
         {
             List<RecipeCategory> recipeCategories = new List<RecipeCategory>();
-            string query = $"select * from recipe_categories where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection);
+            string query = $"select * from recipe_categories where recipe_id = $1";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            {
+                Parameters = { new() { Value = recipeId } }
+            };
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -63,6 +66,38 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
             }
             
             return recipeCategories;
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+    }
+
+    public async Task<RecipeCategory?> GetRecipeMainCategoryAsync(int recipeId)
+    {
+        connection.Open();
+        try
+        {
+            RecipeCategory recipeCategory = new RecipeCategory();
+            string query = $"select * from recipe_categories where recipe_id = $1 limit 1";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            {
+                Parameters = { new() { Value = recipeId } }
+            };
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                recipeCategory.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                recipeCategory.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
+                recipeCategory.CategoryId = reader.GetInt32(reader.GetOrdinal("category_id"));
+            }
+            
+            return recipeCategory;
         }
         catch
         {

@@ -3,17 +3,62 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
              d:DesignHeight="160" d:DesignWidth="320">
     
-    <Border CornerRadius="10" BorderThickness="1" BorderBrush="Black">
-        <StackPanel Margin="5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <Image Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Source="{Binding ImagePath}"/>
-            <StackPanel Margin="10" Orientation="Vertical">
-                <TextBlock Margin="5" TextWrapping="Wrap" Text="{Binding Name}" FontStretch="Medium"/>
-                <TextBlock LineHeight="25" MaxHeight="140" Margin="5" TextWrapping="Wrap" Text="{Binding Description}"/>
-            </StackPanel>
-        </StackPanel>
+<UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe ui"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <Border CornerRadius="15" 
+            BorderBrush="Transparent"
+            BorderThickness="3"
+            Background="PapayaWhip">
+            
+            <Grid>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="65*"/>
+                    <RowDefinition Height="15*"/>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                
+                
+                <Image Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.RowSpan="3"
+                       Height="150"
+                       Width="150"
+                       Source="{Binding ImagePath}"/>
+                
+                <ui:SimpleStackPanel Grid.Row="1"
+                                     Grid.Column="1"
+                                     Spacing="8"
+                                     Margin="5">
+                       <TextBlock 
+                            Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}"
+                            FontWeight="Heavy"/>
+                       
+                       <TextBlock Text="{Binding Category, FallbackValue=Категория, TargetNullValue=Категория}"
+                                  FontSize="16"/>
+                    
+                       <ui:RatingControl Value="{Binding Rating, TargetNullValue = -1}"
+                                         IsReadOnly="True"/>
+                       
+                </ui:SimpleStackPanel>
+
+
+            </Grid>
+            
     </Border>
     
 </UserControl>

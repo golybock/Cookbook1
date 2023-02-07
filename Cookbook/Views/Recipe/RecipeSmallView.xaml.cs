@@ -13,6 +13,6 @@ public partial class RecipeSmallView : UserControl
 
     public RecipeSmallView()
     {
-        throw new System.NotImplementedException();
+        InitializeComponent();
     }
 }

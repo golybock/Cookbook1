@@ -21,6 +21,11 @@ public class RecipeCategoryService : IRecipeCategoryService
         return _recipeCategoryRepository.GetRecipeCategoryAsync(id);
     }
 
+    public Task<RecipeCategory> GetRecipeMainCategoryAsync(int recipeId)
+    {
+        return _recipeCategoryRepository.GetRecipeMainCategoryAsync(recipeId);
+    }
+
     public Task<List<RecipeCategory>> GetRecipeCategoriesAsync(int recipeId)
     {
         return _recipeCategoryRepository.GetRecipeCategoriesAsync(recipeId);
