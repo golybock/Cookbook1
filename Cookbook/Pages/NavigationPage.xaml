@@ -30,7 +30,9 @@
             </ui:NavigationView.Content>
             
             <ui:NavigationView.Header>
-                <TextBlock Text="{Binding Path=Content.Title, ElementName=MainFrame}"></TextBlock>
+                <Label Content="{Binding Path=Content.Title, ElementName=MainFrame}"
+                       FontSize="24"
+                       VerticalContentAlignment="Center"/>
             </ui:NavigationView.Header>
             
         </ui:NavigationView>

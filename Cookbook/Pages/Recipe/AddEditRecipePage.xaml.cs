@@ -1,21 +1,22 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.Pages.Recipe;
 
 public partial class AddEditRecipePage : Page
 {
     // private CookbookContext _context = new CookbookContext();
-    private global::Models.Models.Database.Recipe.Recipe _recipe;
+    private RecipeModel _recipe;
     
     public AddEditRecipePage()
     {
         InitializeComponent();
-        _recipe = new global::Models.Models.Database.Recipe.Recipe();
+        _recipe = new RecipeModel();
         DataContext = _recipe;
     }
     
-    public AddEditRecipePage(global::Models.Models.Database.Recipe.Recipe recipe)
+    public AddEditRecipePage(RecipeModel recipe)
     {
         InitializeComponent();
         _recipe = recipe;
@@ -54,12 +55,6 @@ public partial class AddEditRecipePage : Page
         ErrorTextBlock.Visibility = Visibility.Collapsed;
     }
     
-    private void RefreshInput()
-    {
-        NameTextBox.Text = NameTextBox.Text;
-        TimeNumberBox.Value = TimeNumberBox.Value;
-        PortionsNumberBox.Value = PortionsNumberBox.Value;
-    }
 
     private void NameTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
     {

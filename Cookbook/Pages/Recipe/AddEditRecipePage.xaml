@@ -5,23 +5,25 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cookbook.Pages.RecipesPage"
       xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
       Title="Редактирование поста">
     <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+        
         <Grid ShowGridLines="True">
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="20*" />
+                <RowDefinition Height="80*" />
+                <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0" ShowGridLines="True">
                 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="40*"/>
-                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="35*"/>
+                    <ColumnDefinition Width="35*"/>
                 </Grid.ColumnDefinitions>
                 
                 <Border Grid.Column="0"
@@ -29,9 +31,8 @@
                         BorderThickness="2"
                         BorderBrush="Transparent"
                         CornerRadius="0,0,10,10"
-                        Background="Bisque">
-                
-                </Border>
+                        Margin="5,0,5,5"
+                        Background="Bisque"/>
                 
                 <Viewbox MinHeight="50"
                          MinWidth="50"
@@ -49,54 +50,106 @@
                             Orientation="Vertical"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center">
-                    <TextBlock Text="Заголовок" Margin="5"
-                               FontSize="16"/>
+                    
+                    <TextBlock Text="Заголовок"
+                               Margin="5"
+                               FontSize="20"/>
                     
                     <TextBox Name="NameTextBox"
-                             TextChanged="NameTextBox_OnTextChanged"
-                             Text="{Binding Name, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
-                             MinHeight="25"
-                             MinWidth="150"
+                             ui:ControlHelper.PlaceholderText="Заголовок"
+                             Text="{Binding Name}"
+                             MinHeight="35"
+                             Width="200"
                              Margin="5"
-                             MaxWidth="200"
                              ToolTip="Заголоок рецепта"/>
+                    
+                    <TextBlock Text="Описание"
+                               Margin="5"
+                               FontSize="20"/>
+                    
+                    <TextBox Name="DescriptionTextBox"
+                             Text="{Binding Description}"
+                             MinHeight="35"
+                             Width="200"
+                             ui:ControlHelper.PlaceholderText="Краткое описание"
+                             Margin="5"/>
+                    
+                </StackPanel>
+                
+                <StackPanel Grid.Column="2"
+                            Orientation="Vertical"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    
+                    <TextBlock Text="Время приготовления"
+                               Margin="5"
+                               FontSize="20"
+                               TextWrapping="Wrap"/>
+                    
+                    <ui:SimpleTimePicker Name="CookingTimePicker"
+                                         SelectedDateTime="{Binding CookingTime}"
+                                         MinHeight="35"
+                                         MinWidth="150"
+                                         Margin="5"/>
+                    
+                    <TextBlock VerticalAlignment="Center"
+                               Text="Порций"
+                               Margin="5"
+                               FontSize="20"/>
+                    
+                    <ui:NumberBox Name="PortionsNumberBox" 
+                                  Value="{Binding PortionCount}"
+                                  ValidationMode="InvalidInputOverwritten"
+                                  Minimum="1"
+                                  MinHeight="35"
+                                  Margin="5"
+                                  SpinButtonPlacementMode="Compact"
+                                  PlaceholderText="Кол-во порций"/>
+                    
                 </StackPanel>
                 
             </Grid>
+
+            <Grid Grid.Row="1" ShowGridLines="True">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="35*"/>
+                    <ColumnDefinition Width="35*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Border Grid.ColumnSpan="3"
+                        BorderThickness="2"
+                        BorderBrush="Transparent"
+                        CornerRadius="10"
+                        Margin="5"
+                        Background="Bisque"/>
+                
+                <TextBox Grid.Column="1" MinWidth="300" Margin="20"></TextBox>
+                
+                
+            </Grid>
+            
+
             
             
+            <!-- Перенести во вспылвающее окно предпросмотра -->
             
-            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,0,0" HorizontalAlignment="Center">
+            <!-- <StackPanel Grid.Row="1"  -->
+            <!--             Orientation="Horizontal" -->
+            <!--             HorizontalAlignment="Center"> -->
+            <!--      -->
+            <!--     <recipe:RecipeMediumView x:Name="MediumPreview" -->
+            <!--                              ui:ControlHelper.Header="Предпросмотр" -->
+            <!--                              Height="400"/> -->
+            <!--      -->
+            <!--      -->
+            <!-- </StackPanel> -->
+            
+            <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,0,0" HorizontalAlignment="Center">
                 <!-- основной блок для ввода -->
                 <StackPanel Orientation="Vertical">
                     <!-- блоки ввода -->
-                
-
-                
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Text="Время приготовления" Margin="5" Width="90" TextWrapping="Wrap"></TextBlock>
-                        <ui:NumberBox Value="{Binding CookingTime}" ValidationMode="InvalidInputOverwritten" Minimum="1" Name="TimeNumberBox" MinHeight="25" MinWidth="150" Margin="5" SpinButtonPlacementMode="Compact"></ui:NumberBox>
-                    </StackPanel>
-                
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Text="Порций" Margin="5" Width="90"/>
-                        <ui:NumberBox Value="{Binding PortionCount}" ValidationMode="InvalidInputOverwritten" Minimum="1" Name="PortionsNumberBox" MinHeight="25" MinWidth="150" Margin="5" SpinButtonPlacementMode="Compact"/>
-                    </StackPanel>
-                    
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Top" Text="Описание" Margin="5" Width="90"/>
-                        <TextBox Name="DescriptionTextBox" Text="{Binding Description}" MinHeight="25" Width="150" TextWrapping="Wrap" Margin="5"/>
-                    </StackPanel>
-                    
-                    <StackPanel Orientation="Horizontal">
-                        <ListView>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}"></TextBlock>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
                     
                     <TextBlock Name="ErrorTextBlock" Visibility="Collapsed" Foreground="Red"></TextBlock>
                     
@@ -108,6 +161,7 @@
                 </StackPanel>
             
             </StackPanel>
+            
         </Grid>
     </ScrollViewer>
 </Page>

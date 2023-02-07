@@ -1,6 +1,6 @@
 ﻿using Cookbook.Models.Database.Client;
 
-namespace Cookbook.Models.Login;
+namespace Models.Models.Login;
 
 public class LoginResult
 {

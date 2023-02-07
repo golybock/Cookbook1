@@ -13,6 +13,7 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe ui"></Setter>
             <Setter Property="FontSize" Value="24"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
         </Style>
     </UserControl.Resources>
     

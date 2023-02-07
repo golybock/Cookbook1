@@ -7,6 +7,7 @@ using System.Windows.Media;
 using Cookbook.Database.Services.Client;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Login;
+using Models.Models.Login;
 using ClientService = Cookbook.Database.Services.ClientService;
 
 namespace Cookbook.Pages.LoginRegister;

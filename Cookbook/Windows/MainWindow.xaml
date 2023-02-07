@@ -8,9 +8,7 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         Title="Cookbook"
         Icon="../Resources/Icon/Icon512.png"
-        MinHeight="500" MinWidth="320"
-        Height="450" Width="800"
-        MaxHeight="1080" MaxWidth="1930"
+        MinHeight="600" MinWidth="800"
         SizeToContent="Manual"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
