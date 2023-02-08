@@ -2,7 +2,13 @@
 
 public partial class Client
 {
-    public string? ImagePath;
-    public int Rating;
-    public int PostCount;
+    private string? _imagePath;
+    public string? ImagePath
+    {
+        get => String.IsNullOrEmpty(_imagePath) ? "../../Resources/sirniki.png" : _imagePath;
+        set => _imagePath = value;
+    }
+    
+    public int Rating { get; set; }
+    public int PostCount { get; set; }
 }

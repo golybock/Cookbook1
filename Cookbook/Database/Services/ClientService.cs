@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Automation.Provider;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe.Review;
@@ -96,6 +98,30 @@ public class ClientService : IClientService
         await _clientImageService.AddClientImageAsync(clientImage);
 
         return RegisterResults.Successfully;
+    }
+
+    public async Task<List<ClientModel>> GetClients()
+    {
+        List<ClientModel> clients = await _clientService.GetClientsAsync();
+        
+        return clients;
+    }
+    
+    public async Task<List<ClientModel>> GetClientSubs(int clientId)
+    {
+        List<ClientModel> clients = new List<ClientModel>();
+
+        var subs = await _clientSubService.GetClientSubsAsync(clientId);
+
+        foreach (var sub in subs)
+        {
+            ClientModel? client = await _clientService.GetClientAsync(sub.ClientId);
+            
+            if (client != null)
+                clients.Add(client);
+        }
+
+        return clients;
     }
 
     private async Task GetClientInfo(ClientModel? client)
