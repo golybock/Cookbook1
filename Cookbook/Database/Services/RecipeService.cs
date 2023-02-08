@@ -38,13 +38,14 @@ public class RecipeService : IRecipeService
     public async Task<RecipeModel> GetRecipeAsync(int id)
     {
         var recipe = await _recipeService.GetRecipeAsync(id);
+        
         var recipeStat = _recipeStatsService.GetRecipeStatsAsync(id);
         var recipeCategories = _recipeCategoryService.GetRecipeCategoriesAsync(id);
         var recipeReviews = _reviewService.GetReviewsAsync(id);
         var recipeIngredients = _recipeIngredientService.GetRecipeIngredientByRecipeAsync(id);
         var recipeRating = _reviewService.GetAvgRatingByRecipe(id);
-        var category = GetRecipeMainCategoryAsync(recipe.Id);
-
+        var category = GetRecipeMainCategoryAsync(id);
+        
         recipe.RecipeStat = await recipeStat;
         recipe.RecipeCategories = await recipeCategories;
         recipe.Reviews = await recipeReviews;
@@ -81,7 +82,18 @@ public class RecipeService : IRecipeService
 
     public async Task<List<RecipeModel>> GetClientRecipes(int clientId)
     {
-        return await _recipeService.GetClientRecipesAsync(clientId);
+        var recipes = await _recipeService.GetClientRecipesAsync(clientId);
+
+        foreach (var recipe in recipes)
+        {
+            recipe.Rating =
+                await _reviewService.GetAvgRatingByRecipe(recipe.Id);
+
+            recipe.Category =
+                await GetRecipeMainCategoryAsync(recipe.Id);
+        }
+
+        return recipes;
     }
     
     public async Task<List<RecipeModel>> GetClientFavRecipes(int clientId)
@@ -92,7 +104,7 @@ public class RecipeService : IRecipeService
         
         foreach (var favRecipe in favRecipes)
         {
-            var recipe = await _recipeService.GetRecipeAsync(favRecipe.RecipeId);
+            var recipe = await GetRecipeAsync(favRecipe.RecipeId);
             recipes.Add(recipe);
         }
 

@@ -12,12 +12,15 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
 {
     public async Task<RecipeCategory> GetRecipeCategoryAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        
+        con.Open();
+        
         try
         {
             RecipeCategory recipeCategory = new RecipeCategory();
             string query = $"select * from recipe_categories where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -39,18 +42,19 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<RecipeCategory>> GetRecipeCategoriesAsync(int recipeId)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         try
         {
             List<RecipeCategory> recipeCategories = new List<RecipeCategory>();
             string query = $"select * from recipe_categories where recipe_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = recipeId } }
             };
@@ -73,18 +77,21 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<RecipeCategory?> GetRecipeMainCategoryAsync(int recipeId)
     {
-        connection.Open();
+        var con = GetConnection();
+        
+        con.Open();
+
         try
         {
             RecipeCategory recipeCategory = new RecipeCategory();
             string query = $"select * from recipe_categories where recipe_id = $1 limit 1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = recipeId } }
             };
@@ -105,18 +112,19 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"insert into recipe_categories(recipe_id, category_id) values ($1, $2) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -136,18 +144,19 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateRecipeCategoryAsync(RecipeCategory recipeCategory)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"update recipe_categories set recipe_id = $2, category_id = $3 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -168,7 +177,7 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

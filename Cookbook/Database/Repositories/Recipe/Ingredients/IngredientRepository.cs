@@ -13,12 +13,13 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
 {
     public async Task<Ingredient> GetIngredientAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        
         try
         {
             Ingredient ingredient = new Ingredient();
             string query = $"select * from ingredient where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -41,18 +42,19 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<Ingredient>> GetIngredientsAsync()
     {
-        connection.Open();
+        var con = GetConnection();
+        
         try
         {
             List<Ingredient> ingredients = new List<Ingredient>();
             string query = $"select * from ingredient";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection);
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             while(await reader.ReadAsync())
             {
@@ -73,19 +75,21 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddIngredientAsync(Ingredient ingredient)
     {
+        var con = GetConnection();
+        
         CommandResult result;
-        connection.Open();
+        
         try
         {
             string query = $"insert into ingredient(measure_id, name, image_path)" +
                            $" values ($1, $2, $3) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -106,18 +110,20 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateIngredientAsync(Ingredient ingredient)
     {
+        var con = GetConnection();
+        
         CommandResult result;
-        connection.Open();
+        
         try
         {
             string query = $"update ingredient set measure_id = $2, name = $3, image_path = $4 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -138,7 +144,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

@@ -12,12 +12,14 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
 {
     public async Task<ReviewImage> GetReviewImageAsync(int id)
     {
-        connection.Open();
+                var con = GetConnection();
+        
+        con.Open();
         try
         {
             ReviewImage reviewImage = new ReviewImage();
             string query = $"select * from review_images where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -38,18 +40,20 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<ReviewImage>> GetReviewImagesAsync(int reviewId)
     {
-        connection.Open();
+                var con = GetConnection();
+        
+        con.Open();
         try
         {
             List<ReviewImage> reviewImages = new List<ReviewImage>();
             string query = $"select * from review_images where review_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = reviewId} }
             };
@@ -72,18 +76,20 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddReviewImageAsync(ReviewImage reviewImage)
     {
         CommandResult result;
-        connection.Open();
+                var con = GetConnection();
+        
+        con.Open();
         try
         {
             string query = $"insert into review_images(review_id, image_path) values ($1, $2) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -103,18 +109,20 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateReviewImageAsync(ReviewImage reviewImage)
     {
         CommandResult result;
-        connection.Open();
+                var con = GetConnection();
+        
+        con.Open();
         try
         {
             string query = $"update review_images set image_path = $2 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -133,7 +141,7 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

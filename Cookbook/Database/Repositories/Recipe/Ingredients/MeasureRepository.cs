@@ -12,12 +12,15 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
 {
     public async Task<Measure> GetMeasureAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        
+        con.Open();
+        
         try
         {
             Measure measure = new Measure();
             string query = $"select * from measure where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -37,18 +40,19 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<Measure>> GetMeasuresAsync()
     {
-        connection.Open();
+        var con = GetConnection();
+        
         try
         {
             List<Measure> measures = new List<Measure>();
             string query = $"select * from measure";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection);
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             while(await reader.ReadAsync())
             {
@@ -66,18 +70,20 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddMeasureAsync(Measure measure)
     {
+        var con = GetConnection();
+        
         CommandResult result;
-        connection.Open();
+        
         try
         {
             string query = $"insert into measure(name) values ($1) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -97,18 +103,20 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateMeasureAsync(Measure measure)
     {
         CommandResult result;
-        connection.Open();
+
+        var con = GetConnection();
+        
         try
         {
             string query = $"update measure set name = $2 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -127,7 +135,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

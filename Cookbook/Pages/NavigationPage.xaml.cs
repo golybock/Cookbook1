@@ -72,11 +72,11 @@ public partial class NavigationPage : Page
         if (pageName == "ProfilePage")
             return new ProfilePage(_client);
         if (pageName == "SubsPage")
-            return new SubsPage();
+            return new SubsPage(_client);
         if (pageName == "AddPostPage")
             return new AddEditRecipePage();
         if (pageName == "FavoritePostsPage")
-            return new FavoritePostsPage();
+            return new FavoritePostsPage(_client);
         
         return new SettingsPage();
     }

@@ -13,12 +13,13 @@ public class ClientRepository : MainDbClass, IClientRepository
 {
     public async Task<ClientModel> GetClientAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         try
         {
             ClientModel client = new ClientModel();
             string query = $"select * from client where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -44,18 +45,19 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<ClientModel> GetClientAsync(string login)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         try
         {
             ClientModel client = new ClientModel();
             string query = $"select * from client where login = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = login} }
             };
@@ -81,18 +83,19 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<ClientModel>> GetClientsAsync()
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         try
         {
             List<ClientModel> clients = new List<ClientModel>();
             string query = $"select * from client";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection);
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -119,19 +122,20 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddClientAsync(ClientModel client)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"insert into client(login, password, name, description)" +
                            $" values ($1, $2, $3, $4) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -153,18 +157,19 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateClientAsync(ClientModel client)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"update client set login = $2, password = $3, name = $4, description = $5 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -186,18 +191,19 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> DeleteClientAsync(int id)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"delete from client where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -215,7 +221,7 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 }

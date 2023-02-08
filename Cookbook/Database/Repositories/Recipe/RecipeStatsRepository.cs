@@ -14,12 +14,13 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
 {
     public async Task<RecipeStats> GetRecipeStatsAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        
         try
         {
             RecipeStats recipeStats = new RecipeStats();
             string query = $"select * from recipe_stats where recipe_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -42,18 +43,19 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddRecipeStatsAsync(RecipeStats recipeStats)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"insert into recipe_stats(recipe_id, squirrels, fats, carbohydrates, kilocalories) values ($1, $2, $3, $4, $5) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -76,18 +78,19 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateRecipeStatsAsync(RecipeStats recipeStats)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"update recipe_stats set squirrels = $2, fats = $3, carbohydrates = $4, kilocalories = $5 where recipe_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -110,7 +113,7 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

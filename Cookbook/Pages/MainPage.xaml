@@ -9,5 +9,7 @@
       xmlns:adaptiveWrap="clr-namespace:Cookbook.AdaptiveWrap"
       mc:Ignorable="d"
       Title="Рецепты">
-   <mv:RecipesListView/>
+    
+    <mv:RecipesListView/>
+    
 </Page>

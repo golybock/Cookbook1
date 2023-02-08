@@ -11,18 +11,17 @@ namespace Cookbook.Database.Repositories;
 public class MainDbClass
 {
     private string? _connectionString;
-    public NpgsqlConnection connection;
-    
+
     public MainDbClass()
     {
         GetConnectionString();
-        
-        if (_connectionString != null)
-            connection = new NpgsqlConnection(_connectionString);
-        else
-            throw new Exception("Error connection");
 
         TrustConnection();
+    }
+
+    public NpgsqlConnection GetConnection()
+    {
+        return new NpgsqlConnection(_connectionString);
     }
 
     private void GetConnectionString()
@@ -37,8 +36,11 @@ public class MainDbClass
 
     private bool TrustConnection()
     {
+        var connection = new NpgsqlConnection(_connectionString);
+        
         try
         {
+
             connection.Open();
             return true;
         }
@@ -56,6 +58,9 @@ public class MainDbClass
     public async Task<CommandResult> DeleteAsync(string table, int id)
     {
         CommandResult result;
+        
+        var connection = new NpgsqlConnection(_connectionString);
+        
         connection.Open();
         try
         {

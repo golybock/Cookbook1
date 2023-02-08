@@ -13,12 +13,13 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
 {
     public async Task<RecipeModel> GetRecipeAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         try
         {
             RecipeModel recipe = new RecipeModel();
             string query = $"select * from recipe where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -46,18 +47,19 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<RecipeModel>> GetRecipesAsync()
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         List<RecipeModel> recipes = new List<RecipeModel>();
         try
         {
             string query = $"select * from recipe";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection);
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             while(await reader.ReadAsync())
             {
@@ -84,18 +86,19 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<RecipeModel>> GetClientRecipesAsync(int clientId)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         List<RecipeModel> recipes = new List<RecipeModel>();
         try
         {
             string query = $"select * from recipe where client_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = clientId } }
             };
@@ -125,18 +128,19 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"insert into recipe(client_id, recipe_type_id, name, description, path_to_text_file, cooking_time) VALUES ($1, $2, $3, $4, $5, $6) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -163,21 +167,22 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"update recipe set recipe_type_id = $2, name = $3," +
                            $" description = $4, path_to_text_file = $5," +
                            $" portion_count = $6, cooking_time = $7" +
                            $" where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -202,7 +207,7 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

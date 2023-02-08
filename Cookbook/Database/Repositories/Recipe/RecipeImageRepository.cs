@@ -12,12 +12,13 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
 {
     public async Task<RecipeImage> GetRecipeImageAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         try
         {
             RecipeImage recipeImage = new RecipeImage();
             string query = $"select * from recipe_images where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -39,18 +40,19 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<RecipeImage> GetRecipeImageByRecipeAsync(int recipeId)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         try
         {
             RecipeImage recipeImage = new RecipeImage();
             string query = $"select * from recipe_images where recipe_id = $1 limit 1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = recipeId} }
             };
@@ -72,18 +74,19 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<RecipeImage>> GetRecipeImagesAsync(int recipeId)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         List<RecipeImage> recipeImages = new List<RecipeImage>();
         try
         {
             string query = $"select * from recipe_images where recipe_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = recipeId} }
             };
@@ -107,18 +110,19 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddRecipeImageAsync(RecipeImage recipeImage)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"insert into recipe_images(recipe_id, image_path, image_number) values ($1, $2, $3) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -139,18 +143,19 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateRecipeImageAsync(RecipeImage recipeImage)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"update recipe_images set image_path = $2, image_number = $3 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -171,7 +176,7 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

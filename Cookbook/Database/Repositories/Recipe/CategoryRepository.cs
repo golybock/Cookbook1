@@ -13,12 +13,15 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
 {
     public async Task<Category> GetCategoryAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        
+        con.Open();
+
         try
         {
             Category category = new Category();
             string query = $"select * from category where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -38,18 +41,21 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<Category>> GetCategoriesAsync()
     {
-        connection.Open();
+        var con = GetConnection();
+        
+        con.Open();
+        
         List<Category> categories = new List<Category>();
         try
         {
             string query = $"select * from category";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection);
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -67,18 +73,20 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddCategoryAsync(Category category)
     {
         CommandResult result;
-        connection.Open();
+        var con = GetConnection();
+        
+        con.Open();
         try
         {
             string query = $"insert into category(name) values ($1) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -97,18 +105,20 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateCategoryAsync(Category category)
     {
         CommandResult result;
-        connection.Open();
+        var con = GetConnection();
+        
+        con.Open();
         try
         {
             string query = $"update category set name = $2 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -128,7 +138,7 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

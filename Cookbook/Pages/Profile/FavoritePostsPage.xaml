@@ -4,11 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cookbook.Pages.Profile"
+      xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
+      xmlns:mv="clr-namespace:Cookbook.Views"
       mc:Ignorable="d"
-      Title="FavoritePostsPage" Height="450" Width="800">
-    <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="FavoritesPage"></TextBlock>
-        </StackPanel>
-    </Grid>
+      Title="Понравившиеся посты">
+    
+    <StackPanel>
+        <recipe:RecipesListView x:Name="RecipesListView" Visibility="Visible"/>
+        <mv:NothingShowView x:Name="NothingShowView" Visibility="Collapsed"/>
+    </StackPanel>
+
 </Page>

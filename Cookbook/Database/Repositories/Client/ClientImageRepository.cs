@@ -12,12 +12,13 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
 {
     public async Task<ClientImage?> GetClientImageAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         ClientImage clientImage = new ClientImage();
         try
         {
             string query = $"select * from client_images where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -39,18 +40,19 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<ClientImage?> GetClientImageByClientIdAsync(int clientId)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         ClientImage clientImage = new ClientImage();
         try
         {
             string query = $"select * from client_images where client_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = clientId} }
             };
@@ -72,18 +74,19 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<ClientImage?>> GetClientImagesAsync(int clientId)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         List<ClientImage> clientImages = new List<ClientImage>();
         try
         {
             string query = $"select * from client_images where client_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = clientId } }
             };
@@ -107,19 +110,20 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddClientImageAsync(ClientImage clientImage)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"insert into client_images(client_id, image_path)" +
                            $" values ($1, $2) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -139,18 +143,19 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateClientImageAsync(ClientImage clientImage)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"update client_images set image_path = $2 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -169,7 +174,7 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

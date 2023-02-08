@@ -16,38 +16,38 @@ public class ReviewService : IReviewService
         _reviewRepository = new ReviewRepository();
     }
     
-    public async Task<ReviewModel> GetReviewAsync(int id)
+    public Task<ReviewModel> GetReviewAsync(int id)
     {
-        return await _reviewRepository.GetReviewAsync(id);
+        return _reviewRepository.GetReviewAsync(id);
     }
 
-    public async Task<decimal> GetAvgRatingByRecipe(int recipeId)
+    public Task<decimal> GetAvgRatingByRecipe(int recipeId)
     {
-        return await _reviewRepository.GetAvgRatingByRecipe(recipeId);
+        return _reviewRepository.GetAvgRatingByRecipe(recipeId);
     }
 
-    public async Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
+    public Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
     {
-        return await _reviewRepository.GetReviewsAsync(recipeId);
+        return _reviewRepository.GetReviewsAsync(recipeId);
     }
 
-    public async Task<List<ReviewModel>> GetClientReviewAsync(int clientId)
+    public Task<List<ReviewModel>> GetClientReviewAsync(int clientId)
     {
-        return await _reviewRepository.GetClientReviewAsync(clientId);
+        return _reviewRepository.GetClientReviewAsync(clientId);
     }
 
-    public async Task<CommandResult> AddReviewAsync(ReviewModel review)
+    public Task<CommandResult> AddReviewAsync(ReviewModel review)
     {
-        return await _reviewRepository.AddReviewAsync(review);
+        return _reviewRepository.AddReviewAsync(review);
     }
 
-    public async Task<CommandResult> UpdateReviewAsync(ReviewModel review)
+    public Task<CommandResult> UpdateReviewAsync(ReviewModel review)
     {
-        return await _reviewRepository.UpdateReviewAsync(review);
+        return _reviewRepository.UpdateReviewAsync(review);
     }
 
-    public async Task<CommandResult> DeleteReviewAsync(int id)
+    public Task<CommandResult> DeleteReviewAsync(int id)
     {
-        return await _reviewRepository.DeleteReviewAsync(id);
+        return _reviewRepository.DeleteReviewAsync(id);
     }
 }

@@ -19,8 +19,8 @@
         
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
         
-            <TextBox Name="LoginTextBox" Width="160" Margin="5" TextChanged="Input"/>
-            <PasswordBox Name="PasswordBox" Width="160" Margin="5" PasswordChanged="Input"/>
+            <TextBox Name="LoginTextBox" Width="160" Margin="5" TextChanged="Input" Text="admin"/>
+            <PasswordBox Name="PasswordBox" Width="160" Margin="5" PasswordChanged="Input" Password="admin"/>
             <TextBlock Name="ErrorTextBlock" Visibility="Collapsed" Foreground="Red" HorizontalAlignment="Center"/>
         
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

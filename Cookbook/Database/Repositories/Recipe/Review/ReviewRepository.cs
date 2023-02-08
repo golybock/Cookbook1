@@ -12,12 +12,14 @@ public class ReviewRepository : MainDbClass, IReviewRepository
 {
     public async Task<ReviewModel> GetReviewAsync(int id)
     {
-        connection.Open();
+                var con = GetConnection();
+        
+        con.Open();
         try
         {
             ReviewModel review = new ReviewModel();
             string query = $"select * from review where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -43,18 +45,22 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<decimal> GetAvgRatingByRecipe(int recipeId)
     {
-        connection.Open();
+        var con = GetConnection();
+        
+        con.Open();
+        
         decimal avg = 0;
+        
         try
         {
             string query = $"select avg(grade) from review where recipe_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = recipeId} }
             };
@@ -73,18 +79,20 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
     {
-        connection.Open();
+                var con = GetConnection();
+        
+        con.Open();
         try
         {
             List<ReviewModel> reviews = new List<ReviewModel>();
             string query = $"select * from review where recipe_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = recipeId} }
             };
@@ -112,18 +120,20 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<ReviewModel>> GetClientReviewAsync(int clientId)
     {
-        connection.Open();
+                var con = GetConnection();
+        
+        con.Open();
         try
         {
             List<ReviewModel> reviews = new List<ReviewModel>();
             string query = $"select * from review where client_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = clientId} }
             };
@@ -151,18 +161,20 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddReviewAsync(ReviewModel review)
     {
         CommandResult result;
-        connection.Open();
+                var con = GetConnection();
+        
+        con.Open();
         try
         {
             string query = $"insert into review(recipe_id, client_id, grade, description, is_anonymous) values ($1, $2, $3, $4, $5) returning id";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -185,18 +197,20 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> UpdateReviewAsync(ReviewModel review)
     {
         CommandResult result;
-        connection.Open();
+                var con = GetConnection();
+        
+        con.Open();
         try
         {
             string query = $"update review set grade = $2, description = $3, is_anonymous = $4 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -217,7 +231,7 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 

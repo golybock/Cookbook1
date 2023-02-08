@@ -634,3 +634,5 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.genruntimeconfi
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\ref\Cookbook.dll
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipesListView.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipesListView.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\NothingShowView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\NothingShowView.baml

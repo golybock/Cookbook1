@@ -12,12 +12,13 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
 {
     public async Task<RecipeIngredient> GetRecipeIngredientAsync(int id)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         try
         {
             RecipeIngredient recipeIngredient = new RecipeIngredient();
             string query = $"select * from recipe_ingredients where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
@@ -40,18 +41,19 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<RecipeIngredient>> GetRecipeIngredientByRecipeAsync(int recipeId)
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         List<RecipeIngredient> recipeIngredients = new List<RecipeIngredient>();
         try
         {
             string query = $"select * from recipe_ingredients where recipe_id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = recipeId} }
             };
@@ -75,18 +77,19 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<List<RecipeIngredient>> GetRecipeIngredientsAsync()
     {
-        connection.Open();
+        var con = GetConnection();
+        con.Open();
         List<RecipeIngredient> recipeIngredients = new List<RecipeIngredient>();
         try
         {
             string query = $"select * from recipe_ingredients";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection);
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -107,50 +110,52 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
     public async Task<CommandResult> AddRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
+        var con = GetConnection();
         CommandResult result;
-                connection.Open();
-                try
+        con.Open();
+        try
+        {
+            string query = $"insert into recipe_ingredients(recipe_id, ingredient_id, count) values ($1, $2, $3) returning id";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
                 {
-                    string query = $"insert into recipe_ingredients(recipe_id, ingredient_id, count) values ($1, $2, $3) returning id";
-                    await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
-                    {
-                        Parameters =
-                        {
-                            new() { Value = recipeIngredient.RecipeId },
-                            new() { Value = recipeIngredient.IngredientId },
-                            new() { Value = recipeIngredient.Count }
-                        }
-                    }; 
-                    result = CommandResults.Successfully;
-                    result.ValueId = await cmd.ExecuteNonQueryAsync();
-                    return result;
+                    new() { Value = recipeIngredient.RecipeId },
+                    new() { Value = recipeIngredient.IngredientId },
+                    new() { Value = recipeIngredient.Count }
                 }
-                catch(Exception e)
-                {
-                    result = CommandResults.BadRequest;
-                    result.Description = e.ToString();
-                    return result;
-                }
-                finally
-                {
-                    await connection.CloseAsync();
-                }
+            }; 
+            result = CommandResults.Successfully;
+            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            return result;
+        }
+        catch(Exception e)
+        {
+            result = CommandResults.BadRequest;
+            result.Description = e.ToString();
+            return result;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
     }
 
     public async Task<CommandResult> UpdateRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
+        var con = GetConnection();
         CommandResult result;
-        connection.Open();
+        con.Open();
         try
         {
             string query = $"update recipe_ingredients set count = $2 where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
@@ -170,7 +175,7 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
         }
         finally
         {
-            await connection.CloseAsync();
+            await con.CloseAsync();
         }
     }
 
