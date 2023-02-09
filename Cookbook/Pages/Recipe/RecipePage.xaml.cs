@@ -5,12 +5,9 @@ namespace Cookbook.Pages.Recipe;
 
 public partial class RecipePage : Page
 {
-    private readonly RecipeModel _recipe;
-    
     public RecipePage(RecipeModel recipe)
     {
-        _recipe = recipe;
+        DataContext = recipe;
         InitializeComponent();
-        DataContext = _recipe;
     }
 }

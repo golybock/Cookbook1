@@ -647,3 +647,7 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Re
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipesListView.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientMainView.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientMainView.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientMainView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMainView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientMainView.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMainView.baml

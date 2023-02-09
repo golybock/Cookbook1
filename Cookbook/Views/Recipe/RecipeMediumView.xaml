@@ -82,7 +82,7 @@
                         Height="40"
                         Margin="10">
                         <Image Margin="10"
-                               Source="../../Resources/heart256.png"/>
+                               Source="../../Resources/MenuIcons/heart256.png"/>
                 </Border>
 
             </Grid>

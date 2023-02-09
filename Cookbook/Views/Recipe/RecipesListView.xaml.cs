@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Cookbook.Database.Services.Recipe;
 using ModernWpf.Controls;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
@@ -10,58 +12,57 @@ namespace Cookbook.Views.Recipe;
 
 public partial class RecipesListView : UserControl
 {
-    private readonly RecipeService _recipeService;
+    public delegate void DeleteClick();
+    public delegate void EditClick();
+    public delegate void OpenClick();
+    public delegate void LikeClick();
+    public event DeleteClick? DeleteClicked;
+    public event EditClick? EditClicked;
+    public event OpenClick? OpenClicked;
+    public event LikeClick? LikeClicked;
 
     public RecipesListView()
     {
-        _recipeService = new RecipeService();
         InitializeComponent();
     }
     
-    private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
+    protected virtual void OnEditClicked()
     {
-        var selectedItem = RecipesListBox.SelectedItem;
-        
-        if (selectedItem != null)
-        {
-            ShowAcceptDialog();
-        }
+        EditClicked?.Invoke();
     }
 
-    private async void ShowAcceptDialog()
+    protected virtual void OnDeleteClicked()
     {
-        ContentDialog acceptDialog = new ContentDialog()
-        {
-            Title = "Удаление элемента",
-            Content = "Вы уверены, что хотите удалить этот рецепт?",
-            CloseButtonText = "Отмена",
-            PrimaryButtonText = "Удалить",
-            DefaultButton = ContentDialogButton.Primary
-        };
-
-        if (await acceptDialog.ShowAsync() == ContentDialogResult.Primary)
-        {
-            DeleteRecipe();
-        }
+        DeleteClicked?.Invoke();
     }
 
-    private void DeleteRecipe()
+    protected virtual void OnOpenClicked()
     {
-        var selectedItem = RecipesListBox.SelectedItem;
-
-        var itemsSource = ItemsControl.ItemsControlFromItemContainer(RecipesListBox).ItemsSource;
-
-        if (selectedItem is RecipeModel recipe)
-            _recipeService.DeleteRecipeAsync(recipe.Id);
+        OpenClicked?.Invoke();
     }
-    
-    private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
+
+    protected virtual void OnLikeClicked()
     {
-        
+        LikeClicked?.Invoke();
     }
 
     private void RecipeMediumView_OnLikeClicked()
     {
-        MessageBox.Show("Aboba");
+        OnLikeClicked();
+    }
+
+    private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
+    {
+        OnDeleteClicked();
+    }
+
+    private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
+    {
+        OnEditClicked();
+    }
+
+    private void RecipeMediumView_OnClicked(object sender, MouseButtonEventArgs e)
+    {
+        OnOpenClicked();
     }
 }

@@ -36,7 +36,7 @@ public partial class NavigationPage : Page
         if (NavigationService != null) 
             NavigationService.RemoveBackEntry();
         
-        MainFrame.NavigationService.Navigate(new MainPage());
+        MainFrame.NavigationService.Navigate(new MainPage(_client));
     }
 
     private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -68,7 +68,7 @@ public partial class NavigationPage : Page
     private Page? GetPage(string pageName)
     {
         if (pageName == "MainPage")
-            return new MainPage();
+            return new MainPage(_client);
         if (pageName == "ProfilePage")
             return new ProfilePage(_client);
         if (pageName == "SubsPage")

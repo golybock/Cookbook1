@@ -41,13 +41,13 @@
       <None Remove="Resources\MenuIcons\EditIcon.png" />
       <Resource Include="Resources\MenuIcons\EditIcon.png" />
       <None Remove="Resources\not_found_image.png" />
+      <Resource Include="Resources\MenuIcons\heart256.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
       <Resource Include="Resources\not_found_image.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
       <None Remove="Resources\heart256.png" />
-      <Resource Include="Resources\heart256.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
       <None Remove="Resources\sirniki.png" />
       <Resource Include="Resources\sirniki.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>

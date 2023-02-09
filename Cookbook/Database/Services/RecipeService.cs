@@ -7,6 +7,7 @@ using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe;
 using Cookbook.Database.Services.Recipe.Review;
 using Cookbook.Models.Database;
+using Cookbook.Models.Database.Client;
 using Cookbook.Models.Database.Recipe;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
@@ -287,5 +288,10 @@ public class RecipeService : IRecipeService
         {
             await _reviewService.DeleteReviewAsync(review.Id);
         }
+    }
+
+    public async Task<CommandResult> AddRecipeToFav(FavoriteRecipe favoriteRecipe)
+    {
+        return await _clientFavService.AddFavoriteRecipeAsync(favoriteRecipe);
     }
 }

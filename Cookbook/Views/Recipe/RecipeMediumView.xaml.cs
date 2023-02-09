@@ -18,7 +18,7 @@ public partial class RecipeMediumView : UserControl
     }
 
     public delegate void LikeClickedEvent();
-    public event LikeClickedEvent LikeClicked;
+    public event LikeClickedEvent? LikeClicked;
     
     protected virtual void OnLikeClicked(object sender, EventArgs e)
     {
