@@ -49,7 +49,7 @@
                             </Border.ContextMenu>
                             
                             <Border.Child>
-                                <local:RecipeMediumView Height="400"/>
+                                <local:RecipeMediumView Height="400" LikeClicked="RecipeMediumView_OnLikeClicked"/>
                             </Border.Child>
                             
                         </Border>

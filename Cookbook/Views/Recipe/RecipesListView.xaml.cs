@@ -59,4 +59,9 @@ public partial class RecipesListView : UserControl
     {
         
     }
+
+    private void RecipeMediumView_OnLikeClicked()
+    {
+        MessageBox.Show("Aboba");
+    }
 }

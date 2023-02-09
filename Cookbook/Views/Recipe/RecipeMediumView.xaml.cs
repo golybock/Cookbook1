@@ -14,31 +14,14 @@ public partial class RecipeMediumView : UserControl
     public RecipeMediumView()
     {
         InitializeComponent();
-        var recipe = DataContext as RecipeModel;
+        LikeButton.MouseDown += OnLikeClicked;
     }
 
-    public RecipeMediumView(RecipeModel recipe)
-    {
-        DataContext = recipe;
-    }
-    
     public delegate void LikeClickedEvent();
     public event LikeClickedEvent LikeClicked;
     
-
-    // private void LikeButton_OnMouseDown(object sender, MouseButtonEventArgs e)
-    // {
-    //     if (_recipe != null)
-    //         if (_recipe.IsLiked == false)
-    //         {
-    //             _recipe.IsLiked = true;
-    //             LikeButton.Background = Brushes.PaleVioletRed;
-    //         }
-    //         else
-    //         {
-    //             _recipe.IsLiked = false;
-    //             LikeButton.Background = Brushes.White;
-    //         }
-    //             
-    // }
+    protected virtual void OnLikeClicked(object sender, EventArgs e)
+    {
+        LikeClicked?.Invoke();
+    }
 }
