@@ -8,7 +8,7 @@ public partial class Client
         get => String.IsNullOrEmpty(_imagePath) ? "../../Resources/sirniki.png" : _imagePath;
         set => _imagePath = value;
     }
-    
-    public int Rating { get; set; }
     public int PostCount { get; set; }
+    public event EventHandler Delete;
+    public event EventHandler Edit;
 }

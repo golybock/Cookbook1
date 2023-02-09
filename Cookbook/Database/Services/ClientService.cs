@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Automation.Provider;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe.Review;
@@ -128,16 +127,24 @@ public class ClientService : IClientService
     {
         if (client != null)
         {
-            
-            client.Recipes = await _recipeService.GetClientRecipes(client.Id);
-            client.Reviews = await _reviewService.GetClientReviewAsync(client.Id);
-            client.ClientImages = await _clientImageService.GetClientImagesAsync(client.Id);
-            client.FavoriteRecipes = await _clientFavService.GetFavoriteRecipesAsync(client.Id);
-            client.ClientSubOnClients = await _clientSubService.GetClientSubsAsync(client.Id);
-            client.ClientSubs = await _clientSubService.GetSubsClientAsync(client.Id);
+            var recipes = _recipeService.GetClientRecipes(client.Id);
+            var imagePath =  _clientImageService.GetClientImageByClientIdAsync(client.Id);
+            var reviews = _reviewService.GetClientReviewAsync(client.Id);
+            var clientImages = _clientImageService.GetClientImagesAsync(client.Id);
+            var favRecipes = _clientFavService.GetFavoriteRecipesAsync(client.Id);
+            var clientSubOn = _clientSubService.GetClientSubsAsync(client.Id);
+            var clientSubs = _clientSubService.GetSubsClientAsync(client.Id);
+            var image = await imagePath;
 
-            var imagePath = await _clientImageService.GetClientImageAsync(client.Id);
-            client.ImagePath = imagePath?.ImagePath;
+            client.Recipes = await recipes;
+            client.Reviews = await reviews;
+            client.ClientImages = await clientImages;
+            client.FavoriteRecipes = await favRecipes;
+            client.ClientSubOnClients = await clientSubOn;
+            client.ClientSubs = await clientSubs;
+            
+            client.ImagePath = image?.ImagePath;
+            
         }
     }
     

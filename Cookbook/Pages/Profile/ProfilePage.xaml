@@ -1,35 +1,51 @@
 ﻿<Page x:Class="Cookbook.Pages.Profile.ProfilePage"
+      x:Name="Page"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:local="clr-namespace:Cookbook.Pages.Profile"
+      xmlns:client="clr-namespace:Cookbook.Views.Client"
+      xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
       Title="Профиль">
     <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
         <Grid>
             
-            <StackPanel Orientation="Vertical">
+            <ui:SimpleStackPanel>
                 
-                <!-- основное фото и основная информация профиля -->
-                <Border Margin="5" Name="ProfileBorder" BorderThickness="1" BorderBrush="White" CornerRadius="10" Height="330">
-                    <WrapPanel Margin="5" ItemWidth="160" ItemHeight="160" MaxHeight="330" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <client:ClientMainView Height="400"/>
+            
+                <Grid Margin="12">
+                    
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Grid.Column="0" 
+                           Content="Рецепты"
+                           FontSize="20"
+                           DockPanel.Dock="Left"
+                           HorizontalAlignment="Left"/>
+                    
+                    <Label Grid.Column="1" 
+                           Content="все рецепты >"
+                           FontSize="18"
+                           DockPanel.Dock="Right"
+                           HorizontalAlignment="Right"/>
+                    
+                </Grid>
                 
-                        <ui:PersonPicture ProfilePicture="{Binding ImagePath}"></ui:PersonPicture>
 
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="{Binding Name, TargetNullValue=Guest}"></TextBlock>
-                        </StackPanel>
                 
-                    </WrapPanel>
-                </Border>
+                <recipe:RecipesListView Height="420"/>
                 
-                <Border Margin="5" Name="ContentBorder" BorderThickness="1" BorderBrush="White" CornerRadius="10">
-                    <Frame Name="ContentFrame" NavigationUIVisibility="Hidden"/>
-                </Border>
-                
-            </StackPanel>
+            </ui:SimpleStackPanel>
+            
+
             
         </Grid>
     </ScrollViewer>

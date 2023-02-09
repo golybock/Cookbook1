@@ -28,30 +28,28 @@ public partial class MainPage : Page
     private async void GetRecipes()
     {
         Recipes = await _recipeService.GetRecipesAsync();
+
+        foreach (var recipe in Recipes)
+        {
+            recipe.Like += Like_OnClick;
+        }
         
         DataContext = this;
     }
     
-    private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
+    private void Like_OnClick(object s, EventArgs e)
     {
-        throw new System.NotImplementedException();
+        MessageBox.Show("aboba");
     }
     
-    public class DeleteOnClick : ICommand
+    private void EditMenuItem_OnClick()
     {
-        public bool CanExecute(object? parameter)
-        {
-            MessageBox.Show("Aboba");
-            return true;
-        }
-
-        public void Execute(object? parameter)
-        {
-            MessageBox.Show("Aboba");
-            return;
-        }
-
-        public event EventHandler? CanExecuteChanged;
+        MessageBox.Show("aboba");
+    }
+    
+    private void DeleteMenuItem_OnClick()
+    {
+        MessageBox.Show("aboba");
     }
     
 }

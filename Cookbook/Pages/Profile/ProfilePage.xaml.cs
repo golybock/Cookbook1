@@ -8,7 +8,7 @@ namespace Cookbook.Pages.Profile;
 public partial class ProfilePage : Page
 {
     private Client _client;
-    
+
     public ProfilePage()
     {
         _client = new Client();

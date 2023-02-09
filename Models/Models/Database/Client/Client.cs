@@ -17,7 +17,7 @@ public partial class Client
 
     public DateTime DateOfRegistration { get; set; }
     
-    public List<ClientImage> ClientImages { get; set; } = new List<ClientImage>();
+    public List<ClientImage?> ClientImages { get; set; } = new List<ClientImage>();
 
     public List<ClientSub> ClientSubOnClients { get; set; } = new List<ClientSub>();
 

@@ -12,4 +12,7 @@ public partial class Recipe
     public string? Category { get; set; }
     public bool? IsLiked { get; set; } = false;
     public decimal? Rating { get; set; }
+    public event EventHandler Delete;
+    public event EventHandler Edit;
+    public event EventHandler Like;
 }
