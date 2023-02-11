@@ -79,7 +79,7 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         }
     }
 
-    public async Task<List<ClientImage?>> GetClientImagesAsync(int clientId)
+    public async Task<List<ClientImage>> GetClientImagesAsync(int clientId)
     {
         var con = GetConnection();
         con.Open();
@@ -107,7 +107,7 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         }
         catch
         {
-            return null;
+            return new List<ClientImage>();
         }
         finally
         {
@@ -132,8 +132,15 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
                     new() { Value = clientImage.ImagePath },
                 }
             }; 
+            
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+            
             return result;
         }
         catch(Exception e)
@@ -164,7 +171,12 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
                     new() { Value = clientImage.ImagePath },
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled; 
+            
             return result;
         }
         catch(Exception e)
@@ -179,8 +191,8 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         }
     }
 
-    public async Task<CommandResult> DeleteClientImageAsync(int id)
+    public Task<CommandResult> DeleteClientImageAsync(int id)
     {
-        return await DeleteAsync("client_images", id);
+        return DeleteAsync("client_images", id);
     }
 }
