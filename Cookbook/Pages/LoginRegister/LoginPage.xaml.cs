@@ -22,7 +22,7 @@ public partial class LoginPage : Page
     
     public LoginPage()
     {
-        _clientService = new ClientService();
+        _clientService = new ClientService(new Client(){Id = 0});
         InitializeComponent();
     }
 
@@ -91,44 +91,35 @@ public partial class LoginPage : Page
         _password = PasswordBox.Password;
     }
     
-    private void SetInvalidModeToTextBox(TextBox textBox)
+    private void SetBorderRed(Border border)
     {
-        textBox.BorderBrush = Brushes.Red;
+        border.BorderBrush = Brushes.Red;
     }
-    
-    private void SetInvalidModeToPasswordBox(PasswordBox passwordBox)
+
+    private void SetBorderTransparent(Border border)
     {
-        passwordBox.BorderBrush = Brushes.Red;
+        border.BorderBrush = Brushes.Transparent;
     }
-    
-    private void RemoveInvalidModeFromTextBox(TextBox textBox)
-    {
-        textBox.BorderBrush = Brushes.Black;
-    }
-    
-    private void RemoveInvalidModeFromPasswordBox(PasswordBox passwordBox)
-    {
-        passwordBox.BorderBrush = Brushes.Black;
-    }
+
 
     private void InvalidLogin(string result)
     {
-        SetInvalidModeToTextBox(LoginTextBox);
+        SetBorderRed(LoginBorder);
         ShowError(result);
     }
 
     private void InvalidPassword(string result)
     {
-        SetInvalidModeToPasswordBox(PasswordBox);
         // очищаем пароль
         PasswordBox.Password = String.Empty;
+        SetBorderRed(PasswordBorder);
         ShowError(result);
     }
 
     private void InvalidData(string result)
     {
-        SetInvalidModeToTextBox(LoginTextBox);
-        SetInvalidModeToPasswordBox(PasswordBox);
+        SetBorderRed(LoginBorder);
+        SetBorderRed(PasswordBorder);
         ShowError(result);
     }
 
@@ -151,8 +142,8 @@ public partial class LoginPage : Page
     private void HideError()
     {
         // убираем выделение
-        RemoveInvalidModeFromPasswordBox(PasswordBox);
-        RemoveInvalidModeFromTextBox(LoginTextBox);
+        SetBorderTransparent(LoginBorder);
+        SetBorderTransparent(PasswordBorder);
         // убираем ошибку
         ErrorTextBlock.Visibility = Visibility.Collapsed;
         ErrorTextBlock.Text = "Место для ошибки";
@@ -160,8 +151,11 @@ public partial class LoginPage : Page
 
     private void Input(object sender, RoutedEventArgs routedEventArgs)
     {
-        if(_hasError)
+        if (_hasError)
+        {
+            _hasError = false;
             HideError();
+        }
     }
 
     private void RegistrationTextBlock_OnMouseDown(object sender, MouseButtonEventArgs e)

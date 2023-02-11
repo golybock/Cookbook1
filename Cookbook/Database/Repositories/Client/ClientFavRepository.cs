@@ -82,6 +82,41 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         }
     }
 
+    public async Task<bool> GetRecipeIsLiked(int recipeId, int clientId)
+    {
+        var con = GetConnection();
+        con.Open();
+        bool result = false;
+        try
+        {
+            string query = $"select * from favorite_recipes where client_id = $1 and recipe_id = $2";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new() { Value = clientId },
+                    new () { Value = recipeId }
+                }
+            };
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result = reader.GetInt32(reader.GetOrdinal("id")) > 0;
+            }
+
+            return result;
+        }
+        catch
+        {
+            return false;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+
     public async Task<CommandResult> AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe)
     {
         var con = GetConnection();
@@ -149,6 +184,37 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
     public async Task<CommandResult> DeleteFavoriteRecipeAsync(int id)
     {
         return await DeleteAsync("favorite_recipes", id);
+    }
+
+    public async Task<CommandResult> DeleteFavoriteRecipeAsync(int recipeId, int clientId)
+    {
+        var con = GetConnection();
+        CommandResult result;
+        con.Open();
+        try
+        {
+            string query = $"delete from favorite_recipes where recipe_id = $1 and client_id = $2";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new() { Value = recipeId },
+                    new () { Value = clientId }
+                }
+            };
+            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            return result;
+        }
+        catch(Exception e)
+        {
+            result = CommandResults.BadRequest;
+            result.Description = e.ToString();
+            return result;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
     }
 
     public async Task<CommandResult> DeleteFavoriteRecipeByRecipe(int recipeId)

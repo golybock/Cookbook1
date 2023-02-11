@@ -18,6 +18,7 @@ namespace Cookbook.Database.Services;
 
 public class ClientService : IClientService
 {
+    private readonly ClientModel _client;
     private readonly Client.ClientService _clientService;
     private readonly RecipeService _recipeService;
     private readonly ReviewService _reviewService;
@@ -25,9 +26,10 @@ public class ClientService : IClientService
     private readonly ClientFavService _clientFavService;
     private readonly ClientSubService _clientSubService;
 
-    public ClientService()
+    public ClientService(ClientModel client)
     {
-        _recipeService = new RecipeService();
+        _client = client;
+        _recipeService = new RecipeService(_client);
         _clientImageService = new ClientImageService();
         _reviewService = new ReviewService();
         _clientFavService = new ClientFavService();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,10 +27,10 @@ public partial class MainPage : Page
 
     public MainPage(Client client)
     {
-        _recipeService = new RecipeService();
-
         _client = client;
         
+        _recipeService = new RecipeService(_client);
+
         GetRecipes();
         
         InitializeComponent();
@@ -74,12 +75,26 @@ public partial class MainPage : Page
 
     private void RecipesListView_OnLikeClicked()
     {
-        var selectedItem = GetSelectedObject() as RecipeModel;
+        var selectedItem = (RecipeModel) GetSelectedObject()!;
+        {
+            var recipe = Recipes.FirstOrDefault(c => c.Id == selectedItem.Id);
 
-        if (selectedItem != null)
-            _recipeService.AddRecipeToFav(new FavoriteRecipe() {ClientId = _client.Id, RecipeId = selectedItem.Id});
-        
-        MessageBox.Show("Лайк");
+            if (selectedItem!.IsLiked == true)
+            {
+                MessageBox.Show("не лайк");
+                recipe.IsLiked = false;
+                _recipeService.DeleteFavRecipes(selectedItem.Id, _client.Id);
+            }
+            else
+            {
+                MessageBox.Show("лайк");
+                recipe.IsLiked = true;
+                _recipeService.AddRecipeToFav(new FavoriteRecipe() {ClientId = _client.Id, RecipeId = selectedItem.Id});
+            }
+        }
+
+
+        DataContext = this;
     }
     
     private async void ShowAcceptDialog()

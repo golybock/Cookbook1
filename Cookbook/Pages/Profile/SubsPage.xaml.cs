@@ -15,8 +15,8 @@ public partial class SubsPage : Page
 
     public SubsPage()
     {
-        _clientService = new ClientService();
         _client = new Client();
+        _clientService = new ClientService(_client);
         
         GetClients();
         
@@ -25,9 +25,9 @@ public partial class SubsPage : Page
     
     public SubsPage(Client client)
     {
-        _clientService = new ClientService();
         _client = client;
-        
+        _clientService = new ClientService(_client);
+
         GetClients();
         
         InitializeComponent();

@@ -18,7 +18,7 @@ public partial class FavoritePostsPage : Page
     public FavoritePostsPage()
     {
         _client = new Client();
-        _recipeService = new RecipeService();
+        _recipeService = new RecipeService(_client);
         Recipes = new List<RecipeModel>();
 
         InitializeComponent();
@@ -31,7 +31,7 @@ public partial class FavoritePostsPage : Page
     public FavoritePostsPage(Client client)
     {
         _client = client;
-        _recipeService = new RecipeService();
+        _recipeService = new RecipeService(_client);
         Recipes = new List<RecipeModel>();
 
         GetRecipes();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
@@ -10,11 +11,13 @@ using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Database.Recipe;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
+using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services;
 
 public class RecipeService : IRecipeService
 {
+    private readonly ClientModel _client;
     private readonly Recipe.RecipeService _recipeService;
     private readonly RecipeCategoryService _recipeCategoryService;
     private readonly RecipeImageService _recipeImageService;
@@ -24,8 +27,9 @@ public class RecipeService : IRecipeService
     private readonly ReviewService _reviewService;
     private readonly CategoryService _categoryService;
 
-    public RecipeService()
+    public RecipeService(ClientModel client)
     {
+        _client = client;
         _recipeService = new Recipe.RecipeService();
         _recipeCategoryService = new RecipeCategoryService();
         _recipeImageService = new RecipeImageService();
@@ -47,6 +51,13 @@ public class RecipeService : IRecipeService
         var recipeRating = _reviewService.GetAvgRatingByRecipe(id);
         var category = GetRecipeMainCategoryAsync(id);
         
+        if (_client.Id != 0)
+        {
+            var like = RecipeIsLiked(id);
+            recipe.IsLiked = await like;
+        }
+
+        
         recipe.RecipeStat = await recipeStat;
         recipe.RecipeCategories = await recipeCategories;
         recipe.Reviews = await recipeReviews;
@@ -57,6 +68,11 @@ public class RecipeService : IRecipeService
         return recipe;
     }
 
+    private Task<bool> RecipeIsLiked(int recipeId)
+    {
+        return _clientFavService.GetRecipeIsLiked(recipeId, _client.Id);
+    }
+    
     public async Task<List<RecipeModel>> GetRecipesAsync()
     {
         var recipes = await _recipeService.GetRecipesAsync();
@@ -68,6 +84,13 @@ public class RecipeService : IRecipeService
 
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
+            
+            if (_client.Id != 0)
+            {
+                var like = RecipeIsLiked(recipe.Id);
+                recipe.IsLiked = await like;
+            }
+            
         }
 
         return recipes;
@@ -230,7 +253,7 @@ public class RecipeService : IRecipeService
             var delStats = DeleteRecipeStats(id);
             var delCategories = DeleteRecipeCategories(id);
             var delImages = DeleteRecipeImages(id);
-            var delFavorites = DeleteFavRecipes(id);
+            var delFavorites = DeleteFavRecipes(id, _client.Id);
             
             await delReviews;
             await delStats;
@@ -249,9 +272,9 @@ public class RecipeService : IRecipeService
         return result;
     }
 
-    private async Task DeleteFavRecipes(int recipeId)
+    public async Task DeleteFavRecipes(int recipeId, int clientId)
     {
-        await _clientFavService.DeleteFavoriteRecipeByRecipe(recipeId);
+        await _clientFavService.DeleteFavoriteRecipeAsync(recipeId, clientId);
     }
     
     // переписать под фунцию репозитория

@@ -1,6 +1,8 @@
-﻿namespace Models.Models.Database.Recipe;
+﻿using System.ComponentModel;
 
-public partial class Recipe
+namespace Models.Models.Database.Recipe;
+
+public partial class Recipe : INotifyPropertyChanged
 {
     private string? _imagePath;
     public string? ImagePath
@@ -10,9 +12,23 @@ public partial class Recipe
     }
     
     public string? Category { get; set; }
-    public bool? IsLiked { get; set; } = false;
+    private bool? _isLiked;
+    public bool? IsLiked
+    {
+        get => _isLiked;
+        set
+        {
+            _isLiked = value;
+            OnPropertyChanged(new PropertyChangedEventArgs("IsLiked"));
+        }
+    }
     public decimal? Rating { get; set; }
-    public event EventHandler Delete;
-    public event EventHandler Edit;
-    public event EventHandler Like;
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, e);
+        }
+    }
 }

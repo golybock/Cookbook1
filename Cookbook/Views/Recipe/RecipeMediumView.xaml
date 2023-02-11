@@ -5,11 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:c="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="250"
              Background="Transparent">
     
     <UserControl.Resources>
+        
+        <c:BoolToColorBrushConverter x:Key="ToColorBrushConverter"/>
+        
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe ui"></Setter>
             <Setter Property="FontSize" Value="24"></Setter>
@@ -61,20 +65,12 @@
                                   Grid.Column="0"
                                   Value="{Binding Rating, TargetNullValue = -1}"
                                   IsReadOnly="True"/>
-
-                
-                <!-- <TextBlock Grid.Row="2" -->
-                <!--            Grid.Column="0" -->
-                <!--            Text="{Binding Time, FallbackValue=Время}" -->
-                <!--            FontSize="16" -->
-                <!--            VerticalAlignment="Center" -->
-                <!--            Margin="40,0,0,0"/> -->
                 
                 <Border Name="LikeButton" 
                         Grid.Column="1"
                         Grid.Row="2"
                         CornerRadius="50"
-                        Background="White"
+                        Background="{Binding IsLiked, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ToColorBrushConverter}}"
                         BorderThickness="1"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"

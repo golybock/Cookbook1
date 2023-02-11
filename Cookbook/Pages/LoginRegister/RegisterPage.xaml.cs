@@ -22,15 +22,15 @@ public partial class RegisterPage : Page
     
     public RegisterPage()
     {
-        _clientService = new ClientService();
         _client = new Client();
+        _clientService = new ClientService(_client);
         InitializeComponent();
     }
     
     public RegisterPage(string login)
     {
-        _clientService = new ClientService();
         _client = new Client() { Login = login };
+        _clientService = new ClientService(_client);
         InitializeComponent();
     }
 

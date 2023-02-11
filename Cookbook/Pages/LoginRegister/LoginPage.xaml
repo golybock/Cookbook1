@@ -6,26 +6,71 @@
       xmlns:local="clr-namespace:Cookbook.Pages.LoginRegister"
       mc:Ignorable="d"
       Title="LoginPage">
-    <Grid ShowGridLines="True">
+    <StackPanel Orientation="Vertical"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
         
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30*"></RowDefinition>
-            <RowDefinition Height="40*"></RowDefinition>
-            <RowDefinition Height="35*"></RowDefinition>
-        </Grid.RowDefinitions>
+        <Label HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center"
+               FontSize="36"
+               VerticalAlignment="Center"
+               Margin="10"
+               HorizontalAlignment="Center"
+               Content="Авторизация"/>
         
+        <StackPanel
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
         
-        <Label Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="26" Width="180" Height="40" VerticalAlignment="Center" Margin="0,30,0,20" HorizontalAlignment="Center">Авторизация</Label>
+            <Label FontSize="14"
+                   Content="Логин"
+                   Margin="10,0,0,5"/>
+            
+            <Border Name="LoginBorder"
+                    BorderThickness="2"
+                    CornerRadius="4"
+                    Width="205">
+                <TextBox Name="LoginTextBox"
+                         Width="200"
+                         TextChanged="Input"
+                         Text="admin"/>
+            </Border>
+            
+            <Label FontSize="14"
+                   Content="Пароль"
+                   Margin="10,0,0,5"/>
+            
+            <Border Name="PasswordBorder"
+                    BorderThickness="2"
+                    CornerRadius="4"
+                    Width="205">
+                <PasswordBox Name="PasswordBox"
+                             Width="200"
+                             PasswordChanged="Input"
+                             Password="admin"/>
+            </Border>
+            
+            <TextBlock Name="ErrorTextBlock"
+                       Visibility="Collapsed"
+                       Foreground="Red"
+                       HorizontalAlignment="Center"/>
         
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        
-            <TextBox Name="LoginTextBox" Width="160" Margin="5" TextChanged="Input" Text="admin"/>
-            <PasswordBox Name="PasswordBox" Width="160" Margin="5" PasswordChanged="Input" Password="admin"/>
-            <TextBlock Name="ErrorTextBlock" Visibility="Collapsed" Foreground="Red" HorizontalAlignment="Center"/>
-        
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Name="LoginButton" Margin="5" Width="75" Click="LoginButton_OnClick">Войти</Button>
-                <Button Name="GuestButton" Margin="5" Width="75" Click="GuestButton_OnClick">Гость</Button>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center" Margin="5">
+                
+                <Button Name="LoginButton"
+                        Margin="5"
+                        Width="95"
+                        Click="LoginButton_OnClick"
+                        Content="Войти"/>
+                
+                <Button Name="GuestButton"
+                        Margin="5"
+                        Width="95"
+                        Click="GuestButton_OnClick"
+                        Content="Гость"/>
+                
             </StackPanel>
             
             <TextBlock Name="RegistrationTextBlock" Text="Регистрация" MouseDown="RegistrationTextBlock_OnMouseDown">
@@ -47,5 +92,5 @@
         
         </StackPanel>
 
-    </Grid>
+    </StackPanel>
 </Page>
