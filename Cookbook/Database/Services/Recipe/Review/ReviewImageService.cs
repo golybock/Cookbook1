@@ -4,6 +4,7 @@ using Cookbook.Database.Repositories.Recipe.Review;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces.ReviewInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Review;
+using Models.Models.Database;
 
 namespace Cookbook.Database.Services.Recipe.Review;
 

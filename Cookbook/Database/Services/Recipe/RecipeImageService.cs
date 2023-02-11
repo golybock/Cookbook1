@@ -4,6 +4,7 @@ using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
+using Models.Models.Database;
 
 namespace Cookbook.Database.Services.Recipe;
 

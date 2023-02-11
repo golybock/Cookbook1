@@ -4,6 +4,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
 using Cookbook.Models.Database;
+using Models.Models.Database;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 using Npgsql;
 
@@ -132,7 +133,7 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
     }
 
-    public async Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
+    public async Task<CommandResult> AddRecipeAsync(RecipeModel? recipe)
     {
         var con = GetConnection();
         CommandResult result;

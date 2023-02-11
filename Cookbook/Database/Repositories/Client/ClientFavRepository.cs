@@ -5,6 +5,7 @@ using Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Database.Recipe;
+using Models.Models.Database;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Client;
@@ -133,8 +134,15 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
                     new() { Value = favoriteRecipe.ClientId },
                 }
             }; 
+            
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+            
             return result;
         }
         catch(Exception e)
@@ -166,7 +174,12 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
                     new() { Value = favoriteRecipe.RecipeId }
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ? 
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)
@@ -181,9 +194,9 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         }
     }
 
-    public async Task<CommandResult> DeleteFavoriteRecipeAsync(int id)
+    public Task<CommandResult> DeleteFavoriteRecipeAsync(int id)
     {
-        return await DeleteAsync("favorite_recipes", id);
+        return DeleteAsync("favorite_recipes", id);
     }
 
     public async Task<CommandResult> DeleteFavoriteRecipeAsync(int recipeId, int clientId)
@@ -202,7 +215,12 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
                     new () { Value = clientId }
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result = 
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)
@@ -232,7 +250,12 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
                     new() { Value = recipeId },
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.BadRequest;
+            
             return result;
         }
         catch(Exception e)
@@ -262,7 +285,12 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
                     new() { Value = clientId },
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.BadRequest; 
+            
             return result;
         }
         catch(Exception e)

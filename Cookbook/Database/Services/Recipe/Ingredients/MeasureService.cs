@@ -4,6 +4,7 @@ using Cookbook.Database.Repositories.Recipe.Ingredients;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Ingredients;
+using Models.Models.Database;
 
 namespace Cookbook.Database.Services.Recipe.Ingredients;
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.IngredientsInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Ingredients;
+using Models.Models.Database;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Recipe.Ingredients;

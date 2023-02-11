@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 using Cookbook.Models.Database;
+using Models.Models.Database;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.Database.Services.Recipe;
@@ -31,7 +32,7 @@ public class RecipeService : IRecipeService
         return _recipeRepository.GetClientRecipesAsync(clientId);
     }
 
-    public Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
+    public Task<CommandResult> AddRecipeAsync(RecipeModel? recipe)
     {
         return _recipeRepository.AddRecipeAsync(recipe);
     }

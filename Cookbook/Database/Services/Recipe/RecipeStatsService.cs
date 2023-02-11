@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
+using Models.Models.Database;
 
 namespace Cookbook.Database.Services.Recipe;
 
@@ -16,23 +15,35 @@ public class RecipeStatsService : IRecipeStatsService
         _recipeStatsRepository = new RecipeStatsRepository();
     }
     
-    public Task<RecipeStats> GetRecipeStatsAsync(int id)
+    public async Task<RecipeStats?> GetRecipeStatsAsync(int id)
     {
-        return _recipeStatsRepository.GetRecipeStatsAsync(id);
+        if (id > 0)
+            return null;
+
+        return await _recipeStatsRepository.GetRecipeStatsAsync(id);
     }
 
-    public Task<CommandResult> AddRecipeStatsAsync(RecipeStats recipeStats)
+    public async Task<CommandResult> AddRecipeStatsAsync(RecipeStats? recipeStats)
     {
-        return _recipeStatsRepository.AddRecipeStatsAsync(recipeStats);
+        if (recipeStats == null)
+            return CommandResults.BadRequest; 
+        
+        return await _recipeStatsRepository.AddRecipeStatsAsync(recipeStats);
     }
 
-    public Task<CommandResult> UpdateRecipeStatsAsync(RecipeStats recipeStats)
+    public async Task<CommandResult> UpdateRecipeStatsAsync(RecipeStats? recipeStats)
     {
-        return _recipeStatsRepository.UpdateRecipeStatsAsync(recipeStats);
+        if (recipeStats == null)
+            return CommandResults.BadRequest; 
+        
+        return await _recipeStatsRepository.UpdateRecipeStatsAsync(recipeStats);
     }
 
-    public Task<CommandResult> DeleteRecipeStatsAsync(int id)
+    public async Task<CommandResult> DeleteRecipeStatsAsync(int id)
     {
-        return _recipeStatsRepository.DeleteRecipeStatsAsync(id);
+        if (id > 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeStatsRepository.DeleteRecipeStatsAsync(id);
     }
 }

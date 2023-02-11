@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.ReviewInterfaces;
 using Cookbook.Models.Database;
+using Models.Models.Database;
 using Npgsql;
 using ReviewModel = Cookbook.Models.Database.Recipe.Review.Review;
 

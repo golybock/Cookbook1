@@ -4,6 +4,7 @@ using System.Windows;
 using Cookbook.Models.Database;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using Models.Models.Database;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories;

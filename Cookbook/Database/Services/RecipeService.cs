@@ -10,6 +10,7 @@ using Cookbook.Database.Services.Recipe.Review;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Database.Recipe;
+using Models.Models.Database;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 using ClientModel = Models.Models.Database.Client.Client;
 
@@ -96,10 +97,10 @@ public class RecipeService : IRecipeService
         return recipes;
     }
 
-    public async Task<string> GetRecipeMainCategoryAsync(int recipeId)
+    private async Task<string> GetRecipeMainCategoryAsync(int recipeId)
     {
         var recipeCategory = await _recipeCategoryService.GetRecipeMainCategoryAsync(recipeId);
-        var category = await _categoryService.GetCategoryAsync(recipeCategory.Id);
+        var category = await _categoryService.GetCategoryAsync(recipeCategory.CategoryId);
 
         return category.Name;
     }
@@ -135,7 +136,7 @@ public class RecipeService : IRecipeService
         return recipes;
     }
 
-    public async Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
+    public async Task<CommandResult> AddRecipeAsync(RecipeModel? recipe)
     {
         CommandResult commandResult = await _recipeService.AddRecipeAsync(recipe);
         
@@ -169,7 +170,35 @@ public class RecipeService : IRecipeService
 
     public async Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe)
     {
-        return await _recipeService.UpdateRecipeAsync(recipe);
+        CommandResult commandResult = await _recipeService.UpdateRecipeAsync(recipe);
+        
+                
+        if (commandResult.Code == 100)
+        {
+            if (commandResult.Value is RecipeModel outRecipe)
+            {
+                var recipeStats = _recipeStatsService.UpdateRecipeStatsAsync(recipe.RecipeStat);
+                var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
+                var recipeCategories = AddRecipeCategoriesAsync(outRecipe);
+                var recipeImages = AddRecipeImagesAsync(outRecipe);
+
+                await recipeImages;
+                await recipeStats;
+                await recipeIngredients;
+                await recipeCategories;
+                
+                commandResult = CommandResults.Successfully;
+            }
+            else
+            {
+                commandResult = CommandResults.BadRequest;
+            }
+
+            return commandResult;
+        }
+        commandResult = CommandResults.BadRequest;
+        
+        return commandResult;
     }
 
 

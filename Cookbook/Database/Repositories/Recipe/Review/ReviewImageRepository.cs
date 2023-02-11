@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.ReviewInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Review;
+using Models.Models.Database;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Recipe.Review;

@@ -6,19 +6,20 @@ using System.Windows.Documents;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
+using Models.Models.Database;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Recipe;
 
 public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
 {
-    public async Task<RecipeStats> GetRecipeStatsAsync(int id)
+    public async Task<RecipeStats?> GetRecipeStatsAsync(int id)
     {
         var con = GetConnection();
         
         try
         {
-            RecipeStats recipeStats = new RecipeStats();
+            RecipeStats? recipeStats = new RecipeStats();
             string query = $"select * from recipe_stats where recipe_id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
