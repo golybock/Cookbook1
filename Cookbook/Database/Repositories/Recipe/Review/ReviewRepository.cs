@@ -11,9 +11,9 @@ namespace Cookbook.Database.Repositories.Recipe.Review;
 
 public class ReviewRepository : MainDbClass, IReviewRepository
 {
-    public async Task<ReviewModel> GetReviewAsync(int id)
+    public async Task<ReviewModel?> GetReviewAsync(int id)
     {
-                var con = GetConnection();
+        var con = GetConnection();
         
         con.Open();
         try
@@ -86,12 +86,12 @@ public class ReviewRepository : MainDbClass, IReviewRepository
 
     public async Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
     {
-                var con = GetConnection();
-        
+        var con = GetConnection();
+        List<ReviewModel> reviews = new List<ReviewModel>();
         con.Open();
         try
         {
-            List<ReviewModel> reviews = new List<ReviewModel>();
+            
             string query = $"select * from review where recipe_id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -117,7 +117,7 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
         catch
         {
-            return null;
+            return new List<ReviewModel>();
         }
         finally
         {
@@ -127,12 +127,12 @@ public class ReviewRepository : MainDbClass, IReviewRepository
 
     public async Task<List<ReviewModel>> GetClientReviewAsync(int clientId)
     {
-                var con = GetConnection();
-        
+        var con = GetConnection();
+        List<ReviewModel> reviews = new List<ReviewModel>();
         con.Open();
         try
         {
-            List<ReviewModel> reviews = new List<ReviewModel>();
+
             string query = $"select * from review where client_id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -158,7 +158,7 @@ public class ReviewRepository : MainDbClass, IReviewRepository
         }
         catch
         {
-            return null;
+            return new List<ReviewModel>();
         }
         finally
         {
@@ -169,12 +169,13 @@ public class ReviewRepository : MainDbClass, IReviewRepository
     public async Task<CommandResult> AddReviewAsync(ReviewModel review)
     {
         CommandResult result;
-                var con = GetConnection();
+        var con = GetConnection();
         
         con.Open();
         try
         {
-            string query = $"insert into review(recipe_id, client_id, grade, description, is_anonymous) values ($1, $2, $3, $4, $5) returning id";
+            string query = $"insert into review(recipe_id, client_id, grade, description, is_anonymous)" +
+                           $" values ($1, $2, $3, $4, $5) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -186,8 +187,16 @@ public class ReviewRepository : MainDbClass, IReviewRepository
                     new() { Value = review.IsAnonymous }
                 }
             }; 
+            
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -221,7 +230,12 @@ public class ReviewRepository : MainDbClass, IReviewRepository
                     new() { Value = review.IsAnonymous }
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled; 
+            
             return result;
         }
         catch(Exception e)

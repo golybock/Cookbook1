@@ -11,9 +11,9 @@ namespace Cookbook.Database.Repositories.Recipe.Review;
 
 public class ReviewImageRepository : MainDbClass, IReviewImageRepository
 {
-    public async Task<ReviewImage> GetReviewImageAsync(int id)
+    public async Task<ReviewImage?> GetReviewImageAsync(int id)
     {
-                var con = GetConnection();
+        var con = GetConnection();
         
         con.Open();
         try
@@ -47,12 +47,12 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
 
     public async Task<List<ReviewImage>> GetReviewImagesAsync(int reviewId)
     {
-                var con = GetConnection();
-        
+        var con = GetConnection();
+        List<ReviewImage> reviewImages = new List<ReviewImage>();
         con.Open();
         try
         {
-            List<ReviewImage> reviewImages = new List<ReviewImage>();
+            
             string query = $"select * from review_images where review_id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -73,7 +73,7 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
         }
         catch
         {
-            return null;
+            return new List<ReviewImage>();
         }
         finally
         {
@@ -98,8 +98,16 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
                     new() { Value = reviewImage.ImagePath }
                 }
             }; 
+            
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -131,7 +139,12 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
                     new() { Value = reviewImage.ImagePath }
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result = 
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled; 
+            
             return result;
         }
         catch(Exception e)

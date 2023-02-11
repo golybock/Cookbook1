@@ -8,7 +8,7 @@ namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.ReviewInter
 
 public interface IReviewImageRepository
 {
-    public Task<ReviewImage> GetReviewImageAsync(int id);
+    public Task<ReviewImage?> GetReviewImageAsync(int id);
     public Task<List<ReviewImage>> GetReviewImagesAsync(int reviewId);
     public Task<CommandResult> AddReviewImageAsync(ReviewImage reviewImage);
     public Task<CommandResult> UpdateReviewImageAsync(ReviewImage reviewImage);
