@@ -55,8 +55,8 @@ public class MainDbClass
             connection.Close();
         }
     }
-    
-    public async Task<CommandResult> DeleteAsync(string table, int id)
+
+    protected async Task<CommandResult> DeleteAsync(string table, int id)
     {
         CommandResult result;
         
@@ -73,7 +73,7 @@ public class MainDbClass
                     new() { Value = id },
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled; 
             return result;
         }
         catch(Exception e)

@@ -11,13 +11,13 @@ namespace Cookbook.Database.Repositories.Recipe;
 
 public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientRepository
 {
-    public async Task<RecipeIngredient> GetRecipeIngredientAsync(int id)
+    public async Task<RecipeIngredient?> GetRecipeIngredientAsync(int id)
     {
+        RecipeIngredient recipeIngredient = new RecipeIngredient();
         var con = GetConnection();
         con.Open();
         try
         {
-            RecipeIngredient recipeIngredient = new RecipeIngredient();
             string query = $"select * from recipe_ingredients where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -74,7 +74,7 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
         }
         catch
         {
-            return null;
+            return new List<RecipeIngredient>();
         }
         finally
         {
@@ -107,7 +107,7 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
         }
         catch
         {
-            return null;
+            return new List<RecipeIngredient>();
         }
         finally
         {
@@ -122,7 +122,8 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
         con.Open();
         try
         {
-            string query = $"insert into recipe_ingredients(recipe_id, ingredient_id, count) values ($1, $2, $3) returning id";
+            string query = $"insert into recipe_ingredients(recipe_id, ingredient_id, count)" +
+                           $" values ($1, $2, $3) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -133,7 +134,14 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
                 }
             }; 
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -163,9 +171,12 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
                     new() { Value = recipeIngredient.Id },
                     new() { Value = recipeIngredient.Count }
                 }
-            }; 
-            result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            };
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)

@@ -16,10 +16,9 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
     public async Task<RecipeStats?> GetRecipeStatsAsync(int id)
     {
         var con = GetConnection();
-        
+        RecipeStats? recipeStats = new RecipeStats();
         try
         {
-            RecipeStats? recipeStats = new RecipeStats();
             string query = $"select * from recipe_stats where recipe_id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -55,7 +54,8 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
         con.Open();
         try
         {
-            string query = $"insert into recipe_stats(recipe_id, squirrels, fats, carbohydrates, kilocalories) values ($1, $2, $3, $4, $5) returning id";
+            string query = $"insert into recipe_stats(recipe_id, squirrels, fats, carbohydrates, kilocalories)" +
+                           $" values ($1, $2, $3, $4, $5)";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -68,7 +68,9 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
                 }
             }; 
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+
+            await cmd.ExecuteNonQueryAsync();
+            
             return result;
         }
         catch(Exception e)
@@ -101,9 +103,13 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
                     new() { Value = recipeStats.Carbohydrates },
                     new() { Value = recipeStats.Kilocalories }
                 }
-            }; 
-            result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            };
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)

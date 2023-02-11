@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 using Npgsql;
@@ -11,13 +10,13 @@ namespace Cookbook.Database.Repositories.Recipe;
 
 public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
 {
-    public async Task<RecipeImage> GetRecipeImageAsync(int id)
+    public async Task<RecipeImage?> GetRecipeImageAsync(int id)
     {
         var con = GetConnection();
         con.Open();
+        RecipeImage recipeImage = new RecipeImage();
         try
         {
-            RecipeImage recipeImage = new RecipeImage();
             string query = $"select * from recipe_images where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -45,13 +44,14 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         }
     }
 
-    public async Task<RecipeImage> GetRecipeImageByRecipeAsync(int recipeId)
+    public async Task<RecipeImage?> GetRecipeImageByRecipeAsync(int recipeId)
     {
         var con = GetConnection();
         con.Open();
+        RecipeImage recipeImage = new RecipeImage();
         try
         {
-            RecipeImage recipeImage = new RecipeImage();
+
             string query = $"select * from recipe_images where recipe_id = $1 limit 1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -107,7 +107,7 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         }
         catch
         {
-            return null;
+            return new List<RecipeImage>();
         }
         finally
         {
@@ -122,7 +122,8 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         con.Open();
         try
         {
-            string query = $"insert into recipe_images(recipe_id, image_path, image_number) values ($1, $2, $3) returning id";
+            string query = $"insert into recipe_images(recipe_id, image_path, image_number)" +
+                           $" values ($1, $2, $3) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -133,7 +134,14 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
                 }
             }; 
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -164,9 +172,12 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
                     new() { Value = recipeImage.ImagePath },
                     new() { Value = recipeImage.ImageNumber }
                 }
-            }; 
-            result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            };
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)

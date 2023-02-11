@@ -12,13 +12,14 @@ namespace Cookbook.Database.Repositories.Recipe;
 
 public class RecipeRepository : MainDbClass, IRecipeRepository
 {
-    public async Task<RecipeModel> GetRecipeAsync(int id)
+    public async Task<RecipeModel?> GetRecipeAsync(int id)
     {
         var con = GetConnection();
+        RecipeModel recipe = new RecipeModel();
         con.Open();
         try
         {
-            RecipeModel recipe = new RecipeModel();
+
             string query = $"select * from recipe where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -83,7 +84,7 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
         catch
         {
-            return null;
+            return new List<RecipeModel>();
         }
         finally
         {
@@ -125,7 +126,7 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
         catch
         {
-            return null;
+            return new List<RecipeModel>();
         }
         finally
         {
@@ -133,14 +134,15 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
     }
 
-    public async Task<CommandResult> AddRecipeAsync(RecipeModel? recipe)
+    public async Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
     {
         var con = GetConnection();
         CommandResult result;
         con.Open();
         try
         {
-            string query = $"insert into recipe(client_id, recipe_type_id, name, description, path_to_text_file, cooking_time) VALUES ($1, $2, $3, $4, $5, $6) returning id";
+            string query = $"insert into recipe(client_id, recipe_type_id, name, description, path_to_text_file, cooking_time)" +
+                           $" VALUES ($1, $2, $3, $4, $5, $6) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -155,9 +157,14 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
                 }
             }; 
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
-            recipe.Id = result.ValueId;
-            result.Value = recipe;
+            
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -195,9 +202,13 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
                     new() { Value = recipe.PortionCount },
                     new() { Value = recipe.CookingTime }
                 }
-            }; 
-            result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            };
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)

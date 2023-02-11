@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 using Npgsql;
@@ -11,7 +10,7 @@ namespace Cookbook.Database.Repositories.Recipe;
 
 public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
 {
-    public async Task<RecipeCategory> GetRecipeCategoryAsync(int id)
+    public async Task<RecipeCategory?> GetRecipeCategoryAsync(int id)
     {
         var con = GetConnection();
         
@@ -51,9 +50,10 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
     {
         var con = GetConnection();
         con.Open();
+        List<RecipeCategory> recipeCategories = new List<RecipeCategory>();
         try
         {
-            List<RecipeCategory> recipeCategories = new List<RecipeCategory>();
+
             string query = $"select * from recipe_categories where recipe_id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -74,7 +74,7 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         }
         catch
         {
-            return null;
+            return new List<RecipeCategory>();
         }
         finally
         {
@@ -87,10 +87,11 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         var con = GetConnection();
         
         con.Open();
+        
+        RecipeCategory recipeCategory = new RecipeCategory();
 
         try
         {
-            RecipeCategory recipeCategory = new RecipeCategory();
             string query = $"select * from recipe_categories where recipe_id = $1 limit 1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -124,7 +125,8 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         con.Open();
         try
         {
-            string query = $"insert into recipe_categories(recipe_id, category_id) values ($1, $2) returning id";
+            string query = $"insert into recipe_categories(recipe_id, category_id)" +
+                           $" values ($1, $2) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -134,7 +136,14 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
                 }
             }; 
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -165,9 +174,12 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
                     new() { Value = recipeCategory.RecipeId },
                     new() { Value = recipeCategory.CategoryId }
                 }
-            }; 
-            result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            };
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)
@@ -185,5 +197,38 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
     public async Task<CommandResult> DeleteRecipeCategoryAsync(int id)
     {
         return await DeleteAsync("recipe_categories", id);
+    }
+
+    public async Task<CommandResult> DeleteRecipeCategoriesAsync(int recipeId)
+    {
+        CommandResult result;
+
+        var con = GetConnection();
+
+        con.Open();
+        
+        try
+        {
+            string query = $"delete from recipe_categories where recipe_id = $1";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new() { Value = recipeId },
+                }
+            };
+            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled; 
+            return result;
+        }
+        catch(Exception e)
+        {
+            result = CommandResults.BadRequest;
+            result.Description = e.ToString();
+            return result;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
     }
 }

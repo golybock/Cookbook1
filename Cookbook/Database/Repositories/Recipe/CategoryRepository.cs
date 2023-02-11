@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 using Npgsql;
@@ -12,15 +10,14 @@ namespace Cookbook.Database.Repositories.Recipe;
 
 public class CategoryRepository : MainDbClass, ICategoryRepository
 {
-    public async Task<Category> GetCategoryAsync(int id)
+    public async Task<Category?> GetCategoryAsync(int id)
     {
         var con = GetConnection();
-        
         con.Open();
-
+        Category category = new Category();
         try
         {
-            Category category = new Category();
+
             string query = $"select * from category where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -70,7 +67,7 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
         }
         catch
         {
-            return null;
+            return new List<Category>();
         }
         finally
         {
@@ -95,7 +92,14 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
                 }
             }; 
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -126,9 +130,11 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
                     new() { Value = category.Id },
                     new() { Value = category.Name }
                 }
-            }; 
-            result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            };
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
             return result;
         }
         catch(Exception e)
