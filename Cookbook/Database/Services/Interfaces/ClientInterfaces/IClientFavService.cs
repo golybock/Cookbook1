@@ -8,7 +8,7 @@ namespace Cookbook.Database.Services.Interfaces.ClientInterfaces;
 
 public interface IClientFavService
 {
-    public Task<FavoriteRecipe> GetFavoriteRecipeAsync(int id);
+    public Task<FavoriteRecipe?> GetFavoriteRecipeAsync(int id);
     public Task<List<FavoriteRecipe>> GetFavoriteRecipesAsync(int clientId);
     public Task<bool> GetRecipeIsLiked(int recipeId, int clientId);
     public Task<CommandResult> AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe);

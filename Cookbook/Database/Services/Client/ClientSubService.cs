@@ -18,33 +18,56 @@ public class ClientSubService : IClientSubService
         _clientSubRepository = new ClientSubRepository();
     }
 
-    public async Task<ClientSub> GetClientSubAsync(int id)
+    public async Task<ClientSub?> GetClientSubAsync(int id)
     {
+        if (id <= 0)
+            return null;
+
         return await _clientSubRepository.GetClientSubAsync(id);
     }
 
     public async Task<List<ClientSub>> GetClientSubsAsync(int clientId)
     {
+        if (clientId <= 0)
+            return new List<ClientSub>();
+        
         return await _clientSubRepository.GetClientSubsAsync(clientId);
     }
 
     public async Task<List<ClientSub>> GetSubsClientAsync(int clientId)
     {
+        if (clientId <= 0)
+            return new List<ClientSub>();
+        
         return await _clientSubRepository.GetSubsClientAsync(clientId);
     }
 
     public async Task<CommandResult> AddClientSubAsync(ClientSub clientSub)
     {
+        if(clientSub.Sub <= 0 ||
+           clientSub.ClientId <= 0)
+            return CommandResults.BadRequest;
+
         return await _clientSubRepository.AddClientSubAsync(clientSub);
     }
 
     public async Task<CommandResult> UpdateClientSubAsync(ClientSub clientSub)
     {
+        if(clientSub.Id <= 0)
+            return CommandResults.BadRequest;
+
+        if(clientSub.Sub <= 0 ||
+           clientSub.ClientId <= 0)
+            return CommandResults.BadRequest;
+        
         return await _clientSubRepository.UpdateClientSubAsync(clientSub);
     }
 
     public async Task<CommandResult> DeleteClientSubAsync(int id)
     {
+        if (id <= 0)
+            return CommandResults.BadRequest;
+
         return await _clientSubRepository.DeleteClientSubAsync(id);
     }
 }
