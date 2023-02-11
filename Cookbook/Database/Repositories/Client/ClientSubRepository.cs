@@ -14,7 +14,7 @@ namespace Cookbook.Database.Repositories.Client;
 
 public class ClientSubRepository : MainDbClass, IClientSubRepository
 {
-    public async Task<ClientSub> GetClientSubAsync(int id)
+    public async Task<ClientSub?> GetClientSubAsync(int id)
     {
         var con = GetConnection();
         con.Open();
@@ -76,7 +76,7 @@ public class ClientSubRepository : MainDbClass, IClientSubRepository
         }
         catch
         {
-            return null;
+            return new List<ClientSub>();
         }
         finally
         {
@@ -112,7 +112,7 @@ public class ClientSubRepository : MainDbClass, IClientSubRepository
         }
         catch
         {
-            return null;
+            return new List<ClientSub>();
         }
         finally
         {
@@ -138,7 +138,13 @@ public class ClientSubRepository : MainDbClass, IClientSubRepository
                 }
             }; 
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -169,7 +175,12 @@ public class ClientSubRepository : MainDbClass, IClientSubRepository
                     new() { Value = clientSub.ClientId}
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.BadRequest; 
+            
             return result;
         }
         catch(Exception e)
@@ -199,7 +210,12 @@ public class ClientSubRepository : MainDbClass, IClientSubRepository
                     new() { Value = id },
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)
