@@ -12,7 +12,7 @@ namespace Cookbook.Database.Repositories.Client;
 
 public class ClientRepository : MainDbClass, IClientRepository
 {
-    public async Task<ClientModel> GetClientAsync(int id)
+    public async Task<ClientModel?> GetClientAsync(int id)
     {
         var con = GetConnection();
         con.Open();
@@ -50,7 +50,7 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
     }
 
-    public async Task<ClientModel> GetClientAsync(string login)
+    public async Task<ClientModel?> GetClientAsync(string login)
     {
         var con = GetConnection();
         con.Open();
@@ -80,7 +80,7 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
         catch(Exception e)
         {
-            return new ClientModel(){Id = 5};
+            return null;
         }
         finally
         {
@@ -119,7 +119,7 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
         catch
         {
-            return null;
+            return new List<ClientModel>();
         }
         finally
         {
@@ -146,8 +146,16 @@ public class ClientRepository : MainDbClass, IClientRepository
                     new() { Value = client.Description }
                 }
             }; 
+            
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -181,7 +189,12 @@ public class ClientRepository : MainDbClass, IClientRepository
                     new() { Value = client.Description }
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled; 
+            
             return result;
         }
         catch(Exception e)
@@ -211,7 +224,12 @@ public class ClientRepository : MainDbClass, IClientRepository
                     new() { Value = id },
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled; 
+            
             return result;
         }
         catch(Exception e)
