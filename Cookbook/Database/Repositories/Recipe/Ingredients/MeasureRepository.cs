@@ -11,7 +11,7 @@ namespace Cookbook.Database.Repositories.Recipe.Ingredients;
 
 public class MeasureRepository : MainDbClass, IMeasureRepository
 {
-    public async Task<Measure> GetMeasureAsync(int id)
+    public async Task<Measure?> GetMeasureAsync(int id)
     {
         var con = GetConnection();
         
@@ -48,10 +48,10 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
     public async Task<List<Measure>> GetMeasuresAsync()
     {
         var con = GetConnection();
-        
+        List<Measure> measures = new List<Measure>();
         try
         {
-            List<Measure> measures = new List<Measure>();
+
             string query = $"select * from measure";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
@@ -67,7 +67,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         }
         catch
         {
-            return null;
+            return new List<Measure>();
         }
         finally
         {
@@ -92,8 +92,15 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
                     new() { Value = measure.Name }
                 }
             };
+            
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -125,7 +132,12 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
                     new() { Value = measure.Name }
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)

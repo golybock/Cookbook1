@@ -8,7 +8,7 @@ namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.Ingredients
 
 public interface IMeasureRepository
 {
-    public Task<Measure> GetMeasureAsync(int id);
+    public Task<Measure?> GetMeasureAsync(int id);
     public Task<List<Measure>> GetMeasuresAsync();
     public Task<CommandResult> AddMeasureAsync(Measure measure);
     public Task<CommandResult> UpdateMeasureAsync(Measure measure);
