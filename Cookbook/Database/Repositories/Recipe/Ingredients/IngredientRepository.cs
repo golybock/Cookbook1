@@ -12,7 +12,7 @@ namespace Cookbook.Database.Repositories.Recipe.Ingredients;
 
 public class IngredientRepository : MainDbClass, IIngredientRepository
 {
-    public async Task<Ingredient> GetIngredientAsync(int id)
+    public async Task<Ingredient?> GetIngredientAsync(int id)
     {
         var con = GetConnection();
         
@@ -50,10 +50,10 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
     public async Task<List<Ingredient>> GetIngredientsAsync()
     {
         var con = GetConnection();
-        
+        List<Ingredient> ingredients = new List<Ingredient>();
         try
         {
-            List<Ingredient> ingredients = new List<Ingredient>();
+           
             string query = $"select * from ingredient";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
@@ -63,8 +63,10 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
                 ingredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 ingredient.MeasureId = reader.GetInt32(reader.GetOrdinal("measure_id"));
                 ingredient.Name = reader.GetString(reader.GetOrdinal("name"));
+                
                 var imagePath = reader.GetValue(reader.GetOrdinal("image_path"));
                 ingredient.ImagePath = imagePath == DBNull.Value ? null : imagePath.ToString();
+                
                 ingredients.Add(ingredient);
             }
             
@@ -72,7 +74,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         }
         catch
         {
-            return null;
+            return new List<Ingredient>();
         }
         finally
         {
@@ -99,8 +101,15 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
                     new() { Value = ingredient.ImagePath }
                 }
             }; 
+            
             result = CommandResults.Successfully;
-            result.ValueId = await cmd.ExecuteNonQueryAsync();
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+
             return result;
         }
         catch(Exception e)
@@ -134,7 +143,12 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
                     new() { Value = ingredient.ImagePath }
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.BadRequest; 
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)

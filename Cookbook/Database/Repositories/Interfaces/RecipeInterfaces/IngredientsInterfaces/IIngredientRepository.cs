@@ -8,7 +8,7 @@ namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.Ingredients
 
 public interface IIngredientRepository
 {
-    public Task<Ingredient> GetIngredientAsync(int id);
+    public Task<Ingredient?> GetIngredientAsync(int id);
     public Task<List<Ingredient>> GetIngredientsAsync();
     public Task<CommandResult> AddIngredientAsync(Ingredient ingredient);
     public Task<CommandResult> UpdateIngredientAsync(Ingredient ingredient);
