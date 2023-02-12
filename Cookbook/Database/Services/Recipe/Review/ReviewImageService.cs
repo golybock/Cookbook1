@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe.Review;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces.ReviewInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Review;
 using Models.Models.Database;
 
@@ -17,28 +17,58 @@ public class ReviewImageService : IReviewImageService
         _reviewImageRepository = new ReviewImageRepository();
     }
 
-    public Task<ReviewImage> GetReviewImageAsync(int id)
+    public async Task<ReviewImage> GetReviewImageAsync(int id)
     {
-        return _reviewImageRepository.GetReviewImageAsync(id);
+        if (id <= 0)
+            return null; 
+        
+        return await _reviewImageRepository.GetReviewImageAsync(id);
     }
 
-    public Task<List<ReviewImage>> GetReviewImagesAsync(int reviewId)
+    public async Task<List<ReviewImage>> GetReviewImagesAsync(int reviewId)
     {
-        return _reviewImageRepository.GetReviewImagesAsync(reviewId);
+        if (reviewId <= 0)
+            return new List<ReviewImage>();
+        
+        return await _reviewImageRepository.GetReviewImagesAsync(reviewId);
     }
 
-    public Task<CommandResult> AddReviewImageAsync(ReviewImage reviewImage)
+    public async Task<CommandResult> AddReviewImageAsync(ReviewImage reviewImage)
     {
-        return _reviewImageRepository.AddReviewImageAsync(reviewImage);
+        if(reviewImage.ReviewId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(string.IsNullOrWhiteSpace(reviewImage.ImagePath))
+            return CommandResults.BadRequest;
+
+        if (!File.Exists(reviewImage.ImagePath))
+            return CommandResults.BadRequest;
+        
+        return await _reviewImageRepository.AddReviewImageAsync(reviewImage);
     }
 
-    public Task<CommandResult> UpdateReviewImageAsync(ReviewImage reviewImage)
+    public async Task<CommandResult> UpdateReviewImageAsync(ReviewImage reviewImage)
     {
-        return _reviewImageRepository.UpdateReviewImageAsync(reviewImage);
+        if(reviewImage.Id <= 0)
+            return CommandResults.BadRequest;
+        
+        if(reviewImage.ReviewId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(string.IsNullOrWhiteSpace(reviewImage.ImagePath))
+            return CommandResults.BadRequest;
+
+        if (!File.Exists(reviewImage.ImagePath))
+            return CommandResults.BadRequest;
+        
+        return await _reviewImageRepository.UpdateReviewImageAsync(reviewImage);
     }
 
-    public Task<CommandResult> DeleteReviewImageAsync(int id)
+    public async Task<CommandResult> DeleteReviewImageAsync(int id)
     {
-        return _reviewImageRepository.DeleteReviewImageAsync(id);
+        if(id <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _reviewImageRepository.DeleteReviewImageAsync(id);
     }
 }

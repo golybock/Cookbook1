@@ -8,7 +8,7 @@ namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces.IngredientsInte
 
 public interface IIngredientService
 {
-    public Task<Ingredient> GetIngredientAsync(int id);
+    public Task<Ingredient?> GetIngredientAsync(int id);
     public Task<List<Ingredient>> GetIngredientsAsync();
     public Task<CommandResult> AddIngredientAsync(Ingredient ingredient);
     public Task<CommandResult> UpdateIngredientAsync(Ingredient ingredient);

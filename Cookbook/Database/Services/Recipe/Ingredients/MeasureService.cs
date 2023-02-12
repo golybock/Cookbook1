@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe.Ingredients;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
 
@@ -17,9 +16,12 @@ public class MeasureService : IMeasureService
         _measureRepository = new MeasureRepository();
     }
     
-    public Task<Measure> GetMeasureAsync(int id)
+    public async Task<Measure?> GetMeasureAsync(int id)
     {
-        return _measureRepository.GetMeasureAsync(id);
+        if (id <= 0)
+            return null; 
+        
+        return await _measureRepository.GetMeasureAsync(id);
     }
 
     public Task<List<Measure>> GetMeasuresAsync()
@@ -27,18 +29,30 @@ public class MeasureService : IMeasureService
         return _measureRepository.GetMeasuresAsync();
     }
 
-    public Task<CommandResult> AddMeasureAsync(Measure measure)
+    public async Task<CommandResult> AddMeasureAsync(Measure measure)
     {
-        return _measureRepository.AddMeasureAsync(measure);
+        if(string.IsNullOrWhiteSpace(measure.Name))
+            return CommandResults.BadRequest; 
+        
+        return await _measureRepository.AddMeasureAsync(measure);
     }
 
-    public Task<CommandResult> UpdateMeasureAsync(Measure measure)
+    public async Task<CommandResult> UpdateMeasureAsync(Measure measure)
     {
-        return _measureRepository.UpdateMeasureAsync(measure);
+        if(measure.Id <= 0)
+            return CommandResults.BadRequest; 
+        
+        if(string.IsNullOrWhiteSpace(measure.Name))
+            return CommandResults.BadRequest; 
+        
+        return await _measureRepository.UpdateMeasureAsync(measure);
     }
 
-    public Task<CommandResult> DeleteMeasureAsync(int id)
+    public async Task<CommandResult> DeleteMeasureAsync(int id)
     {
-        return _measureRepository.DeleteMeasureAsync(id);
+        if(id <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _measureRepository.DeleteMeasureAsync(id);
     }
 }

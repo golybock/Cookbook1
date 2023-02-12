@@ -8,8 +8,8 @@ namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 
 public interface IRecipeCategoryService
 {
-    public Task<RecipeCategory> GetRecipeCategoryAsync(int id);
-    public Task<RecipeCategory> GetRecipeMainCategoryAsync(int recipeId);
+    public Task<RecipeCategory?> GetRecipeCategoryAsync(int id);
+    public Task<RecipeCategory?>? GetRecipeMainCategoryAsync(int recipeId);
     public Task<List<RecipeCategory>> GetRecipeCategoriesAsync(int recipeId);
     public Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory);
     public Task<CommandResult> UpdateRecipeCategoryAsync(RecipeCategory recipeCategory);

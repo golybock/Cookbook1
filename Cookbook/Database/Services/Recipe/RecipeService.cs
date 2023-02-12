@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database;
 using Models.Models.Database;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
@@ -17,9 +17,12 @@ public class RecipeService : IRecipeService
         _recipeRepository = new RecipeRepository();
     }
     
-    public Task<RecipeModel> GetRecipeAsync(int id)
+    public async Task<RecipeModel?> GetRecipeAsync(int id)
     {
-        return _recipeRepository.GetRecipeAsync(id);
+        if (id <= 0)
+            return null;
+        
+        return await _recipeRepository.GetRecipeAsync(id);
     }
 
     public Task<List<RecipeModel>> GetRecipesAsync()
@@ -27,23 +30,47 @@ public class RecipeService : IRecipeService
         return _recipeRepository.GetRecipesAsync();
     }
 
-    public Task<List<RecipeModel>> GetClientRecipesAsync(int clientId)
+    public async Task<List<RecipeModel>> GetClientRecipesAsync(int clientId)
     {
-        return _recipeRepository.GetClientRecipesAsync(clientId);
+        if (clientId <= 0)
+            return new List<RecipeModel>();
+        
+        return await _recipeRepository.GetClientRecipesAsync(clientId);
     }
 
-    public Task<CommandResult> AddRecipeAsync(RecipeModel? recipe)
+    public async Task<CommandResult> AddRecipeAsync(RecipeModel? recipe)
     {
-        return _recipeRepository.AddRecipeAsync(recipe);
+        if(recipe == null)
+            return CommandResults.BadRequest; 
+        
+        if(string.IsNullOrWhiteSpace(recipe.Name))
+            return CommandResults.BadRequest;
+        
+        if(recipe.ClientId <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeRepository.AddRecipeAsync(recipe);
     }
 
-    public Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe)
+    public async Task<CommandResult> UpdateRecipeAsync(RecipeModel? recipe)
     {
-        return _recipeRepository.UpdateRecipeAsync(recipe);
+        if(recipe == null)
+            return CommandResults.BadRequest; 
+        
+        if(string.IsNullOrWhiteSpace(recipe.Name))
+            return CommandResults.BadRequest;
+        
+        if(recipe.ClientId <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeRepository.UpdateRecipeAsync(recipe);
     }
 
-    public Task<CommandResult> DeleteRecipeAsync(int id)
+    public async Task<CommandResult> DeleteRecipeAsync(int id)
     {
-        return _recipeRepository.DeleteRecipeAsync(id);
+        if (id <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeRepository.DeleteRecipeAsync(id);
     }
 }

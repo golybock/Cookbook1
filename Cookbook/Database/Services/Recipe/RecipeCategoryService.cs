@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 
@@ -17,33 +16,56 @@ public class RecipeCategoryService : IRecipeCategoryService
         _recipeCategoryRepository = new RecipeCategoryRepository();
     }
     
-    public Task<RecipeCategory> GetRecipeCategoryAsync(int id)
+    public async Task<RecipeCategory?> GetRecipeCategoryAsync(int id)
     {
-        return _recipeCategoryRepository.GetRecipeCategoryAsync(id);
+        if (id <= 0)
+            return null;
+
+        return await _recipeCategoryRepository.GetRecipeCategoryAsync(id);
     }
 
-    public Task<RecipeCategory> GetRecipeMainCategoryAsync(int recipeId)
+    public async Task<RecipeCategory?> GetRecipeMainCategoryAsync(int recipeId)
     {
-        return _recipeCategoryRepository.GetRecipeMainCategoryAsync(recipeId);
+        if (recipeId <= 0)
+            return null;
+        
+        return await _recipeCategoryRepository.GetRecipeMainCategoryAsync(recipeId);
     }
 
-    public Task<List<RecipeCategory>> GetRecipeCategoriesAsync(int recipeId)
+    public async Task<List<RecipeCategory>> GetRecipeCategoriesAsync(int recipeId)
     {
-        return _recipeCategoryRepository.GetRecipeCategoriesAsync(recipeId);
+        if (recipeId <= 0)
+            return new List<RecipeCategory>();
+        
+        return await _recipeCategoryRepository.GetRecipeCategoriesAsync(recipeId);
     }
 
-    public Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory)
+    public async Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory)
     {
-        return _recipeCategoryRepository.AddRecipeCategoryAsync(recipeCategory);
+        if (recipeCategory.CategoryId <= 0 ||
+            recipeCategory.RecipeId <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeCategoryRepository.AddRecipeCategoryAsync(recipeCategory);
     }
 
-    public Task<CommandResult> UpdateRecipeCategoryAsync(RecipeCategory recipeCategory)
+    public async Task<CommandResult> UpdateRecipeCategoryAsync(RecipeCategory recipeCategory)
     {
-        return _recipeCategoryRepository.UpdateRecipeCategoryAsync(recipeCategory);
+        if(recipeCategory.Id <= 0)
+            return CommandResults.BadRequest;
+
+        if (recipeCategory.CategoryId <= 0 ||
+            recipeCategory.RecipeId <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeCategoryRepository.UpdateRecipeCategoryAsync(recipeCategory);
     }
 
-    public Task<CommandResult> DeleteRecipeCategoryAsync(int id)
+    public async Task<CommandResult> DeleteRecipeCategoryAsync(int id)
     {
-        return _recipeCategoryRepository.DeleteRecipeCategoryAsync(id);
+        if (id <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeCategoryRepository.DeleteRecipeCategoryAsync(id);
     }
 }

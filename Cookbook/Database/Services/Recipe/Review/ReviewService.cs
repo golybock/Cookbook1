@@ -4,6 +4,7 @@ using Cookbook.Database.Repositories.Recipe.Review;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces.ReviewInterfaces;
 using Cookbook.Models.Database;
 using Models.Models.Database;
+using ModernWpf.Controls;
 using ReviewModel = Cookbook.Models.Database.Recipe.Review.Review;
 
 namespace Cookbook.Database.Services.Recipe.Review;
@@ -17,38 +18,71 @@ public class ReviewService : IReviewService
         _reviewRepository = new ReviewRepository();
     }
     
-    public Task<ReviewModel> GetReviewAsync(int id)
+    public async Task<ReviewModel?> GetReviewAsync(int id)
     {
-        return _reviewRepository.GetReviewAsync(id);
+        if (id <= 0)
+            return null;
+        
+        return await _reviewRepository.GetReviewAsync(id);
     }
 
-    public Task<decimal> GetAvgRatingByRecipe(int recipeId)
+    public async Task<decimal> GetAvgRatingByRecipe(int recipeId)
     {
-        return _reviewRepository.GetAvgRatingByRecipe(recipeId);
+        if (recipeId <= 0)
+            return -1;
+        
+        return await _reviewRepository.GetAvgRatingByRecipe(recipeId);
     }
 
-    public Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
+    public async Task<List<ReviewModel>> GetReviewsAsync(int recipeId)
     {
-        return _reviewRepository.GetReviewsAsync(recipeId);
+        if (recipeId <= 0)
+            return new List<ReviewModel>();
+        
+        return await _reviewRepository.GetReviewsAsync(recipeId);
     }
 
-    public Task<List<ReviewModel>> GetClientReviewAsync(int clientId)
+    public async Task<List<ReviewModel>> GetClientReviewAsync(int clientId)
     {
-        return _reviewRepository.GetClientReviewAsync(clientId);
+        if (clientId <= 0)
+            return new List<ReviewModel>();
+        
+        return await _reviewRepository.GetClientReviewAsync(clientId);
     }
 
-    public Task<CommandResult> AddReviewAsync(ReviewModel review)
+    public async Task<CommandResult> AddReviewAsync(ReviewModel review)
     {
-        return _reviewRepository.AddReviewAsync(review);
+        if(review.Grade <= 0 || review.Grade > 5)
+            return CommandResults.BadRequest;
+        
+        if(review.ClientId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(review.RecipeId <= 0)
+            return CommandResults.BadRequest;
+
+        return await _reviewRepository.AddReviewAsync(review);
     }
 
-    public Task<CommandResult> UpdateReviewAsync(ReviewModel review)
+    public async Task<CommandResult> UpdateReviewAsync(ReviewModel review)
     {
-        return _reviewRepository.UpdateReviewAsync(review);
+        if(review.Grade <= 0 || review.Grade > 5)
+            return CommandResults.BadRequest;
+        
+        if(review.ClientId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(review.RecipeId <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _reviewRepository.UpdateReviewAsync(review);
     }
 
-    public Task<CommandResult> DeleteReviewAsync(int id)
+    public async Task<CommandResult> DeleteReviewAsync(int id)
     {
-        return _reviewRepository.DeleteReviewAsync(id);
+        if(id <= 0)
+            return CommandResults.BadRequest; 
+        
+        return await _reviewRepository.DeleteReviewAsync(id);
     }
 }

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe.Ingredients;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
 
@@ -17,9 +16,12 @@ public class IngredientService : IIngredientService
         _ingredientRepository = new IngredientRepository();
     }
     
-    public Task<Ingredient> GetIngredientAsync(int id)
+    public async Task<Ingredient?> GetIngredientAsync(int id)
     {
-        return _ingredientRepository.GetIngredientAsync(id);
+        if (id <= 0)
+            return null;
+        
+        return await _ingredientRepository.GetIngredientAsync(id);
     }
 
     public Task<List<Ingredient>> GetIngredientsAsync()
@@ -27,18 +29,36 @@ public class IngredientService : IIngredientService
         return _ingredientRepository.GetIngredientsAsync();
     }
 
-    public Task<CommandResult> AddIngredientAsync(Ingredient ingredient)
+    public async Task<CommandResult> AddIngredientAsync(Ingredient ingredient)
     {
-        return _ingredientRepository.AddIngredientAsync(ingredient);
+        if(ingredient.MeasureId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(string.IsNullOrWhiteSpace(ingredient.Name))
+            return CommandResults.BadRequest;
+        
+        return await _ingredientRepository.AddIngredientAsync(ingredient);
     }
 
-    public Task<CommandResult> UpdateIngredientAsync(Ingredient ingredient)
+    public async Task<CommandResult> UpdateIngredientAsync(Ingredient ingredient)
     {
-        return _ingredientRepository.UpdateIngredientAsync(ingredient);
+        if(ingredient.Id <= 0)
+            return CommandResults.BadRequest;
+        
+        if(ingredient.MeasureId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(string.IsNullOrWhiteSpace(ingredient.Name))
+            return CommandResults.BadRequest;
+        
+        return await _ingredientRepository.UpdateIngredientAsync(ingredient);
     }
 
-    public Task<CommandResult> DeleteIngredientAsync(int id)
+    public async Task<CommandResult> DeleteIngredientAsync(int id)
     {
-        return _ingredientRepository.DeleteIngredientAsync(id);
+        if(id <= 0)
+            return CommandResults.BadRequest; 
+        
+        return await _ingredientRepository.DeleteIngredientAsync(id);
     }
 }

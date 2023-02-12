@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 
@@ -17,33 +17,66 @@ public class RecipeImageService : IRecipeImageService
         _recipeImageRepository = new RecipeImageRepository();
     }
     
-    public Task<RecipeImage> GetRecipeImageAsync(int id)
+    public async Task<RecipeImage?> GetRecipeImageAsync(int id)
     {
-        return _recipeImageRepository.GetRecipeImageAsync(id);
+        if (id <= 0)
+            return null;
+        
+        return await _recipeImageRepository.GetRecipeImageAsync(id);
     }
 
-    public Task<RecipeImage> GetRecipeImageByRecipeAsync(int recipeId)
+    public async Task<RecipeImage?> GetRecipeImageByRecipeAsync(int recipeId)
     {
-        return _recipeImageRepository.GetRecipeImageByRecipeAsync(recipeId);
+        if (recipeId <= 0)
+            return null;
+        
+        return await _recipeImageRepository.GetRecipeImageByRecipeAsync(recipeId);
     }
 
-    public Task<List<RecipeImage>> GetRecipeImagesAsync(int recipeId)
+    public async Task<List<RecipeImage>> GetRecipeImagesAsync(int recipeId)
     {
-        return _recipeImageRepository.GetRecipeImagesAsync(recipeId);
+        if (recipeId <= 0)
+            return new List<RecipeImage>();
+        
+        return await _recipeImageRepository.GetRecipeImagesAsync(recipeId);
     }
 
-    public Task<CommandResult> AddRecipeImageAsync(RecipeImage recipeImage)
+    public async Task<CommandResult> AddRecipeImageAsync(RecipeImage recipeImage)
     {
-        return _recipeImageRepository.AddRecipeImageAsync(recipeImage);
+        if(recipeImage.RecipeId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(string.IsNullOrWhiteSpace(recipeImage.ImagePath))
+            return CommandResults.BadRequest;
+        
+        if(!File.Exists(recipeImage.ImagePath))
+            return CommandResults.BadRequest;
+        
+        return await _recipeImageRepository.AddRecipeImageAsync(recipeImage);
     }
 
-    public Task<CommandResult> UpdateRecipeImageAsync(RecipeImage recipeImage)
+    public async Task<CommandResult> UpdateRecipeImageAsync(RecipeImage recipeImage)
     {
-        return _recipeImageRepository.UpdateRecipeImageAsync(recipeImage);
+        if (recipeImage.Id <= 0)
+            return CommandResults.BadRequest;
+        
+        if(recipeImage.RecipeId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(string.IsNullOrWhiteSpace(recipeImage.ImagePath))
+            return CommandResults.BadRequest;
+        
+        if(!File.Exists(recipeImage.ImagePath))
+            return CommandResults.BadRequest;
+
+        return await _recipeImageRepository.UpdateRecipeImageAsync(recipeImage);
     }
 
-    public Task<CommandResult> DeleteRecipeImageAsync(int id)
+    public async Task<CommandResult> DeleteRecipeImageAsync(int id)
     {
-        return _recipeImageRepository.DeleteRecipeImageAsync(id);
+        if (id <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeImageRepository.DeleteRecipeImageAsync(id);
     }
 }

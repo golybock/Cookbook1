@@ -88,7 +88,7 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         
         con.Open();
         
-        RecipeCategory recipeCategory = new RecipeCategory();
+        RecipeCategory? recipeCategory = new RecipeCategory();
 
         try
         {

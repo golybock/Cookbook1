@@ -17,14 +17,20 @@ public class RecipeIngredientService : IRecipeIngredientService
         _recipeIngredientRepository = new RecipeIngredientRepository();
     }
     
-    public Task<RecipeIngredient> GetRecipeIngredientAsync(int id)
+    public async Task<RecipeIngredient?> GetRecipeIngredientAsync(int id)
     {
-        return _recipeIngredientRepository.GetRecipeIngredientAsync(id);
+        if (id <= 0)
+            return null;
+        
+        return await _recipeIngredientRepository.GetRecipeIngredientAsync(id);
     }
 
-    public Task<List<RecipeIngredient>> GetRecipeIngredientByRecipeAsync(int recipeId)
+    public async Task<List<RecipeIngredient>> GetRecipeIngredientByRecipeAsync(int recipeId)
     {
-        return _recipeIngredientRepository.GetRecipeIngredientByRecipeAsync(recipeId);
+        if (recipeId <= 0)
+            return new List<RecipeIngredient>(); 
+        
+        return await _recipeIngredientRepository.GetRecipeIngredientByRecipeAsync(recipeId);
     }
 
     public Task<List<RecipeIngredient>> GetRecipeIngredientsAsync()
@@ -32,18 +38,38 @@ public class RecipeIngredientService : IRecipeIngredientService
         return _recipeIngredientRepository.GetRecipeIngredientsAsync();
     }
 
-    public Task<CommandResult> AddRecipeIngredientAsync(RecipeIngredient recipeIngredient)
+    public async Task<CommandResult> AddRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
-        return _recipeIngredientRepository.AddRecipeIngredientAsync(recipeIngredient);
+        if(recipeIngredient.IngredientId <=0 ||
+           recipeIngredient.RecipeId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(recipeIngredient.Count < 1)
+            return CommandResults.BadRequest;
+        
+        return await _recipeIngredientRepository.AddRecipeIngredientAsync(recipeIngredient);
     }
 
-    public Task<CommandResult> UpdateRecipeIngredientAsync(RecipeIngredient recipeIngredient)
+    public async Task<CommandResult> UpdateRecipeIngredientAsync(RecipeIngredient recipeIngredient)
     {
-        return _recipeIngredientRepository.UpdateRecipeIngredientAsync(recipeIngredient);
+        if(recipeIngredient.Id <= 0)
+            return CommandResults.BadRequest;
+        
+        if(recipeIngredient.IngredientId <=0 ||
+           recipeIngredient.RecipeId <= 0)
+            return CommandResults.BadRequest;
+        
+        if(recipeIngredient.Count < 1)
+            return CommandResults.BadRequest;
+        
+        return await _recipeIngredientRepository.UpdateRecipeIngredientAsync(recipeIngredient);
     }
 
-    public Task<CommandResult> DeleteRecipeIngredientAsync(int id)
+    public async Task<CommandResult> DeleteRecipeIngredientAsync(int id)
     {
-        return _recipeIngredientRepository.DeleteRecipeIngredientAsync(id);
+        if(id <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeIngredientRepository.DeleteRecipeIngredientAsync(id);
     }
 }

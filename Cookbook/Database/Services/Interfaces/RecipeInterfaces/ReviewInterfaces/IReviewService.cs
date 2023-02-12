@@ -9,7 +9,7 @@ namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces.ReviewInterface
 
 public interface IReviewService
 {
-    public Task<Review> GetReviewAsync(int id);
+    public Task<Review?> GetReviewAsync(int id);
     public Task<decimal> GetAvgRatingByRecipe(int recipeId);
     public Task<List<Review>> GetReviewsAsync(int recipeId);
     public Task<List<Review>> GetClientReviewAsync(int clientId);
