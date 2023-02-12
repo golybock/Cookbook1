@@ -55,9 +55,7 @@ public partial class RegisterPage : Page
         string file = files[0];
         // если файл картинка
         if (file.EndsWith(".png") || file.EndsWith(".jpg"))
-        {
             SetImage(file);
-        }
     }
 
     private void ChooseImage()

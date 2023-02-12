@@ -217,7 +217,7 @@ public class ClientService : IClientService
 
     private bool LoginValid(string login)
     {
-        return _clientService.GetClientAsync(login).Id == 0;
+        return _clientService.GetClientAsync(login).Result.Id == 0;
     }
 
 }

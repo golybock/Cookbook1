@@ -116,6 +116,12 @@ public class RecipeService : IRecipeService
 
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
+            
+            if (_client.Id != 0)
+            {
+                var like = RecipeIsLiked(recipe.Id);
+                recipe.IsLiked = await like;
+            }
         }
 
         return recipes;
@@ -130,6 +136,21 @@ public class RecipeService : IRecipeService
         foreach (var favRecipe in favRecipes)
         {
             var recipe = await GetRecipeAsync(favRecipe.RecipeId);
+
+            
+            
+            recipe.Rating =
+                await _reviewService.GetAvgRatingByRecipe(recipe.Id);
+
+            recipe.Category =
+                await GetRecipeMainCategoryAsync(recipe.Id);
+            
+            if (_client.Id != 0)
+            {
+                var like = RecipeIsLiked(recipe.Id);
+                recipe.IsLiked = await like;
+            }
+            
             recipes.Add(recipe);
         }
 
