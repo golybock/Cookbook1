@@ -13,6 +13,7 @@ public interface IClientSubRepository
     public Task<ClientSub?> GetClientSubAsync(int clientId, int subId);
     public Task<List<ClientSub>> GetClientSubsAsync(int clientId);
     public Task<List<ClientSub>> GetSubsClientAsync(int clientId);
+    public Task<bool> ClientIsLiked(int clientId, int subId);
     public Task<CommandResult> AddClientSubAsync(ClientSub clientSub);
     public Task<CommandResult> UpdateClientSubAsync(ClientSub clientSub);
     public Task<CommandResult> DeleteClientSubAsync(int id);

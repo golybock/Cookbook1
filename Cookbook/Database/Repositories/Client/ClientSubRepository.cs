@@ -158,6 +158,41 @@ public class ClientSubRepository : MainDbClass, IClientSubRepository
         }
     }
 
+    public async Task<bool> ClientIsLiked(int clientId, int subId)
+    {
+        var con = GetConnection();
+        con.Open();
+        bool result = false;
+        try
+        {
+            string query = $"select * from client_subs where client_id = $1 and sub = $2";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new() { Value = clientId },
+                    new () { Value = subId }
+                }
+            };
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                result = reader.GetInt32(reader.GetOrdinal("id")) > 0;
+            }
+
+            return result;
+        }
+        catch
+        {
+            return false;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+
     public async Task<CommandResult> AddClientSubAsync(ClientSub clientSub)
     {
         var con = GetConnection();

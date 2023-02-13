@@ -47,6 +47,11 @@ public class ClientSubService : IClientSubService
         return await _clientSubRepository.GetSubsClientAsync(clientId);
     }
 
+    public async Task<bool> ClientIsLiked(int clientId, int subId)
+    {
+        return await _clientSubRepository.ClientIsLiked(clientId, subId);
+    }
+
     public async Task<CommandResult> AddClientSubAsync(ClientSub clientSub)
     {
         if(clientSub.Sub <= 0 ||

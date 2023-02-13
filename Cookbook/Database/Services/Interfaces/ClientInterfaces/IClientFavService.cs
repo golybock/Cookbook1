@@ -12,6 +12,7 @@ public interface IClientFavService
     public Task<List<FavoriteRecipe>> GetFavoriteRecipesAsync(int clientId);
     public Task<bool> GetRecipeIsLiked(int recipeId, int clientId);
     public Task<CommandResult> AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe);
+    
     public Task<CommandResult> UpdateFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe);
     public Task<CommandResult> DeleteFavoriteRecipeAsync(int id);
     public Task<CommandResult> DeleteFavoriteRecipeAsync(int recipeId, int clientId);

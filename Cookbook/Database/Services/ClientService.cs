@@ -105,9 +105,17 @@ public class ClientService : IClientService
     public async Task<List<ClientModel>> GetClients()
     {
         List<ClientModel> clients = await _clientService.GetClientsAsync();
+
+        foreach (var client in clients)
+        {
+            client.IsLiked =
+                await _clientSubService.ClientIsLiked(_client.Id, client.Id);
+        }
         
         return clients;
     }
+    
+    
     
     public async Task<List<ClientModel>> GetClientSubs(int clientId)
     {
@@ -153,7 +161,9 @@ public class ClientService : IClientService
             var clientSubOn = _clientSubService.GetClientSubsAsync(client.Id);
             var clientSubs = _clientSubService.GetSubsClientAsync(client.Id);
             var image = await imagePath;
+            var isLiked = _clientSubService.ClientIsLiked(_client.Id, client.Id);
 
+            client.IsLiked = await isLiked;
             client.Recipes = await recipes;
             client.Reviews = await reviews;
             client.ClientImages = await clientImages;
