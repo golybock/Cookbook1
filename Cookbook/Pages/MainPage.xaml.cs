@@ -50,7 +50,7 @@ public partial class MainPage : Page
         if (NavigationService != null)
             if (recipe != null)
                 NavigationService.Navigate(
-                    new RecipePage(recipe, _client)
+                    new RecipePage(_client, id)
                 );
     }
 

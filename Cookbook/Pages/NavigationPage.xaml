@@ -14,7 +14,7 @@
                            IsBackButtonVisible="Collapsed"
                            PaneDisplayMode="LeftCompact"
                            ItemInvoked="NavigationView_OnItemInvoked"
-                           IsBackEnabled="{Binding ElementName=MainFrame, Path=CanGoBack, UpdateSourceTrigger=PropertyChanged}">
+                           IsSettingsVisible="False">
             
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem Tag="MainPage" Content="Home" Icon="Home"/>

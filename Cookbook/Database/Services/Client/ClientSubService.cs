@@ -26,6 +26,11 @@ public class ClientSubService : IClientSubService
         return await _clientSubRepository.GetClientSubAsync(id);
     }
 
+    public async Task<ClientSub?> GetClientSubAsync(int clientId, int subId)
+    {
+        return await _clientSubRepository.GetClientSubAsync(clientId, subId);
+    }
+
     public async Task<List<ClientSub>> GetClientSubsAsync(int clientId)
     {
         if (clientId <= 0)

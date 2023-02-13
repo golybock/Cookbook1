@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows.Markup;
 using Cookbook.Database.Services;
 using Cookbook.Models.Database.Client;
 using Models.Models.Database.Client;
@@ -11,7 +12,7 @@ namespace Cookbook.Pages.Recipe;
 public partial class RecipePage : Page
 {
     private readonly Client _client;
-    private readonly RecipeModel _recipe;
+    private RecipeModel _recipe;
     private readonly RecipeService _recipeService;
     
     public RecipePage(RecipeModel recipe, Client client)
@@ -23,6 +24,22 @@ public partial class RecipePage : Page
         DataContext = _recipe;
         
         InitializeComponent();
+    }
+    
+    public RecipePage(Client client, int recipeId)
+    {
+        _client = client;
+        _recipeService = new RecipeService(_client);
+
+        GetRecipe(recipeId);
+        
+        InitializeComponent();
+    }
+
+    private async Task GetRecipe(int recipeId)
+    {
+        _recipe = await _recipeService.GetRecipeAsync(recipeId);
+        DataContext = _recipe;
     }
 
     private void RecipeMainView_OnLikeClicked(int id)

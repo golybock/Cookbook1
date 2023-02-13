@@ -8,6 +8,8 @@
       mc:Ignorable="d"
       Title="Подписки">
       
-    <client:ClientListView/>
+    <client:ClientListView x:Name="ClientListView"
+                           OpenClicked="ClientListView_OnOpenClicked"
+                           LikeClicked="ClientListView_OnLikeClicked"/>
       
 </Page>

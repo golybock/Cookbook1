@@ -25,7 +25,7 @@
             BorderThickness="3"
             Background="PapayaWhip">
             
-            <Grid ShowGridLines="True">
+            <Grid>
                 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60*"/>
@@ -56,7 +56,8 @@
                                   FontWeight="Heavy"/>
                     
                        <controls:RatingControl HorizontalAlignment="Left"
-                                               Value="{Binding Rating, TargetNullValue = -1}"/>
+                                               Value="{Binding Rating, TargetNullValue = -1}"
+                                               IsReadOnly="True"/>
                     
                        <TextBlock Text="{Binding Time, FallbackValue=Время}"
                                   FontSize="16"
@@ -74,8 +75,6 @@
                                TextWrapping="Wrap"/>
                     
                 </controls:SimpleStackPanel>
-                
-
                 
                 <TextBlock Name="Id"
                            Visibility="Collapsed"
@@ -113,6 +112,8 @@
                            FontSize="26"
                            FontWeight="Heavy"/>
                 
+                <TextBlock Text="{Binding Text}"
+                           FontSize="20"/>
                 
             </controls:SimpleStackPanel>
 

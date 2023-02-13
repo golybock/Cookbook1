@@ -27,7 +27,7 @@ public partial class NavigationPage : Page
     
     public NavigationPage(Client client)
     {
-        _client = client;
+        _client = client; 
         InitializeComponent();
     }
 

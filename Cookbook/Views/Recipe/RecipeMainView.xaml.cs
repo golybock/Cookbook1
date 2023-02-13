@@ -34,5 +34,4 @@ public partial class RecipeMainView : UserControl
         DeleteClicked?.Invoke(id);
     }
     
-    
 }

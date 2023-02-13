@@ -6,19 +6,37 @@ namespace Cookbook.Views.Client;
 
 public partial class ClientListView : UserControl
 {
+    public delegate void DeleteClick(int id);
+    public delegate void EditClick(int id);
+    public delegate void OpenClick(int id);
+    public delegate void LikeCLick(int id);
+    public event DeleteClick? DeleteClicked;
+    public event EditClick? EditClicked;
+    public event OpenClick? OpenClicked;
+    public event LikeCLick? LikeClicked;
+    
     public ClientListView()
     {
         InitializeComponent();
     }
-    
 
-    private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
+    private void ClientMediumView_OnLikeClicked(int id)
     {
-        throw new System.NotImplementedException();
+        LikeClicked?.Invoke(id);
     }
 
-    private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
+    private void ClientMediumView_OnEditClicked(int id)
     {
-        throw new System.NotImplementedException();
+        EditClicked?.Invoke(id);
+    }
+
+    private void ClientMediumView_OnDeleteClicked(int id)
+    {
+        DeleteClicked?.Invoke(id);
+    }
+
+    private void ClientMediumView_OnOpenClicked(int id)
+    {
+        OpenClicked?.Invoke(id);
     }
 }

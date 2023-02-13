@@ -9,6 +9,7 @@ namespace Cookbook.Database.Services.Interfaces.ClientInterfaces;
 public interface IClientSubService
 {
     public Task<ClientSub?> GetClientSubAsync(int id);
+    public Task<ClientSub?> GetClientSubAsync(int clientId, int subId);
     public Task<List<ClientSub>> GetClientSubsAsync(int clientId);
     public Task<List<ClientSub>> GetSubsClientAsync(int clientId);
     public Task<CommandResult> AddClientSubAsync(ClientSub clientSub);

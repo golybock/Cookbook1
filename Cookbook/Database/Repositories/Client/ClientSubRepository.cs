@@ -48,6 +48,44 @@ public class ClientSubRepository : MainDbClass, IClientSubRepository
         }
     }
 
+    public async Task<ClientSub?> GetClientSubAsync(int clientId, int subId)
+    {
+        var con = GetConnection();
+        con.Open();
+        try
+        {
+            ClientSub clientSub = new ClientSub();
+            string query = $"select * from client_subs where client_id = $1 and sub = $2";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new() { Value = clientId},
+                    new () { Value = subId }
+                }
+            };
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                clientSub.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                clientSub.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
+                clientSub.Sub = reader.GetInt32(reader.GetOrdinal("sub"));
+                clientSub.DateOfSub = reader.GetDateTime(reader.GetOrdinal("date_of_sub"));
+            }
+            
+            return clientSub;
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+
     public async Task<List<ClientSub>> GetClientSubsAsync(int clientId)
     {
         var con = GetConnection();

@@ -4,10 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:converters="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
+             MouseDoubleClick="ClientMediumView_OnMouseDoubleClick"
              d:DesignHeight="400" d:DesignWidth="250">
     
     <UserControl.Resources>
+        
+        <converters:BoolToColorBrushConverter x:Key="ToColorBrushConverter"/>
+        
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe ui"></Setter>
             <Setter Property="FontSize" Value="24"></Setter>
@@ -60,20 +65,23 @@
                     
                 </ui:SimpleStackPanel>
 
+                <TextBlock Name="Id"
+                           Text="{Binding Id}"
+                           Visibility="Collapsed"></TextBlock>
                 
-                <Border Name="LikeButton" 
+                <Border Name="LikeButton"
                         Grid.Column="1"
                         Grid.Row="2"
                         CornerRadius="50"
-                        Background="White"
+                        Background="{Binding IsLiked, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ToColorBrushConverter}}"
                         BorderThickness="1"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Width="40"
                         Height="40"
                         Margin="10">
-                        <Image Margin="10"
-                               Source="../../Resources/MenuIcons/heart256.png"/>
+                    <Image Margin="10"
+                           Source="../../Resources/MenuIcons/heart256.png"/>
                 </Border>
 
             </Grid>

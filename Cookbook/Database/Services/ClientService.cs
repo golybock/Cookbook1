@@ -11,6 +11,7 @@ using Cookbook.Models.Database.Client;
 using Cookbook.Models.Login;
 using Cookbook.Models.Register;
 using Cookbook.Models.Register.Password;
+using Models.Models.Database;
 using Models.Models.Login;
 using ClientModel = Models.Models.Database.Client.Client;
 
@@ -123,6 +124,21 @@ public class ClientService : IClientService
         }
 
         return clients;
+    }
+
+    public Task<CommandResult> AddClientToSub(int clientId)
+    {
+        return _clientSubService.AddClientSubAsync(new ClientSub() { ClientId = _client.Id, Sub = clientId });
+    }
+
+    public async Task<CommandResult> DeleteClientFromSub(int clientId)
+    {
+        var sub = await _clientSubService.GetClientSubAsync(_client.Id, clientId);
+
+        if (sub != null)
+            return await _clientSubService.DeleteClientSubAsync(sub.Id);
+        
+        return CommandResults.BadRequest;
     }
 
     private async Task GetClientInfo(ClientModel? client)
