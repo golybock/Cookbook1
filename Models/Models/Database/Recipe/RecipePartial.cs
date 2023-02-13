@@ -23,6 +23,9 @@ public partial class Recipe : INotifyPropertyChanged
         }
     }
     public decimal? Rating { get; set; }
+
+    public TimeOnly Time => TimeOnly.Parse(new DateTime(0,0,0,0,CookingTime,0).ToString());
+
     public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged(PropertyChangedEventArgs e)
     {

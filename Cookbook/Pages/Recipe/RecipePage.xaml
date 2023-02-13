@@ -8,7 +8,10 @@
       Title="RecipePage">
     <ScrollViewer>
         <Grid>
-            <recipe:RecipeMainView/>
+            <recipe:RecipeMainView x:Name="RecipeMainView"
+                                   LikeClicked="RecipeMainView_OnLikeClicked"
+                                   DeleteClicked="RecipeMainView_OnDeleteClicked"
+                                   EditClicked="RecipeMainView_OnEditClicked"/>
         </Grid>
     </ScrollViewer>
 </Page>

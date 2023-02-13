@@ -3,11 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:controls="http://schemas.modernwpf.com/2019"
              xmlns:converters="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="700">
+             d:DesignHeight="400" d:DesignWidth="400">
  <UserControl.Resources>
      
     <converters:BoolToColorBrushConverter x:Key="ToColorBrushConverter"/>
@@ -19,67 +18,72 @@
         </Style>
     </UserControl.Resources>
     
-    <Border CornerRadius="15" 
+    <StackPanel Orientation="Vertical">
+        
+        <Border CornerRadius="15" 
             BorderBrush="Transparent"
             BorderThickness="3"
             Background="PapayaWhip">
             
-            <Grid>
+            <Grid ShowGridLines="True">
                 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="35*"/>
-                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="40*"/>
                 </Grid.RowDefinitions>
                 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="10*"/>
                 </Grid.ColumnDefinitions>
                 
                 
                 <Image Grid.Row="0"
                        Grid.Column="0"
-                       Grid.ColumnSpan="2"
-                       Height="250"
-                       Width="250"
+                       Height="200"
+                       Width="200"
                        Source="{Binding ImagePath}"/>
                 
-                <controls:SimpleStackPanel Grid.Row="1"
-                                     Grid.ColumnSpan="2"
-                                     Grid.Column="0"
-                                     Spacing="14"
-                                     Margin="25">
-                       <TextBlock 
-                            Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}"/>
+                <controls:SimpleStackPanel Grid.Row="0"
+                                           Grid.Column="1"
+                                           Spacing="14"
+                                           Margin="25">
+                       <TextBlock Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}"/>
                        
                        <TextBlock Text="{Binding Category, FallbackValue=Категория, TargetNullValue=Категория}"
                                   FontSize="26"
                                   FontWeight="Heavy"/>
                     
+                       <controls:RatingControl HorizontalAlignment="Left"
+                                               Value="{Binding Rating, TargetNullValue = -1}"/>
+                    
+                       <TextBlock Text="{Binding Time, FallbackValue=Время}"
+                                  FontSize="16"
+                                  VerticalAlignment="Center"/>
+                       
+                </controls:SimpleStackPanel>
+                
+                <controls:SimpleStackPanel Grid.Row="1"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           Spacing="14"
+                                           Margin="25">
+                
+                    <TextBlock Text="{Binding Description}"
+                               TextWrapping="Wrap"/>
                     
                 </controls:SimpleStackPanel>
-
-                <controls:RatingControl Grid.Row="2"
-                                  Grid.Column="0"
-                                  Value="{Binding Rating, TargetNullValue = -1}"
-                                  IsReadOnly="True"/>
-
                 
-                <!-- <TextBlock Grid.Row="2" -->
-                <!--            Grid.Column="0" -->
-                <!--            Text="{Binding Time, FallbackValue=Время}" -->
-                <!--            FontSize="16" -->
-                <!--            VerticalAlignment="Center" -->
-                <!--            Margin="40,0,0,0"/> -->
+
                 
                 <TextBlock Name="Id"
                            Visibility="Collapsed"
                            Text="{Binding Id}"></TextBlock>
                 
                 <Border Name="LikeButton" 
-                        Grid.Column="1"
-                        Grid.Row="2"
+                        Grid.Column="2"
+                        Grid.Row="1"
                         CornerRadius="50"
                         Background="{Binding IsLiked, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ToColorBrushConverter}}"
                         BorderThickness="1"
@@ -94,6 +98,29 @@
 
             </Grid>
             
-    </Border>
+        </Border>
+        
+        <Border CornerRadius="15" 
+                BorderBrush="Transparent"
+                BorderThickness="3"
+                Background="PapayaWhip">
+            
+            
+            <controls:SimpleStackPanel Spacing="14"
+                                       Margin="25">
+                
+                <TextBlock Text="Шаги приготовления:"
+                           FontSize="26"
+                           FontWeight="Heavy"/>
+                
+                
+            </controls:SimpleStackPanel>
+
+            
+        </Border>
+        
+    </StackPanel>
+    
+    
     
 </UserControl>

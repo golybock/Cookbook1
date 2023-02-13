@@ -47,9 +47,10 @@ public partial class MainPage : Page
     {
         var recipe = Recipes.FirstOrDefault(c => c.Id == id);
 
-        if (NavigationService != null) 
-            NavigationService.Navigate(
-                new RecipePage(recipe)
+        if (NavigationService != null)
+            if (recipe != null)
+                NavigationService.Navigate(
+                    new RecipePage(recipe, _client)
                 );
     }
 
