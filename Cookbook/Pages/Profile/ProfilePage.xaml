@@ -8,6 +8,7 @@
       xmlns:local="clr-namespace:Cookbook.Pages.Profile"
       xmlns:client="clr-namespace:Cookbook.Views.Client"
       xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
+      xmlns:views="clr-namespace:Cookbook.Views"
       mc:Ignorable="d"
       Title="Профиль">
     <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
@@ -38,7 +39,16 @@
                     
                 </Grid>
                 
-                <recipe:RecipesListView Height="420"/>
+                <recipe:RecipesListView x:Name="RecipesListView"
+                                        Height="420"
+                                        DeleteClicked="RecipesListView_OnDeleteClicked"
+                                        EditClicked="RecipesListView_OnEditClicked"
+                                        OpenClicked="RecipesListView_OnOpenClicked"
+                                        LikeClicked="RecipesListView_OnLikeClicked"
+                                        Visibility="Visible"/>
+                
+                <views:NothingShowView x:Name="NothingShowView"
+                                       Visibility="Collapsed"/>
                 
             </ui:SimpleStackPanel>
             

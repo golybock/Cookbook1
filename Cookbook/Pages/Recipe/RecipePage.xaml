@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
-      Title="RecipePage">
+      Title="{Binding Name}">
     <ScrollViewer>
         <Grid>
             <recipe:RecipeMainView x:Name="RecipeMainView"

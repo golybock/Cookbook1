@@ -91,7 +91,9 @@ public class ClientService : IClientService
         
         client.Password = Hash(client.Password);
 
-        client.Id = _clientService.AddClientAsync(client).Id;
+        var result = await _clientService.AddClientAsync(client);
+
+        client.Id = result.ValueId;
 
         ClientImage clientImage = new ClientImage();
 

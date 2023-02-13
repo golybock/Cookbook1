@@ -134,16 +134,15 @@ public class ClientRepository : MainDbClass, IClientRepository
         con.Open();
         try
         {
-            string query = $"insert into client(login, password, name, description)" +
-                           $" values ($1, $2, $3, $4) returning id";
+            string query = $"insert into client(login, password, name)" +
+                           $" values ($1, $2, $3) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new() { Value = client.Login },
                     new() { Value = client.Password },
-                    new() { Value = client.Name },
-                    new() { Value = client.Description }
+                    new() { Value = client.Name }
                 }
             }; 
             
