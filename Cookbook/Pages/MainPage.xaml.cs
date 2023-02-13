@@ -43,61 +43,35 @@ public partial class MainPage : Page
         DataContext = this;
     }
 
-    private void RecipesListView_OnDeleteClicked()
+    private void RecipesListView_OnOpenClicked(int id)
     {
-        var selectedItem = GetSelectedObject();
-        
-        if (selectedItem != null)
-        {
-            ShowAcceptDialog();
-        }
-    }
-
-    private void RecipesListView_OnEditClicked()
-    {
-        var selectedItem = GetSelectedObject() as RecipeModel;
+        var recipe = Recipes.FirstOrDefault(c => c.Id == id);
 
         if (NavigationService != null) 
             NavigationService.Navigate(
-                new AddEditRecipePage(selectedItem)
-            );
-    }
-
-    private void RecipesListView_OnOpenClicked()
-    {
-        var selectedItem = GetSelectedObject() as RecipeModel;
-
-        if (NavigationService != null) 
-            NavigationService.Navigate(
-                new RecipePage(selectedItem)
+                new RecipePage(recipe)
                 );
     }
 
-    private void RecipesListView_OnLikeClicked()
+    private void RecipesListView_OnLikeClicked(int id)
     {
-        var selectedItem = (RecipeModel) GetSelectedObject()!;
+        var recipe = Recipes.FirstOrDefault(c => c.Id == id);
+
+        if (recipe!.IsLiked == true)
         {
-            var recipe = Recipes.FirstOrDefault(c => c.Id == selectedItem.Id);
-
-            if (selectedItem!.IsLiked == true)
-            {
-                MessageBox.Show("не лайк");
-                recipe.IsLiked = false;
-                _recipeService.DeleteFavRecipes(selectedItem.Id, _client.Id);
-            }
-            else
-            {
-                MessageBox.Show("лайк");
-                recipe.IsLiked = true;
-                _recipeService.AddRecipeToFav(new FavoriteRecipe() {ClientId = _client.Id, RecipeId = selectedItem.Id});
-            }
+            recipe.IsLiked = false;
+            _recipeService.DeleteFavRecipes(id, _client.Id);
         }
-
+        else
+        {
+            recipe.IsLiked = true;
+            _recipeService.AddRecipeToFav(new FavoriteRecipe() {ClientId = _client.Id, RecipeId = id});
+        }
 
         DataContext = this;
     }
     
-    private async void ShowAcceptDialog()
+    private async void ShowAcceptDialog(int id)
     {
         ContentDialog acceptDialog = new ContentDialog()
         {
@@ -111,28 +85,37 @@ public partial class MainPage : Page
         if (await acceptDialog.ShowAsync() == ContentDialogResult.Primary)
         {
             #pragma warning disable CS4014
-            DeleteRecipe();
+            DeleteRecipe(id);
             #pragma warning restore CS4014
         }
     }
     
-    private async Task DeleteRecipe()
+    private async Task DeleteRecipe(int id)
     {
-        var selectedItem = GetSelectedObject();
+        var recipe = Recipes.FirstOrDefault(c => c.Id == id);
 
-        if (selectedItem is RecipeModel recipe)
+        if (recipe != null)
         {
             await _recipeService.DeleteRecipeAsync(recipe.Id);
             Recipes.Remove(recipe);
-            DataContext = this;
         }
-        
+
+        DataContext = this;
     }
 
-    private object? GetSelectedObject()
+    private void RecipesListView_OnDeleteClicked(int id)
     {
-        return RecipesListView
-            .RecipesListBox
-            .SelectedItem;
+        ShowAcceptDialog(id);
+    }
+
+    private void RecipesListView_OnEditClicked(int id)
+    {
+        var recipe = Recipes.FirstOrDefault(c => c.Id == id);
+
+        if (NavigationService != null)
+            if (recipe != null)
+                NavigationService.Navigate(
+                    new AddEditRecipePage(recipe)
+                );
     }
 }

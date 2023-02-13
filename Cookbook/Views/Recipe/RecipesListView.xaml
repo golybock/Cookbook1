@@ -27,31 +27,13 @@
                         
                         <Border>
                             
-                            <Border.ContextMenu>
-                                
-                                <ContextMenu>
-                                    
-                                    <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick">
-                                        <MenuItem.Icon>
-                                            <Image Source="../../Resources/MenuIcons/DeleteIcon.png"></Image>
-                                        </MenuItem.Icon>
-
-                                    </MenuItem>
-                            
-                                    <MenuItem Header="Изменить" Name="EditMenuItem" Click="EditMenuItem_OnClick">
-                                        <MenuItem.Icon>
-                                            <Image Source="../../Resources/MenuIcons/EditIcon.png"></Image>
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-
-                                </ContextMenu>
-
-                            </Border.ContextMenu>
-                            
                             <Border.Child>
                                 <local:RecipeMediumView Name="RecipeMediumView"
                                                         Height="400"
-                                                        MouseDoubleClick="RecipeMediumView_OnClicked" LikeClicked="RecipeMediumView_OnLikeClicked"/>
+                                                        OpenClicked="RecipeMediumView_OnOpenClicked"
+                                                        LikeClicked="RecipeMediumView_OnLikeClicked"
+                                                        DeleteClicked="RecipeMediumView_OnDeleteClicked"
+                                                        EditClicked="RecipeMediumView_OnEditClicked"/>
                             </Border.Child>
                             
                         </Border>

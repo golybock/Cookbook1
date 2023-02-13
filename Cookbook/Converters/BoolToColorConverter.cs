@@ -18,7 +18,7 @@ namespace Cookbook.Converters;
         /// <param name="parameter">A CSV string on the format [ColorNameIfTrue;ColorNameIfFalse;OpacityNumber] may be provided for customization, default is [LimeGreen;Transperent;1.0].</param>
         /// <param name="culture"></param>
         /// <returns>A SolidColorBrush in the supplied or default colors depending on the state of value.</returns>
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
             SolidColorBrush color;
             // Setting default values
@@ -55,7 +55,7 @@ namespace Cookbook.Converters;
             }
 
             // Creating Color Brush
-            if ((bool) value)
+            if (value != null && (bool) value)
             {
                 color = new SolidColorBrush(colorIfTrue);
                 color.Opacity = opacity;

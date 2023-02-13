@@ -1,68 +1,45 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Cookbook.Database.Services.Recipe;
-using ModernWpf.Controls;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.Views.Recipe;
 
 public partial class RecipesListView : UserControl
 {
-    public delegate void DeleteClick();
-    public delegate void EditClick();
-    public delegate void OpenClick();
-    public delegate void LikeClick();
+    public delegate void DeleteClick(int id);
+    public delegate void EditClick(int id);
+    public delegate void OpenClick(int id);
+    public delegate void LikeCLick(int id);
     public event DeleteClick? DeleteClicked;
     public event EditClick? EditClicked;
     public event OpenClick? OpenClicked;
-    public event LikeClick? LikeClicked;
+    public event LikeCLick? LikeClicked;
 
     public RecipesListView()
     {
         InitializeComponent();
     }
-    
-    protected virtual void OnEditClicked()
+
+    private void RecipeMediumView_OnLikeClicked(int id)
     {
-        EditClicked?.Invoke();
+        LikeClicked?.Invoke(id);
     }
 
-    protected virtual void OnDeleteClicked()
+    private void RecipeMediumView_OnDeleteClicked(int id)
     {
-        DeleteClicked?.Invoke();
+        DeleteClicked?.Invoke(id);
     }
 
-    protected virtual void OnOpenClicked()
+    private void RecipeMediumView_OnEditClicked(int id)
     {
-        OpenClicked?.Invoke();
+        EditClicked?.Invoke(id);
     }
 
-    protected virtual void OnLikeClicked()
+    private void RecipeMediumView_OnOpenClicked(int id)
     {
-        LikeClicked?.Invoke();
-    }
-
-    private void RecipeMediumView_OnLikeClicked()
-    {
-        OnLikeClicked();
-    }
-
-    private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
-    {
-        OnDeleteClicked();
-    }
-
-    private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
-    {
-        OnEditClicked();
-    }
-
-    private void RecipeMediumView_OnClicked(object sender, MouseButtonEventArgs e)
-    {
-        OnOpenClicked();
+        OpenClicked?.Invoke(id);
     }
 }

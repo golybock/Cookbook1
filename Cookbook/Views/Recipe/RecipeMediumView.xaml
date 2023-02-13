@@ -8,6 +8,7 @@
              xmlns:c="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="250"
+             MouseDoubleClick="RecipeMediumView_OnMouseDown"
              Background="Transparent">
     
     <UserControl.Resources>
@@ -26,6 +27,27 @@
             BorderThickness="3"
             Background="PapayaWhip">
             
+            <Border.ContextMenu>
+                                    
+                <ContextMenu>
+                                        
+                    <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick">
+                        <MenuItem.Icon>
+                            <Image Source="../../Resources/MenuIcons/DeleteIcon.png"></Image>
+                        </MenuItem.Icon>
+
+                    </MenuItem>
+                                
+                    <MenuItem Header="Изменить" Name="EditMenuItem" Click="EditMenuItem_OnClick">
+                        <MenuItem.Icon>
+                            <Image Source="../../Resources/MenuIcons/EditIcon.png"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                </ContextMenu>
+
+            </Border.ContextMenu>
+        
             <Grid>
                 
                 <Grid.RowDefinitions>
@@ -66,7 +88,11 @@
                                   Value="{Binding Rating, TargetNullValue = -1}"
                                   IsReadOnly="True"/>
                 
-                <Border Name="LikeButton" 
+                <TextBlock Name="Id"
+                           Text="{Binding Id}"
+                           Visibility="Collapsed"/>
+                
+                <Border Name="LikeButton"
                         Grid.Column="1"
                         Grid.Row="2"
                         CornerRadius="50"
