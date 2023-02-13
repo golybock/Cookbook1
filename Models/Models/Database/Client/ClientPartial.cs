@@ -2,7 +2,7 @@
 
 namespace Models.Models.Database.Client;
 
-public partial class Client
+public partial class Client: INotifyPropertyChanged
 {
     private string? _imagePath;
     public string? ImagePath
@@ -11,6 +11,7 @@ public partial class Client
         set => _imagePath = value;
     }
     public int PostCount => Recipes.Count;
+    
     private bool? _isLiked;
     public bool? IsLiked
     {
@@ -22,6 +23,7 @@ public partial class Client
         }
     }
     public event PropertyChangedEventHandler? PropertyChanged;
+
     private void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         if (PropertyChanged != null)
@@ -29,5 +31,4 @@ public partial class Client
             PropertyChanged(this, e);
         }
     }
-
 }
