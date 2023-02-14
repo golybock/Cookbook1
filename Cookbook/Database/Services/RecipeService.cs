@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe;
@@ -155,6 +156,18 @@ public class RecipeService : IRecipeService
         }
 
         return recipes;
+    }
+
+    public async Task<List<RecipeModel>> FindRecipesAsync(string searchString)
+    {
+        List<RecipeModel> recipes = await GetRecipesAsync();
+
+        return 
+            recipes.Where(c => c.Name.Contains(searchString) ||
+                                  c.Id.ToString()
+                                      .Contains(searchString))
+                .ToList();
+
     }
 
     public async Task<CommandResult> AddRecipeAsync(RecipeModel? recipe)

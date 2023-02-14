@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
 using Cookbook.Models.Database.Client;
+using Cookbook.Pages.Find;
 using Cookbook.Pages.Profile;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Settings;
@@ -69,6 +70,8 @@ public partial class NavigationPage : Page
     {
         if (pageName == "MainPage")
             return new MainPage(_client);
+        if (pageName == "FindPage")
+            return new FindPage(_client);
         if (pageName == "ProfilePage")
             return new ProfilePage(_client);
         if (pageName == "SubsPage")
