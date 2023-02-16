@@ -52,6 +52,12 @@
       <Resource Include="Resources\sirniki.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
+      <None Remove="Resources\MenuIcons\Sort\defaultsort.png" />
+      <Resource Include="Resources\MenuIcons\Sort\defaultsort.png" />
+      <None Remove="Resources\MenuIcons\Sort\lower_to_upper_sort.png" />
+      <Resource Include="Resources\MenuIcons\Sort\lowerToUpperSort.png" />
+      <None Remove="Resources\MenuIcons\Sort\upper_to_lower_sort.png" />
+      <Resource Include="Resources\MenuIcons\Sort\upperToLowerSort.png" />
     </ItemGroup>
 
     <ItemGroup>

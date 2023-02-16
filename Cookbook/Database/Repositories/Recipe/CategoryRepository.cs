@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
+using Models.Models.Database.Recipe;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Recipe;
@@ -61,6 +62,7 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
                 Category category = new Category();
                 category.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 category.Name = reader.GetString(reader.GetOrdinal("name"));
+                categories.Add(category);
             }
             
             return categories;

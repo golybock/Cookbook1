@@ -12,6 +12,7 @@ using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
+using Models.Models.Database.Recipe;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 using ClientModel = Models.Models.Database.Client.Client;
 
@@ -96,6 +97,12 @@ public class RecipeService : IRecipeService
         }
 
         return recipes;
+    }
+
+    public async Task<List<Category>> GetCategories()
+    {
+        List<Category> categories = await _categoryService.GetCategories();
+        return categories;
     }
 
     private async Task<string> GetRecipeMainCategoryAsync(int recipeId)

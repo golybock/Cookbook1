@@ -4,11 +4,113 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cookbook.Pages.Find"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
-      Title="FindPage">
-    <Grid>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Поиск"></TextBlock>
-        </StackPanel>
-    </Grid>
+      Title="Поиск">
+    
+    <ScrollViewer>
+        
+        <Grid>
+            
+            <StackPanel Orientation="Vertical">
+                
+                <ui:SimpleStackPanel x:Name="SearchSettingsPanel"
+                                     Orientation="Horizontal"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Center"
+                                     Spacing="12">
+                
+                    <ui:SplitButton x:Name="SortButton"
+                                    Click="SortListButton_OnClick"
+                                    Height="45"
+                                    Width="75">
+                        
+                        <ui:BitmapIcon x:Name="SortButtonBitmapIcon"
+                                       Height="32"
+                                       Width="32"/>
+                        
+                        <ui:SplitButton.Flyout>
+                            <ui:Flyout>
+                                <ListView x:Name="SortTypeListView"
+                                          SelectionChanged="ListStylesListView_SelectionChanged"
+                                          SelectionMode="Single"
+                                          SelectedIndex="0">
+                                    
+                                    <StackPanel Tag="Default" Orientation="Horizontal">
+                                        <ui:BitmapIcon Height="32" Width="32" UriSource="../../Resources/MenuIcons/Sort/defaultsort.png"/>
+                                        <TextBlock Text="По умолчанию" Margin="8"/>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Tag="ByUpper" Orientation="Horizontal">
+                                        <ui:BitmapIcon Height="32" Width="32" UriSource="../../Resources/MenuIcons/Sort/lowerToUpperSort.png"/>
+                                        <TextBlock Text="По возрастанию" Margin="8"/>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Tag="ByLower" Orientation="Horizontal">
+                                        <ui:BitmapIcon Height="32" Width="32" UriSource="../../Resources/MenuIcons/Sort/upperToLowerSort.png"/>
+                                        <TextBlock Text="По убывнаию" Margin="8"/>
+                                    </StackPanel>
+                                    
+                                </ListView>
+                            </ui:Flyout>
+                        </ui:SplitButton.Flyout>
+                        
+                    </ui:SplitButton>
+                    
+                    <ui:SplitButton x:Name="FilterButton"
+                                    Click="FilterButton_OnClick"
+                                    Height="45"
+                                    Width="200">
+                        
+                        <TextBlock x:Name="FilterButtonTextBlock"
+                                   FontSize="16"
+                                   Text="Все категории" />
+
+                        
+                        <ui:SplitButton.Flyout>
+                            <ui:Flyout>
+                                <ListView x:Name="FilterListView"
+                                          SelectionChanged="FilterListView_OnSelectionChanged"
+                                          SelectionMode="Single"
+                                          ItemsSource="{Binding Categories}">
+                                    
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        
+                                        <StackPanel Orientation="Horizontal" d:DataContext="{d:SampleData}">
+                                            
+                                            <TextBlock Text="{Binding Name}"
+                                                       Margin="8"/>
+                                        </StackPanel>
+                                        
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                    
+                                </ListView>
+                            </ui:Flyout>
+                        </ui:SplitButton.Flyout>
+                        
+                    </ui:SplitButton>
+                    
+                    <ui:AutoSuggestBox Name="SearchBox"
+                                       Height="45"
+                                       Width="250"
+                                       FontSize="16"
+                                       VerticalContentAlignment="Center"
+                                       HorizontalContentAlignment="Left"/>
+                    
+                </ui:SimpleStackPanel>
+                
+                <recipe:RecipesListView x:Name="RecipesListView"
+                                    DeleteClicked="RecipeMainView_OnOpenClickeded"
+                                    EditClicked="RecipesListView_OnEditClicked"
+                                    OpenClicked="RecipesListView_OnOpenClicked"
+                                    LikeClicked="RecipesListView_OnLikeClicked"/>
+            </StackPanel>
+            
+            
+        </Grid>
+        
+    </ScrollViewer>
 </Page>
