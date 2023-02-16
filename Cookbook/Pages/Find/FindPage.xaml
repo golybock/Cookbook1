@@ -13,7 +13,8 @@
         
         <Grid>
             
-            <StackPanel Orientation="Vertical">
+            <ui:SimpleStackPanel Orientation="Vertical"
+                                 Spacing="12">
                 
                 <ui:SimpleStackPanel x:Name="SearchSettingsPanel"
                                      Orientation="Horizontal"
@@ -107,7 +108,7 @@
                                     EditClicked="RecipesListView_OnEditClicked"
                                     OpenClicked="RecipesListView_OnOpenClicked"
                                     LikeClicked="RecipesListView_OnLikeClicked"/>
-            </StackPanel>
+            </ui:SimpleStackPanel>
             
             
         </Grid>

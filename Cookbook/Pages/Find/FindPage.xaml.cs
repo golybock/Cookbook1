@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Cookbook.Database.Services;
@@ -37,34 +38,32 @@ public partial class FindPage : Page
     {
         _client = client;
         _recipeService = new RecipeService(_client);
-
-        InitializeComponent();
         
         LoadData();
+        
+        InitializeComponent();
     }
 
-    private void LoadData()
+    private async Task LoadData()
     {
-        LoadCategories();
-        LoadRecipes();
+        await LoadCategories();
+        await LoadRecipes();
 
         DataContext = this;
     }
     
-    private async void LoadCategories()
+    private async Task LoadCategories()
     {
         Categories = new List<Category> {new() {Id = -1, Name = "Все категории" } };
 
         Categories.AddRange(await _recipeService.GetCategories());
     }
 
-    private async void LoadRecipes()
+    private async Task LoadRecipes()
     {
         Recipes = new List<RecipeModel>();
-        
-        Recipes = await _recipeService.GetRecipesAsync();
 
-        DataContext = this;
+        Recipes.AddRange(await _recipeService.GetRecipesAsync());
     }
 
     private void SortListButton_OnClick(SplitButton sender, SplitButtonClickEventArgs args)
