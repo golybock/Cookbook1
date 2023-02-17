@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Cookbook.Database.Services;
-using Cookbook.Pages.Recipe;
-using ModernWpf.Controls;
 using Client = Models.Models.Database.Client.Client;
 using Page = System.Windows.Controls.Page;
 

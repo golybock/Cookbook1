@@ -36,7 +36,7 @@ public partial class Recipe : INotifyPropertyChanged
         }
     }
 
-    public string Text => GetFormattedText();
+    public string Text => GetText();
 
     private string GetText()
     {
@@ -45,25 +45,6 @@ public partial class Recipe : INotifyPropertyChanged
         if (PathToTextFile != null)
             if (File.Exists(PathToTextFile))
                 text = File.ReadAllText(PathToTextFile);
-
-        return text;
-    }
-
-    private string GetFormattedText()
-    {
-        string text = GetText();
-        if (text != "Нет рецепта")
-        {
-            string[] lines = text.Split("\t");
-
-            text = string.Empty;
-        
-            for (int i = 0; i < lines.Length; i++)
-            {
-                text += $"{i}. {lines[i]}\n";
-            }
-
-        }
 
         return text;
     }

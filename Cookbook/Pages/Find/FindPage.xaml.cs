@@ -17,6 +17,7 @@ public partial class FindPage : Page
     private readonly RecipeService _recipeService;
     private readonly ClientModel _client;
     private readonly RecipesViewService _recipesViewService;
+    private readonly Category _emptyCategory = new() { Id = -1, Name = "Все категории" };
     
     private string _sort;
     private string _search;
@@ -28,6 +29,11 @@ public partial class FindPage : Page
     public FindPage()
     {
         _client = new ClientModel();
+        
+        _filterCategory = _emptyCategory;
+        _search = String.Empty;
+        _sort = "Default";
+
         _recipeService = new RecipeService(_client);
         _recipesViewService = new RecipesViewService(_client);
         
@@ -39,6 +45,11 @@ public partial class FindPage : Page
     public FindPage(ClientModel client)
     {
         _client = client;
+        
+        _filterCategory = _emptyCategory;
+        _search = String.Empty;
+        _sort = "Default";
+        
         _recipeService = new RecipeService(_client);
         _recipesViewService = new RecipesViewService(_client);
         
