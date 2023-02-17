@@ -135,7 +135,7 @@ public partial class FindPage : Page
 
     private async Task FindRecipes()
     {
-        if (_search != string.Empty)
+        if (_search != "")
             Recipes = await _recipeService.FindRecipesAsync(_search);
         else
             Recipes = await _recipeService.GetRecipesAsync();
@@ -148,6 +148,12 @@ public partial class FindPage : Page
             // показываем что рецептов нет
             NothingShowView.Visibility = Visibility.Visible;
             RecipesListView.Visibility = Visibility.Collapsed;
+        }
+        else
+        {
+            // обратно показываем рецепты
+            NothingShowView.Visibility = Visibility.Collapsed;
+            RecipesListView.Visibility = Visibility.Visible;
         }
     }
 
