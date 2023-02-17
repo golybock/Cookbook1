@@ -17,4 +17,5 @@ public interface IClientSubRepository
     public Task<CommandResult> AddClientSubAsync(ClientSub clientSub);
     public Task<CommandResult> UpdateClientSubAsync(ClientSub clientSub);
     public Task<CommandResult> DeleteClientSubAsync(int id);
+    public Task<CommandResult> DeleteClientSubAsync(int clientId, int id);
 }

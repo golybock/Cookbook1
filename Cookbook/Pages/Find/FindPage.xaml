@@ -104,7 +104,7 @@
                 </ui:SimpleStackPanel>
                 
                 <recipe:RecipesListView x:Name="RecipesListView"
-                                    DeleteClicked="RecipeMainView_OnOpenClickeded"
+                                    DeleteClicked="RecipesListView_OnDeleteClicked"
                                     EditClicked="RecipesListView_OnEditClicked"
                                     OpenClicked="RecipesListView_OnOpenClicked"
                                     LikeClicked="RecipesListView_OnLikeClicked"/>

@@ -151,6 +151,11 @@ public class ClientService : IClientService
         return CommandResults.BadRequest;
     }
 
+    public async Task<CommandResult> DeleteSub(int subId)
+    {
+        return await _clientSubService.DeleteClientSubAsync(_client.Id, subId);
+    }
+
     private async Task GetClientInfo(ClientModel? client)
     {
         if (client != null)

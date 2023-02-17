@@ -302,4 +302,40 @@ public class ClientSubRepository : MainDbClass, IClientSubRepository
             await con.CloseAsync();
         }
     }
+
+    public async Task<CommandResult> DeleteClientSubAsync(int clientId, int id)
+    {
+        var con = GetConnection();
+        CommandResult result;
+        con.Open();
+        try
+        {
+            string query = $"delete from client_subs where client_id = $1 and sub = $2";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters =
+                {
+                    new() { Value = clientId },
+                    new() { Value = id }
+                }
+            };
+            
+            result =
+                await cmd.ExecuteNonQueryAsync() > 0 ?
+                    CommandResults.Successfully :
+                    CommandResults.NotFulfilled;
+            
+            return result;
+        }
+        catch(Exception e)
+        {
+            result = CommandResults.BadRequest;
+            result.Description = e.ToString();
+            return result;
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
 }

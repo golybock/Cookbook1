@@ -8,7 +8,8 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:adaptiveWrap="clr-namespace:Cookbook.AdaptiveWrap"
       mc:Ignorable="d"
-      Title="Рецепты">
+      Title="Рецепты"
+      Loaded="MainPage_OnLoaded">
     
     <mv:RecipesListView x:Name="RecipesListView"
                         DeleteClicked="RecipesListView_OnDeleteClicked"

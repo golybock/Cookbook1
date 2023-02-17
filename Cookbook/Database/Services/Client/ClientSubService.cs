@@ -80,4 +80,12 @@ public class ClientSubService : IClientSubService
 
         return await _clientSubRepository.DeleteClientSubAsync(id);
     }
+
+    public async Task<CommandResult> DeleteClientSubAsync(int clientId, int id)
+    {
+        if (id <= 0 || clientId <= 0)
+            return CommandResults.BadRequest;
+
+        return await _clientSubRepository.DeleteClientSubAsync(clientId, id);
+    }
 }

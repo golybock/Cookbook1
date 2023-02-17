@@ -11,15 +11,15 @@ namespace Cookbook.Pages.Profile;
 
 public partial class SubsPage : Page
 {
-    private Client _client;
     // ReSharper disable once MemberCanBePrivate.Global
     public List<Client> Clients { get; set; } = null!;
     private readonly ClientService _clientService;
+    private readonly ClientViewService _clientViewService;
 
     public SubsPage(Client client)
     {
-        _client = client;
-        _clientService = new ClientService(_client);
+        _clientViewService = new ClientViewService(client);
+        _clientService = new ClientService(client);
 
         GetClients();
         
@@ -35,30 +35,12 @@ public partial class SubsPage : Page
 
     private void ClientListView_OnOpenClicked(int id)
     {
-        var client = Clients.FirstOrDefault(c => c.Id == id);
-
-        if (NavigationService != null)
-            if (client != null)
-                NavigationService.Navigate(
-                    new ProfilePage(client)
-                );
+        _clientViewService.OpenClicked(id, Clients, NavigationService);
     }
 
     private void ClientListView_OnLikeClicked(int id)
     {
-        var client = Clients.FirstOrDefault(c => c.Id == id);
-
-        if (client!.IsLiked == true)
-        {
-            client.IsLiked = false;
-            _clientService.DeleteClientFromSub(id);
-        }
-        else
-        {
-            client.IsLiked = true;
-            _clientService.AddClientToSub(id);
-        }
-
+        _clientViewService.LikeClicked(id, Clients);
         DataContext = this;
     }
 

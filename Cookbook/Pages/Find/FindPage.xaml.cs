@@ -16,6 +16,7 @@ public partial class FindPage : Page
 {
     private readonly RecipeService _recipeService;
     private readonly ClientModel _client;
+    private readonly RecipesViewService _recipesViewService;
     
     private string _sort;
     private string _search;
@@ -27,7 +28,8 @@ public partial class FindPage : Page
     public FindPage()
     {
         _client = new ClientModel();
-        _recipeService = new RecipeService(new ClientModel());
+        _recipeService = new RecipeService(_client);
+        _recipesViewService = new RecipesViewService(_client);
         
         LoadData();
         
@@ -38,6 +40,7 @@ public partial class FindPage : Page
     {
         _client = client;
         _recipeService = new RecipeService(_client);
+        _recipesViewService = new RecipesViewService(_client);
         
         LoadData();
         
@@ -99,23 +102,25 @@ public partial class FindPage : Page
             Recipes.Reverse();
     }
 
-    private void RecipeMainView_OnOpenClickeded(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     private void RecipesListView_OnEditClicked(int id)
     {
-        throw new NotImplementedException();
+        _recipesViewService.EditClicked(id, Recipes, NavigationService);
     }
 
     private void RecipesListView_OnOpenClicked(int id)
     {
-        throw new NotImplementedException();
+        _recipesViewService.OpenClicked(id, Recipes, NavigationService);
     }
 
     private void RecipesListView_OnLikeClicked(int id)
     {
-        throw new NotImplementedException();
+        _recipesViewService.LikeClicked(id, Recipes);
+        DataContext = this;
+    }
+
+    private void RecipesListView_OnDeleteClicked(int id)
+    {
+        _recipesViewService.DeleteClicked(id, Recipes);
+        DataContext = this;
     }
 }
