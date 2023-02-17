@@ -23,6 +23,7 @@ public partial class Recipe
     public int CookingTime { get; set; }
     
     public List<RecipeCategory> RecipeCategories { get; set; } = new List<RecipeCategory>();
+    public List<Category?> Categories { get; set; } = new List<Category?>();
 
     public List<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 

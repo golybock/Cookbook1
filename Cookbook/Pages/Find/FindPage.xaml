@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:Cookbook.Pages.Find"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
+      xmlns:views="clr-namespace:Cookbook.Views"
       mc:Ignorable="d"
       Title="Поиск">
     
@@ -99,7 +100,8 @@
                                        Width="250"
                                        FontSize="16"
                                        VerticalContentAlignment="Center"
-                                       HorizontalContentAlignment="Left"/>
+                                       HorizontalContentAlignment="Left"
+                                       TextChanged="SearchBox_OnTextChanged"/>
                     
                 </ui:SimpleStackPanel>
                 
@@ -108,6 +110,9 @@
                                     EditClicked="RecipesListView_OnEditClicked"
                                     OpenClicked="RecipesListView_OnOpenClicked"
                                     LikeClicked="RecipesListView_OnLikeClicked"/>
+                
+                <views:NothingShowView x:Name="NothingShowView" Visibility="Collapsed"/>
+                
             </ui:SimpleStackPanel>
             
             

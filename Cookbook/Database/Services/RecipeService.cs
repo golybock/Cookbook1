@@ -67,6 +67,13 @@ public class RecipeService : IRecipeService
         recipe.RecipeIngredients = await recipeIngredients;
         recipe.Rating = await recipeRating;
         recipe.Category = await category;
+
+        foreach (var recipeCategory in recipe.RecipeCategories)
+        {
+            recipe.Categories.Add(
+                await _categoryService.GetCategoryAsync(recipeCategory.CategoryId)
+                );
+        }
         
         return recipe;
     }
@@ -87,6 +94,13 @@ public class RecipeService : IRecipeService
 
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
+            
+            foreach (var recipeCategory in recipe.RecipeCategories)
+            {
+                recipe.Categories.Add(
+                    await _categoryService.GetCategoryAsync(recipeCategory.CategoryId)
+                );
+            }
             
             if (_client.Id != 0)
             {
@@ -125,6 +139,13 @@ public class RecipeService : IRecipeService
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
             
+            foreach (var recipeCategory in recipe.RecipeCategories)
+            {
+                recipe.Categories.Add(
+                    await _categoryService.GetCategoryAsync(recipeCategory.CategoryId)
+                );
+            }
+            
             if (_client.Id != 0)
             {
                 var like = RecipeIsLiked(recipe.Id);
@@ -144,14 +165,19 @@ public class RecipeService : IRecipeService
         foreach (var favRecipe in favRecipes)
         {
             var recipe = await GetRecipeAsync(favRecipe.RecipeId);
-
-            
             
             recipe.Rating =
                 await _reviewService.GetAvgRatingByRecipe(recipe.Id);
 
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
+            
+            foreach (var recipeCategory in recipe.RecipeCategories)
+            {
+                recipe.Categories.Add(
+                    await _categoryService.GetCategoryAsync(recipeCategory.CategoryId)
+                );
+            }
             
             if (_client.Id != 0)
             {
