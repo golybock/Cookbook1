@@ -195,8 +195,11 @@ public class RecipeService : IRecipeService
     {
         List<RecipeModel> recipes = await GetRecipesAsync();
 
+        searchString = searchString.ToLower();
+        
         return 
-            recipes.Where(c => c.Name.Contains(searchString) ||
+            recipes.Where(c => c.Name.ToLower()
+                                   .Contains(searchString) ||
                                   c.Id.ToString()
                                       .Contains(searchString))
                 .ToList();

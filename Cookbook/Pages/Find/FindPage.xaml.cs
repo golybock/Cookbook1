@@ -1,7 +1,7 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
- using System.Linq;
- using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Cookbook.Database.Services;
@@ -16,7 +16,6 @@ namespace Cookbook.Pages.Find;
 public partial class FindPage : Page
 {
     private readonly RecipeService _recipeService;
-    private readonly ClientModel _client;
     private readonly RecipesViewService _recipesViewService;
     private readonly Category? _emptyCategory = new() { Id = -1, Name = "Все категории" };
     
@@ -29,14 +28,14 @@ public partial class FindPage : Page
 
     public FindPage()
     {
-        _client = new ClientModel();
+        var client = new ClientModel();
         
         _filterCategory = _emptyCategory;
         _search = String.Empty;
         _sort = "Default";
 
-        _recipeService = new RecipeService(_client);
-        _recipesViewService = new RecipesViewService(_client);
+        _recipeService = new RecipeService(client);
+        _recipesViewService = new RecipesViewService(client);
         
         LoadData();
         
@@ -45,14 +44,12 @@ public partial class FindPage : Page
     
     public FindPage(ClientModel client)
     {
-        _client = client;
-        
         _filterCategory = _emptyCategory;
         _search = String.Empty;
         _sort = "Default";
         
-        _recipeService = new RecipeService(_client);
-        _recipesViewService = new RecipesViewService(_client);
+        _recipeService = new RecipeService(client);
+        _recipesViewService = new RecipesViewService(client);
         
         LoadData();
         
@@ -174,6 +171,7 @@ public partial class FindPage : Page
         // сортируем
         SortRecipes();
 
+        DataContext = null;
         DataContext = this;
     }
 
