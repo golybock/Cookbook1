@@ -37,11 +37,13 @@
             </ui:NavigationView.Header>
             
             <ui:NavigationView.PaneFooter>
+                
                 <ui:NavigationViewItem Name="ExitButton" 
                                        Tag="Exit"
                                        Content="Выйти"
                                        Icon="Back"
                                        MouseDown="ExitButton_OnMouseDown"/>
+                                       
             </ui:NavigationView.PaneFooter>
             
         </ui:NavigationView>
