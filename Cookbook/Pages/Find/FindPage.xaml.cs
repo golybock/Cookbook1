@@ -88,6 +88,13 @@ public partial class FindPage : Page
         var selectedType = SortTypeListView.SelectedItem as StackPanel;
         var uri = selectedType?.Children[0] as BitmapIcon;
         SortButtonBitmapIcon.UriSource = uri?.UriSource;
+
+        if (SortTypeListView.SelectedIndex == 0)
+            _sort = "Default";
+        else if (SortTypeListView.SelectedIndex == 1)
+            _sort = "ByUpper";
+        else if (SortTypeListView.SelectedIndex == 2)
+            _sort = "ByLower";
         
         ShowRecipes();
     }
@@ -96,6 +103,8 @@ public partial class FindPage : Page
     {
         var selectedType = FilterListView.SelectedItem as Category;
         FilterButtonTextBlock.Text = selectedType?.Name;
+
+        _filterCategory = selectedType;
         
         ShowRecipes();
     }
@@ -121,7 +130,7 @@ public partial class FindPage : Page
         {
             Recipes = Recipes
                 .Where(
-                    c => c.Categories.Contains(_filterCategory)
+                    c => c.Category == _filterCategory.Name
                 ).ToList();
         }
         else
@@ -171,8 +180,8 @@ public partial class FindPage : Page
         // сортируем
         SortRecipes();
 
-        DataContext = null;
-        DataContext = this;
+        RecipesListView.DataContext = null;
+        RecipesListView.DataContext = this;
     }
 
     private void RecipesListView_OnEditClicked(int id)

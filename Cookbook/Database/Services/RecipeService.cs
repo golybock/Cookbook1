@@ -53,7 +53,7 @@ public class RecipeService : IRecipeService
         var recipeIngredients = _recipeIngredientService.GetRecipeIngredientByRecipeAsync(id);
         var recipeRating = _reviewService.GetAvgRatingByRecipe(id);
         var category = GetRecipeMainCategoryAsync(id);
-        
+         
         if (_client.Id != 0)
         {
             var like = RecipeIsLiked(id);
@@ -197,12 +197,29 @@ public class RecipeService : IRecipeService
 
         searchString = searchString.ToLower();
         
-        return 
+        var firstFind =
             recipes.Where(c => c.Name.ToLower()
-                                   .Contains(searchString) ||
-                                  c.Id.ToString()
-                                      .Contains(searchString))
-                .ToList();
+                                   .Contains(searchString) || 
+                               c.Id.ToString()
+                                   .Contains(searchString))
+            .ToList();
+
+        var secondFind = recipes.Where(c => c.Category != null &&
+                                            c.Category.ToLower()
+                                                .Contains(searchString))
+            .ToList();
+
+        var thirdFind = recipes.Where(c => c.Description != null &&
+                                           c.Description.ToLower()
+                                               .Contains(searchString))
+            .ToList();
+
+        var result = firstFind.Concat(secondFind);
+        result = result.Concat(thirdFind);
+        result = result.Distinct();
+        
+        return result.ToList();
+
 
     }
 

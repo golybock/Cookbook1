@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Navigation;
 using Cookbook.Models.Database.Client;
 using Cookbook.Pages.Find;
+using Cookbook.Pages.LoginRegister;
 using Cookbook.Pages.Profile;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Settings;
@@ -34,9 +36,6 @@ public partial class NavigationPage : Page
 
     private void NavigationPage_OnLoaded(object sender, RoutedEventArgs e)
     {
-        if (NavigationService != null) 
-            NavigationService.RemoveBackEntry();
-        
         MainFrame.NavigationService.Navigate(new MainPage(_client));
     }
 
@@ -80,8 +79,15 @@ public partial class NavigationPage : Page
             return new AddEditRecipePage();
         if (pageName == "FavoritePostsPage")
             return new FavoritePostsPage(_client);
-        
+
         return new SettingsPage();
     }
-    
+
+    private void ExitButton_OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        while (NavigationService.CanGoBack)
+        {
+            NavigationService.GoBack();
+        }
+    }
 }

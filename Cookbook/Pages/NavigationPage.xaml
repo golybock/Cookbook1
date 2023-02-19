@@ -18,9 +18,9 @@
             
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem Tag="MainPage" Content="Home" Icon="Home"/>
-                <ui:NavigationViewItem Tag="FindPage" Content="Find" Icon="Find"></ui:NavigationViewItem>
+                <ui:NavigationViewItem Tag="FindPage" Content="Find" Icon="Find"/>
                 <ui:NavigationViewItem Tag="ProfilePage" Content="Profile" Icon="Contact"/>
-                <ui:NavigationViewItem Tag="SubsPage" Content="Subs" Icon="People"></ui:NavigationViewItem>
+                <!-- <ui:NavigationViewItem Tag="SubsPage" Content="Subs" Icon="People"/> -->
                 <ui:NavigationViewItem Tag="FavoritePostsPage" Content="Liked" Icon="Favorite"/>
                 <ui:NavigationViewItem Tag="AddPostPage" Content="AddPost" Icon="Add"/>
             </ui:NavigationView.MenuItems>
@@ -35,6 +35,14 @@
                        FontSize="24"
                        VerticalContentAlignment="Center"/>
             </ui:NavigationView.Header>
+            
+            <ui:NavigationView.PaneFooter>
+                <ui:NavigationViewItem Name="ExitButton" 
+                                       Tag="Exit"
+                                       Content="Выйти"
+                                       Icon="Back"
+                                       MouseDown="ExitButton_OnMouseDown"/>
+            </ui:NavigationView.PaneFooter>
             
         </ui:NavigationView>
 
