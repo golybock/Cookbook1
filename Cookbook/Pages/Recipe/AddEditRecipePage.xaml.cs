@@ -29,7 +29,7 @@ public partial class AddEditRecipePage : Page
         InitializeComponent();
         
         DataContext = _recipe;
-        MediumPreview.DataContext = _recipe;
+        // MediumPreview.DataContext = _recipe;
     }
     
     public AddEditRecipePage(RecipeModel recipe, ClientModel client)
@@ -108,7 +108,7 @@ public partial class AddEditRecipePage : Page
 
     private void ImageView_OnDrop(object sender, DragEventArgs e)
     {
-        string[] files = (string[]) e.Data.GetData(DataFormats.FileDrop);
+        string[] files = ((string[]) e.Data.GetData(DataFormats.FileDrop));
         string file = files[0];
         // если файл картинка
         if (file.EndsWith(".png") || file.EndsWith(".jpg"))

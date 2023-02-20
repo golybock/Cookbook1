@@ -8,9 +8,10 @@
       mc:Ignorable="d"
       Title="Редактирование поста">
     
-    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+    <ScrollViewer VerticalScrollBarVisibility="Visible"
+                  HorizontalScrollBarVisibility="Disabled">
         
-        <Grid ShowGridLines="True">
+        <Grid ShowGridLines="False">
             
             <Grid.RowDefinitions>
                 <RowDefinition Height="20*" />
@@ -165,7 +166,7 @@
             <Grid Grid.Column="0"
                   Grid.Row="1"
                   Grid.RowSpan="2"
-                  ShowGridLines="True">
+                  ShowGridLines="False">
                 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -173,7 +174,8 @@
                 </Grid.RowDefinitions>
                 
                 
-                <Border Grid.Column="0"
+                <Border Name="RecipeText"
+                        Grid.Column="0"
                         Grid.Row="0"
                         Grid.RowSpan="2"
                         BorderThickness="2"
@@ -199,11 +201,11 @@
                 
             </Grid>
             
-            <Grid Grid.Column="1"
-                  Name="StatsGrid"
+            <Grid Name="StatsGrid"
+                  Grid.Column="1"
                   Grid.Row="1"
                   Grid.RowSpan="2"
-                  ShowGridLines="True">
+                  ShowGridLines="False">
                 
                 <Border Grid.Column="0"
                         Grid.Row="0"
@@ -229,7 +231,6 @@
                 </StackPanel>
                 
             </Grid>
-            
             
             <StackPanel Name="ToolBarStackPanel"
                         Grid.Row="3"
@@ -293,5 +294,7 @@
             </StackPanel>
             
         </Grid>
+        
     </ScrollViewer>
+    
 </Page>
