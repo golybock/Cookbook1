@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Cookbook.Database.Services;
-using Cookbook.Models.Database.Client;
-using Cookbook.Models.Database.Recipe;
 using Microsoft.Win32;
 using ModernWpf.Controls;
 using Page = System.Windows.Controls.Page;
@@ -30,7 +29,7 @@ public partial class AddEditRecipePage : Page
         InitializeComponent();
         
         DataContext = _recipe;
-        // MediumPreview.DataContext = _recipe;
+        MediumPreview.DataContext = _recipe;
     }
     
     public AddEditRecipePage(RecipeModel recipe, ClientModel client)
@@ -44,12 +43,17 @@ public partial class AddEditRecipePage : Page
         InitializeComponent();
         
         DataContext = _recipe;
-        // MediumPreview.DataContext = _recipe;
+        MediumPreview.DataContext = _recipe;
     }
 
     private void AddButton_OnClick(object sender, RoutedEventArgs e)
     {
-        _recipeService.AddRecipeAsync(_recipe);
+        AddRecipe();
+    }
+
+    private async Task AddRecipe()
+    {
+        await _recipeService.AddRecipeAsync(_recipe);
     }
 
     private void OutError(string error)
