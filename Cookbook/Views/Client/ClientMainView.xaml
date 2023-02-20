@@ -62,22 +62,6 @@
                     
                 </ui:SimpleStackPanel>
 
-                
-                <Border Name="LikeButton" 
-                        Grid.Column="2"
-                        Grid.Row="1"
-                        CornerRadius="50"
-                        Background="White"
-                        BorderThickness="1"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Width="40"
-                        Height="40"
-                        Margin="10">
-                        <Image Margin="10"
-                               Source="../../Resources/MenuIcons/heart256.png"/>
-                </Border>
-
             </Grid>
             
         </Border>

@@ -52,7 +52,7 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         ClientImage clientImage = new ClientImage();
         try
         {
-            string query = $"select * from client_images where client_id = $1";
+            string query = $"select * from client_images where client_id = $1 limit 1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = clientId} }

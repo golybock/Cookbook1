@@ -78,10 +78,10 @@ public partial class RegisterPage : Page
     private void SetImage(string path)
     {
         // сохраняем путь в объекте
-        _client.ImagePath = path;
+        _client.ClientImage.ImagePath = path;
         _client.ClientImages.Add(new ClientImage(){ImagePath = path});
         // отображаем изображение
-        PersonPicture.ProfilePicture = new BitmapImage(new Uri(_client.ImagePath));
+        PersonPicture.ProfilePicture = new BitmapImage(new Uri(_client.ClientImage.ImagePath));
     }
 
     private void CancelButton_OnClick(object sender, RoutedEventArgs e)

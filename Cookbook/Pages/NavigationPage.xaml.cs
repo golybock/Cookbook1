@@ -21,15 +21,17 @@ public partial class NavigationPage : Page
 {
     private readonly Client _client;
     private NavigationViewItem _lastItem;
+    public Frame FirstFrame { get; set; }
 
-    public NavigationPage()
+    public NavigationPage(Client client)
     {
-        _client = new Client();
+        _client = client; 
         InitializeComponent();
     }
     
-    public NavigationPage(Client client)
+    public NavigationPage(Client client, Frame frame)
     {
+        FirstFrame = frame;
         _client = client; 
         InitializeComponent();
     }
@@ -72,22 +74,29 @@ public partial class NavigationPage : Page
         if (pageName == "FindPage")
             return new FindPage(_client);
         if (pageName == "ProfilePage")
-            return new ProfilePage(_client);
-        if (pageName == "SubsPage")
-            return new SubsPage(_client);
+            if (_client.Id == -1)
+                return new UnavaliabalePage();
+            else
+                return new ProfilePage(_client);
+        // if (pageName == "SubsPage")
+        //     return new SubsPage(_client);
         if (pageName == "AddPostPage")
-            return new AddEditRecipePage();
+            if (_client.Id == -1)
+                return new UnavaliabalePage();
+            else
+                return new AddEditRecipePage(_client);
         if (pageName == "FavoritePostsPage")
-            return new FavoritePostsPage(_client);
+            if (_client.Id == -1)
+                return new UnavaliabalePage();
+            else
+                return new FavoritePostsPage(_client);
 
         return new SettingsPage();
     }
 
     private void ExitButton_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        while (NavigationService.CanGoBack)
-        {
-            NavigationService.GoBack();
-        }
+        if (FirstFrame != null)
+            FirstFrame.Navigate(new LoginPage(FirstFrame));
     }
 }

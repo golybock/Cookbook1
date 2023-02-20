@@ -35,12 +35,7 @@
                     </StackPanel>
                     
                     <TextBlock Name="ErrorLabel" Foreground="Red" TextWrapping="Wrap" Width="150"></TextBlock>
-                
-                    <!-- <StackPanel Orientation="Vertical"> -->
-                    <!--     <Label Content="Описание"></Label> -->
-                    <!--     <TextBox Text="{Binding Description}" Width="150" TextWrapping="Wrap"></TextBox> -->
-                    <!-- </StackPanel> -->
-                
+                    
                 </StackPanel>
                 
             </WrapPanel>

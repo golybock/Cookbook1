@@ -8,7 +8,7 @@ namespace Cookbook.Windows
         public MainWindow()
         {
             InitializeComponent();
-            ContentFrame.NavigationService.Navigate(new LoginPage());
+            ContentFrame.NavigationService.Navigate(new LoginPage(ContentFrame));
         }
     }
 }

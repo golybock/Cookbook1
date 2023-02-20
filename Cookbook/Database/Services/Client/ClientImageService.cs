@@ -44,15 +44,12 @@ public class ClientImageService : IClientImageService
 
     public async Task<CommandResult> AddClientImageAsync(ClientImage clientImage)
     {
-        if(clientImage.ClientId <= 0)
+        if(clientImage.ClientId == 0)
             return CommandResults.BadRequest;
         
         if(string.IsNullOrEmpty(clientImage.ImagePath))
             return CommandResults.BadRequest;
 
-        if (!File.Exists(clientImage.ImagePath))
-            return CommandResults.BadRequest;
-        
         return await _clientImageRepository.AddClientImageAsync(clientImage);
     }
 

@@ -8,7 +8,7 @@ public partial class ClientImage
 
     public int ClientId { get; set; }
 
-    public string ImagePath { get; set; } = null!;
+    public string? ImagePath { get; set; } = null!;
 
     public DateTime DateOfAdded { get; set; }
 }

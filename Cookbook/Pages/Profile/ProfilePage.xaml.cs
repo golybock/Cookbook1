@@ -15,14 +15,6 @@ public partial class ProfilePage : Page
     private Client _client;
     private readonly RecipeService _recipeService;
 
-    public ProfilePage()
-    {
-        _client = new Client();
-        _recipeService = new RecipeService(_client);
-        DataContext = _client;
-        InitializeComponent();
-    }
-
     public ProfilePage(Client client)
     {
         _client = client;
@@ -86,7 +78,7 @@ public partial class ProfilePage : Page
         if (NavigationService != null)
             if (recipe != null)
                 NavigationService.Navigate(
-                    new AddEditRecipePage(recipe)
+                    new AddEditRecipePage(recipe, _client)
                 );
     }
 

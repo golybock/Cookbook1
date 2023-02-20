@@ -45,8 +45,9 @@ namespace Cookbook
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
             }
-            catch
+            catch(Exception e)
             {
+                Console.WriteLine(e.ToString());
                 // nothing
             }
         }
@@ -64,6 +65,16 @@ namespace Cookbook
             {
                 // nothing
             }
+        }
+        
+        public static string GetTimeStamp()
+        {
+            return
+                Convert.ToString(
+                    (int)DateTime.
+                        UtcNow.
+                        Subtract(new DateTime(1970, 1, 1)).
+                        TotalSeconds);
         }
         
     }

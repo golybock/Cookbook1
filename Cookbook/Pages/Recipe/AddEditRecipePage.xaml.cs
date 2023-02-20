@@ -1,17 +1,18 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Cookbook.Models.Database.Client;
 using ModernWpf.Controls;
 using Page = System.Windows.Controls.Page;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
+using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Pages.Recipe;
 
 public partial class AddEditRecipePage : Page
 {
-    // private CookbookContext _context = new CookbookContext();
     public RecipeModel Recipe;
     
-    public AddEditRecipePage()
+    public AddEditRecipePage(ClientModel client)
     {
         InitializeComponent();
         Recipe = new RecipeModel();
@@ -19,7 +20,7 @@ public partial class AddEditRecipePage : Page
         MediumPreview.DataContext = Recipe;
     }
     
-    public AddEditRecipePage(RecipeModel recipe)
+    public AddEditRecipePage(RecipeModel recipe, ClientModel client)
     {
         InitializeComponent();
         Recipe = recipe;

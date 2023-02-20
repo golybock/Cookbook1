@@ -10,6 +10,7 @@ using Cookbook.Models.Login;
 using Models.Models.Login;
 using Client = Models.Models.Database.Client.Client;
 using ClientService = Cookbook.Database.Services.ClientService;
+using Frame = ModernWpf.Controls.Frame;
 
 namespace Cookbook.Pages.LoginRegister;
 
@@ -19,9 +20,17 @@ public partial class LoginPage : Page
     private string _login;
     private string _password;
     private bool _hasError;
+    private Frame FirstFrame { get; set; }
     
     public LoginPage()
     {
+        _clientService = new ClientService(new Client(){Id = 0});
+        InitializeComponent();
+    }
+    
+    public LoginPage(Frame frame)
+    {
+        FirstFrame = frame;
         _clientService = new ClientService(new Client(){Id = 0});
         InitializeComponent();
     }
@@ -29,7 +38,7 @@ public partial class LoginPage : Page
     private void GuestButton_OnClick(object sender, RoutedEventArgs e)
     {
         if (NavigationService != null) 
-            NavigationService.Navigate(new NavigationPage());
+            NavigationService.Navigate(new NavigationPage(new Client(){Id = -1, Name = "Гость"}, FirstFrame));
     }
 
     private void LoginButton_OnClick(object sender, RoutedEventArgs e)
@@ -64,7 +73,7 @@ public partial class LoginPage : Page
     {
         // переход на основную страницу
         if (NavigationService != null) 
-            NavigationService.Navigate(new NavigationPage(client));
+            NavigationService.Navigate(new NavigationPage(client, FirstFrame));
 
         // очищаем данные
         ClearInput();

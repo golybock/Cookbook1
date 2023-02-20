@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -95,11 +96,11 @@ public class ClientService : IClientService
 
         client.Id = result.ValueId;
 
-        ClientImage clientImage = new ClientImage();
+        // save image to docs
+        client.ClientImage.ClientId = client.Id;
+        client.ClientImage.ImagePath = CopyImageToDocuments(client.ClientImage.ImagePath, client.Id);
 
-        clientImage.ClientId = client.Id;
-
-        await _clientImageService.AddClientImageAsync(clientImage);
+        var imageResult = await _clientImageService.AddClientImageAsync(client.ClientImage);
 
         return RegisterResults.Successfully;
     }
@@ -116,8 +117,6 @@ public class ClientService : IClientService
         
         return clients;
     }
-    
-    
     
     public async Task<List<ClientModel>> GetClientSubs(int clientId)
     {
@@ -138,9 +137,19 @@ public class ClientService : IClientService
 
     public Task<CommandResult> AddClientToSub(int clientId)
     {
-        return _clientSubService.AddClientSubAsync(new ClientSub() { ClientId = _client.Id, Sub = clientId });
+        return
+            _clientSubService
+                .AddClientSubAsync(
+                    new ClientSub 
+                        { 
+                            ClientId = _client.Id,
+                            Sub = clientId
+                        }
+                    );
     }
-
+    
+    // unused
+    // ReSharper disable once UnusedMember.Global
     public async Task<CommandResult> DeleteClientFromSub(int clientId)
     {
         var sub = await _clientSubService.GetClientSubAsync(_client.Id, clientId);
@@ -150,7 +159,24 @@ public class ClientService : IClientService
         
         return CommandResults.BadRequest;
     }
+    
+    private string? CopyImageToDocuments(string? path, int clientId)
+    {
+        string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients\\";
 
+        string filePath = $"client_{clientId}_{App.GetTimeStamp()}.png";
+
+        string writePath = documentsPath + filePath;
+
+        if (File.Exists(path))
+        {
+            File.Copy(path, writePath);
+            return filePath;
+        }
+
+        return null;
+    }
+    
     public async Task<CommandResult> DeleteSub(int subId)
     {
         return await _clientSubService.DeleteClientSubAsync(_client.Id, subId);
@@ -158,7 +184,7 @@ public class ClientService : IClientService
 
     private async Task GetClientInfo(ClientModel? client)
     {
-        if (client != null)
+        if (client != null || client.Id != -1)
         {
             var recipes = _recipeService.GetClientRecipes(client.Id);
             var imagePath =  _clientImageService.GetClientImageByClientIdAsync(client.Id);
@@ -167,7 +193,6 @@ public class ClientService : IClientService
             var favRecipes = _clientFavService.GetFavoriteRecipesAsync(client.Id);
             var clientSubOn = _clientSubService.GetClientSubsAsync(client.Id);
             var clientSubs = _clientSubService.GetSubsClientAsync(client.Id);
-            var image = await imagePath;
             var isLiked = _clientSubService.ClientIsLiked(_client.Id, client.Id);
 
             client.IsLiked = await isLiked;
@@ -177,12 +202,14 @@ public class ClientService : IClientService
             client.FavoriteRecipes = await favRecipes;
             client.ClientSubOnClients = await clientSubOn;
             client.ClientSubs = await clientSubs;
+            client.ClientImage = (await imagePath)!;
             
-            client.ImagePath = image?.ImagePath;
+            client.ImagePath = client.ClientImage.ImagePath;
             
         }
     }
     
+    [Obsolete("Obsolete")]
     private static string Hash(string stringToHash)
     {
         if (stringToHash == "admin")
@@ -191,8 +218,8 @@ public class ClientService : IClientService
         using var sha1 = new SHA1Managed();
         return BitConverter.ToString(sha1.ComputeHash(Encoding.UTF8.GetBytes(stringToHash)));
     }
-    
-    public PasswordResult PasswordValidate(string password)
+
+    private PasswordResult PasswordValidate(string password)
     {
         if (!PasswordNotNull(password))
             return PasswordResults.EmptyPassword;
@@ -212,15 +239,6 @@ public class ClientService : IClientService
         
         return PasswordResults.Successfully;
 
-    }
-    
-    public bool PasswordValid(string password)
-    {
-        return PasswordNotNull(password) &&
-               PasswordHasDigit(password) &&
-               PasswordHasSymbol(password) &&
-               PasswordHasUpper(password) &&
-               PasswordLengthValid(password);
     }
 
     private bool PasswordNotNull(string password)
@@ -250,7 +268,6 @@ public class ClientService : IClientService
 
     private bool LoginValid(string login)
     {
-        return _clientService.GetClientAsync(login).Result.Id == 0;
+        return _clientService.GetClientAsync(login).Result!.Id == 0;
     }
-
 }

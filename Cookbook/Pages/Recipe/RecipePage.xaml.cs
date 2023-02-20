@@ -67,7 +67,7 @@ public partial class RecipePage : Page
     {
         if (NavigationService != null)
             NavigationService.Navigate(
-                new AddEditRecipePage(_recipe)
+                new AddEditRecipePage(_recipe, _client)
             );
     }
     

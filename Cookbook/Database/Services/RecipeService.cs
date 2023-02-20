@@ -293,12 +293,14 @@ public class RecipeService : IRecipeService
     {
         string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\";
 
-        string outPath = $"{documentsPath}recipe_{recipeId}_{GetTimeStamp()}";
+        string filePath = $"recipe_{recipeId}_{GetTimeStamp()}";
+
+        string writePath = documentsPath + filePath;
 
         if (File.Exists(path))
         {
-            File.Copy(path, outPath);
-            return outPath;
+            File.Copy(path, writePath);
+            return filePath;
         }
 
         return null;
@@ -306,7 +308,12 @@ public class RecipeService : IRecipeService
 
     private string GetTimeStamp()
     {
-        return Convert.ToString((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+        return
+            Convert.ToString(
+                (int)DateTime.
+                    UtcNow.
+                    Subtract(new DateTime(1970, 1, 1)).
+                    TotalSeconds);
     }
 
     private async Task AddRecipeImagesAsync(RecipeModel recipe)

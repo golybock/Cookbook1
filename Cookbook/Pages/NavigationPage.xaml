@@ -17,12 +17,12 @@
                            IsSettingsVisible="False">
             
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Tag="MainPage" Content="Home" Icon="Home"/>
-                <ui:NavigationViewItem Tag="FindPage" Content="Find" Icon="Find"/>
-                <ui:NavigationViewItem Tag="ProfilePage" Content="Profile" Icon="Contact"/>
+                <ui:NavigationViewItem Tag="MainPage" Content="Рецепты" Icon="Home"/>
+                <ui:NavigationViewItem Tag="FindPage" Content="Поиск" Icon="Find"/>
+                <ui:NavigationViewItem Tag="ProfilePage" Content="Профиль" Icon="Contact"/>
                 <!-- <ui:NavigationViewItem Tag="SubsPage" Content="Subs" Icon="People"/> -->
-                <ui:NavigationViewItem Tag="FavoritePostsPage" Content="Liked" Icon="Favorite"/>
-                <ui:NavigationViewItem Tag="AddPostPage" Content="AddPost" Icon="Add"/>
+                <ui:NavigationViewItem Tag="FavoritePostsPage" Content="Понравившиеся" Icon="Favorite"/>
+                <ui:NavigationViewItem Tag="AddPostPage" Content="Создать" Icon="Add"/>
             </ui:NavigationView.MenuItems>
             
             <ui:NavigationView.Content>

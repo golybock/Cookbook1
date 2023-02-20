@@ -18,19 +18,6 @@ public partial class FavoritePostsPage : Page
     private readonly RecipeService _recipeService;
     public List<RecipeModel> Recipes { get; set; }
 
-    public FavoritePostsPage()
-    {
-        _client = new Client();
-        _recipeService = new RecipeService(_client);
-        Recipes = new List<RecipeModel>();
-
-        InitializeComponent();
-        
-        // показываем что таких постов нет
-        NothingShowView.Visibility = Visibility.Visible;
-        RecipesListView.Visibility = Visibility.Collapsed;
-    }
-    
     public FavoritePostsPage(Client client)
     {
         _client = client;
@@ -39,6 +26,13 @@ public partial class FavoritePostsPage : Page
         GetRecipes();
 
         InitializeComponent();
+
+        if (client.Id == -1)
+        {
+            // показываем что таких постов нет
+            NothingShowView.Visibility = Visibility.Visible;
+            RecipesListView.Visibility = Visibility.Collapsed;
+        }
     }
 
     private async Task GetRecipes()
@@ -128,7 +122,7 @@ public partial class FavoritePostsPage : Page
         if (NavigationService != null)
             if (recipe != null)
                 NavigationService.Navigate(
-                    new AddEditRecipePage(recipe)
+                    new AddEditRecipePage(recipe, _client)
                 );
     }
     

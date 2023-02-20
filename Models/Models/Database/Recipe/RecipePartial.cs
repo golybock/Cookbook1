@@ -7,7 +7,9 @@ public partial class Recipe : INotifyPropertyChanged
     private string? _imagePath;
     public string? ImagePath
     {
-        get => String.IsNullOrEmpty(_imagePath) ? "../../Resources/sirniki.png" : _imagePath;
+        get => String.IsNullOrEmpty(_imagePath) ?
+            "../../Resources/not_found_image.png" :
+            $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + _imagePath;
         set => _imagePath = value;
     }
     
