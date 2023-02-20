@@ -48,10 +48,7 @@ public class RecipeImageService : IRecipeImageService
         
         if(string.IsNullOrWhiteSpace(recipeImage.ImagePath))
             return CommandResults.BadRequest;
-        
-        if(!File.Exists(recipeImage.ImagePath))
-            return CommandResults.BadRequest;
-        
+
         return await _recipeImageRepository.AddRecipeImageAsync(recipeImage);
     }
 

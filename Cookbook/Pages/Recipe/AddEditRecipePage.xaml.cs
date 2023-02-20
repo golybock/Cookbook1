@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Cookbook.Database.Services;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Database.Recipe;
+using Microsoft.Win32;
 using ModernWpf.Controls;
 using Page = System.Windows.Controls.Page;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
@@ -13,27 +16,40 @@ namespace Cookbook.Pages.Recipe;
 
 public partial class AddEditRecipePage : Page
 {
-    public RecipeModel Recipe;
+    private RecipeModel _recipe;
+    private ClientModel _client;
+    private RecipeService _recipeService;
     
     public AddEditRecipePage(ClientModel client)
     {
+        _client = client;
+        
+        _recipe = new RecipeModel();
+        _recipeService = new RecipeService(_client);
+
         InitializeComponent();
-        Recipe = new RecipeModel();
-        DataContext = Recipe;
-        MediumPreview.DataContext = Recipe;
+        
+        DataContext = _recipe;
+        // MediumPreview.DataContext = _recipe;
     }
     
     public AddEditRecipePage(RecipeModel recipe, ClientModel client)
     {
+        _recipe = recipe;
+        _client = client;
+        
+        _recipe = new RecipeModel();
+        _recipeService = new RecipeService(_client);
+        
         InitializeComponent();
-        Recipe = recipe;
-        DataContext = Recipe;
-        MediumPreview.DataContext = Recipe;
+        
+        DataContext = _recipe;
+        // MediumPreview.DataContext = _recipe;
     }
 
     private void AddButton_OnClick(object sender, RoutedEventArgs e)
     {
-
+        _recipeService.AddRecipeAsync(_recipe);
     }
 
     private void OutError(string error)
@@ -49,7 +65,7 @@ public partial class AddEditRecipePage : Page
     }
     
 
-    private void NameTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+    private void Input(object sender, TextChangedEventArgs e)
     {
         ClearError();
     }
@@ -59,15 +75,13 @@ public partial class AddEditRecipePage : Page
         ShowAcceptDialog();
     }
 
-    private void PreviewButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        // ворк
-    }
-
     private void ClearPage()
     {
-        Recipe = new RecipeModel();
-        DataContext = Recipe;
+        _recipe = new RecipeModel();
+        
+        DataContext = null;
+        
+        DataContext = _recipe;
     }
 
     private async void ShowAcceptDialog()
@@ -100,10 +114,32 @@ public partial class AddEditRecipePage : Page
     private void SetImage(string path)
     {
         // сохраняем путь в объекте
-        Recipe.RecipeImage.ImagePath = path;
-        Recipe.RecipeImages.Add(new (){ RecipeId = Recipe.Id, ImagePath = path});
+        _recipe.RecipeImage.ImagePath = path;
+        _recipe.RecipeImages.Add(new (){ RecipeId = _recipe.Id, ImagePath = path});
         // отображаем изображение
-        if (Recipe.RecipeImage.ImagePath != null)
-            RecipeImage.Source = new BitmapImage(new Uri(Recipe.RecipeImage.ImagePath));
+        if (_recipe.RecipeImage.ImagePath != null)
+            RecipeImage.Source = new BitmapImage(new Uri(_recipe.RecipeImage.ImagePath));
     }
+
+    private void ImageView_OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        ChooseImage();
+    }
+    private void ChooseImage()
+    {
+        // открываем диалог выбора файла
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.InitialDirectory = "c:\\";
+        openFileDialog.Filter = "Image files (*.png)|*.png|All files (*.*)|*.*";
+        // если показан
+        if (openFileDialog.ShowDialog() == true)
+        {
+            // если есть выбранный файл
+            if (openFileDialog.FileName != String.Empty)
+            {
+                SetImage(openFileDialog.FileName);
+            }
+        }
+    }
+    
 }

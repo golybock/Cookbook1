@@ -198,23 +198,22 @@ public class RecipeService : IRecipeService
         searchString = searchString.ToLower();
         
         var firstFind =
-            recipes.Where(c => c.Name.ToLower()
-                                   .Contains(searchString) || 
-                               c.Id.ToString()
-                                   .Contains(searchString))
+            recipes.Where(c => c.Name.ToLower().Contains(searchString) || 
+                               c.Id.ToString().Contains(searchString))
             .ToList();
 
-        var secondFind = recipes.Where(c => c.Category != null &&
-                                            c.Category.ToLower()
-                                                .Contains(searchString))
+        var secondFind =
+            recipes.Where(c => c.Category != null &&
+                                            c.Category.ToLower().Contains(searchString))
             .ToList();
 
-        var thirdFind = recipes.Where(c => c.Description != null &&
-                                           c.Description.ToLower()
-                                               .Contains(searchString))
+        var thirdFind =
+            recipes.Where(c => c.Description != null &&
+                                           c.Description.ToLower().Contains(searchString))
             .ToList();
 
         var result = firstFind.Concat(secondFind);
+        
         result = result.Concat(thirdFind);
         result = result.Distinct();
         
@@ -236,12 +235,14 @@ public class RecipeService : IRecipeService
                 var recipeCategories = AddRecipeCategoriesAsync(outRecipe);
                 var recipeImages = AddRecipeImagesAsync(outRecipe);
                 var recipeText = WriteRecipeFileAsync(outRecipe);
+                var recipeImage = AddRecipeImageAsync(outRecipe);
 
                 await recipeImages;
                 await recipeStats;
                 await recipeIngredients;
                 await recipeCategories;
                 await recipeText;
+                await recipeImage;
                 
                 commandResult = CommandResults.Successfully;
             }
@@ -352,8 +353,18 @@ public class RecipeService : IRecipeService
 
             }
         }
-        
     }
+    
+    private async Task AddRecipeImageAsync(RecipeModel recipe)
+    {
+        recipe.RecipeImage.RecipeId = recipe.Id;
+        
+        recipe.RecipeImage.ImagePath =
+            CopyImageToDocuments(recipe.RecipeImage.ImagePath, recipe.Id);
+        
+        await _recipeImageService.AddRecipeImageAsync(recipe.RecipeImage);
+    }
+    
     private async Task AddRecipeCategoriesAsync(RecipeModel recipe)
     {
         if (recipe.RecipeCategories.Count > 0)

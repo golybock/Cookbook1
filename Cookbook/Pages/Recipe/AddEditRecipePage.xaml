@@ -37,13 +37,16 @@
                 <Viewbox x:Name="ImageView"
                          MinHeight="50"
                          MinWidth="50"
-                         MaxHeight="250"
-                         MaxWidth="250"  
+                         MaxHeight="225"
+                         MaxWidth="225"  
                          Grid.Column="0"
                          Grid.Row="0"
                          AllowDrop="True"
-                         Drop="ImageView_OnDrop">
-                    <Image Name="RecipeImage" Source="{Binding ImagePath}"></Image>
+                         Drop="ImageView_OnDrop"
+                         MouseDown="ImageView_OnMouseDown">
+                    
+                    <Image Name="RecipeImage"
+                           Source="{Binding ImagePath}"/>
                     
                 </Viewbox>
                 
@@ -62,6 +65,7 @@
                              MinHeight="35"
                              Width="200"
                              Margin="5"
+                             TextChanged="Input"
                              ToolTip="Заголоок рецепта"/>
                     
                     <TextBlock Text="Описание"
@@ -72,6 +76,7 @@
                              Text="{Binding Description}"
                              MinHeight="35"
                              Width="200"
+                             TextChanged="Input"
                              ui:ControlHelper.PlaceholderText="Краткое описание"
                              Margin="5"/>
                     
@@ -87,11 +92,15 @@
                                FontSize="20"
                                TextWrapping="Wrap"/>
                     
-                    <ui:SimpleTimePicker Name="CookingTimePicker"
-                                         SelectedDateTime="{Binding CookingTime}"
-                                         MinHeight="35"
-                                         MinWidth="150"
-                                         Margin="5"/>
+                    <ui:NumberBox Name="CookingTimeNumberBox"
+                                  Value="{Binding CookingTime}"
+                                  ValidationMode="InvalidInputOverwritten"
+                                  Minimum="1"
+                                  MinHeight="35"
+                                  MinWidth="150"
+                                  Margin="5"
+                                  PlaceholderText="Время приготовления"
+                                  SpinButtonPlacementMode="Compact"/>
                     
                     <TextBlock VerticalAlignment="Center"
                                Text="Порций"
@@ -118,15 +127,9 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="35*"/>
-                    <ColumnDefinition Width="35*"/>
-                </Grid.ColumnDefinitions>
                 
                 <Border Grid.Column="0"
                         Grid.Row="0"
-                        Grid.ColumnSpan="3"
                         Grid.RowSpan="2"
                         BorderThickness="2"
                         BorderBrush="Transparent"
@@ -134,75 +137,75 @@
                         Margin="5"
                         Background="Bisque"/>
                 
-                <TextBlock Grid.Column="0"
-                           Grid.Row="0"
-                           FontSize="20"
-                           Margin="10"
-                           HorizontalAlignment="Center"
-                           Text="Фото"/>
                 
-                <TextBlock Grid.Column="1"
-                           Grid.Row="0"
+                <TextBlock Grid.Row="0"
                            FontSize="20"
                            Margin="10"
                            HorizontalAlignment="Center"
                            Text="Текст рецепта"/>
                 
-                <TextBlock Grid.Column="2"
-                           Grid.Row="0"
-                           FontSize="20"
-                           Margin="10"
-                           HorizontalAlignment="Center"
-                           Text="Настройки"/>
                 
                 <TextBox Grid.Row="1" 
-                         Grid.Column="1"
                          ui:ControlHelper.PlaceholderText="Текст рецепта"
                          TextWrapping="Wrap"
                          MinWidth="300"
+                         TextChanged="Input"
                          Margin="20"/>
-                
-                <StackPanel Grid.Column="2"
-                            Grid.Row="1"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                    
-                    <Button Name="PreviewButton"
-                            Content="Предпросмотр"
-                            Click="PreviewButton_OnClick">
-                        
-                        <Button.ToolTip>
-                            <ToolTip Background="Transparent"
-                                     BorderBrush="Transparent">
-                                
-                                <recipe:RecipeMediumView x:Name="MediumPreview"
-                                                         ui:ControlHelper.Header="Предпросмотр"
-                                                         Height="400"/>
-                                
-                            </ToolTip>
-                        </Button.ToolTip>
-                        
-                    </Button>
-                    
-                    <Button Name="ClearButton"
-                            Content="Очистить"
-                            ToolTip="Очистить все"
-                            Click="ClearButton_OnClick"/>
-                    
-                </StackPanel>
                 
             </Grid>
             
-            <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,0,0" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="2"
+                        Orientation="Vertical"
+                        VerticalAlignment="Top"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
                 <!-- основной блок для ввода -->
+                
                 <StackPanel Orientation="Vertical">
                     <!-- блоки ввода -->
                     
-                    <TextBlock Name="ErrorTextBlock" Visibility="Collapsed" Foreground="Red"></TextBlock>
+                    <TextBlock Name="ErrorTextBlock"
+                               Visibility="Collapsed"
+                               Foreground="Red"/>
                     
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Name="CancelButton" Width="100" Content="Отмена" Margin="5"/>
-                        <Button Name="AddButton" Click="AddButton_OnClick" Width="100" Content="Сохранить" Margin="5"/>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        
+                        <Button Name="CancelButton"
+                                Width="125"
+                                Content="Отмена"
+                                Margin="5"/>
+                        
+                        <Button Name="AddButton"
+                                Click="AddButton_OnClick"
+                                Width="125"
+                                Content="Сохранить"
+                                Margin="5"/>
+                        
+                        <Button Name="PreviewButton"
+                                Content="Предпросмотр"
+                                Margin="5">
+                    
+                            <Button.ToolTip>
+                                <ToolTip Background="Transparent"
+                                         BorderBrush="Transparent">
+                    
+                                    <recipe:RecipeMediumView x:Name="MediumPreview"
+                                                             ui:ControlHelper.Header="Предпросмотр"
+                                                             Height="400"/>
+                    
+                                </ToolTip>
+                            </Button.ToolTip>
+                    
+                        </Button>
+                    
+                        <Button Name="ClearButton"
+                                Content="Очистить"
+                                Width="125"
+                                ToolTip="Очистить все"
+                                Click="ClearButton_OnClick"
+                                Margin="5"/>
+                    
                     </StackPanel>
                     
                 </StackPanel>
