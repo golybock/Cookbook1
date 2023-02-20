@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Cookbook.Models.Database.Recipe;
 
 namespace Models.Models.Database.Recipe;
 
@@ -12,6 +13,8 @@ public partial class Recipe : INotifyPropertyChanged
             $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + _imagePath;
         set => _imagePath = value;
     }
+
+    public RecipeImage RecipeImage { get; set; } = new RecipeImage();
     
     public string? Category { get; set; }
     private bool? _isLiked;

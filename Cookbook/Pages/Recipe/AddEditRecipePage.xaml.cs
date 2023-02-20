@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using Cookbook.Models.Database.Client;
+using Cookbook.Models.Database.Recipe;
 using ModernWpf.Controls;
 using Page = System.Windows.Controls.Page;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
@@ -83,5 +86,24 @@ public partial class AddEditRecipePage : Page
         if (result == ContentDialogResult.Primary)
             ClearPage();
         
-    } 
+    }
+
+    private void ImageView_OnDrop(object sender, DragEventArgs e)
+    {
+        string[] files = (string[]) e.Data.GetData(DataFormats.FileDrop);
+        string file = files[0];
+        // если файл картинка
+        if (file.EndsWith(".png") || file.EndsWith(".jpg"))
+            SetImage(file);
+    }
+    
+    private void SetImage(string path)
+    {
+        // сохраняем путь в объекте
+        Recipe.RecipeImage.ImagePath = path;
+        Recipe.RecipeImages.Add(new (){ RecipeId = Recipe.Id, ImagePath = path});
+        // отображаем изображение
+        if (Recipe.RecipeImage.ImagePath != null)
+            RecipeImage.Source = new BitmapImage(new Uri(Recipe.RecipeImage.ImagePath));
+    }
 }

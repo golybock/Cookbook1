@@ -235,11 +235,13 @@ public class RecipeService : IRecipeService
                 var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
                 var recipeCategories = AddRecipeCategoriesAsync(outRecipe);
                 var recipeImages = AddRecipeImagesAsync(outRecipe);
+                var recipeText = WriteRecipeFileAsync(outRecipe);
 
                 await recipeImages;
                 await recipeStats;
                 await recipeIngredients;
                 await recipeCategories;
+                await recipeText;
                 
                 commandResult = CommandResults.Successfully;
             }
@@ -253,6 +255,22 @@ public class RecipeService : IRecipeService
         commandResult = CommandResults.BadRequest;
         
         return commandResult;
+    }
+
+    private async Task<string> WriteRecipeFileAsync(RecipeModel recipe)
+    {
+        string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\";
+
+        string filePath = $"recipe_{recipe.Id}_{GetTimeStamp()}";
+
+        string outPath = documentsPath + filePath + ".txt";
+
+        await using (StreamWriter sw = new StreamWriter(outPath))
+        {
+            await sw.WriteAsync(recipe.Text);
+        }
+
+        return filePath;
     }
 
     public async Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe)
@@ -293,7 +311,7 @@ public class RecipeService : IRecipeService
     {
         string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\";
 
-        string filePath = $"recipe_{recipeId}_{GetTimeStamp()}";
+        string filePath = $"recipe_{recipeId}_{GetTimeStamp()}.png";
 
         string writePath = documentsPath + filePath;
 

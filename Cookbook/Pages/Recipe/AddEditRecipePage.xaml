@@ -34,13 +34,16 @@
                         Margin="5,0,5,5"
                         Background="Bisque"/>
                 
-                <Viewbox MinHeight="50"
+                <Viewbox x:Name="ImageView"
+                         MinHeight="50"
                          MinWidth="50"
                          MaxHeight="250"
                          MaxWidth="250"  
                          Grid.Column="0"
-                         Grid.Row="0">
-                    <Image Source="../../Resources/sirniki.png"></Image>
+                         Grid.Row="0"
+                         AllowDrop="True"
+                         Drop="ImageView_OnDrop">
+                    <Image Name="RecipeImage" Source="{Binding ImagePath}"></Image>
                     
                 </Viewbox>
                 
