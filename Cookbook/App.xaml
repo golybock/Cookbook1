@@ -51,6 +51,8 @@
                         </Setter>
                     </Style>
                     
+                    <Brush x:Key="PurpleBrush">#E5B1F4</Brush>
+                    
                 </ui:XamlControlsResources>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

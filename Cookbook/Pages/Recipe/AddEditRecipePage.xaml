@@ -6,7 +6,9 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
-      Title="Редактирование поста">
+      Width="600"
+      HorizontalAlignment="Center"
+      Title="Рецепт">
     
     <ScrollViewer VerticalScrollBarVisibility="Visible"
                   HorizontalScrollBarVisibility="Disabled">
@@ -15,14 +17,111 @@
               ShowGridLines="True">
             
             <Grid.RowDefinitions>
+                <RowDefinition Height="25*"/>
                 <RowDefinition Height="20*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             
+            <Border Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="3"
+                    Background="{StaticResource PurpleBrush}"
+                    BorderBrush="{StaticResource PurpleBrush}"
+                    CornerRadius="10"
+                    BorderThickness="1"/>
             
+            <Border Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="3"
+                    Background="{StaticResource PurpleBrush}"
+                    BorderBrush="{StaticResource PurpleBrush}"
+                    CornerRadius="10"
+                    BorderThickness="1"/>
+            
+            <Grid Name="TitleGrid"
+                  Grid.Row="0"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="3">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="60*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Image Name="RecipeImage"
+                       Grid.Column="0"
+                       Height="250"
+                       Width="250"
+                       Source="../../Resources/sirniki.png"></Image>
+                
+                <ui:SimpleStackPanel Name="MainInfoStackPanel"
+                                     Grid.Column="1"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     Spacing="6">
+                    
+                    <Label Content="Заголовок"
+                           FontSize="22"
+                           Foreground="Black"/>
+                    
+                    <TextBox Text="{Binding Name}"
+                             Width="190"/>
+                    
+                    <Label Content="Краткое описание"
+                           FontSize="22"
+                           Foreground="Black"/>
+                    
+                    <TextBox Text="{Binding Description}"
+                             Width="190"/>
+                    
+                </ui:SimpleStackPanel>
+                
+            </Grid>
+            
+            <Grid Name="TimePortionsGrid"
+                  Grid.Row="1"
+                  Grid.Column="0">
+                
+                    <ui:SimpleStackPanel Spacing="0"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Center">
+                        
+                        <TextBlock Text="Время приготовления"
+                                   Margin="5"
+                                   FontSize="14"/>
+                
+                        <ui:NumberBox Name="CookingTimeNumberBox"
+                                      Value="{Binding CookingTime}"
+                                      ValidationMode="InvalidInputOverwritten"
+                                      Minimum="1"
+                                      Margin="5"
+                                      Width="150"
+                                      SpinButtonPlacementMode="Inline"/>
+                
+                        <TextBlock Text="Порций"
+                                   Margin="5"
+                                   FontSize="14"/>
+                
+                        <ui:NumberBox Name="PortionsNumberBox"
+                                      Value="{Binding PortionCount}"
+                                      ValidationMode="InvalidInputOverwritten"
+                                      Minimum="1"
+                                      Margin="5"
+                                      Width="150"
+                                      SpinButtonPlacementMode="Inline"/>
+                        
+                    </ui:SimpleStackPanel>
+                
+            </Grid>
             
         </Grid>
         
