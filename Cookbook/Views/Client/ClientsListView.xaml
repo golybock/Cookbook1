@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             xmlns:adaptiveWrap="clr-namespace:Cookbook.AdaptiveWrap"
              xmlns:client="clr-namespace:Cookbook.Views.Client"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -19,7 +18,7 @@
                 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <adaptiveWrap:AdaptiveWrapPanel MinItemWidth="250" HorizontalAlignment="Center"/>
+                        <WrapPanel HorizontalAlignment="Center"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 

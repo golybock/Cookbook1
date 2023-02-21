@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:Cookbook.Pages"
       xmlns:mv="clr-namespace:Cookbook.Views.Recipe"
       xmlns:ui="http://schemas.modernwpf.com/2019"
-      xmlns:adaptiveWrap="clr-namespace:Cookbook.AdaptiveWrap"
       mc:Ignorable="d"
       Title="Рецепты"
       Loaded="MainPage_OnLoaded">
