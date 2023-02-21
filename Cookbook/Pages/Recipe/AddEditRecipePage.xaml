@@ -6,7 +6,6 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
-      Width="600"
       HorizontalAlignment="Center"
       Title="Рецепт">
     
@@ -73,15 +72,13 @@
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Name}"
-                             Width="190"/>
+                    <TextBox Text="{Binding Name}"/>
                     
                     <Label Content="Краткое описание"
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Description}"
-                             Width="190"/>
+                    <TextBox Text="{Binding Description}"/>
                     
                 </ui:SimpleStackPanel>
                 
