@@ -11,8 +11,14 @@
     
     <ScrollViewer VerticalScrollBarVisibility="Visible"
                   HorizontalScrollBarVisibility="Disabled">
-    
-        <recipe:EditRecipeView x:Name="EditRecipeView"/>
+        
+        <Grid>
+            
+            <recipe:EditRecipeView x:Name="EditRecipeView"
+                                   Width="600"
+                                   Height="1000"/>
+            
+        </Grid>
     
     </ScrollViewer>
     

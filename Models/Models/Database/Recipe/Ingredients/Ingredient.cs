@@ -1,4 +1,6 @@
-﻿namespace Cookbook.Models.Database.Recipe.Ingredients;
+﻿using Cookbook.Models.Database.Recipe.Ingredients;
+
+namespace Models.Models.Database.Recipe.Ingredients;
 
 public partial class Ingredient
 {
@@ -10,6 +12,6 @@ public partial class Ingredient
 
     public string? ImagePath { get; set; }
 
-    public virtual Measure Measure { get; set; } = null!;
+    public Measure? Measure { get; set; } = null!;
     
 }

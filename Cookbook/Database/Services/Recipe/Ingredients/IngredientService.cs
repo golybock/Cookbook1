@@ -4,15 +4,18 @@ using Cookbook.Database.Repositories.Recipe.Ingredients;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces.IngredientsInterfaces;
 using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
+using Models.Models.Database.Recipe.Ingredients;
 
 namespace Cookbook.Database.Services.Recipe.Ingredients;
 
 public class IngredientService : IIngredientService
 {
     private readonly IngredientRepository _ingredientRepository;
+    private readonly MeasureService _measureService;
 
     public IngredientService()
     {
+        _measureService = new MeasureService();
         _ingredientRepository = new IngredientRepository();
     }
     
@@ -21,12 +24,24 @@ public class IngredientService : IIngredientService
         if (id <= 0)
             return null;
         
-        return await _ingredientRepository.GetIngredientAsync(id);
+        Ingredient? ingredient = await _ingredientRepository.GetIngredientAsync(id);
+
+        ingredient!.Measure =
+            await _measureService.GetMeasureAsync(ingredient.MeasureId);
+        
+        return ingredient;
     }
 
-    public Task<List<Ingredient>> GetIngredientsAsync()
+    public async Task<List<Ingredient>> GetIngredientsAsync()
     {
-        return _ingredientRepository.GetIngredientsAsync();
+        List<Ingredient> ingredients =
+            await _ingredientRepository.GetIngredientsAsync();
+
+        foreach (var ingredient in ingredients)
+            ingredient!.Measure =
+                await _measureService.GetMeasureAsync(ingredient.MeasureId);
+
+        return ingredients;
     }
 
     public async Task<CommandResult> AddIngredientAsync(Ingredient ingredient)

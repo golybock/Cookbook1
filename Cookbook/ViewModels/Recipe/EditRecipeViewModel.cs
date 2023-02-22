@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Cookbook.Database.Services;
 using Cookbook.Models.Database.Recipe;
 using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database.Recipe;
+using Models.Models.Database.Recipe.Ingredients;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 using ClientModel = Models.Models.Database.Client.Client;
 
@@ -16,7 +18,7 @@ public class EditRecipeViewModel
     public RecipeModel Recipe { get; set; }
     public List<Ingredient> Ingredients { get; set; }
     public List<Category> Categories { get; set; }
-    public List<RecipeType> RecipeTypes { get; set; }
+    public List<RecipeType> RecipeTypes => GetRecipeTypes().Result;
 
     private readonly RecipeService _recipeService;
 
@@ -25,7 +27,6 @@ public class EditRecipeViewModel
         Ingredient = new Ingredient();
         Ingredients = new List<Ingredient>();
         Categories = new List<Category>();
-        RecipeTypes = new List<RecipeType>();
 
         Recipe = recipe;
 
@@ -38,7 +39,6 @@ public class EditRecipeViewModel
         Recipe = new RecipeModel();
         Ingredients = new List<Ingredient>();
         Categories = new List<Category>();
-        RecipeTypes = new List<RecipeType>();
 
         _recipeService = new RecipeService(client);
     }
@@ -51,9 +51,12 @@ public class EditRecipeViewModel
     private async Task GetIngredients()
     {
         Ingredients = await _recipeService.GetIngredientsAsync();
-    } 
-    
-    private async 
+    }
+
+    private async Task<List<RecipeType>> GetRecipeTypes()
+    {
+        return await _recipeService.GetRecipeTypes();
+    }
     
 }
 

@@ -1,4 +1,5 @@
 ﻿using Cookbook.Models.Database.Recipe.Ingredients;
+using Models.Models.Database.Recipe.Ingredients;
 
 namespace Models.Models.Database.Recipe;
 

@@ -16,6 +16,7 @@ using Cookbook.Models.Database.Recipe;
 using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
 using Models.Models.Database.Recipe;
+using Models.Models.Database.Recipe.Ingredients;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 using ClientModel = Models.Models.Database.Client.Client;
 

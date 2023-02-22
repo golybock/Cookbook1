@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Cookbook.Views.Recipe;
 
@@ -108,5 +109,39 @@ public partial class EditRecipeView : UserControl
     //         }
     //     }
     // }
-    
+
+    private void RemoveIngredientFromListButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void AddRecipeTypeButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void AddCategoryButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void NewIngredientButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void ClearButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void SaveButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void CancelButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
 }

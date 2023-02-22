@@ -68,7 +68,7 @@ public partial class FindPage : Page
     {
         Categories = new List<Category> {new() {Id = -1, Name = "Все категории" } };
 
-        Categories.AddRange(await _recipeService.GetCategories());
+        Categories.AddRange(await _recipeService.GetCategoriesAsync());
     }
 
     private async Task LoadRecipes()

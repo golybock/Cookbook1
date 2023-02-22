@@ -6,6 +6,7 @@ using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.IngredientsInte
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
+using Models.Models.Database.Recipe.Ingredients;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Recipe.Ingredients;
