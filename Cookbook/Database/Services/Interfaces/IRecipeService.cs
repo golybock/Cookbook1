@@ -13,7 +13,7 @@ public interface IRecipeService
 {
     public Task<RecipeModel> GetRecipeAsync(int id);
     public Task<List<RecipeModel>> GetRecipesAsync();
-    public Task<List<Category>> GetCategories();
+    public Task<List<Category>> GetCategoriesAsync();
     public Task<List<RecipeModel>> GetClientRecipes(int clientId);
     public Task<List<RecipeModel>> GetClientFavRecipes(int clientId);
     public Task<List<RecipeModel>> FindRecipesAsync(string searchString);

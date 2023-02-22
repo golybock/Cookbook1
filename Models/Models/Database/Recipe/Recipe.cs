@@ -1,4 +1,5 @@
 ﻿using Cookbook.Models.Database.Recipe;
+using Cookbook.Models.Database.Recipe.Ingredients;
 
 namespace Models.Models.Database.Recipe;
 
@@ -23,7 +24,10 @@ public partial class Recipe
     public int CookingTime { get; set; }
     
     public List<RecipeCategory> RecipeCategories { get; set; } = new List<RecipeCategory>();
+    
     public List<Category> Categories { get; set; } = new List<Category?>();
+
+    public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 
     public List<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 
@@ -31,7 +35,7 @@ public partial class Recipe
 
     public RecipeStats? RecipeStat { get; set; }
 
-    public RecipeType RecipeType { get; set; } = null!;
+    public RecipeType? RecipeType { get; set; }
 
     public List<Cookbook.Models.Database.Recipe.Review.Review> Reviews { get; set; } = new List<Cookbook.Models.Database.Recipe.Review.Review>();
 }

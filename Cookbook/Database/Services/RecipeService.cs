@@ -4,13 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using Accessibility;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe;
+using Cookbook.Database.Services.Recipe.Ingredients;
 using Cookbook.Database.Services.Recipe.Review;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Database.Recipe;
+using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
 using Models.Models.Database.Recipe;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
@@ -29,6 +32,8 @@ public class RecipeService : IRecipeService
     private readonly RecipeIngredientService _recipeIngredientService;
     private readonly ReviewService _reviewService;
     private readonly CategoryService _categoryService;
+    private readonly IngredientService _ingredientService;
+    private readonly RecipeTypeService _recipeTypeService;
 
     public RecipeService(ClientModel client)
     {
@@ -41,6 +46,8 @@ public class RecipeService : IRecipeService
         _reviewService = new ReviewService();
         _clientFavService = new ClientFavService();
         _categoryService = new CategoryService();
+        _ingredientService = new IngredientService();
+        _recipeTypeService = new RecipeTypeService();
     }
 
     public async Task<RecipeModel> GetRecipeAsync(int id)
@@ -71,8 +78,15 @@ public class RecipeService : IRecipeService
         foreach (var recipeCategory in recipe.RecipeCategories)
         {
             recipe.Categories.Add(
-                await _categoryService.GetCategoryAsync(recipeCategory.CategoryId)
+                (await _categoryService.GetCategoryAsync(recipeCategory.CategoryId))!
                 );
+        }
+        
+        foreach (var ingredient in recipe.RecipeIngredients)
+        {
+            recipe.Ingredients.Add(
+                (await _ingredientService.GetIngredientAsync(ingredient.IngredientId))!
+            );
         }
         
         return recipe;
@@ -108,15 +122,30 @@ public class RecipeService : IRecipeService
                 recipe.IsLiked = await like;
             }
             
+            foreach (var ingredient in recipe.RecipeIngredients)
+            {
+                recipe.Ingredients.Add(
+                    (await _ingredientService.GetIngredientAsync(ingredient.IngredientId))!
+                );
+            }
         }
 
         return recipes;
     }
 
-    public async Task<List<Category>> GetCategories()
+    public Task<List<Category>> GetCategoriesAsync()
     {
-        List<Category> categories = await _categoryService.GetCategories();
-        return categories;
+        return _categoryService.GetCategories();;
+    }
+
+    public Task<List<Ingredient>> GetIngredientsAsync()
+    {
+        return _ingredientService.GetIngredientsAsync();
+    }
+
+    public Task<List<RecipeType>> GetRecipeTypes()
+    {
+        return _recipeTypeService.GetRecipeTypesAsync();
     }
 
     private async Task<string> GetRecipeMainCategoryAsync(int recipeId)

@@ -4,6 +4,7 @@ using System.Windows.Documents;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
+using Models.Models.Database.Recipe;
 
 namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
 

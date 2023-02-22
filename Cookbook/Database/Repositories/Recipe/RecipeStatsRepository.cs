@@ -7,6 +7,7 @@ using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
+using Models.Models.Database.Recipe;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Recipe;

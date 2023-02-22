@@ -1,0 +1,488 @@
+﻿<UserControl x:Class="Cookbook.Views.Recipe.EditRecipeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Cookbook.Views.Recipe"
+             xmlns:controls="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d"
+             d:DesignHeight="1000" d:DesignWidth="600">
+    <Grid>
+        <Grid Name="MainGrid"
+              ShowGridLines="True">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25 *"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="25*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Border Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="3"
+                    Background="{StaticResource PurpleBrush}"
+                    BorderBrush="{StaticResource PurpleBrush}"
+                    CornerRadius="10"
+                    BorderThickness="1"/>
+            
+            <Border Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="3"
+                    Background="{StaticResource PurpleBrush}"
+                    BorderBrush="{StaticResource PurpleBrush}"
+                    CornerRadius="10"
+                    BorderThickness="1"/>
+            
+            <Border Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="3"
+                    Background="{StaticResource PurpleBrush}"
+                    BorderBrush="{StaticResource PurpleBrush}"
+                    CornerRadius="10"
+                    BorderThickness="1"/>
+            
+            <Border Grid.Row="2"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="3"
+                    Background="{StaticResource PurpleBrush}"
+                    BorderBrush="{StaticResource PurpleBrush}"
+                    CornerRadius="10"
+                    BorderThickness="1"/>
+            
+            <Border Grid.Row="2"
+                    Grid.Column="2"
+                    Margin="3"
+                    Background="{StaticResource PurpleBrush}"
+                    BorderBrush="{StaticResource PurpleBrush}"
+                    CornerRadius="10"
+                    BorderThickness="1"/>
+            
+            <Border Grid.Row="3"
+                    Grid.Column="2"
+                    Margin="3"
+                    Background="{StaticResource PurpleBrush}"
+                    BorderBrush="{StaticResource PurpleBrush}"
+                    CornerRadius="10"
+                    BorderThickness="1"/>
+            
+            <Border Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="3"
+                    Background="{StaticResource PurpleBrush}"
+                    BorderBrush="{StaticResource PurpleBrush}"
+                    CornerRadius="10"
+                    BorderThickness="1"/>
+            
+            <Grid Name="TitleGrid"
+                  Grid.Row="0"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="3">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="60*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Image Name="RecipeImage"
+                       Grid.Column="0"
+                       Height="250"
+                       Width="250"
+                       Source="../../Resources/sirniki.png"></Image>
+                
+                <controls:SimpleStackPanel Name="MainInfoStackPanel"
+                                     Grid.Column="1"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     Spacing="6">
+                    
+                    <Label Content="Заголовок"
+                           FontSize="22"
+                           Foreground="Black"/>
+                    
+                    <TextBox Text="{Binding Name}"/>
+                    
+                    <Label Content="Краткое описание"
+                           FontSize="22"
+                           Foreground="Black"/>
+                    
+                    <TextBox Text="{Binding Description}"/>
+                    
+                </controls:SimpleStackPanel>
+                
+            </Grid>
+            
+            <Grid Name="TimePortionsGrid"
+                  Grid.Row="1"
+                  Grid.Column="0">
+                
+                    <controls:SimpleStackPanel Spacing="0"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Center">
+                        
+                        <TextBlock Text="Время приготовления"
+                                   Margin="5"
+                                   FontSize="14"/>
+                
+                        <controls:NumberBox Name="CookingTimeNumberBox"
+                                      Value="{Binding CookingTime}"
+                                      ValidationMode="InvalidInputOverwritten"
+                                      Minimum="1"
+                                      Margin="5"
+                                      Width="150"
+                                      SpinButtonPlacementMode="Inline"/>
+                
+                        <TextBlock Text="Порций"
+                                   Margin="5"
+                                   FontSize="14"/>
+                
+                        <controls:NumberBox Name="PortionsNumberBox"
+                                      Value="{Binding PortionCount}"
+                                      ValidationMode="InvalidInputOverwritten"
+                                      Minimum="1"
+                                      Margin="5"
+                                      Width="150"
+                                      SpinButtonPlacementMode="Inline"/>
+                        
+                    </controls:SimpleStackPanel>
+                
+            </Grid>
+            
+            <Grid Name="StatsGrid"
+                  Grid.Row="1"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="2">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                
+                <controls:SimpleStackPanel Grid.Column="0" Spacing="0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                        
+                    <TextBlock Text="Белки"
+                               Margin="5"
+                               FontSize="14"/>
+                
+                    <controls:NumberBox Name="SquirrelsNumberBox"
+                                        Value="{Binding RecipeStat.Squirrels}"
+                                        ValidationMode="InvalidInputOverwritten"
+                                        Minimum="1"
+                                        Margin="5"
+                                        Width="150"
+                                        SpinButtonPlacementMode="Inline"/>
+                
+                    <TextBlock Text="Жиры"
+                               Margin="5"
+                               FontSize="14"/>
+                
+                    <controls:NumberBox Name="FatsNumberBox"
+                                        Value="{Binding RecipeStat.Fats}"
+                                        ValidationMode="InvalidInputOverwritten"
+                                        Minimum="1"
+                                        Margin="5"
+                                        Width="150"
+                                        SpinButtonPlacementMode="Inline"/>
+                        
+                </controls:SimpleStackPanel>
+                
+                <controls:SimpleStackPanel Grid.Column="1" Spacing="0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                        
+                    <TextBlock Text="Углеводы"
+                               Margin="5"
+                               FontSize="14"/>
+                
+                    <controls:NumberBox Name="CarbohydratesNumberBox"
+                                        Value="{Binding RecipeStat.Carbohydrates}"
+                                        ValidationMode="InvalidInputOverwritten"
+                                        Minimum="1"
+                                        Margin="5"
+                                        Width="150"
+                                        SpinButtonPlacementMode="Inline"/>
+                
+                    <TextBlock Text="Ккал"
+                               Margin="5"
+                               FontSize="14"/>
+                
+                    <controls:NumberBox Name="KilocaloriesNumberBox"
+                                        Value="{Binding RecipeStat.Kilocalories}"
+                                        ValidationMode="InvalidInputOverwritten"
+                                        Minimum="1"
+                                        Margin="5"
+                                        Width="150"
+                                        SpinButtonPlacementMode="Inline"/>
+                        
+                </controls:SimpleStackPanel>
+                
+            </Grid>
+            
+            <Grid Name="IngredientsGrid"
+                  Grid.Row="2"
+                  Grid.RowSpan="2"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2">
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="40*"/>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                
+                <controls:SimpleStackPanel Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2" 
+                                           Spacing="0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                        
+                    <TextBlock Text="Белки"
+                               Margin="5"
+                               FontSize="14"/>
+                
+                    <controls:ListView Name="IngredientsListview"
+                                       ItemsSource="{Binding Ingredients}"/>
+
+                </controls:SimpleStackPanel>
+                
+                <controls:SimpleStackPanel Grid.Row="1"
+                                           Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                        
+                    <TextBlock Text="Ингридиент"
+                               Margin="5"
+                               FontSize="14"/>
+                
+                    <ComboBox Name="IngredientsComboBox"
+                              Margin="5"/>
+                        
+                    <controls:NumberBox Name="IngredientCountNumberBox"
+                                        Value="{Binding Ingredient.Count}"
+                                        ValidationMode="InvalidInputOverwritten"
+                                        Minimum="1"
+                                        Margin="5"
+                                        Width="150"
+                                        SpinButtonPlacementMode="Inline"/>
+                        
+                </controls:SimpleStackPanel>
+                
+                <controls:SimpleStackPanel Grid.Row="1"
+                                           Grid.Column="1"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                        
+                    <TextBlock Text="Ингридиент"
+                               Margin="5"
+                               FontSize="14"/>
+                
+                    <ComboBox Name="MeasureComboBox"
+                              Margin="5"/>
+                        
+                    <Button Name="AddIngredientButton"
+                            Width="150"
+                            Style="{DynamicResource AccentButtonStyle}"
+                            Content="Добавить"
+                            Margin="5"/>
+                        
+                </controls:SimpleStackPanel>
+                
+            </Grid>
+            
+            <Grid Name="TextGrid"
+                  Grid.Row="4"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="3">
+                
+                <TextBox Text="{Binding Text}"
+                         Margin="10"
+                         TextWrapping="Wrap"/>
+                
+            </Grid>
+            
+        </Grid>
+
+        <!--              -->
+        <!--             <StackPanel Orientation="Vertical" -->
+        <!--                         HorizontalAlignment="Center" -->
+        <!--                         VerticalAlignment="Center" -->
+        <!--                         Margin="5"> -->
+        <!--                  -->
+        <!--                 <TextBlock VerticalAlignment="Center" -->
+        <!--                            Text="Категория" -->
+        <!--                            Margin="5" -->
+        <!--                            FontSize="20"/> -->
+        <!--              -->
+        <!--                 <ComboBox Name="CategoryComboBox" -->
+        <!--                           Width="150" -->
+        <!--                           Margin="5"/> -->
+        <!--                  -->
+        <!--                 <TextBlock VerticalAlignment="Center" -->
+        <!--                            Text="Тип рецепта" -->
+        <!--                            Margin="5" -->
+        <!--                            FontSize="20"/> -->
+        <!--              -->
+        <!--                 <ComboBox Name="TypeComboBox" -->
+        <!--                           Width="150" -->
+        <!--                           Margin="5"/> -->
+        <!--                  -->
+        <!--             </StackPanel> -->
+        <!--              -->
+        <!--         </StackPanel> -->
+        <!--          -->
+        <!--         -->
+        <!--          -->
+        <!--     </Grid> -->
+        <!-- -->
+        <!--     <Grid Grid.Column="0" -->
+        <!--           Grid.Row="1" -->
+        <!--           Grid.RowSpan="2" -->
+        <!--           ShowGridLines="False"> -->
+        <!--          -->
+        <!--         <Grid.RowDefinitions> -->
+        <!--             <RowDefinition Height="Auto"/> -->
+        <!--             <RowDefinition Height="*"/> -->
+        <!--         </Grid.RowDefinitions> -->
+        <!--          -->
+        <!--          -->
+        <!--         <Border Name="RecipeText" -->
+        <!--                 Grid.Column="0" -->
+        <!--                 Grid.Row="0" -->
+        <!--                 Grid.RowSpan="2" -->
+        <!--                 BorderThickness="2" -->
+        <!--                 BorderBrush="Transparent" -->
+        <!--                 CornerRadius="10" -->
+        <!--                 Margin="5" -->
+        <!--                 Background="Bisque"/> -->
+        <!--          -->
+        <!--          -->
+        <!--         <TextBlock Grid.Row="0" -->
+        <!--                    FontSize="20" -->
+        <!--                    Margin="20,10,0,10" -->
+        <!--                    HorizontalAlignment="Left" -->
+        <!--                    Text="Текст рецепта"/> -->
+        <!--          -->
+        <!--          -->
+        <!--         <TextBox Grid.Row="1"  -->
+        <!--                  ui:ControlHelper.PlaceholderText="Текст рецепта" -->
+        <!--                  TextWrapping="Wrap" -->
+        <!--                  MinWidth="300" -->
+        <!--                  TextChanged="Input" -->
+        <!--                  Margin="20"/> -->
+        <!--          -->
+        <!--     </Grid> -->
+        <!--      -->
+        <!--     <Grid Name="StatsGrid" -->
+        <!--           Grid.Column="1" -->
+        <!--           Grid.Row="1" -->
+        <!--           Grid.RowSpan="2" -->
+        <!--           ShowGridLines="False"> -->
+        <!--          -->
+        <!--         <Border Grid.Column="0" -->
+        <!--                 Grid.Row="0" -->
+        <!--                 BorderThickness="2" -->
+        <!--                 BorderBrush="Transparent" -->
+        <!--                 CornerRadius="10" -->
+        <!--                 Margin="5" -->
+        <!--                 Background="Bisque"/> -->
+        <!--          -->
+        <!--         <StackPanel Orientation="Horizontal" -->
+        <!--                     VerticalAlignment="Center" -->
+        <!--                     HorizontalAlignment="Center"> -->
+        <!--              -->
+        <!--             <StackPanel Orientation="Vertical" -->
+        <!--                         VerticalAlignment="Center" -->
+        <!--                         HorizontalAlignment="Center"> -->
+        <!--                  -->
+        <!--                 <TextBox Text="Aboba"></TextBox> -->
+        <!--                  -->
+        <!--             </StackPanel> -->
+        <!--              -->
+        <!--              -->
+        <!--         </StackPanel> -->
+        <!--          -->
+        <!--     </Grid> -->
+        <!--      -->
+        <!--     <StackPanel Name="ToolBarStackPanel" -->
+        <!--                 Grid.Row="3" -->
+        <!--                 Grid.Column="0" -->
+        <!--                 Grid.ColumnSpan="2" -->
+        <!--                 Orientation="Vertical" -->
+        <!--                 VerticalAlignment="Top" -->
+        <!--                 Margin="0,10,0,0" -->
+        <!--                 HorizontalAlignment="Center"> -->
+        <!--         ~1~ основной блок для ввода @1@ -->
+        <!--          -->
+        <!--         <StackPanel Orientation="Vertical"> -->
+        <!--             ~1~ блоки ввода @1@ -->
+        <!--              -->
+        <!--             <TextBlock Name="ErrorTextBlock" -->
+        <!--                        Visibility="Collapsed" -->
+        <!--                        Foreground="Red"/> -->
+        <!--              -->
+        <!--             <StackPanel Orientation="Horizontal" -->
+        <!--                         HorizontalAlignment="Center"> -->
+        <!--                  -->
+        <!--                 <Button Name="CancelButton" -->
+        <!--                         Width="125" -->
+        <!--                         Content="Отмена" -->
+        <!--                         Margin="5"/> -->
+        <!--                  -->
+        <!--                 <Button Name="AddButton" -->
+        <!--                         Click="AddButton_OnClick" -->
+        <!--                         Width="125" -->
+        <!--                         Content="Сохранить" -->
+        <!--                         Margin="5"/> -->
+        <!--                  -->
+        <!--                 <Button Name="PreviewButton" -->
+        <!--                         Content="Предпросмотр" -->
+        <!--                         Margin="5"> -->
+        <!--              -->
+        <!--                     <Button.ToolTip> -->
+        <!--                         <ToolTip Background="Transparent" -->
+        <!--                                  BorderBrush="Transparent"> -->
+        <!--              -->
+        <!--                             <recipe:RecipeMediumView x:Name="MediumPreview" -->
+        <!--                                                      ui:ControlHelper.Header="Предпросмотр" -->
+        <!--                                                      Height="400"/> -->
+        <!--              -->
+        <!--                         </ToolTip> -->
+        <!--                     </Button.ToolTip> -->
+        <!--              -->
+        <!--                 </Button> -->
+        <!--              -->
+        <!--                 <Button Name="ClearButton" -->
+        <!--                         Content="Очистить" -->
+        <!--                         Width="125" -->
+        <!--                         ToolTip="Очистить все" -->
+        <!--                         Click="ClearButton_OnClick" -->
+        <!--                         Margin="5"/> -->
+        <!--              -->
+        <!--             </StackPanel> -->
+        <!--              -->
+        <!--         </StackPanel> -->
+        <!--      -->
+        <!--     </StackPanel> -->
+        <!--      -->
+        <!-- </Grid> -->
+    </Grid>
+</UserControl>

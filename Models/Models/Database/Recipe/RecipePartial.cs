@@ -18,6 +18,7 @@ public partial class Recipe : INotifyPropertyChanged
     
     public string? Category { get; set; }
     private bool? _isLiked;
+
     public bool? IsLiked
     {
         get => _isLiked;
@@ -40,8 +41,8 @@ public partial class Recipe : INotifyPropertyChanged
             PropertyChanged(this, e);
         }
     }
-
-    public string Text => GetText();
+    
+    public string? Text { get; set; }
 
     private string GetText()
     {
