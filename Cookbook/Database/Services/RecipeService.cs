@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
-using Accessibility;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe;
 using Cookbook.Database.Services.Recipe.Ingredients;
 using Cookbook.Database.Services.Recipe.Review;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
-using Cookbook.Models.Database.Recipe;
-using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
 using Models.Models.Database.Recipe;
 using Models.Models.Database.Recipe.Ingredients;
@@ -498,5 +493,10 @@ public class RecipeService : IRecipeService
     public async Task<CommandResult> AddRecipeToFav(FavoriteRecipe favoriteRecipe)
     {
         return await _clientFavService.AddFavoriteRecipeAsync(favoriteRecipe);
+    }
+
+    public async Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType)
+    {
+        return await _recipeTypeService.AddRecipeTypeAsync(recipeType);
     }
 }

@@ -663,3 +663,5 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\EditRecipeP
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\EditRecipeView.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\EditRecipePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\EditRecipeView.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddRecipeTypeView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddRecipeTypeView.baml

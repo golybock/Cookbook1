@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
+using Models.Models.Database;
 using Models.Models.Database.Recipe;
 using Npgsql;
 
@@ -45,6 +47,7 @@ public class RecipeTypeRepository : MainDbClass, IRecipeTypeRepository
         List<RecipeType> recipeTypes = new List<RecipeType>();
         try
         {
+            await con.OpenAsync();
             string query = $"select * from recipe_type";
             
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
@@ -64,6 +67,43 @@ public class RecipeTypeRepository : MainDbClass, IRecipeTypeRepository
         catch
         {
             return new List<RecipeType>();
+        }
+        finally
+        {
+            await con.CloseAsync();
+        }
+    }
+
+    public async Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType)
+    {
+        CommandResult commandResult = CommandResults.Successfully;
+        
+        var con = GetConnection();
+        
+        try
+        {
+            await con.OpenAsync();
+            string query = $"insert into recipe_type(name) values($1)";
+            
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            {
+                Parameters = { new(){Value = recipeType.Name}}
+            };
+            
+            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            while(await reader.ReadAsync())
+            {
+                commandResult.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+            }
+            
+            return commandResult;
+        }
+        catch(Exception e)
+        {
+            commandResult = CommandResults.BadRequest;
+            commandResult.Description = e.ToString();
+            return commandResult;
         }
         finally
         {

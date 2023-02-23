@@ -102,9 +102,8 @@
                 
                 <Image Name="RecipeImage"
                        Grid.Column="0"
-                       Height="250"
-                       Width="250"
-                       Source="{Binding ImagePath}"
+                       Margin="20"
+                       Source="{Binding RecipeImage.ImagePath, UpdateSourceTrigger=PropertyChanged}"
                        AllowDrop="True"
                        Drop="RecipeImage_OnDrop"
                        MouseDown="RecipeImage_OnMouseDown"/>

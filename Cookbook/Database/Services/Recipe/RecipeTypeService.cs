@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
+using Models.Models.Database;
 using Models.Models.Database.Recipe;
 
 namespace Cookbook.Database.Services.Recipe;
@@ -26,5 +27,10 @@ public class RecipeTypeService : IRecipeTypeService
     public Task<List<RecipeType>> GetRecipeTypesAsync()
     {
         return _recipeTypeRepository.GetRecipeTypesAsync();
+    }
+
+    public Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType)
+    {
+        return _recipeTypeRepository.AddRecipeTypeAsync(recipeType);
     }
 }

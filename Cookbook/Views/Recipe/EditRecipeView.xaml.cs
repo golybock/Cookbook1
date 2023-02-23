@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Models.Models.Database.Recipe;
+using Models.Models.Database.Recipe.Ingredients;
 
 namespace Cookbook.Views.Recipe;
 
@@ -11,6 +12,10 @@ public partial class EditRecipeView : UserControl
         CategoryComboBox.SelectedItem as Category;
     public RecipeType? SelectedRecipeType =>
         RecipeTypeComboBox.SelectedItem as RecipeType;
+
+    public Ingredient? SelectedIngredient =>
+        IngredientsComboBox.SelectedItem as Ingredient;
+
     public delegate void RemoveIngredientFromList(int id);
     public delegate void AddRecipeType();
     public delegate void AddCategory();
@@ -19,7 +24,7 @@ public partial class EditRecipeView : UserControl
     public delegate void Save();
     public delegate void Cancel();
     public delegate void ChooseImage();
-    public delegate void ImageDrop();
+    public delegate void ImageDrop(DragEventArgs e);
 
     public event RemoveIngredientFromList? RemoveIngredientFromListClicked;
     public event AddRecipeType? AddRecipeTypeClicked;
@@ -77,11 +82,12 @@ public partial class EditRecipeView : UserControl
 
     private void RecipeImage_OnDrop(object sender, DragEventArgs e)
     {
-        ImageDropped?.Invoke();
+        ImageDropped?.Invoke(e);
     }
 
     private void RecipeImage_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         ChooseImageCLicked?.Invoke();
     }
+
 }
