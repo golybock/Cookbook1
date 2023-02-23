@@ -3,11 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
       HorizontalAlignment="Center"
-      Title="Рецепт">
+      Title="Рецепт"
+      Loaded="AddEditRecipePage_OnLoaded">
     
     <ScrollViewer VerticalScrollBarVisibility="Visible"
                   HorizontalScrollBarVisibility="Disabled">
@@ -16,7 +16,16 @@
             
             <recipe:EditRecipeView x:Name="EditRecipeView"
                                    Width="600"
-                                   Height="1000"/>
+                                   Height="1000"
+                                   RemoveIngredientFromListClicked="EditRecipeView_OnRemoveIngredientFromListClicked"
+                                   AddRecipeTypeClicked="EditRecipeView_OnAddRecipeTypeClicked"
+                                   AddCategoryClicked="EditRecipeView_OnAddCategoryClicked"
+                                   NewIngredientClicked="EditRecipeView_OnNewIngredientClicked"
+                                   ClearClicked="EditRecipeView_OnClearClicked"
+                                   SaveClicked="EditRecipeView_OnSaveClicked"
+                                   CancelClicked="EditRecipeView_OnCancelClicked"
+                                   ChooseImageCLicked="EditRecipeView_OnChooseImageCLicked"
+                                   ImageDropped="EditRecipeView_OnImageDropped"/>
             
         </Grid>
     

@@ -1,11 +1,16 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Models.Models.Database.Recipe;
 
 namespace Cookbook.Views.Recipe;
 
 public partial class EditRecipeView : UserControl
 {
+    public Category? SelectedCategory =>
+        CategoryComboBox.SelectedItem as Category;
+    public RecipeType? SelectedRecipeType =>
+        RecipeTypeComboBox.SelectedItem as RecipeType;
     public delegate void RemoveIngredientFromList(int id);
     public delegate void AddRecipeType();
     public delegate void AddCategory();
@@ -13,6 +18,8 @@ public partial class EditRecipeView : UserControl
     public delegate void Clear();
     public delegate void Save();
     public delegate void Cancel();
+    public delegate void ChooseImage();
+    public delegate void ImageDrop();
 
     public event RemoveIngredientFromList? RemoveIngredientFromListClicked;
     public event AddRecipeType? AddRecipeTypeClicked;
@@ -21,10 +28,15 @@ public partial class EditRecipeView : UserControl
     public event Clear? ClearClicked;
     public event Save? SaveClicked;
     public event Cancel? CancelClicked;
+    public event ChooseImage? ChooseImageCLicked;
+    public event ImageDrop? ImageDropped;
 
     public EditRecipeView()
     {
         InitializeComponent();
+        
+        CategoryComboBox.SelectedIndex = 0;
+        RecipeTypeComboBox.SelectedIndex = 0;
     }
 
     private void RemoveIngredientFromListButton_OnClick(object sender, RoutedEventArgs e)
@@ -61,5 +73,15 @@ public partial class EditRecipeView : UserControl
     private void CancelButton_OnClick(object sender, RoutedEventArgs e)
     {
         CancelClicked?.Invoke();
+    }
+
+    private void RecipeImage_OnDrop(object sender, DragEventArgs e)
+    {
+        ImageDropped?.Invoke();
+    }
+
+    private void RecipeImage_OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        ChooseImageCLicked?.Invoke();
     }
 }

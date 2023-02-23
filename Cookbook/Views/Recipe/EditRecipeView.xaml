@@ -9,7 +9,7 @@
              d:DesignHeight="1000" d:DesignWidth="600">
     <Grid>
         <Grid Name="MainGrid"
-              ShowGridLines="True">
+              ShowGridLines="False">
             
             <Grid.RowDefinitions>
                 <RowDefinition Height="25*"/>
@@ -104,7 +104,10 @@
                        Grid.Column="0"
                        Height="250"
                        Width="250"
-                       Source="{Binding ImagePath}"/>
+                       Source="{Binding ImagePath}"
+                       AllowDrop="True"
+                       Drop="RecipeImage_OnDrop"
+                       MouseDown="RecipeImage_OnMouseDown"/>
                 
                 <controls:SimpleStackPanel Name="MainInfoStackPanel"
                                      Grid.Column="1"
@@ -183,11 +186,11 @@
                     <TextBlock Text="Белки"
                                Margin="5"
                                FontSize="14"/>
-                
+                    
                     <controls:NumberBox Name="SquirrelsNumberBox"
                                         Value="{Binding Squirrels}"
                                         ValidationMode="InvalidInputOverwritten"
-                                        Minimum="1"
+                                        Minimum="0"
                                         Margin="5"
                                         Width="150"
                                         SpinButtonPlacementMode="Inline"/>
@@ -199,7 +202,7 @@
                     <controls:NumberBox Name="FatsNumberBox"
                                         Value="{Binding Fats}"
                                         ValidationMode="InvalidInputOverwritten"
-                                        Minimum="1"
+                                        Minimum="0"
                                         Margin="5"
                                         Width="150"
                                         SpinButtonPlacementMode="Inline"/>
@@ -217,7 +220,7 @@
                     <controls:NumberBox Name="CarbohydratesNumberBox"
                                         Value="{Binding Carbohydrates}"
                                         ValidationMode="InvalidInputOverwritten"
-                                        Minimum="1"
+                                        Minimum="0"
                                         Margin="5"
                                         Width="150"
                                         SpinButtonPlacementMode="Inline"/>
@@ -229,7 +232,7 @@
                     <controls:NumberBox Name="KilocaloriesNumberBox"
                                         Value="{Binding Kilocalories}"
                                         ValidationMode="InvalidInputOverwritten"
-                                        Minimum="1"
+                                        Minimum="0"
                                         Margin="5"
                                         Width="150"
                                         SpinButtonPlacementMode="Inline"/>
@@ -312,6 +315,7 @@
                     <ComboBox Name="IngredientsComboBox"
                               Margin="5"
                               Width="150"
+                              DisplayMemberPath="Name"
                               ItemsSource="{Binding Ingredients}"
                               SelectedIndex="0"/>
                         
@@ -337,6 +341,7 @@
                     <ComboBox Name="MeasureComboBox"
                               Margin="5"
                               Width="150"
+                              DisplayMemberPath="Name"
                               ItemsSource="{Binding Measures}"
                               SelectedIndex="0"/>
                         
@@ -373,8 +378,7 @@
                                   Width="110"
                                   Height="32"
                                   ItemsSource="{Binding Categories}"
-                                  DisplayMemberPath="Name"
-                                  SelectedIndex="{Binding Recipe.Category.Id}"/>
+                                  DisplayMemberPath="Name"/>
                         
                         <Button Name="AddCategoryButton"
                                 Width="32"
@@ -397,8 +401,7 @@
                                   Width="110"
                                   Height="32"
                                   DisplayMemberPath="Name"
-                                  ItemsSource="{Binding RecipeTypes}"
-                                  SelectedValue="{Binding Recipe.RecipeType}"/>
+                                  ItemsSource="{Binding RecipeTypes}"/>
                         
                         <Button Name="AddRecipeTypeButton"
                                 Width="32"

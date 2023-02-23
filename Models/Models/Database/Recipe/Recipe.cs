@@ -34,7 +34,7 @@ public partial class Recipe
 
     public List<RecipeImage> RecipeImages { get; set; } = new List<RecipeImage>();
 
-    public RecipeStats? RecipeStat { get; set; }
+    public RecipeStats RecipeStat { get; set; } = new RecipeStats();
 
     public RecipeType? RecipeType { get; set; }
 
