@@ -77,7 +77,7 @@
                        <TextBlock 
                             Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}"/>
                        
-                       <TextBlock Text="{Binding Category, FallbackValue=Категория, TargetNullValue=Категория}"
+                       <TextBlock Text="{Binding Category.Name, FallbackValue=Без категории, TargetNullValue=Без категории}"
                                   FontSize="26"
                                   FontWeight="Heavy"/>
                     

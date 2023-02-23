@@ -149,12 +149,12 @@ public class RecipeService : IRecipeService
         return _recipeTypeService.GetRecipeTypesAsync();
     }
 
-    private async Task<string> GetRecipeMainCategoryAsync(int recipeId)
+    private async Task<Category> GetRecipeMainCategoryAsync(int recipeId)
     {
         var recipeCategory = await _recipeCategoryService.GetRecipeMainCategoryAsync(recipeId);
         var category = await _categoryService.GetCategoryAsync(recipeCategory.CategoryId);
 
-        return category.Name;
+        return category;
     }
 
     public async Task<List<RecipeModel>> GetClientRecipes(int clientId)
@@ -234,7 +234,7 @@ public class RecipeService : IRecipeService
 
         var secondFind =
             recipes.Where(c => c.Category != null &&
-                                            c.Category.ToLower().Contains(searchString))
+                                            c.Category.Name.ToLower().Contains(searchString))
             .ToList();
 
         var thirdFind =

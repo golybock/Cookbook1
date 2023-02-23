@@ -130,7 +130,7 @@ public partial class FindPage : Page
         {
             Recipes = Recipes
                 .Where(
-                    c => c.Category == _filterCategory.Name
+                    c => c.Category.Name == _filterCategory.Name
                 ).ToList();
         }
         else

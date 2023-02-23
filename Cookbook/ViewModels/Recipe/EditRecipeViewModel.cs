@@ -14,19 +14,19 @@ namespace Cookbook.ViewModels.Recipe;
 
 public class EditRecipeViewModel
 {
-    public Ingredient Ingredient { get; set; }
+    public RecipeIngredient RecipeIngredient { get; set; }
     public RecipeModel Recipe { get; set; }
-    public List<Ingredient> Ingredients { get; set; }
-    public List<Category> Categories { get; set; }
-    public List<RecipeType> RecipeTypes => GetRecipeTypes().Result;
+    // public List<Ingredient> Ingredients => GetIngredients().Result;
+    public List<Measure> Measures { get; set; }
+    // public List<Category> Categories => GetCategories().Result;
+    // public List<RecipeType> RecipeTypes => GetRecipeTypes().Result;
 
     private readonly RecipeService _recipeService;
 
     public EditRecipeViewModel(RecipeModel recipe, ClientModel client)
     {
-        Ingredient = new Ingredient();
-        Ingredients = new List<Ingredient>();
-        Categories = new List<Category>();
+        Measures = new List<Measure>();
+        RecipeIngredient = new RecipeIngredient();
 
         Recipe = recipe;
 
@@ -35,22 +35,21 @@ public class EditRecipeViewModel
 
     public EditRecipeViewModel(ClientModel client)
     {
-        Ingredient = new Ingredient();
+        Measures = new List<Measure>();
+        RecipeIngredient = new RecipeIngredient();
         Recipe = new RecipeModel();
-        Ingredients = new List<Ingredient>();
-        Categories = new List<Category>();
 
         _recipeService = new RecipeService(client);
     }
 
-    private async Task GetCategories()
+    private async Task<List<Category>> GetCategories()
     {
-        Categories = await _recipeService.GetCategoriesAsync();
+        return await _recipeService.GetCategoriesAsync();
     } 
     
-    private async Task GetIngredients()
+    private async Task<List<Ingredient>> GetIngredients()
     {
-        Ingredients = await _recipeService.GetIngredientsAsync();
+        return await _recipeService.GetIngredientsAsync();
     }
 
     private async Task<List<RecipeType>> GetRecipeTypes()

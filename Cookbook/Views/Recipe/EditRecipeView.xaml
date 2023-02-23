@@ -92,7 +92,8 @@
             <Grid Name="TitleGrid"
                   Grid.Row="0"
                   Grid.Column="0"
-                  Grid.ColumnSpan="3">
+                  Grid.ColumnSpan="3"
+                  DataContext="{Binding Recipe}">
                 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40*"/>
@@ -103,7 +104,7 @@
                        Grid.Column="0"
                        Height="250"
                        Width="250"
-                       Source="../../Resources/sirniki.png"></Image>
+                       Source="{Binding ImagePath}"/>
                 
                 <controls:SimpleStackPanel Name="MainInfoStackPanel"
                                      Grid.Column="1"
@@ -115,13 +116,13 @@
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Name}"/>
+                    <TextBox Text="{Binding Name, ValidatesOnDataErrors=True}"/>
                     
                     <Label Content="Краткое описание"
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Description}"/>
+                    <TextBox Text="{Binding Description, ValidatesOnDataErrors=True}"/>
                     
                 </controls:SimpleStackPanel>
                 
@@ -129,7 +130,8 @@
             
             <Grid Name="TimePortionsGrid"
                   Grid.Row="1"
-                  Grid.Column="0">
+                  Grid.Column="0"
+                  DataContext="{Binding Recipe}">
                 
                     <controls:SimpleStackPanel Spacing="0"
                                          VerticalAlignment="Center"
@@ -166,7 +168,8 @@
             <Grid Name="StatsGrid"
                   Grid.Row="1"
                   Grid.Column="1"
-                  Grid.ColumnSpan="2">
+                  Grid.ColumnSpan="2"
+                  DataContext="{Binding Recipe.RecipeStat}">
                 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*"/>
@@ -182,7 +185,7 @@
                                FontSize="14"/>
                 
                     <controls:NumberBox Name="SquirrelsNumberBox"
-                                        Value="{Binding RecipeStat.Squirrels}"
+                                        Value="{Binding Squirrels}"
                                         ValidationMode="InvalidInputOverwritten"
                                         Minimum="1"
                                         Margin="5"
@@ -194,7 +197,7 @@
                                FontSize="14"/>
                 
                     <controls:NumberBox Name="FatsNumberBox"
-                                        Value="{Binding RecipeStat.Fats}"
+                                        Value="{Binding Fats}"
                                         ValidationMode="InvalidInputOverwritten"
                                         Minimum="1"
                                         Margin="5"
@@ -212,7 +215,7 @@
                                FontSize="14"/>
                 
                     <controls:NumberBox Name="CarbohydratesNumberBox"
-                                        Value="{Binding RecipeStat.Carbohydrates}"
+                                        Value="{Binding Carbohydrates}"
                                         ValidationMode="InvalidInputOverwritten"
                                         Minimum="1"
                                         Margin="5"
@@ -224,7 +227,7 @@
                                FontSize="14"/>
                 
                     <controls:NumberBox Name="KilocaloriesNumberBox"
-                                        Value="{Binding RecipeStat.Kilocalories}"
+                                        Value="{Binding Kilocalories}"
                                         ValidationMode="InvalidInputOverwritten"
                                         Minimum="1"
                                         Margin="5"
@@ -257,7 +260,8 @@
                                            Spacing="0"
                                            VerticalAlignment="Top"
                                            HorizontalAlignment="Left"
-                                           Margin="20,10,20,0">
+                                           Margin="20,10,20,0"
+                                           DataContext="{Binding Recipe}">
                         
                     <TextBlock Text="Ингридиенты"
                                Margin="5"
@@ -307,10 +311,12 @@
                 
                     <ComboBox Name="IngredientsComboBox"
                               Margin="5"
-                              Width="150"/>
+                              Width="150"
+                              ItemsSource="{Binding Ingredients}"
+                              SelectedIndex="0"/>
                         
                     <controls:NumberBox Name="IngredientCountNumberBox"
-                                        Value="{Binding Ingredient.Count}"
+                                        Value="{Binding RecipeIngredient.Count}"
                                         ValidationMode="InvalidInputOverwritten"
                                         Minimum="1"
                                         Margin="5"
@@ -330,7 +336,9 @@
                 
                     <ComboBox Name="MeasureComboBox"
                               Margin="5"
-                              Width="150"/>
+                              Width="150"
+                              ItemsSource="{Binding Measures}"
+                              SelectedIndex="0"/>
                         
                     <Button Name="AddIngredientButton"
                             Width="150"
@@ -363,7 +371,9 @@
                         <ComboBox Name="CategoryComboBox"
                                   Margin="5"
                                   Width="110"
-                                  Height="32"/>
+                                  Height="32"
+                                  ItemsSource="{Binding Categories}"
+                                  SelectedValue="{Binding Recipe.Category}"/>
                         
                         <Button Name="AddCategoryButton"
                                 Width="32"
@@ -384,7 +394,9 @@
                         <ComboBox Name="RecipeTypeComboBox"
                                   Margin="5"
                                   Width="110"
-                                  Height="32"/>
+                                  Height="32"
+                                  ItemsSource="{Binding RecipeTypes}"
+                                  SelectedValue="{Binding Recipe.RecipeType}"/>
                         
                         <Button Name="AddRecipeTypeButton"
                                 Width="32"
@@ -430,7 +442,7 @@
                     <TextBlock Text="Шаги приготовления"
                                FontSize="14"></TextBlock>
                     
-                    <TextBox Text="{Binding Text}"
+                    <TextBox Text="{Binding Recipe.Text}"
                              Width="560"
                              MinHeight="190"
                              controls:ControlHelper.PlaceholderText="Начните ввод"
