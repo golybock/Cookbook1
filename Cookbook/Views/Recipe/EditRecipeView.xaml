@@ -373,7 +373,8 @@
                                   Width="110"
                                   Height="32"
                                   ItemsSource="{Binding Categories}"
-                                  SelectedValue="{Binding Recipe.Category}"/>
+                                  DisplayMemberPath="Name"
+                                  SelectedIndex="{Binding Recipe.Category.Id}"/>
                         
                         <Button Name="AddCategoryButton"
                                 Width="32"
@@ -395,6 +396,7 @@
                                   Margin="5"
                                   Width="110"
                                   Height="32"
+                                  DisplayMemberPath="Name"
                                   ItemsSource="{Binding RecipeTypes}"
                                   SelectedValue="{Binding Recipe.RecipeType}"/>
                         
@@ -520,5 +522,7 @@
             </Grid>
             
         </Grid>
+        
     </Grid>
+    
 </UserControl>
