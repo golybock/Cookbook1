@@ -9,6 +9,7 @@ using Cookbook.Database.Services.Recipe;
 using Cookbook.Database.Services.Recipe.Ingredients;
 using Cookbook.Database.Services.Recipe.Review;
 using Cookbook.Models.Database.Client;
+using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
 using Models.Models.Database.Recipe;
 using Models.Models.Database.Recipe.Ingredients;
@@ -30,6 +31,7 @@ public class RecipeService : IRecipeService
     private readonly CategoryService _categoryService;
     private readonly IngredientService _ingredientService;
     private readonly RecipeTypeService _recipeTypeService;
+    private readonly MeasureService _measureService;
 
     public RecipeService(ClientModel client)
     {
@@ -44,6 +46,7 @@ public class RecipeService : IRecipeService
         _categoryService = new CategoryService();
         _ingredientService = new IngredientService();
         _recipeTypeService = new RecipeTypeService();
+        _measureService = new MeasureService();
     }
 
     public async Task<RecipeModel> GetRecipeAsync(int id)
@@ -490,6 +493,11 @@ public class RecipeService : IRecipeService
         }
     }
 
+    public async Task<List<Measure>> GetMeasures()
+    {
+        return await _measureService.GetMeasuresAsync();
+    }
+    
     public async Task<CommandResult> AddRecipeToFav(FavoriteRecipe favoriteRecipe)
     {
         return await _clientFavService.AddFavoriteRecipeAsync(favoriteRecipe);
@@ -498,5 +506,15 @@ public class RecipeService : IRecipeService
     public async Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType)
     {
         return await _recipeTypeService.AddRecipeTypeAsync(recipeType);
+    }
+
+    public async Task<CommandResult> AddRecipeCategoryAsync(Category category)
+    {
+        return await _categoryService.AddCategoryAsync(category);
+    }
+
+    public async Task<CommandResult> AddIngredient(Ingredient ingredient)
+    {
+        return await _ingredientService.AddIngredientAsync(ingredient);
     }
 }

@@ -51,7 +51,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         List<Measure> measures = new List<Measure>();
         try
         {
-
+            con.Open();
             string query = $"select * from measure";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
@@ -83,6 +83,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         
         try
         {
+            con.Open();
             string query = $"insert into measure(name) values ($1) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {

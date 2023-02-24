@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:controls="http://schemas.modernwpf.com/2019"
+             xmlns:vr="clr-namespace:Cookbook.ValidationRules"
              mc:Ignorable="d"
              d:DesignHeight="1000" d:DesignWidth="600">
     <Grid>
@@ -118,13 +119,15 @@
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Name, ValidatesOnDataErrors=True}"/>
+                    <TextBox Text="{Binding Name}">
+                        
+                    </TextBox>
                     
                     <Label Content="Краткое описание"
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Description, ValidatesOnDataErrors=True}"/>
+                    <TextBox Text="{Binding Description}"/>
                     
                 </controls:SimpleStackPanel>
                 

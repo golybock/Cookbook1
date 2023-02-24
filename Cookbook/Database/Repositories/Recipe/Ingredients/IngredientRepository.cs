@@ -54,7 +54,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         List<Ingredient> ingredients = new List<Ingredient>();
         try
         {
-           
+           con.Open();
             string query = $"select * from ingredient";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
@@ -91,15 +91,15 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         
         try
         {
-            string query = $"insert into ingredient(measure_id, name, image_path)" +
-                           $" values ($1, $2, $3) returning id";
+            con.Open();
+            string query = $"insert into ingredient(measure_id, name)" +
+                           $" values ($1, $2) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
-                    new() { Value = ingredient.MeasureId },
+                    new() { Value = ingredient.Measure.Id },
                     new() { Value = ingredient.Name },
-                    new() { Value = ingredient.ImagePath }
                 }
             }; 
             

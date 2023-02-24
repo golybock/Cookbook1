@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,14 +19,14 @@ using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Pages.Recipe;
 
-public partial class AddEditRecipePage : Page, INotifyPropertyChanged
+public partial class AddEditRecipePage : Page
 {
     public RecipeIngredient RecipeIngredient { get; set; }
     public RecipeModel Recipe { get; set; }
-    public ObservableCollection<Ingredient> Ingredients { get; set; }
-    public ObservableCollection<Measure> Measures { get; set; }
-    public ObservableCollection<Category> Categories { get; set; }
-    public ObservableCollection<RecipeType> RecipeTypes { get; set; }
+    public List<Ingredient> Ingredients { get; set; }
+    public List<Measure> Measures { get; set; }
+    public List<Category> Categories { get; set; }
+    public List<RecipeType> RecipeTypes { get; set; }
 
     private readonly RecipeService _recipeService;
     
@@ -45,11 +46,11 @@ public partial class AddEditRecipePage : Page, INotifyPropertyChanged
     
     public AddEditRecipePage(RecipeModel recipe, ClientModel client)
     {
-        Measures = new ObservableCollection<Measure>();
+        Measures = new List<Measure>();
         RecipeIngredient = new RecipeIngredient();
-        Categories = new ObservableCollection<Category>();
-        RecipeTypes = new ObservableCollection<RecipeType>();
-        Ingredients = new ObservableCollection<Ingredient>();
+        Categories = new List<Category>();
+        RecipeTypes = new List<RecipeType>();
+        Ingredients = new List<Ingredient>();
         Recipe = new RecipeModel();
         
         _recipeService = new RecipeService(client);
@@ -61,21 +62,22 @@ public partial class AddEditRecipePage : Page, INotifyPropertyChanged
 
     private async void GetAll()
     {
-        Measures = new ObservableCollection<Measure>() {new Measure() {Id = -1, Name = "Не выбрано"}};
-        Categories = new ObservableCollection<Category>() {new Category() {Id = -1, Name = "Выберите категорию"}};
-        RecipeTypes = new ObservableCollection<RecipeType>() {new RecipeType() { Id = -1, Name = "Выберите тип" }};
-        Ingredients = new ObservableCollection<Ingredient>(){new Ingredient() { Id = -1, Name = "Выберите ингридиент"}};
-
-        foreach (var category in await GetCategories())
-            Categories.Add(category);
-
-        foreach (var ingredient in await GetIngredients())
-            Ingredients.Add(ingredient);
-
-        foreach (var recipeType in await GetRecipeTypes())
-            RecipeTypes.Add(recipeType);
+        Measures = new List<Measure>() {new Measure() {Id = -1, Name = "Не выбрано"}};
+        Categories = new List<Category>() {new Category() {Id = -1, Name = "Выберите категорию"}};
+        RecipeTypes = new List<RecipeType>() {new RecipeType() { Id = -1, Name = "Выберите тип" }};
+        Ingredients = new List<Ingredient>(){new Ingredient() { Id = -1, Name = "Выберите ингридиент"}};
+        
+        Categories.AddRange(await GetCategories());
+        Ingredients.AddRange(await GetIngredients());
+        RecipeTypes.AddRange(await GetRecipeTypes());
+        Measures.AddRange(await GetMeasures());
         
         DataContext = this;
+    }
+
+    private async Task<List<Measure>> GetMeasures()
+    {
+        return await _recipeService.GetMeasures();
     }
 
     private async Task<List<Category>> GetCategories()
@@ -119,6 +121,35 @@ public partial class AddEditRecipePage : Page, INotifyPropertyChanged
             ClearPage();
     }
 
+    private async void ShowAddRecipeCategoryDialog()
+    {
+        Category category = new Category();
+        
+        ContentDialog addDialog = new ContentDialog()
+        {
+            Title = "Добавление категории рецепта",
+            Content = new AddRecipeCategoryView(category),
+            CloseButtonText = "Отмена",
+            PrimaryButtonText = "Добавить",
+            DefaultButton = ContentDialogButton.Primary
+        };
+        
+        ContentDialogResult result = await addDialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            if (!string.IsNullOrWhiteSpace(category.Name))
+            {
+                var commandResult = await _recipeService.AddRecipeCategoryAsync(category);
+                category.Id = commandResult.ValueId;
+                Categories.Add(category);
+                EditRecipeView.CategoryComboBox.ItemsSource = Categories;
+                EditRecipeView.CategoryComboBox.SelectedIndex = 0;
+            }
+            
+        }
+    }
+    
     private async void ShowAddRecipeTypeDialog()
     {
         RecipeType recipeType = new RecipeType();
@@ -141,6 +172,8 @@ public partial class AddEditRecipePage : Page, INotifyPropertyChanged
                 var commandResult = await _recipeService.AddRecipeTypeAsync(recipeType);
                 recipeType.Id = commandResult.ValueId;
                 RecipeTypes.Add(recipeType);
+                EditRecipeView.RecipeTypeComboBox.ItemsSource = RecipeTypes;
+                EditRecipeView.RecipeTypeComboBox.SelectedIndex = 0;
             }
             
         }
@@ -177,22 +210,26 @@ public partial class AddEditRecipePage : Page, INotifyPropertyChanged
 
     private void EditRecipeView_OnRemoveIngredientFromListClicked(int id)
     {
-        throw new System.NotImplementedException();
+        Recipe.Ingredients.Remove(
+            Recipe.Ingredients.First(c => c.Id == id)
+        );
+        
+        EditRecipeView.IngredientsListview.ItemsSource = Recipe.Ingredients;
     }
 
     private void EditRecipeView_OnAddRecipeTypeClicked()
     {
-        ShowAddRecipeTypeDialog();
+        CreateRecipeType();
     }
 
     private void EditRecipeView_OnAddCategoryClicked()
     {
-        throw new System.NotImplementedException();
+        CreateRecipeCategory();
     }
 
     private void EditRecipeView_OnNewIngredientClicked()
     {
-        throw new System.NotImplementedException();
+        CreateIngredient();
     }
 
     private void EditRecipeView_OnClearClicked()
@@ -207,9 +244,60 @@ public partial class AddEditRecipePage : Page, INotifyPropertyChanged
 
     private void EditRecipeView_OnCancelClicked()
     {
-        throw new System.NotImplementedException();
+        ShowAcceptDialogToCancel();
     }
 
+    private async void ShowAcceptDialogToCancel()
+    {
+        ContentDialog addDialog = new ContentDialog()
+        {
+            Title = "Подтверждение",
+            Content = "Отменить добавление рецепта?",
+            CloseButtonText = "Нет, продолжить",
+            PrimaryButtonText = "Да, отменить",
+            DefaultButton = ContentDialogButton.Primary
+        };
+        
+        ContentDialogResult result = await addDialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            if (NavigationService != null) 
+                NavigationService.GoBack();
+        }
+
+    }
+
+    private async void ShowAddIngredientDialog()
+    {
+        Ingredient ingredient = new Ingredient();
+        
+        ContentDialog addDialog = new ContentDialog()
+        {
+            Title = "Создание ингридиента",
+            Content = new AddIngredientView(ingredient, Measures),
+            CloseButtonText = "Отмена",
+            PrimaryButtonText = "Добавить",
+            DefaultButton = ContentDialogButton.Primary
+        };
+        
+        ContentDialogResult result = await addDialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            if (!string.IsNullOrWhiteSpace(ingredient.Name) && ingredient.Measure != null)
+            {
+                var commandResult = await _recipeService.AddIngredient(ingredient);
+                ingredient.Id = commandResult.ValueId;
+                Ingredients.Add(ingredient);
+                EditRecipeView.IngredientsComboBox.ItemsSource = null;
+                EditRecipeView.IngredientsComboBox.ItemsSource = Ingredients;
+                EditRecipeView.IngredientsComboBox.SelectedIndex = 0;
+            }
+            
+        }
+    }
+    
     private void EditRecipeView_OnChooseImageCLicked()
     {
         ChooseImage();
@@ -227,23 +315,17 @@ public partial class AddEditRecipePage : Page, INotifyPropertyChanged
 
     private void CreateRecipeType()
     {
-        
-        
-        
+        ShowAddRecipeTypeDialog();
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    private void CreateRecipeCategory()
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        ShowAddRecipeCategoryDialog();
     }
 
-    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    private void CreateIngredient()
     {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(propertyName);
-        return true;
+        ShowAddIngredientDialog();
     }
+
 }

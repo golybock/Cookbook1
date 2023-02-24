@@ -46,7 +46,7 @@ public class IngredientService : IIngredientService
 
     public async Task<CommandResult> AddIngredientAsync(Ingredient ingredient)
     {
-        if(ingredient.MeasureId <= 0)
+        if(ingredient.Measure!.Id <= 0)
             return CommandResults.BadRequest;
         
         if(string.IsNullOrWhiteSpace(ingredient.Name))

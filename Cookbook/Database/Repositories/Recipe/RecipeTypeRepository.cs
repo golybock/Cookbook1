@@ -83,7 +83,7 @@ public class RecipeTypeRepository : MainDbClass, IRecipeTypeRepository
         try
         {
             await con.OpenAsync();
-            string query = $"insert into recipe_type(name) values($1)";
+            string query = $"insert into recipe_type(name) values($1) returning id";
             
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
