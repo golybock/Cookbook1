@@ -669,3 +669,13 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddRecipe
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddRecipeCategoryView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddIngredientView.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddIngredientView.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddIngredientView.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddRecipeCategoryView.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddRecipeTypeView.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\EditRecipePage.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\EditRecipeView.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddIngredientView.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddRecipeCategoryView.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\ContentDialogs\AddRecipeTypeView.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\EditRecipePage.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\EditRecipeView.baml

@@ -33,9 +33,15 @@ public partial class AddEditRecipePage : Page
 
     public AddEditRecipePage(ClientModel client)
     {
+        Measures = new List<Measure>();
         RecipeIngredient = new RecipeIngredient();
+        Categories = new List<Category>();
+        RecipeTypes = new List<RecipeType>();
+        Ingredients = new List<Ingredient>();
+        Recipe = new RecipeModel();
 
         Recipe = new RecipeModel();
+        Recipe.ClientId = client.Id;
         
         _recipeService = new RecipeService(client);
         
@@ -143,6 +149,7 @@ public partial class AddEditRecipePage : Page
                 var commandResult = await _recipeService.AddRecipeCategoryAsync(category);
                 category.Id = commandResult.ValueId;
                 Categories.Add(category);
+                EditRecipeView.CategoryComboBox.ItemsSource = null;
                 EditRecipeView.CategoryComboBox.ItemsSource = Categories;
                 EditRecipeView.CategoryComboBox.SelectedIndex = 0;
             }
@@ -172,6 +179,7 @@ public partial class AddEditRecipePage : Page
                 var commandResult = await _recipeService.AddRecipeTypeAsync(recipeType);
                 recipeType.Id = commandResult.ValueId;
                 RecipeTypes.Add(recipeType);
+                EditRecipeView.RecipeTypeComboBox.ItemsSource = null;
                 EditRecipeView.RecipeTypeComboBox.ItemsSource = RecipeTypes;
                 EditRecipeView.RecipeTypeComboBox.SelectedIndex = 0;
             }
@@ -239,9 +247,23 @@ public partial class AddEditRecipePage : Page
 
     private void EditRecipeView_OnSaveClicked()
     {
-        throw new System.NotImplementedException();
+        CreateRecipe();
     }
 
+    private async void CreateRecipe()
+    {
+        var createResult = await _recipeService.AddRecipeAsync(Recipe);
+
+        if (createResult.Code != 100)
+        {
+            MessageBox.Show("Ошибка");
+        }
+        else
+        {
+            MessageBox.Show("ес");
+        }
+    }
+    
     private void EditRecipeView_OnCancelClicked()
     {
         ShowAcceptDialogToCancel();

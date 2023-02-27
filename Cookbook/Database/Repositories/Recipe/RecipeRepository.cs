@@ -141,19 +141,19 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         con.Open();
         try
         {
-            string query = $"insert into recipe(client_id, recipe_type_id, name, description, path_to_text_file, cooking_time)" +
-                           $" VALUES ($1, $2, $3, $4, $5, $6) returning id";
+            string query = $"insert into recipe(client_id, recipe_type_id, name, description, path_to_text_file, portion_count, cooking_time)" +
+                           $" VALUES ($1, $2, $3, $4, $5, $6, $7) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
-                    new() { Value = recipe.Id },
-                    new() { Value = recipe.RecipeTypeId },
+                    new() { Value = recipe.ClientId },
+                    new() { Value = recipe.RecipeTypeId == 0 ? 1 : recipe.RecipeTypeId },
                     new() { Value = recipe.Name },
-                    new() { Value = recipe.Description },
-                    new() { Value = recipe.PathToTextFile },
-                    new() { Value = recipe.PortionCount },
-                    new() { Value = recipe.CookingTime }
+                    new() { Value = recipe.Description == null ? DBNull.Value : recipe.Description },
+                    new() { Value = recipe.PathToTextFile == null ? DBNull.Value : recipe.PathToTextFile },
+                    new() { Value = recipe.CookingTime == 0 ? 1 : recipe.CookingTime },
+                    new() { Value = recipe.PortionCount == 0 ? 1 : recipe.PortionCount}
                 }
             }; 
             result = CommandResults.Successfully;
@@ -163,6 +163,8 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
             while(await reader.ReadAsync())
             {
                 result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                recipe.Id = result.ValueId;
+                result.Value = recipe;
             }
 
             return result;
