@@ -94,8 +94,6 @@ public class ClientService : IClientService
 
         var result = await _clientService.AddClientAsync(client);
 
-        client.Id = result.ValueId;
-
         // save image to docs
         client.ClientImage.ClientId = client.Id;
         client.ClientImage.ImagePath = CopyImageToDocuments(client.ClientImage.ImagePath, client.Id);

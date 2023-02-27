@@ -33,8 +33,10 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
                 recipe.RecipeTypeId = reader.GetInt32(reader.GetOrdinal("recipe_type_id"));
                 recipe.Name = reader.GetString(reader.GetOrdinal("name"));
                 recipe.DateOfCreation = reader.GetDateTime(reader.GetOrdinal("date_of_creation"));
+                
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 recipe.Description = description == DBNull.Value ? null : description.ToString();
+                
                 var pathToTextFile = reader.GetValue(reader.GetOrdinal("path_to_text_file"));
                 recipe.PathToTextFile = pathToTextFile == DBNull.Value ? null : pathToTextFile.ToString();
                 recipe.PortionCount = reader.GetInt32(reader.GetOrdinal("portion_count"));

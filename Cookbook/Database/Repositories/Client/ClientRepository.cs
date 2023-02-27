@@ -153,6 +153,8 @@ public class ClientRepository : MainDbClass, IClientRepository
             while(await reader.ReadAsync())
             {
                 result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                client.Id = result.ValueId;
+                result.Value = client;
             }
 
             return result;

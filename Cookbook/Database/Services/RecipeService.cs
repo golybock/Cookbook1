@@ -232,12 +232,16 @@ public class RecipeService : IRecipeService
 
         var secondFind =
             recipes.Where(c => c.Category != null &&
-                                            c.Category.Name.ToLower().Contains(searchString))
+                                            c.Category.Name
+                                                .ToLower()
+                                                .Contains(searchString))
             .ToList();
 
         var thirdFind =
             recipes.Where(c => c.Description != null &&
-                                           c.Description.ToLower().Contains(searchString))
+                                           c.Description
+                                               .ToLower()
+                                               .Contains(searchString))
             .ToList();
 
         var result = firstFind.Concat(secondFind);
