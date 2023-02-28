@@ -4,12 +4,17 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Mime;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Cookbook.Command;
+using Cookbook.Database.Services.Client;
 using Cookbook.Models.Database.Client;
+using Cookbook.Models.Register;
+using Cookbook.Pages;
 using Microsoft.Win32;
 using Models.Models.Database.Client;
 using ModernWpf.Controls;
@@ -18,42 +23,41 @@ namespace Cookbook.ViewModels.Registration;
 
 public sealed class RegistrationViewModel : INotifyPropertyChanged
 {
-    public RelayCommand<DragEventArgs> DropCommand =>
-        new RelayCommand<DragEventArgs>(OnDrop);
-    
-    private void OnDrop(DragEventArgs e)
+    public RegistrationViewModel()
     {
-        if (e.Data.GetDataPresent(DataFormats.FileDrop))
-        {
-            var files = (string[])e.Data.GetData(DataFormats.FileDrop) ?? Array.Empty<string>();
-
-            if (files.Length > 0)
-            {
-                string file = files[0];
-                
-                if (file.EndsWith(".png") || file.EndsWith(".jpg"))
-                    SetImage(file);
-            }
-        }
+        _clientService = new ClientService();
+        Client = new Client();
     }
-    
-    
-    public RegistrationViewModel() { }
 
-    public RegistrationViewModel(string login) =>
-        Client.Login = login;
+    public RegistrationViewModel(string login)
+    {
+        _clientService = new ClientService();
+        Client = new Client {Login = login};
+    }
 
     public RegistrationViewModel(string login, NavigationService navigationService)
     {
-        Client.Login = login; 
+        _clientService = new ClientService();
+        Client = new Client{ Login = login };
         _navigationService = navigationService;
     }
 
+    // основная модель данных
+    public Client Client { get; set; }
     
+    // атрибуты для привязки
+    public bool LoginValid { get; set; }
+    public bool PasswordValid { get; set; }
+    public string Error { get; set; } = String.Empty;
+    public bool HasError =>
+        !string.IsNullOrEmpty(Error);
+    
+    // приватные атрибуты
+    private ClientService _clientService;
     private NavigationService? _navigationService;
     
-    // public DropCommandHandler DropImageCommand(DragEventArgs e) =>
-    //     new DropCommandHandler(PersonPicture_OnDrop, e);
+    public RelayCommand<DragEventArgs> DropCommand =>
+        new RelayCommand<DragEventArgs>(OnDrop);
     
     public CommandHandler EditImageCommand =>
         new CommandHandler(ChooseImage);
@@ -63,25 +67,69 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
 
     public CommandHandler RegisterCommand =>
         new CommandHandler(Registration);
-    
-    public Client Client { get; set; } = new Client();
-
-    // private void PersonPicture_OnDrop(DragEventArgs e)
-    // {
-    //     string[] files = (string[]) e.Data.GetData(DataFormats.FileDrop);
-    //     string file = files[0];
-    //     // если файл картинка
-    //     if (file.EndsWith(".png") || file.EndsWith(".jpg"))
-    //         SetImage(file);
-    // }
 
     private void CancelRegistration() =>
         _navigationService?.GoBack();
 
-    private void Registration()
+    
+    private void OnDrop(DragEventArgs e)
     {
-        
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            var data = e.Data.GetData(DataFormats.FileDrop);
+            
+            if (data != null)
+            {
+                var files = (string[]) data;
+
+                if (files.Length > 0)
+                {
+                    string file = files[0];
+                
+                    if (file.EndsWith(".png") || file.EndsWith(".jpg"))
+                        SetImage(file);
+                }
+            }
+
+        }
     }
+    
+    // private async Task Register()
+    // {
+    //     // Client.Password = PasswordBox.Password;
+    //     //
+    //     // RegisterResult result = await _clientService.Register(_client);
+    //     //
+    //     // if (result.Result)
+    //     // {
+    //     //     if (NavigationService != null) 
+    //     //         NavigationService.Navigate(new NavigationPage(_client));
+    //     // }
+    //     // else
+    //     // {
+    //     //     if (result.Code == 101)
+    //     //     {
+    //     //         InvalidLogin(result.Description);
+    //     //     }
+    //     //     else if (result.Code == 102)
+    //     //     {
+    //     //         InvalidPassword(result.PasswordResult.Description);
+    //     //     }
+    //     //     else if (result.Code == 103)
+    //     //     {
+    //     //         InvalidData(result.Description);
+    //     //     }
+    //     //     else
+    //     //     {
+    //     //         ShowError("Неизвестная ошибка");
+    //     //     }
+    //     //     
+    //     // }
+    //
+    // }
+
+    
+    private void Registration() { }
     
     private void ChooseImage()
     {
@@ -105,6 +153,7 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
         Client.NewImagePath = path;
 
     
+    // PropertyChanged for bindings
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
