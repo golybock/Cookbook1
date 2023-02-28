@@ -26,17 +26,13 @@
                                             AllowDrop="True"
                                             ProfilePicture="{Binding Client.ClientImage.ImagePath, UpdateSourceTrigger=PropertyChanged}">
                         
-                        <controls:PersonPicture.InputBindings>
-                            
-                            <MouseBinding Gesture="LeftClick"
-                                          Command="{Binding EditImageCommand}"/>
-                            
-                        </controls:PersonPicture.InputBindings>
-                        
                         <b:Interaction.Triggers>
-                            <b:EventTrigger>
-                                <b:InvokeCommandAction Command="{Binding DropImageCommand}" PassEventArgsToCommand="True"/>    
-                            </b:EventTrigger>    
+                            <b:EventTrigger EventName="MouseDown">
+                                <b:InvokeCommandAction Command="{Binding EditImageCommand}" />
+                            </b:EventTrigger>
+                            <b:EventTrigger EventName="Drop">
+                                <b:InvokeCommandAction Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
+                            </b:EventTrigger>
                         </b:Interaction.Triggers>
                         
                     </controls:PersonPicture>

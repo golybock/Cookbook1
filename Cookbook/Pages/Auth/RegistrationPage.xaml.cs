@@ -15,6 +15,6 @@ public partial class RegistrationPage : Page
     public RegistrationPage(string login)
     {
         InitializeComponent();
-        DataContext = new RegistrationViewModel(login, NavigationService.GetNavigationService(this));
+        DataContext = new RegistrationViewModel(login, NavigationService);
     }
 }

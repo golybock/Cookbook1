@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Net.Mime;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Models.Database.Client;
@@ -14,6 +18,26 @@ namespace Cookbook.ViewModels.Registration;
 
 public sealed class RegistrationViewModel : INotifyPropertyChanged
 {
+    public RelayCommand<DragEventArgs> DropCommand =>
+        new RelayCommand<DragEventArgs>(OnDrop);
+    
+    private void OnDrop(DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop) ?? Array.Empty<string>();
+
+            if (files.Length > 0)
+            {
+                string file = files[0];
+                
+                if (file.EndsWith(".png") || file.EndsWith(".jpg"))
+                    SetImage(file);
+            }
+        }
+    }
+    
+    
     public RegistrationViewModel() { }
 
     public RegistrationViewModel(string login) =>

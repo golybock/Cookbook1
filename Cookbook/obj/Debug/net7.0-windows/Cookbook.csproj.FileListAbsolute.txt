@@ -687,3 +687,11 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\PdfSharp
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\PdfSharp.dll
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.Charting.resources.dll
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.resources.dll
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\RegistrationPage.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\RegistrationView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\PdfSharp.Charting.dll
+C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\PdfSharp.dll
+C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.Charting.resources.dll
+C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.resources.dll
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\RegistrationPage.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\RegistrationView.baml
