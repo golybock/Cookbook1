@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Security;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using Cookbook.Command;
 using Cookbook.Models.Database.Client;
 using Microsoft.Win32;
@@ -21,9 +18,9 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     public RegistrationViewModel(string login) =>
         Client.Login = login;
 
-    // private DropCommandHandler DropImageCommand(DragEventArgs e) =>
-    //     new DropCommandHandler(PersonPicture_OnDrop(e));
-    //
+    // public DropCommandHandler DropImageCommand(DragEventArgs e) =>
+    //     new DropCommandHandler(PersonPicture_OnDrop, e);
+    
     public CommandHandler EditImageCommand =>
         new CommandHandler(ChooseImage);
 
