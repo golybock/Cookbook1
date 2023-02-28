@@ -43,6 +43,7 @@
                     
                     <Button Name="EditImageButton"
                             Command="{Binding EditImageCommand}"
+                            CommandParameter="{Binding}"
                             Content="Изменить"
                             Margin="5"
                             HorizontalAlignment="Center"/>

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Cookbook.Command;
 
 public class CommandHandler : ICommand
 {
-    private Action _action;
+    private readonly Action _action;
     private Func<bool> _canExecute;
     
     public CommandHandler(Action action, Func<bool> canExecute)
@@ -20,19 +21,19 @@ public class CommandHandler : ICommand
         _canExecute = () => true;
     }
 
-    public event EventHandler? CanExecuteChanged
+    public event EventHandler CanExecuteChanged
     {
-        add => CommandManager.RequerySuggested += value;
-        remove => CommandManager.RequerySuggested -= value;
+        add { CommandManager.RequerySuggested += value; }
+        remove { CommandManager.RequerySuggested -= value; }
     }
-
-    public bool CanExecute(object? parameter)
+    
+    public bool CanExecute(object parameter)
     {
-        return _canExecute.Invoke();
+        return true;
     }
 
     public void Execute(object? parameter)
     {
-        _action();
+        _action.Invoke();
     }
 }

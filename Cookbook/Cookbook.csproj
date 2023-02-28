@@ -16,6 +16,7 @@
       <PackageReference Include="ModernWpfUI" Version="0.9.6" />
       <PackageReference Include="ModernWpfUI.MahApps" Version="0.9.5" />
       <PackageReference Include="Npgsql" Version="7.0.1" />
+      <PackageReference Include="PDFsharp" Version="1.50.5147" />
     </ItemGroup>
 
     <ItemGroup>

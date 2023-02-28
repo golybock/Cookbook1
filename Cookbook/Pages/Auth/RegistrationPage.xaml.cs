@@ -7,13 +7,13 @@ public partial class RegistrationPage : Page
 {
     public RegistrationPage()
     {
-        DataContext = new RegistrationViewModel();
         InitializeComponent();
+        DataContext = new RegistrationViewModel();
     }
     
     public RegistrationPage(string login)
     {
-        DataContext = new RegistrationViewModel(login);
         InitializeComponent();
+        DataContext = new RegistrationViewModel(login);
     }
 }

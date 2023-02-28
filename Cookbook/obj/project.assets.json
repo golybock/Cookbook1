@@ -752,6 +752,33 @@
           }
         }
       },
+      "PDFsharp/1.50.5147": {
+        "type": "package",
+        "compile": {
+          "lib/net20/PdfSharp.Charting.dll": {
+            "related": ".xml"
+          },
+          "lib/net20/PdfSharp.dll": {
+            "related": ".Charting.xml;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net20/PdfSharp.Charting.dll": {
+            "related": ".xml"
+          },
+          "lib/net20/PdfSharp.dll": {
+            "related": ".Charting.xml;.xml"
+          }
+        },
+        "resource": {
+          "lib/net20/de/PdfSharp.Charting.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net20/de/PdfSharp.resources.dll": {
+            "locale": "de"
+          }
+        }
+      },
       "System.Text.Encodings.Web/7.0.0": {
         "type": "package",
         "compile": {
@@ -1901,6 +1928,23 @@
         "postgresql.png"
       ]
     },
+    "PDFsharp/1.50.5147": {
+      "sha512": "vr5KBIqcXu2hqZ43UTwPR+jqHgMrT5tsPtJvEF+mORKoBNMh3bRWgAwic0U1sT2IVb4PR5m0GyQxnmCz8jBHWg==",
+      "type": "package",
+      "path": "pdfsharp/1.50.5147",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/PdfSharp.Charting.dll",
+        "lib/net20/PdfSharp.Charting.xml",
+        "lib/net20/PdfSharp.dll",
+        "lib/net20/PdfSharp.xml",
+        "lib/net20/de/PdfSharp.Charting.resources.dll",
+        "lib/net20/de/PdfSharp.resources.dll",
+        "pdfsharp.1.50.5147.nupkg.sha512",
+        "pdfsharp.nuspec"
+      ]
+    },
     "System.Text.Encodings.Web/7.0.0": {
       "sha512": "OP6umVGxc0Z0MvZQBVigj4/U31Pw72ITihDWP9WiWDm+q5aoe0GaJivsfYGq53o6dxH7DcXWiCTl7+0o2CGdmg==",
       "type": "package",
@@ -2019,7 +2063,8 @@
       "Models >= 1.0.0",
       "ModernWpfUI >= 0.9.6",
       "ModernWpfUI.MahApps >= 0.9.5",
-      "Npgsql >= 7.0.1"
+      "Npgsql >= 7.0.1",
+      "PDFsharp >= 1.50.5147"
     ]
   },
   "packageFolders": {
@@ -2102,6 +2147,10 @@
           "Npgsql": {
             "target": "Package",
             "version": "[7.0.1, )"
+          },
+          "PDFsharp": {
+            "target": "Package",
+            "version": "[1.50.5147, )"
           }
         },
         "imports": [
@@ -2126,5 +2175,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PDFsharp 1.50.5147' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PDFsharp",
+      "targetGraphs": [
+        "net7.0-windows7.0"
+      ]
+    }
+  ]
 }

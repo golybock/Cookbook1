@@ -25,29 +25,31 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     //     new DropCommandHandler(PersonPicture_OnDrop(e));
     //
     private CommandHandler EditImageCommand =>
-        new CommandHandler(EditImageEvent);
+        new CommandHandler(ChooseImage);
 
-    private void EditImageEvent() =>
-        ChooseImage();
-   
     public Client Client { get; set; } = new Client();
 
-    private void PersonPicture_OnDrop(DragEventArgs e)
-    {
-        string[] files = (string[]) e.Data.GetData(DataFormats.FileDrop);
-        string file = files[0];
-        // если файл картинка
-        if (file.EndsWith(".png") || file.EndsWith(".jpg"))
-            SetImage(file);
-    }
+    // private void PersonPicture_OnDrop(DragEventArgs e)
+    // {
+    //     string[] files = (string[]) e.Data.GetData(DataFormats.FileDrop);
+    //     string file = files[0];
+    //     // если файл картинка
+    //     if (file.EndsWith(".png") || file.EndsWith(".jpg"))
+    //         SetImage(file);
+    // }
     
     private void ChooseImage()
     {
-        // открываем диалог выбора файла
-        OpenFileDialog openFileDialog = new OpenFileDialog();
-        openFileDialog.InitialDirectory = @"C:\\";
-        openFileDialog.Filter = "Image files (*.png)|*.png|All files (*.*)|*.*";
+        string dir = @"C:\\";
+        string filter = "Image files (*.png)|*.png|All files (*.*)|*.*";
         
+        // открываем диалог выбора файла
+        OpenFileDialog openFileDialog = new OpenFileDialog
+        {
+            InitialDirectory = dir,
+            Filter = filter
+        };
+
         // если показан
         if (openFileDialog.ShowDialog() == true)
             // если есть выбранный файл
