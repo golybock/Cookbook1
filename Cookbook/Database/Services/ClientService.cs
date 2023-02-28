@@ -180,9 +180,9 @@ public class ClientService : IClientService
         return await _clientSubService.DeleteClientSubAsync(_client.Id, subId);
     }
 
-    private async Task GetClientInfo(ClientModel? client)
+    private async Task GetClientInfo(ClientModel client)
     {
-        if (client != null || client.Id != -1)
+        if (client.Id != -1 && client.Id > 0)
         {
             var recipes = _recipeService.GetClientRecipes(client.Id);
             var imagePath =  _clientImageService.GetClientImageByClientIdAsync(client.Id);
@@ -202,7 +202,7 @@ public class ClientService : IClientService
             client.ClientSubs = await clientSubs;
             client.ClientImage = (await imagePath)!;
             
-            client.ImagePath = client.ClientImage.ImagePath;
+            client.ClientImage.ImagePath = client.ClientImage.ImagePath;
             
         }
     }

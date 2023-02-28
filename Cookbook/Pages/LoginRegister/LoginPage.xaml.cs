@@ -7,6 +7,7 @@ using System.Windows.Media;
 using Cookbook.Database.Services.Client;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Login;
+using Cookbook.Pages.Auth;
 using Models.Models.Login;
 using Client = Models.Models.Database.Client.Client;
 using ClientService = Cookbook.Database.Services.ClientService;
@@ -172,11 +173,9 @@ public partial class LoginPage : Page
         GetInfo();
         
         if(_login != String.Empty)
-        {
             if (NavigationService != null) 
-                NavigationService.Navigate(new RegisterPage(_login));
-        }
+                NavigationService.Navigate(new RegistrationPage(_login));
         else if (NavigationService != null) 
-            NavigationService.Navigate(new RegisterPage());
+            NavigationService.Navigate(new RegistrationPage());
     }
 }

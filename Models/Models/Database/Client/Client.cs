@@ -15,17 +15,17 @@ public partial class Client
 
     public string? Description { get; set; }
 
-    public DateTime DateOfRegistration { get; set; }
+    public virtual DateTime DateOfRegistration { get; set; }
     
-    public List<ClientImage> ClientImages { get; set; } = new List<ClientImage>();
+    public virtual List<ClientImage> ClientImages { get; set; } = new();
 
-    public List<ClientSub> ClientSubOnClients { get; set; } = new List<ClientSub>();
+    public virtual List<ClientSub> ClientSubOnClients { get; set; } = new();
 
-    public List<ClientSub> ClientSubs { get; set; } = new List<ClientSub>();
+    public virtual List<ClientSub> ClientSubs { get; set; } = new();
 
-    public List<FavoriteRecipe> FavoriteRecipes { get; set; } = new List<FavoriteRecipe>();
+    public virtual List<FavoriteRecipe> FavoriteRecipes { get; set; } = new();
 
-    public List<global::Models.Models.Database.Recipe.Recipe> Recipes { get; set; } = new List<global::Models.Models.Database.Recipe.Recipe>();
+    public virtual List<Recipe.Recipe> Recipes { get; set; } = new();
 
-    public List<Review> Reviews { get; set; } = new List<Review>();
+    public virtual List<Review> Reviews { get; set; } = new();
 }
