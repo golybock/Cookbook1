@@ -9,6 +9,7 @@ using Cookbook.Database.Services;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Register;
 using Microsoft.Win32;
+using Models.Models.Database.Client;
 using Client = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Pages.LoginRegister;

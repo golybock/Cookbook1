@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Cookbook.Models.Database.Client;
 
 namespace Models.Models.Database.Client;
@@ -15,7 +16,7 @@ public partial class Client: INotifyPropertyChanged
         {
             _newImagePath = value;
             ClientImage.ImagePath = _newImagePath;
-            OnPropertyChanged(new PropertyChangedEventArgs("Client.ClientImage.ImagePath"));
+            OnPropertyChanged();
         }
     }
     
@@ -27,7 +28,7 @@ public partial class Client: INotifyPropertyChanged
         set
         {
             _isLiked = value;
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiked"));
+            OnPropertyChanged();
         }
     }
     
@@ -43,14 +44,18 @@ public partial class Client: INotifyPropertyChanged
     }
 
 
-    
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private void OnPropertyChanged(PropertyChangedEventArgs e)
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, e);
-        }
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
     }
 }

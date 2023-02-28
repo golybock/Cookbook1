@@ -5,6 +5,7 @@ using Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
 using Models.Models.Database;
+using Models.Models.Database.Client;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Client;
