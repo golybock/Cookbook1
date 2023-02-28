@@ -40,17 +40,16 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     
     private void ChooseImage()
     {
-        string dir = @"C:\\";
+        string dir = "C:\\";
         string filter = "Image files (*.png)|*.png|All files (*.*)|*.*";
         
         // открываем диалог выбора файла
-        OpenFileDialog openFileDialog = new OpenFileDialog
-        {
-            InitialDirectory = dir,
-            Filter = filter
-        };
+        OpenFileDialog openFileDialog = new OpenFileDialog();
 
-        // если показан
+        openFileDialog.InitialDirectory = dir;
+        openFileDialog.Filter = filter;
+
+            // если показан
         if (openFileDialog.ShowDialog() == true)
             // если есть выбранный файл
             if (openFileDialog.FileName != String.Empty)
