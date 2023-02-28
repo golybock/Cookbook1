@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Models.Database.Client;
 using Microsoft.Win32;
@@ -18,12 +19,27 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     public RegistrationViewModel(string login) =>
         Client.Login = login;
 
+    public RegistrationViewModel(string login, NavigationService navigationService)
+    {
+        Client.Login = login; 
+        _navigationService = navigationService;
+    }
+
+    
+    private NavigationService? _navigationService;
+    
     // public DropCommandHandler DropImageCommand(DragEventArgs e) =>
     //     new DropCommandHandler(PersonPicture_OnDrop, e);
     
     public CommandHandler EditImageCommand =>
         new CommandHandler(ChooseImage);
 
+    public CommandHandler CancelCommand =>
+        new CommandHandler(CancelRegistration);
+
+    public CommandHandler RegisterCommand =>
+        new CommandHandler(Registration);
+    
     public Client Client { get; set; } = new Client();
 
     // private void PersonPicture_OnDrop(DragEventArgs e)
@@ -34,6 +50,14 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     //     if (file.EndsWith(".png") || file.EndsWith(".jpg"))
     //         SetImage(file);
     // }
+
+    private void CancelRegistration() =>
+        _navigationService?.GoBack();
+
+    private void Registration()
+    {
+        
+    }
     
     private void ChooseImage()
     {
