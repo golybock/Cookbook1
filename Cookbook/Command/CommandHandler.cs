@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Cookbook.Command;
@@ -34,6 +33,6 @@ public class CommandHandler : ICommand
 
     public void Execute(object? parameter)
     {
-        _action.Invoke();
+        _action();
     }
 }

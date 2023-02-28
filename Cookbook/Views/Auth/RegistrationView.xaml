@@ -43,7 +43,6 @@
                     
                     <Button Name="EditImageButton"
                             Command="{Binding EditImageCommand}"
-                            CommandParameter="{Binding}"
                             Content="Изменить"
                             Margin="5"
                             HorizontalAlignment="Center"/>
@@ -58,7 +57,7 @@
                         <Label Content="Имя"/>
                         
                         <TextBox Name="NameTextBox"
-                                 Text="{Binding Name}"
+                                 Text="{Binding Client.Name}"
                                  Width="150"/>
                         
                     </StackPanel>
@@ -74,7 +73,7 @@
                         
                             
                             <TextBox Name="LoginTextBox"
-                                     Text="{Binding Login}"
+                                     Text="{Binding Client.Login}"
                                      Width="150"
                                      TextChanged="DataChanged"/>
                             

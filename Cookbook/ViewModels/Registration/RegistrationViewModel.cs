@@ -24,7 +24,7 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     // private DropCommandHandler DropImageCommand(DragEventArgs e) =>
     //     new DropCommandHandler(PersonPicture_OnDrop(e));
     //
-    private CommandHandler EditImageCommand =>
+    public CommandHandler EditImageCommand =>
         new CommandHandler(ChooseImage);
 
     public Client Client { get; set; } = new Client();
