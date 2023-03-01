@@ -125,7 +125,8 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         con.Open();
         try
         {
-            string query = $"insert into favorite_recipes(recipe_id, client_id) values ($1, $2) returning id";
+            string query = $"insert into favorite_recipes(recipe_id, client_id)" +
+                           $" values ($1, $2) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -140,7 +141,7 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                favoriteRecipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
             
             return result;

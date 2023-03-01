@@ -99,7 +99,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                measure.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
 
             return result;

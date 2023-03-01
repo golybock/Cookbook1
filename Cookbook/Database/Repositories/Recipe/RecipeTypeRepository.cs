@@ -94,7 +94,7 @@ public class RecipeTypeRepository : MainDbClass, IRecipeTypeRepository
             
             while(await reader.ReadAsync())
             {
-                commandResult.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                recipeType.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
             
             return commandResult;

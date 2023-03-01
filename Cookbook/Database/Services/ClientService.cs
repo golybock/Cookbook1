@@ -10,10 +10,10 @@ using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe.Review;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Login;
-using Cookbook.Models.Register;
-using Cookbook.Models.Register.Password;
 using Models.Models.Database;
 using Models.Models.Login;
+using Models.Models.Register;
+using Models.Models.Register.Password;
 using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services;
@@ -68,7 +68,7 @@ public class ClientService : IClientService
         if (currentClient?.Id == 0)
             return LoginResults.InvalidLogin;
         
-        if (currentClient?.Password != Hash(password))
+        if (currentClient?.Password != App.Hash(password))
             return LoginResults.InvalidPassword;
         
         LoginResult result = LoginResults.Successfully;
@@ -80,39 +80,7 @@ public class ClientService : IClientService
         return result;
     }
 
-    public async Task<RegisterResult> Register(ClientModel client)
-    {
-        if (client.Login == String.Empty &&
-            client.Password == string.Empty)
-            return RegisterResults.InvalidData;
-        
-        PasswordResult passwordResult = PasswordValidate(client.Password);
-        
-        if (!passwordResult.Result)
-        {
-            return new RegisterResult()
-            {
-                Code = 102, Result = false,
-                PasswordResult = passwordResult,
-                Description = "Неверный пароль"
-            };
-        }
 
-        if (!LoginValid(client.Login))
-            return RegisterResults.InvalidLogin;
-        
-        client.Password = Hash(client.Password);
-
-        var result = await _clientService.AddClientAsync(client);
-
-        // save image to docs
-        client.ClientImage.ClientId = client.Id;
-        client.ClientImage.ImagePath = CopyImageToDocuments(client.ClientImage.ImagePath, client.Id);
-
-        var imageResult = await _clientImageService.AddClientImageAsync(client.ClientImage);
-
-        return RegisterResults.Successfully;
-    }
 
     public async Task<List<ClientModel>> GetClients()
     {
@@ -169,22 +137,7 @@ public class ClientService : IClientService
         return CommandResults.BadRequest;
     }
     
-    private string? CopyImageToDocuments(string? path, int clientId)
-    {
-        string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients\\";
 
-        string filePath = $"client_{clientId}_{App.GetTimeStamp()}.png";
-
-        string writePath = documentsPath + filePath;
-
-        if (File.Exists(path))
-        {
-            File.Copy(path, writePath);
-            return filePath;
-        }
-
-        return null;
-    }
     
     public async Task<CommandResult> DeleteSub(int subId)
     {
@@ -217,66 +170,5 @@ public class ClientService : IClientService
             
         }
     }
-    
-    [Obsolete("Obsolete")]
-    private static string Hash(string stringToHash)
-    {
-        if (stringToHash == "admin")
-            return "admin";
-        
-        using var sha1 = new SHA1Managed();
-        return BitConverter.ToString(sha1.ComputeHash(Encoding.UTF8.GetBytes(stringToHash)));
-    }
 
-    private PasswordResult PasswordValidate(string password)
-    {
-        if (!PasswordNotNull(password))
-            return PasswordResults.EmptyPassword;
-        
-        if(!PasswordHasDigit(password))
-            return PasswordResults.NeedDigit;
-
-        if (!PasswordHasSymbol(password))
-            return PasswordResults.NeedSymbol;
-
-        if (!PasswordHasUpper(password))
-            return PasswordResults.NeedUpper;
-
-        if (!PasswordLengthValid(password))
-            return PasswordResults.NeedLength;
-        
-        
-        return PasswordResults.Successfully;
-
-    }
-
-    private bool PasswordNotNull(string password)
-    {
-        return !string.IsNullOrEmpty(password);
-    }
-
-    private bool PasswordHasDigit(string password)
-    {
-        return password.Any(char.IsDigit);
-    }
-
-    private bool PasswordHasUpper(string password)
-    {
-        return password.Any(char.IsUpper);
-    }
-
-    private bool PasswordLengthValid(string password)
-    {
-        return password.Length >= 8;
-    }
-
-    private bool PasswordHasSymbol(string password)
-    {
-        return password.Any(char.IsPunctuation);
-    }
-
-    private bool LoginValid(string login)
-    {
-        return _clientService.GetClientAsync(login).Result!.Id == 0;
-    }
 }

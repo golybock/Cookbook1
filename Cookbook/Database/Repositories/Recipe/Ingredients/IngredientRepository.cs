@@ -108,7 +108,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                ingredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
 
             return result;

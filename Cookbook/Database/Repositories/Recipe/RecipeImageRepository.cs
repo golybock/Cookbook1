@@ -140,7 +140,7 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                recipeImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
 
             return result;

@@ -23,12 +23,6 @@ public partial class NavigationPage : Page
     private NavigationViewItem _lastItem;
     public Frame FirstFrame { get; set; }
 
-    public NavigationPage(Client client)
-    {
-        _client = client; 
-        InitializeComponent();
-    }
-    
     public NavigationPage(Client client, Frame frame)
     {
         FirstFrame = frame;

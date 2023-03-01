@@ -194,7 +194,7 @@ public class ReviewRepository : MainDbClass, IReviewRepository
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                review.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
 
             return result;

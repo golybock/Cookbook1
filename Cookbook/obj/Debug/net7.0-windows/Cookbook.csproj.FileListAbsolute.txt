@@ -587,7 +587,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.csproj.Assembly
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\LoginPage.g.cs
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\RegisterPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.g.cs
@@ -606,7 +605,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_MarkupCompile.c
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_MarkupCompile.lref
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\App.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\LoginPage.baml
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\RegisterPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.baml

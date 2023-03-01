@@ -60,7 +60,7 @@ public class ClientRepository : MainDbClass, IClientRepository
             string query = $"select * from client where login = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
-                Parameters = { new() { Value = login} }
+                Parameters = { new() { Value = login == string.Empty ? DBNull.Value : login  } }
             };
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
@@ -130,30 +130,33 @@ public class ClientRepository : MainDbClass, IClientRepository
     public async Task<CommandResult> AddClientAsync(ClientModel client)
     {
         var con = GetConnection();
+        
         CommandResult result;
-        con.Open();
+
         try
         {
+            con.Open();
+            
             string query = $"insert into client(login, password, name)" +
                            $" values ($1, $2, $3) returning id";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new() { Value = client.Login },
                     new() { Value = client.Password },
-                    new() { Value = client.Name }
+                    new() { Value = client.Name == null ? DBNull.Value : client.Name }
                 }
             }; 
             
-            result = CommandResults.Successfully;
-            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
+            result = CommandResults.Successfully;
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
-                client.Id = result.ValueId;
+                client.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 result.Value = client;
             }
 

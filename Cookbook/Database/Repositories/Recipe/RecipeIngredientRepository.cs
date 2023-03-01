@@ -140,7 +140,7 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                recipeIngredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
 
             return result;

@@ -99,7 +99,7 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                category.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
 
             return result;

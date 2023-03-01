@@ -215,7 +215,7 @@ public class ClientSubRepository : MainDbClass, IClientSubRepository
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                clientSub.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
 
             return result;

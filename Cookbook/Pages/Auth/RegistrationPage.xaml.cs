@@ -1,20 +1,20 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Navigation;
+using Frame = ModernWpf.Controls.Frame;
 using Cookbook.ViewModels.Registration;
 
 namespace Cookbook.Pages.Auth;
 
 public partial class RegistrationPage : Page
 {
-    public RegistrationPage()
+    public RegistrationPage(Frame frame)
     {
         InitializeComponent();
-        DataContext = new RegistrationViewModel();
+        DataContext = new RegistrationViewModel(frame);
     }
     
-    public RegistrationPage(string login)
+    public RegistrationPage(string login, Frame frame)
     {
         InitializeComponent();
-        DataContext = new RegistrationViewModel(login, NavigationService);
+        DataContext = new RegistrationViewModel(login, frame);
     }
 }

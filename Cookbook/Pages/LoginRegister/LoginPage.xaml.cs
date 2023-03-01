@@ -172,10 +172,13 @@ public partial class LoginPage : Page
     {
         GetInfo();
         
+        // лучше передавать frame, а не только NavigationService
+        
         if(_login != String.Empty)
             if (NavigationService != null) 
-                NavigationService.Navigate(new RegistrationPage(_login));
+                NavigationService.Navigate(new RegistrationPage(_login, FirstFrame));
+            
         else if (NavigationService != null) 
-            NavigationService.Navigate(new RegistrationPage());
+            NavigationService.Navigate(new RegistrationPage(FirstFrame));
     }
 }

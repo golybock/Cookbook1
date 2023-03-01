@@ -84,7 +84,7 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
     public async Task<CommandResult> AddReviewImageAsync(ReviewImage reviewImage)
     {
         CommandResult result;
-                var con = GetConnection();
+        var con = GetConnection();
         
         con.Open();
         try
@@ -105,7 +105,7 @@ public class ReviewImageRepository : MainDbClass, IReviewImageRepository
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                reviewImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
 
             return result;

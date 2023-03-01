@@ -141,7 +141,7 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
             
             while(await reader.ReadAsync())
             {
-                result.ValueId = reader.GetInt32(reader.GetOrdinal("id"));
+                recipeCategory.Id = reader.GetInt32(reader.GetOrdinal("id"));
             }
 
             return result;

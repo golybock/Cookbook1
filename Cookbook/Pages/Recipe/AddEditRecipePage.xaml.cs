@@ -147,7 +147,6 @@ public partial class AddEditRecipePage : Page
             if (!string.IsNullOrWhiteSpace(category.Name))
             {
                 var commandResult = await _recipeService.AddRecipeCategoryAsync(category);
-                category.Id = commandResult.ValueId;
                 Categories.Add(category);
                 EditRecipeView.CategoryComboBox.ItemsSource = null;
                 EditRecipeView.CategoryComboBox.ItemsSource = Categories;
@@ -177,7 +176,6 @@ public partial class AddEditRecipePage : Page
             if (!string.IsNullOrWhiteSpace(recipeType.Name))
             {
                 var commandResult = await _recipeService.AddRecipeTypeAsync(recipeType);
-                recipeType.Id = commandResult.ValueId;
                 RecipeTypes.Add(recipeType);
                 EditRecipeView.RecipeTypeComboBox.ItemsSource = null;
                 EditRecipeView.RecipeTypeComboBox.ItemsSource = RecipeTypes;
@@ -310,7 +308,6 @@ public partial class AddEditRecipePage : Page
             if (!string.IsNullOrWhiteSpace(ingredient.Name) && ingredient.Measure != null)
             {
                 var commandResult = await _recipeService.AddIngredient(ingredient);
-                ingredient.Id = commandResult.ValueId;
                 Ingredients.Add(ingredient);
                 EditRecipeView.IngredientsComboBox.ItemsSource = null;
                 EditRecipeView.IngredientsComboBox.ItemsSource = Ingredients;

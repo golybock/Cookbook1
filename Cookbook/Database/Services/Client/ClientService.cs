@@ -44,9 +44,6 @@ public class ClientService : IClientService
         
         if(string.IsNullOrWhiteSpace(client.Password))
             return CommandResults.BadRequest;
-            
-        if(string.IsNullOrWhiteSpace(client.Name))
-            return CommandResults.BadRequest;
 
         return await _clientRepository.AddClientAsync(client);
     }

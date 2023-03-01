@@ -1,4 +1,4 @@
-﻿namespace Cookbook.Models.Register.Password;
+﻿namespace Models.Models.Register.Password;
 
 public static class PasswordResults
 {
