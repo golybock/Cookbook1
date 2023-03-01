@@ -5,15 +5,15 @@ using System.Windows.Media;
 
 namespace Cookbook.Converters;
 
-    [ValueConversion(typeof(bool), typeof(SolidColorBrush))]
-    class BoolToColorBrushConverter : IValueConverter
-    {
+[ValueConversion(typeof(bool), typeof(SolidColorBrush))]
+public class ErrorBoolToColorConverter : IValueConverter
+{
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
             SolidColorBrush color;
             // Setting default values
-            var colorIfTrue = Colors.Black;
-            var colorIfFalse = Colors.White;
+            var colorIfTrue = Colors.Transparent;
+            var colorIfFalse = Colors.Red;
             double opacity = 1;
             // Parsing converter parameter
             if (parameter != null)
@@ -70,4 +70,4 @@ namespace Cookbook.Converters;
             System.Drawing.Color systemColor = System.Drawing.Color.FromName(colorName);
             return Color.FromArgb(systemColor.A, systemColor.R, systemColor.G, systemColor.B);
         }
-    }
+}

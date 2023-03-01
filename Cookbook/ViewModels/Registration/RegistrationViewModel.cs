@@ -1,25 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Net.Mime;
 using System.Runtime.CompilerServices;
-using System.Security;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Cookbook.Command;
-using Cookbook.Converters;
-using Cookbook.Database.Services.Client;
-using Cookbook.Models.Database.Client;
+using Cookbook.Database.Services;
 using Cookbook.Models.Register;
-using Cookbook.Pages;
 using Microsoft.Win32;
 using Models.Models.Database.Client;
-using ModernWpf.Controls;
+using PdfSharp.Pdf.IO;
 
 namespace Cookbook.ViewModels.Registration;
 
@@ -33,30 +23,107 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
 
     public RegistrationViewModel(string login)
     {
+        OnCreated();
+        
         _clientService = new ClientService();
         Client = new Client {Login = login};
     }
 
     public RegistrationViewModel(string login, NavigationService navigationService)
     {
+        OnCreated();
+        
         _clientService = new ClientService();
         Client = new Client{ Login = login };
         _navigationService = navigationService;
     }
-    
-    public string SecurePassword { get; set; }
+
+    // задаем дефолтные значения при инициализации 
+    private void OnCreated()
+    {
+        // логин и пароль валидны при создании в любом случае
+        LoginValid = true;
+        PasswordValid = true;
+    }
 
     // основная модель данных
-    public Client Client { get; set; }
+    private Client Client { get; }
     
-    // атрибуты для привязки
-    public bool LoginValid { get; set; }
-    public bool PasswordValid { get; set; }
-    public string Error { get; set; } = String.Empty;
+    // данные для приязки
+    public string Password 
+    { 
+        get => _password;
+        set 
+        { 
+            _password = value;
+            Client.Password = _password;
+            OnPropertyChanged();
+        }
+    }
+
+    public string Name
+    {
+        get => _name;
+        set
+        {
+            _name = value;
+            Client.Name = _name;
+            OnPropertyChanged();
+        }
+    }
+
+    public string Login
+    {
+        get => _login;
+        set
+        {
+            _login = value;
+            Client.Login = _login;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool LoginValid
+    {
+        get => _loginValid;
+        set
+        {
+            _loginValid = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool PasswordValid
+    {
+        get => _passwordValid;
+        set
+        {
+            _passwordValid = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string Error
+    {
+        get => _error;
+        set
+        {
+            _error = value;
+            OnPropertyChanged();
+        }
+    }
+    
     public bool HasError =>
         !string.IsNullOrEmpty(Error);
     
     // приватные атрибуты
+    private string _password = null!;
+    private string _name = null!;
+    private string _login = null!;
+    private bool _loginValid;
+    private bool _passwordValid;
+    private string _error = null!;
+    
     private ClientService _clientService;
     private NavigationService? _navigationService;
     
@@ -72,10 +139,14 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     public CommandHandler RegisterCommand =>
         new CommandHandler(Registration);
 
+    // приватные короткие функции
     private void CancelRegistration() =>
         _navigationService?.GoBack();
 
+    private void SetImage(string path) =>
+        Client.NewImagePath = path;
     
+    // основные функции
     private void OnDrop(DragEventArgs e)
     {
         if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -94,7 +165,6 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
                         SetImage(file);
                 }
             }
-
         }
     }
     
@@ -135,7 +205,10 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
 
     private async void Registration()
     {
-        Client.Password = SecurePassword;
+        Error = "aboba";
+        LoginValid = true;
+
+        // RegisterResult result = await _clientService.Register(Client);
     }
     
     private void ChooseImage()
@@ -156,8 +229,7 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
                 SetImage(openFileDialog.FileName);
     }
 
-    private void SetImage(string path) =>
-        Client.NewImagePath = path;
+
 
     
     // PropertyChanged for bindings

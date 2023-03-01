@@ -74,7 +74,7 @@ public partial class RegistrationView : UserControl
         DataChanged();
         
         if (DataContext != null)
-            ((dynamic)DataContext).SecurePassword 
+            ((dynamic)DataContext).Password 
                 = ((PasswordBox)sender).Password;
     }
 }

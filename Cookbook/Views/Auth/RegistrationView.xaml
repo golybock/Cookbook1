@@ -12,7 +12,8 @@
              d:DesignHeight="480" d:DesignWidth="300">
     
     <UserControl.Resources>
-        <converters:SecureStringToStringConverter x:Key="SecureStringToStringConverter"/>
+        <converters:BoolToVisabilityConverter x:Key="BoolToVisabilityConverter"/>
+        <converters:ErrorBoolToColorConverter x:Key="ErrorBoolToColorConverter"/>
     </UserControl.Resources>
     
     <Grid>
@@ -71,7 +72,9 @@
                         
                         <Border Name="LoginBorder"
                                  CornerRadius="4"
-                                 BorderBrush="Transparent"
+                                 BorderBrush="{Binding LoginValid, 
+                                    Converter={StaticResource ErrorBoolToColorConverter},
+                                    UpdateSourceTrigger=PropertyChanged}"
                                  BorderThickness="1.5">
                         
                             
@@ -90,7 +93,9 @@
                         
                         <Border Name="PasswordBorder"
                                 CornerRadius="4"
-                                BorderBrush="Transparent"
+                                BorderBrush="{Binding PasswordValid,
+                                    Converter={StaticResource ErrorBoolToColorConverter},
+                                    UpdateSourceTrigger=PropertyChanged}"
                                 BorderThickness="1.5">
                             
                             <PasswordBox Name="PasswordBox"
@@ -115,7 +120,12 @@
                     <TextBlock Name="ErrorLabel"
                                Foreground="Red"
                                TextWrapping="Wrap"
-                               Width="150"/>
+                               Width="150"
+                               Text="{Binding Error,
+                                    UpdateSourceTrigger=PropertyChanged}"
+                               Visibility="{Binding HasError,
+                                    Converter={StaticResource BoolToVisabilityConverter},
+                                    UpdateSourceTrigger=PropertyChanged}"/>
                     
                 </StackPanel>
                 
