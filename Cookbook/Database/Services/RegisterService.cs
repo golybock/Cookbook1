@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Models.Models.Database;
+using Models.Models.Database.Client;
 using Models.Models.Register;
 using Models.Models.Register.Password;
 using ClientModel = Models.Models.Database.Client.Client;
@@ -42,21 +43,32 @@ public class RegisterService : IRegisterService
 
         if (! await LoginValid(client.Login))
             return RegisterResults.InvalidLogin;
+
+        string notHashedPass = client.Password;
         
         // хешируем пароль
         client.Password = App.Hash(client.Password);
 
         CommandResult сommandResult = await _clientService.AddClientAsync(client);
 
-        // save image to docs
-        client.ClientImage.ClientId = client.Id;
-        client.ClientImage.ImagePath = CopyImageToDocuments(client.ClientImage.ImagePath, client.Id);
-
-        await _clientImageService.AddClientImageAsync(client.ClientImage);
-
         if (сommandResult.Result)
-            return RegisterResults.Successfully;
+        {
+            // save image to docs
+            ClientImage newClientImage = new ClientImage {ClientId = client.Id, ImagePath = client.NewImagePath};
 
+            client.ClientImage.ClientId = client.Id;
+            client.ClientImage.ImagePath = CopyImageToDocuments(newClientImage);
+
+            CommandResult cmdResult =  await _clientImageService.AddClientImageAsync(client.ClientImage);
+
+            if (cmdResult.Result)
+                client.ClientImage = (cmdResult.Value as ClientImage)!;
+            
+            return RegisterResults.Successfully;
+        }
+
+
+        client.Password = notHashedPass;
         var res = RegisterResults.InvalidData;
         res.Description = сommandResult.Description;
 
@@ -86,17 +98,17 @@ public class RegisterService : IRegisterService
     }
     
     
-    private string? CopyImageToDocuments(string? path, int clientId)
+    private string? CopyImageToDocuments(ClientImage clientImage)
     {
         string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients\\";
 
-        string filePath = $"client_{clientId}_{App.GetTimeStamp()}.png";
+        string filePath = $"client_{clientImage.ClientId}_{App.GetTimeStamp()}.png";
 
         string writePath = documentsPath + filePath;
 
-        if (File.Exists(path))
+        if (File.Exists(clientImage.ImagePath))
         {
-            File.Copy(path, writePath);
+            File.Copy(clientImage.ImagePath, writePath);
             return filePath;
         }
 

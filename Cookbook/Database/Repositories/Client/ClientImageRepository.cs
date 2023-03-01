@@ -140,6 +140,7 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
             while(await reader.ReadAsync())
             {
                 clientImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                result.Value = clientImage;
             }
             
             return result;

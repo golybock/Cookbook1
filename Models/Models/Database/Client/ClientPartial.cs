@@ -7,6 +7,9 @@ public partial class Client: INotifyPropertyChanged
 {
     public int PostCount =>
         Recipes.Count;
+
+    public string? ImagePath =>
+        ClientImage.ImagePath;
     
     public ClientImage ClientImage { get; set; }
     

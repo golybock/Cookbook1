@@ -149,7 +149,7 @@ public class ClientService : IClientService
         if (client.Id != -1 && client.Id > 0)
         {
             var recipes = _recipeService.GetClientRecipes(client.Id);
-            var imagePath =  _clientImageService.GetClientImageByClientIdAsync(client.Id);
+            var image =  _clientImageService.GetClientImageByClientIdAsync(client.Id);
             var reviews = _reviewService.GetClientReviewAsync(client.Id);
             var clientImages = _clientImageService.GetClientImagesAsync(client.Id);
             var favRecipes = _clientFavService.GetFavoriteRecipesAsync(client.Id);
@@ -164,10 +164,7 @@ public class ClientService : IClientService
             client.FavoriteRecipes = await favRecipes;
             client.ClientSubOnClients = await clientSubOn;
             client.ClientSubs = await clientSubs;
-            client.ClientImage = (await imagePath)!;
-            
-            client.ClientImage.ImagePath = client.ClientImage.ImagePath;
-            
+            client.ClientImage = (await image)!;
         }
     }
 

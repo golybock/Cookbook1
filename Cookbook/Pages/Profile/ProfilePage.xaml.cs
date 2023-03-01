@@ -4,6 +4,7 @@ using System.Windows;
 using Cookbook.Database.Services;
 using Cookbook.Models.Database.Client;
 using Cookbook.Pages.Recipe;
+using Cookbook.Views.Client;
 using ModernWpf.Controls;
 using Client = Models.Models.Database.Client.Client;
 using Page = System.Windows.Controls.Page;
@@ -21,6 +22,8 @@ public partial class ProfilePage : Page
         _recipeService = new RecipeService(_client);
         LoadClientRecipes();
         InitializeComponent();
+
+        ClientMainView.DataContext = client;
     }
 
     private async void ShowAcceptDialog(int id)

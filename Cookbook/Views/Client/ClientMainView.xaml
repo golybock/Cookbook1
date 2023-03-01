@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Cookbook.Views.Client"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="700">
+             d:DesignHeight="300" d:DesignWidth="700">
  <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe ui"></Setter>
@@ -22,12 +22,7 @@
                 BorderThickness="3"
                 Background="Thistle">
         
-            <Grid>
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="85*"/>
-                    <RowDefinition Height="15*"/>
-                </Grid.RowDefinitions>
+            <Grid ShowGridLines="False">
                 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40*"/>
@@ -36,11 +31,11 @@
                 </Grid.ColumnDefinitions>
                 
                 
-                <Image Grid.Row="0"
+                <ui:PersonPicture Grid.Row="0"
                        Grid.Column="0"
                        Height="250"
                        Width="250"
-                       Source="{Binding ImagePath}"/>
+                       ProfilePicture="{Binding ImagePath}"/>
                 
                 <ui:SimpleStackPanel Grid.Row="0"
                                      Grid.ColumnSpan="2"

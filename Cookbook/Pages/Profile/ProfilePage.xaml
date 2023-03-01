@@ -16,7 +16,8 @@
             
             <ui:SimpleStackPanel>
                 
-                <client:ClientMainView Height="400"/>
+                <client:ClientMainView x:Name="ClientMainView"
+                                       Height="300"/>
             
                 <Grid Margin="12">
                     

@@ -13,7 +13,7 @@ public partial class ClientImage : INotifyPropertyChanged
 
     public string? ImagePath
     {
-        get => _imagePath;
+        get => $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients\\" + _imagePath;
         set
         {
             _imagePath = value;
