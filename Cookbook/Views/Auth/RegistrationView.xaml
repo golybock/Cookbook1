@@ -4,10 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Auth"
+             xmlns:behavoirs="clr-namespace:Cookbook.Behaviors"
              xmlns:controls="http://schemas.modernwpf.com/2019"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converters="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
              d:DesignHeight="480" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <converters:SecureStringToStringConverter x:Key="SecureStringToStringConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         
         <StackPanel Orientation="Vertical"
@@ -88,7 +95,18 @@
                             
                             <PasswordBox Name="PasswordBox"
                                          Width="150"
-                                         PasswordChanged="PasswordChanged"/>
+                                         PasswordChanged="PasswordChanged">
+                                
+                                <!-- <b:Interaction.Behaviors> -->
+                                <!--      -->
+                                <!--     <behavoirs:DependencyPropertyBehavior -->
+                                <!--         UpdateEvent="PasswordChanged" -->
+                                <!--         Property="Password" -->
+                                <!--         Binding="{Binding Password}"/> -->
+                                <!--      -->
+                                <!-- </b:Interaction.Behaviors> -->
+                                
+                            </PasswordBox>
                             
                         </Border>
                         

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Mime;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Cookbook.Command;
+using Cookbook.Converters;
 using Cookbook.Database.Services.Client;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Register;
@@ -41,6 +43,8 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
         Client = new Client{ Login = login };
         _navigationService = navigationService;
     }
+    
+    public string SecurePassword { get; set; }
 
     // основная модель данных
     public Client Client { get; set; }
@@ -128,8 +132,11 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     //
     // }
 
-    
-    private void Registration() { }
+
+    private async void Registration()
+    {
+        Client.Password = SecurePassword;
+    }
     
     private void ChooseImage()
     {
