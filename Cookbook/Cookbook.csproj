@@ -72,4 +72,8 @@
       <ProjectReference Include="..\Models\Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ViewModels\Registration" />
+    </ItemGroup>
+
 </Project>

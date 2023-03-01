@@ -9,8 +9,6 @@ namespace Cookbook.Database.Services.Interfaces;
 
 public interface IClientService
 {
-    public Task<LoginResult> Login(ClientModel client);
-    public Task<LoginResult> Login(string login, string password);
     public Task<List<ClientModel>> GetClientSubs(int clientId);
     // public void DeleteClient(int id);
 }

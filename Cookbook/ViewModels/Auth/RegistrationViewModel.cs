@@ -12,7 +12,7 @@ using Models.Models.Register;
 using ModernWpf.Controls;
 using Frame = ModernWpf.Controls.Frame;
 
-namespace Cookbook.ViewModels.Registration;
+namespace Cookbook.ViewModels.Auth;
 
 public sealed class RegistrationViewModel : INotifyPropertyChanged
 {

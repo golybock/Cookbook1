@@ -107,7 +107,7 @@
                         
                     </StackPanel>
                     
-                    <TextBlock Name="ErrorLabel"
+                    <TextBlock Name="ErrorTextBlock"
                                Foreground="Red"
                                TextWrapping="Wrap"
                                Width="150"

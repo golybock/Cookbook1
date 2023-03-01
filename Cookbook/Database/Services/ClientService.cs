@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
@@ -12,8 +8,6 @@ using Cookbook.Models.Database.Client;
 using Cookbook.Models.Login;
 using Models.Models.Database;
 using Models.Models.Login;
-using Models.Models.Register;
-using Models.Models.Register.Password;
 using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services;
@@ -50,38 +44,6 @@ public class ClientService : IClientService
         _clientService = new Client.ClientService();
     }
     
-    public async Task<LoginResult> Login(ClientModel client)
-    {
-        return await Login(client.Login, client.Password);
-    }
-
-    public async Task<LoginResult> Login(string login, string password)
-    {
-        ClientModel? currentClient = await _clientService.GetClientAsync(login);
-        
-        if(string.IsNullOrEmpty(login))
-            return LoginResults.EmptyLogin;
-        
-        if(string.IsNullOrEmpty(password))
-            return LoginResults.EmptyPassword;
-        
-        if (currentClient?.Id == 0)
-            return LoginResults.InvalidLogin;
-        
-        if (currentClient?.Password != App.Hash(password))
-            return LoginResults.InvalidPassword;
-        
-        LoginResult result = LoginResults.Successfully;
-        
-        await GetClientInfo(currentClient);
-        
-        result.Client = currentClient;
-        
-        return result;
-    }
-
-
-
     public async Task<List<ClientModel>> GetClients()
     {
         List<ClientModel> clients = await _clientService.GetClientsAsync();
@@ -155,9 +117,7 @@ public class ClientService : IClientService
             var favRecipes = _clientFavService.GetFavoriteRecipesAsync(client.Id);
             var clientSubOn = _clientSubService.GetClientSubsAsync(client.Id);
             var clientSubs = _clientSubService.GetSubsClientAsync(client.Id);
-            var isLiked = _clientSubService.ClientIsLiked(_client.Id, client.Id);
-
-            client.IsLiked = await isLiked;
+            
             client.Recipes = await recipes;
             client.Reviews = await reviews;
             client.ClientImages = await clientImages;

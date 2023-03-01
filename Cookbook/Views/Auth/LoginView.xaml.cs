@@ -1,14 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Views.Auth;
 
-public partial class RegistrationView : UserControl
+public partial class LoginView : UserControl
 {
-    public RegistrationView() =>
+    public LoginView()
+    {
         InitializeComponent();
-    
+    }
+
     private void DataChanged(object sender, RoutedEventArgs e) =>
         DataChanged();
 

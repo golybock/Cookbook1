@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
+using Cookbook.ViewModels.Auth;
 using Frame = ModernWpf.Controls.Frame;
-using Cookbook.ViewModels.Registration;
 
 namespace Cookbook.Pages.Auth;
 
