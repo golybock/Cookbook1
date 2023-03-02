@@ -15,9 +15,7 @@
         <converters:ErrorBoolToColorConverter x:Key="ErrorBoolToColorConverter"/>
     </UserControl.Resources>
     
-    <Grid>
-        
-        <StackPanel Orientation="Vertical"
+    <StackPanel Orientation="Vertical"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
         
@@ -33,43 +31,46 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
         
-            <Label FontSize="14"
-                   Content="Логин"
-                   Margin="0,0,0,5"/>
+            <ui:SimpleStackPanel Orientation="Vertical"
+                                 Spacing="5">
+                
+                <Label FontSize="14"
+                       Content="Логин"/>
             
-            <Border Name="LoginBorder"
-                    CornerRadius="4"
-                    BorderBrush="{Binding LoginValid, 
+                <Border Name="LoginBorder"
+                        CornerRadius="4"
+                        BorderBrush="{Binding LoginValid, 
                                     Converter={StaticResource ErrorBoolToColorConverter},
                                     UpdateSourceTrigger=PropertyChanged}"
-                    BorderThickness="1.5">
+                        BorderThickness="1.5">
                 
-                <TextBox Name="LoginTextBox"
-                         TextChanged="DataChanged"
-                         Text="{Binding Login}"/>
+                    <TextBox Name="LoginTextBox"
+                             TextChanged="DataChanged"
+                             Text="{Binding Login}"/>
                 
-            </Border>
+                </Border>
             
-            <Label FontSize="14"
-                   Content="Пароль"
-                   Margin="0,0,0,5"/>
+                <Label FontSize="14"
+                       Content="Пароль"/>
             
-            <Border Name="PasswordBorder"
-                    CornerRadius="4"
-                    BorderBrush="{Binding PasswordValid,
+                <Border Name="PasswordBorder"
+                        CornerRadius="4"
+                        BorderBrush="{Binding PasswordValid,
                                     Converter={StaticResource ErrorBoolToColorConverter},
                                     UpdateSourceTrigger=PropertyChanged}"
-                    BorderThickness="1.5">
+                        BorderThickness="1.5">
                 
-                <PasswordBox Name="PasswordBox"
-                             PasswordChanged="PasswordChanged"/>
+                    <PasswordBox Name="PasswordBox"
+                                 PasswordChanged="PasswordChanged"/>
                 
-            </Border>
+                </Border>
+                
+            </ui:SimpleStackPanel>
             
             <TextBlock Name="ErrorTextBlock"
                        Foreground="Red"
                        TextWrapping="Wrap"
-                       Width="150"
+                       Width="220"
                        Text="{Binding Error,
                                     UpdateSourceTrigger=PropertyChanged}"
                        Visibility="{Binding HasError,
@@ -78,22 +79,23 @@
         
             <ui:SimpleStackPanel Orientation="Horizontal"
                                  HorizontalAlignment="Center"
-                                 Margin="5"
                                  Spacing="10">
                 
                 <Button Name="LoginButton"
-                        Width="100"
+                        Width="105"
                         Command="{Binding LoginCommand}"
                         Content="Войти"/>
                 
                 <Button Name="GuestButton"
-                        Width="100"
+                        Width="105"
                         Command="{Binding GuestCommand}"
                         Content="Гость"/>
                 
             </ui:SimpleStackPanel>
             
-            <TextBlock Name="RegistrationTextBlock" Text="Регистрация">
+            <TextBlock Name="RegistrationTextBlock"
+                       Text="Регистрация"
+                       Margin="10">
                 
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="MouseDown">
@@ -121,5 +123,5 @@
         </StackPanel>
 
     </StackPanel>
-    </Grid>
+    
 </UserControl>
