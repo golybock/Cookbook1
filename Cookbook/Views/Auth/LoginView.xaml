@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Cookbook.Views.Auth"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:converters="clr-namespace:Cookbook.Converters"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     
@@ -28,14 +29,13 @@
                HorizontalAlignment="Center"
                Content="Авторизация"/>
         
-        <StackPanel
-                    Orientation="Vertical"
+        <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
         
             <Label FontSize="14"
                    Content="Логин"
-                   Margin="10,0,0,5"/>
+                   Margin="0,0,0,5"/>
             
             <Border Name="LoginBorder"
                     CornerRadius="4"
@@ -45,15 +45,14 @@
                     BorderThickness="1.5">
                 
                 <TextBox Name="LoginTextBox"
-                         Width="200"
                          TextChanged="DataChanged"
-                         Text="admin"/>
+                         Text="{Binding Login}"/>
                 
             </Border>
             
             <Label FontSize="14"
                    Content="Пароль"
-                   Margin="10,0,0,5"/>
+                   Margin="0,0,0,5"/>
             
             <Border Name="PasswordBorder"
                     CornerRadius="4"
@@ -63,9 +62,8 @@
                     BorderThickness="1.5">
                 
                 <PasswordBox Name="PasswordBox"
-                             Width="200"
-                             PasswordChanged="PasswordChanged"
-                             Password="admin"/>
+                             PasswordChanged="PasswordChanged"/>
+                
             </Border>
             
             <TextBlock Name="ErrorTextBlock"
@@ -78,22 +76,22 @@
                                     Converter={StaticResource BoolToVisabilityConverter},
                                     UpdateSourceTrigger=PropertyChanged}"/>
         
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Center" Margin="5">
+            <ui:SimpleStackPanel Orientation="Horizontal"
+                                 HorizontalAlignment="Center"
+                                 Margin="5"
+                                 Spacing="10">
                 
                 <Button Name="LoginButton"
-                        Margin="5"
-                        Width="95"
+                        Width="100"
                         Command="{Binding LoginCommand}"
                         Content="Войти"/>
                 
                 <Button Name="GuestButton"
-                        Margin="5"
-                        Width="95"
+                        Width="100"
                         Command="{Binding GuestCommand}"
                         Content="Гость"/>
                 
-            </StackPanel>
+            </ui:SimpleStackPanel>
             
             <TextBlock Name="RegistrationTextBlock" Text="Регистрация">
                 

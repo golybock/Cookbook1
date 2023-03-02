@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Cookbook.Pages.LoginRegister;
+using Cookbook.Pages.Auth;
 
 namespace Cookbook.Windows
 {

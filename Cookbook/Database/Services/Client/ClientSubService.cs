@@ -4,7 +4,6 @@ using Cookbook.Database.Repositories.Client;
 using Cookbook.Database.Services.Interfaces.ClientInterfaces;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
-using Cookbook.Models.Login;
 using Models.Models.Database;
 
 namespace Cookbook.Database.Services.Client;

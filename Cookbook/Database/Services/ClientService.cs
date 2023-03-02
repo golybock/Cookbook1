@@ -5,7 +5,6 @@ using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe.Review;
 using Cookbook.Models.Database.Client;
-using Cookbook.Models.Login;
 using Models.Models.Database;
 using Models.Models.Login;
 using ClientModel = Models.Models.Database.Client.Client;

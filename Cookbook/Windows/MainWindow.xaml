@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
-        Title="Cookbook"
+        Title="Книга рецептов"
         Icon="../Resources/Icon/Icon512.png"
         MinHeight="600" MinWidth="800"
-        SizeToContent="Manual"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
     <Grid>

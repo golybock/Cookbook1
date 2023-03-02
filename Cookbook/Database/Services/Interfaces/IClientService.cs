@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cookbook.Models.Login;
 using Models.Models.Login;
 using Models.Models.Register;
 using ClientModel = Models.Models.Database.Client.Client;

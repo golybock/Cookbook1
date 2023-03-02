@@ -19,13 +19,25 @@ public class LoginViewModel : INotifyPropertyChanged
     public LoginViewModel(Frame frame)
     {
         _loginService = new LoginService();
+        Client = new Client();
+        
         _firstFrame = frame;
+
+        OnCreated();
+    }
+    
+    // задаем дефолтные значения при инициализации 
+    private void OnCreated()
+    {
+        // логин и пароль валидны при создании в любом случае
+        LoginValid = true;
+        PasswordValid = true;
     }
     
     // основная модель данных
     private Client Client { get; set; }
     
-// данные для приязки
+    // данные для приязки
     public string Password 
     { 
         get => Client.Password;
@@ -84,8 +96,6 @@ public class LoginViewModel : INotifyPropertyChanged
         new CommandHandler(OnGuest);
 
     // приватные атрибуты
-    private string _password = null!;
-    private string _login = null!;
     private bool _loginValid;
     private bool _passwordValid;
     private string _error = null!;
@@ -118,7 +128,6 @@ public class LoginViewModel : INotifyPropertyChanged
             SuccessfullyLogin();
         }
         
-
         else
             ValidateError(result);
     }
@@ -137,32 +146,32 @@ public class LoginViewModel : INotifyPropertyChanged
 
     private void ValidateError(LoginResult result)
     {
-        // if (result.Code == 101)
-        // {
-        //     SetLoginInvalid();
-        //         
-        //     if (result.Description != null)
-        //         ShowError(result.Description);
-        // }
-        // else if (result.Code == 102)
-        // {
-        //     SetPasswordInvalid();
-        //         
-        //     if (result.PasswordResult?.Description != null)
-        //         ShowError(result.PasswordResult.Description);
-        // }
-        // else if (result.Code == 103)
-        // {
-        //     SetPasswordInvalid();
-        //     SetLoginInvalid();
-        //
-        //     if (result.Description != null)
-        //         ShowError(result.Description);
-        // }
-        // else
-        // {
-        //     ShowError("Неизвестная ошибка");
-        // }
+        if (result.Code == 101 || result.Code == 201)
+        {
+            SetLoginInvalid();
+                
+            if (result.Description != null)
+                ShowError(result.Description);
+        }
+        else if (result.Code == 102 || result.Code == 202)
+        {
+            SetPasswordInvalid();
+                
+            if (result.Description != null)
+                ShowError(result.Description);
+        }
+        else if (result.Code == 203)
+        {
+            SetPasswordInvalid();
+            SetLoginInvalid();
+        
+            if (result.Description != null)
+                ShowError(result.Description);
+        }
+        else
+        {
+            ShowError("Неизвестная ошибка");
+        }
     }
     
     private void SuccessfullyLogin()

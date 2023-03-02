@@ -1,16 +1,11 @@
-﻿using System;
-using System.Reflection;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
-using Cookbook.Models.Database.Client;
+using Cookbook.Pages.Auth;
 using Cookbook.Pages.Find;
-using Cookbook.Pages.LoginRegister;
 using Cookbook.Pages.Profile;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Settings;
 using ModernWpf.Controls;
-using ModernWpf.Media.Animation;
 using Client = Models.Models.Database.Client.Client;
 using Page = System.Windows.Controls.Page;
 
@@ -90,7 +85,6 @@ public partial class NavigationPage : Page
 
     private void ExitButton_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        if (FirstFrame != null)
-            FirstFrame.Navigate(new LoginPage(FirstFrame));
+        FirstFrame.Navigate(new LoginPage(FirstFrame));
     }
 }

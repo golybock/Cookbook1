@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
-using Cookbook.Models.Login;
 using Models.Models.Database;
 using Models.Models.Database.Recipe;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;

@@ -2,7 +2,6 @@
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe.Review;
-using Cookbook.Models.Login;
 using Models.Models.Login;
 using ClientModel = Models.Models.Database.Client.Client;
 
@@ -11,13 +10,14 @@ namespace Cookbook.Database.Services;
 public class LoginService : ILoginService
 {
     private readonly Client.ClientService _clientService;
-    private readonly RecipeService _recipeService;
+    private readonly Recipe.RecipeService _recipeService;
     private readonly ReviewService _reviewService;
     private readonly ClientImageService _clientImageService;
     private readonly ClientFavService _clientFavService;
 
     public LoginService()
     {
+        _recipeService = new Recipe.RecipeService();
         _clientImageService = new ClientImageService();
         _reviewService = new ReviewService();
         _clientFavService = new ClientFavService();
@@ -53,7 +53,7 @@ public class LoginService : ILoginService
     {
         if (client.Id != -1 && client.Id > 0)
         {
-            var recipes = _recipeService.GetClientRecipes(client.Id);
+            var recipes = _recipeService.GetClientRecipesAsync(client.Id);
             var image =  _clientImageService.GetClientImageByClientIdAsync(client.Id);
             var reviews = _reviewService.GetClientReviewAsync(client.Id);
             var clientImages = _clientImageService.GetClientImagesAsync(client.Id);

@@ -586,7 +586,6 @@ C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Models.pdb
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.csproj.AssemblyReference.cache
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.baml
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\LoginPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.g.cs
@@ -604,7 +603,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\GeneratedInternalTypeHel
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_MarkupCompile.cache
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_MarkupCompile.lref
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\App.baml
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\LoginPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.baml
@@ -693,3 +691,7 @@ C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.Charting.res
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.resources.dll
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\RegistrationPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\RegistrationView.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\LoginPage.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\LoginView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\LoginPage.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\LoginView.baml
