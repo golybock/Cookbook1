@@ -82,11 +82,6 @@
                                   FontWeight="Heavy"/>
                     
                 </ui:SimpleStackPanel>
-
-                <ui:RatingControl Grid.Row="2"
-                                  Grid.Column="0"
-                                  Value="{Binding Rating, TargetNullValue = -1}"
-                                  IsReadOnly="True"/>
                 
                 <TextBlock Name="Id"
                            Text="{Binding Id}"

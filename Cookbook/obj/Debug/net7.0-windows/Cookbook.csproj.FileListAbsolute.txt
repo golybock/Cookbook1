@@ -585,7 +585,6 @@ C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Models.dll
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Models.pdb
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.csproj.AssemblyReference.cache
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.baml
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.g.cs
@@ -595,7 +594,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\AddEditReci
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Settings\SettingsPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.g.cs
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Windows\MainWindow.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\App.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_Content.g.cs

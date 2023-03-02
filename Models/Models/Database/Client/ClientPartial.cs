@@ -39,7 +39,6 @@ public partial class Client: INotifyPropertyChanged
         }
     }
     
-    // для привзяки like
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)

@@ -8,10 +8,7 @@
       Title="{Binding Name}">
     <ScrollViewer>
         <Grid>
-            <recipe:RecipeMainView x:Name="RecipeMainView"
-                                   LikeClicked="RecipeMainView_OnLikeClicked"
-                                   DeleteClicked="RecipeMainView_OnDeleteClicked"
-                                   EditClicked="RecipeMainView_OnEditClicked"/>
+            <recipe:RecipeMainView x:Name="RecipeMainView"/>
         </Grid>
     </ScrollViewer>
 </Page>

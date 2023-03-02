@@ -41,60 +41,6 @@ public partial class RecipePage : Page
         _recipe = await _recipeService.GetRecipeAsync(recipeId);
         DataContext = _recipe;
     }
-
-    private void RecipeMainView_OnLikeClicked(int id)
-    {
-        if (_recipe!.IsLiked == true)
-        {
-            _recipe.IsLiked = false;
-            _recipeService.DeleteFavRecipes(id, _client.Id);
-        }
-        else
-        {
-            _recipe.IsLiked = true;
-            _recipeService.AddRecipeToFav(new FavoriteRecipe() {ClientId = _client.Id, RecipeId = id});
-        }
-
-        DataContext = _recipe;
-    }
-
-    private void RecipeMainView_OnDeleteClicked(int id)
-    {
-        ShowAcceptDialog(id);
-    }
-
-    private void RecipeMainView_OnEditClicked(int id)
-    {
-        if (NavigationService != null)
-            NavigationService.Navigate(
-                new AddEditRecipePage(_recipe, _client)
-            );
-    }
     
-    private async void ShowAcceptDialog(int id)
-    {
-        ContentDialog acceptDialog = new ContentDialog()
-        {
-            Title = "Удаление элемента",
-            Content = "Вы уверены, что хотите удалить этот рецепт?",
-            CloseButtonText = "Отмена",
-            PrimaryButtonText = "Удалить",
-            DefaultButton = ContentDialogButton.Primary
-        };
     
-        if (await acceptDialog.ShowAsync() == ContentDialogResult.Primary)
-        {
-#pragma warning disable CS4014
-            DeleteRecipe(id);
-#pragma warning restore CS4014
-        }
-    }
-    
-    private async Task DeleteRecipe(int id)
-    {
-        await _recipeService.DeleteRecipeAsync(id);
-        
-        if (NavigationService != null)
-            NavigationService.GoBack();
-    }
 }

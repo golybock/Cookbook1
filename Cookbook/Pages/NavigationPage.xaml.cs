@@ -27,7 +27,7 @@ public partial class NavigationPage : Page
 
     private void NavigationPage_OnLoaded(object sender, RoutedEventArgs e)
     {
-        MainFrame.NavigationService.Navigate(new MainPage(_client));
+        MainFrame.NavigationService.Navigate(new MainPage(_client, FirstFrame));
     }
 
     private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -59,7 +59,7 @@ public partial class NavigationPage : Page
     private Page? GetPage(string pageName)
     {
         if (pageName == "MainPage")
-            return new MainPage(_client);
+            return new MainPage(_client, FirstFrame);
         if (pageName == "FindPage")
             return new FindPage(_client);
         if (pageName == "ProfilePage")

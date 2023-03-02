@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="Cookbook.Views.Recipe.RecipesListView"
+             Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,13 +8,15 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-<ScrollViewer>
+    
+    <ScrollViewer>
+        
         <ui:SimpleStackPanel Orientation="Vertical">
             
             <ListBox Name="RecipesListBox"
                      SelectionMode="Single"
                      ItemContainerStyle="{StaticResource CardListBoxStyle}"
-                     ItemsSource="{Binding Recipes}">
+                     ItemsSource="{Binding Recipes, UpdateSourceTrigger=PropertyChanged}">
                 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -22,24 +25,30 @@
                 </ListBox.ItemsPanel>
                 
                 <ListBox.ItemTemplate>
+                    
                     <DataTemplate>
                         
                         <Border>
-                            
                             <Border.Child>
+                                
                                 <local:RecipeMediumView Name="RecipeMediumView"
                                                         Height="400"
-                                                        OpenClicked="RecipeMediumView_OnOpenClicked"
-                                                        LikeClicked="RecipeMediumView_OnLikeClicked"
-                                                        DeleteClicked="RecipeMediumView_OnDeleteClicked"
-                                                        EditClicked="RecipeMediumView_OnEditClicked"/>
+                                                        OpenClicked="{Binding Path=DataContext.OpenCommand, ElementName=this}"
+                                                        LikeClicked="{Binding Path=DataContext.LikeCommand, ElementName=this}"
+                                                        DeleteClicked="{Binding Path=DataContext.DeleteCommand, ElementName=this}"
+                                                        EditClicked="{Binding Path=DataContext.EditCommand, ElementName=this}"/>
                             </Border.Child>
                             
                         </Border>
 
                     </DataTemplate>
+                    
                 </ListBox.ItemTemplate>
+                
             </ListBox>
+            
         </ui:SimpleStackPanel>
+        
     </ScrollViewer>
+    
 </UserControl>

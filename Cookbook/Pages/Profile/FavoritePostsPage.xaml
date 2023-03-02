@@ -11,11 +11,7 @@
     
     <StackPanel>
         <recipe:RecipesListView x:Name="RecipesListView"
-                                Visibility="Visible"
-                                DeleteClicked="RecipesListView_OnDeleteClicked"
-                                EditClicked="RecipesListView_OnEditClicked"
-                                OpenClicked="RecipesListView_OnOpenClicked"
-                                LikeClicked="RecipesListView_OnLikeClicked"/>
+                                Visibility="Visible"/>
         
         <mv:NothingShowView x:Name="NothingShowView" Visibility="Collapsed"/>
     </StackPanel>

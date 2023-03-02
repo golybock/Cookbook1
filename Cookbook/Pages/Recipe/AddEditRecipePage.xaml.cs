@@ -213,15 +213,7 @@ public partial class AddEditRecipePage : Page
     {
         GetAll();
     }
-
-    private void EditRecipeView_OnRemoveIngredientFromListClicked(int id)
-    {
-        Recipe.Ingredients.Remove(
-            Recipe.Ingredients.First(c => c.Id == id)
-        );
-        
-        EditRecipeView.IngredientsListview.ItemsSource = Recipe.Ingredients;
-    }
+    
 
     private void EditRecipeView_OnAddRecipeTypeClicked()
     {

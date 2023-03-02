@@ -6,6 +6,9 @@ namespace Models.Models.Database.Recipe;
 
 public partial class Recipe
 {
+    public Recipe() =>
+        RecipeImage = new RecipeImage() {RecipeId = Id};
+    
     public int Id { get; set; }
 
     public int ClientId { get; set; }
@@ -23,12 +26,8 @@ public partial class Recipe
     public int PortionCount { get; set; }
 
     public int CookingTime { get; set; }
-    
-    public List<RecipeCategory> RecipeCategories { get; set; } = new List<RecipeCategory>();
-    
-    public List<Category> Categories { get; set; } = new List<Category?>();
 
-    public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+    public List<Category> Categories { get; set; } = new List<Category?>();
 
     public List<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
 
@@ -36,7 +35,7 @@ public partial class Recipe
 
     public RecipeStats RecipeStat { get; set; } = new RecipeStats();
 
-    public RecipeType? RecipeType { get; set; }
+    public RecipeType RecipeType { get; set; } = new RecipeType();
 
     public List<Cookbook.Models.Database.Recipe.Review.Review> Reviews { get; set; } = new List<Cookbook.Models.Database.Recipe.Review.Review>();
 }

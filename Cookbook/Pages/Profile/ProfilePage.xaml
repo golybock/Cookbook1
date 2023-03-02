@@ -42,10 +42,6 @@
                 
                 <recipe:RecipesListView x:Name="RecipesListView"
                                         Height="420"
-                                        DeleteClicked="RecipesListView_OnDeleteClicked"
-                                        EditClicked="RecipesListView_OnEditClicked"
-                                        OpenClicked="RecipesListView_OnOpenClicked"
-                                        LikeClicked="RecipesListView_OnLikeClicked"
                                         Visibility="Visible"/>
                 
                 <views:NothingShowView x:Name="NothingShowView"

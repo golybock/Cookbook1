@@ -14,15 +14,14 @@ public class RecipeImage : INotifyPropertyChanged
     {
         get => String.IsNullOrEmpty(_imagePath) ?
             "../../Resources/not_found_image.png" :
-            _imagePath;
+            $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + _imagePath;
         set
         {
             _imagePath = value;
             OnPropertyChanged();   
         }
     }
-
-    public int ImageNumber { get; set; }
+    
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

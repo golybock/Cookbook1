@@ -7,13 +7,8 @@
       xmlns:mv="clr-namespace:Cookbook.Views.Recipe"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d"
-      Title="Рецепты"
-      Loaded="MainPage_OnLoaded">
+      Title="Рецепты">
     
-    <mv:RecipesListView x:Name="RecipesListView"
-                        DeleteClicked="RecipesListView_OnDeleteClicked"
-                        EditClicked="RecipesListView_OnEditClicked"
-                        OpenClicked="RecipesListView_OnOpenClicked"
-                        LikeClicked="RecipesListView_OnLikeClicked"/>
+    <mv:RecipesListView x:Name="RecipesListView"/>
     
 </Page>

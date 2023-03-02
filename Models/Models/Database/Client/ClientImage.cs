@@ -22,6 +22,7 @@ public partial class ClientImage : INotifyPropertyChanged
     } 
 
     public DateTime DateOfAdded { get; set; }
+    
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

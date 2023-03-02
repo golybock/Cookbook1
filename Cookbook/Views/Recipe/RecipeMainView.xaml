@@ -6,8 +6,9 @@
              xmlns:controls="http://schemas.modernwpf.com/2019"
              xmlns:converters="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="400">
- <UserControl.Resources>
+             d:DesignHeight="1000" d:DesignWidth="600">
+    
+    <UserControl.Resources>
      
     <converters:BoolToColorBrushConverter x:Key="ToColorBrushConverter"/>
          
@@ -18,110 +19,333 @@
         </Style>
     </UserControl.Resources>
     
-    <StackPanel Orientation="Vertical">
+    <Grid Name="MainGrid"
+          ShowGridLines="False">
+            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="16*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         
-        <Border CornerRadius="15" 
-            BorderBrush="Transparent"
-            BorderThickness="3"
-            Background="PapayaWhip">
-            
-            <Grid>
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60*"/>
-                    <RowDefinition Height="40*"/>
-                </Grid.RowDefinitions>
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40*"/>
-                    <ColumnDefinition Width="50*"/>
-                    <ColumnDefinition Width="10*"/>
-                </Grid.ColumnDefinitions>
-                
-                
-                <Image Grid.Row="0"
-                       Grid.Column="0"
-                       Height="200"
-                       Width="200"
-                       Source="{Binding ImagePath}"/>
-                
-                <controls:SimpleStackPanel Grid.Row="0"
-                                           Grid.Column="1"
-                                           Spacing="14"
-                                           Margin="25">
-                       <TextBlock Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}"/>
-                       
-                       <TextBlock Text="{Binding Category, FallbackValue=Категория, TargetNullValue=Категория}"
-                                  FontSize="26"
-                                  FontWeight="Heavy"/>
-                    
-                       <controls:RatingControl HorizontalAlignment="Left"
-                                               Value="{Binding Rating, TargetNullValue = -1}"
-                                               IsReadOnly="True"/>
-                    
-                       <TextBlock Text="{Binding Time, FallbackValue=Время}"
-                                  FontSize="16"
-                                  VerticalAlignment="Center"/>
-                       
-                </controls:SimpleStackPanel>
-                
-                <controls:SimpleStackPanel Grid.Row="1"
-                                           Grid.Column="0"
-                                           Grid.ColumnSpan="2"
-                                           Spacing="14"
-                                           Margin="25">
-                
-                    <TextBlock Text="{Binding Description}"
-                               TextWrapping="Wrap"/>
-                    
-                </controls:SimpleStackPanel>
-                
-                <TextBlock Name="Id"
-                           Visibility="Collapsed"
-                           Text="{Binding Id}"></TextBlock>
-                
-                <Border Name="LikeButton" 
-                        Grid.Column="2"
-                        Grid.Row="1"
-                        CornerRadius="50"
-                        Background="{Binding IsLiked, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ToColorBrushConverter}}"
-                        BorderThickness="1"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Width="40"
-                        Height="40"
-                        Margin="10">
-                    <Image Margin="10"
-                           Source="../../Resources/MenuIcons/heart256.png"/>
-                </Border>
-
-            </Grid>
-            
-        </Border>
+        <Border Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="3"
+                Background="{StaticResource PurpleBrush}"
+                BorderBrush="{StaticResource PurpleBrush}"
+                CornerRadius="10"
+                BorderThickness="1"/>
         
-        <Border CornerRadius="15" 
-                BorderBrush="Transparent"
-                BorderThickness="3"
-                Background="PapayaWhip">
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                Margin="3"
+                Background="{StaticResource PurpleBrush}"
+                BorderBrush="{StaticResource PurpleBrush}"
+                CornerRadius="10"
+                BorderThickness="1"/>
+        
+        <Border Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="3"
+                Background="{StaticResource PurpleBrush}"
+                BorderBrush="{StaticResource PurpleBrush}"
+                CornerRadius="10"
+                BorderThickness="1"/>
+        
+        <Border Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="3"
+                Background="{StaticResource PurpleBrush}"
+                BorderBrush="{StaticResource PurpleBrush}"
+                CornerRadius="10"
+                BorderThickness="1"/>
+        
+        <Border Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="3"
+                Background="{StaticResource PurpleBrush}"
+                BorderBrush="{StaticResource PurpleBrush}"
+                CornerRadius="10"
+                BorderThickness="1"/>
+        
+        <Grid Name="TitleGrid"
+              Grid.Row="0"
+              Grid.Column="0"
+              Grid.ColumnSpan="3"
+              DataContext="{Binding Recipe}">
             
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="60*"/>
+            </Grid.ColumnDefinitions>
             
-            <controls:SimpleStackPanel Spacing="14"
-                                       Margin="25">
+            <Image Name="RecipeImage"
+                   Grid.Column="0"
+                   Margin="20"
+                   Source="{Binding RecipeImage.ImagePath}"
+                   AllowDrop="True"/>
+            
+            <controls:SimpleStackPanel Name="MainInfoStackPanel"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Center"
+                                 Spacing="6">
                 
-                <TextBlock Text="Шаги приготовления:"
-                           FontSize="26"
-                           FontWeight="Heavy"/>
+                <Label Content="Заголовок"
+                       FontSize="22"
+                       Foreground="Black"/>
                 
-                <TextBlock Text="{Binding Text}"
-                           FontSize="20"/>
+                <TextBox Text="{Binding Name}">
+                    
+                </TextBox>
+                
+                <Label Content="Краткое описание"
+                       FontSize="22"
+                       Foreground="Black"/>
+                
+                <TextBox Text="{Binding Description}"/>
                 
             </controls:SimpleStackPanel>
-
             
-        </Border>
+        </Grid>
         
-    </StackPanel>
-    
-    
+        <Grid Name="TimePortionsGrid"
+              Grid.Row="1"
+              Grid.Column="0"
+              DataContext="{Binding Recipe}">
+            
+                <controls:SimpleStackPanel Spacing="0"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center">
+                    
+                    <TextBlock Text="Время приготовления"
+                               Margin="5"
+                               FontSize="14"/>
+            
+                    <controls:NumberBox Name="CookingTimeNumberBox"
+                                  Value="{Binding CookingTime}"
+                                  ValidationMode="InvalidInputOverwritten"
+                                  Minimum="1"
+                                  Margin="5"
+                                  Width="150"
+                                  IsEnabled="False"
+                                  SpinButtonPlacementMode="Hidden"/>
+            
+                    <TextBlock Text="Порций"
+                               Margin="5"
+                               FontSize="14"/>
+            
+                    <controls:NumberBox Name="PortionsNumberBox"
+                                  Value="{Binding PortionCount}"
+                                  ValidationMode="InvalidInputOverwritten"
+                                  Minimum="1"
+                                  Margin="5"
+                                  Width="150"
+                                  IsEnabled="False"
+                                  SpinButtonPlacementMode="Hidden"/>
+                    
+                </controls:SimpleStackPanel>
+            
+        </Grid>
+        
+        <Grid Name="StatsGrid"
+              Grid.Row="1"
+              Grid.Column="1"
+              Grid.ColumnSpan="2"
+              DataContext="{Binding Recipe.RecipeStat}">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            
+            <controls:SimpleStackPanel Grid.Column="0" Spacing="0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center">
+                    
+                <TextBlock Text="Белки"
+                           Margin="5"
+                           FontSize="14"/>
+                
+                <controls:NumberBox Name="SquirrelsNumberBox"
+                                    Value="{Binding Squirrels}"
+                                    ValidationMode="InvalidInputOverwritten"
+                                    Minimum="0"
+                                    Margin="5"
+                                    Width="150"
+                                    IsEnabled="False"
+                                    SpinButtonPlacementMode="Hidden"/>
+            
+                <TextBlock Text="Жиры"
+                           Margin="5"
+                           FontSize="14"/>
+            
+                <controls:NumberBox Name="FatsNumberBox"
+                                    Value="{Binding Fats}"
+                                    ValidationMode="InvalidInputOverwritten"
+                                    Minimum="0"
+                                    Margin="5"
+                                    Width="150"
+                                    IsEnabled="False"
+                                    SpinButtonPlacementMode="Hidden"/>
+                    
+            </controls:SimpleStackPanel>
+            
+            <controls:SimpleStackPanel Grid.Column="1" Spacing="0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center">
+                    
+                <TextBlock Text="Углеводы"
+                           Margin="5"
+                           FontSize="14"/>
+            
+                <controls:NumberBox Name="CarbohydratesNumberBox"
+                                    Value="{Binding Carbohydrates}"
+                                    ValidationMode="InvalidInputOverwritten"
+                                    Minimum="0"
+                                    Margin="5"
+                                    Width="150"
+                                    IsEnabled="False"
+                                    SpinButtonPlacementMode="Hidden"/>
+            
+                <TextBlock Text="Ккал"
+                           Margin="5"
+                           FontSize="14"/>
+            
+                <controls:NumberBox Name="KilocaloriesNumberBox"
+                                    Value="{Binding Kilocalories}"
+                                    ValidationMode="InvalidInputOverwritten"
+                                    Minimum="0"
+                                    Margin="5"
+                                    Width="150"
+                                    IsEnabled="False"
+                                    SpinButtonPlacementMode="Hidden"/>
+                    
+            </controls:SimpleStackPanel>
+            
+        </Grid>
+        
+        <Grid Name="IngredientsGrid"
+              Grid.Row="2"
+              Grid.Column="0"
+              Grid.ColumnSpan="2">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60*"/>
+                <RowDefinition Height="40*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            
+            <controls:SimpleStackPanel Grid.Row="0"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2" 
+                                       Spacing="0"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="20,10,20,0"
+                                       DataContext="{Binding Recipe}">
+                    
+                <TextBlock Text="Ингридиенты"
+                           Margin="5"
+                           FontSize="14"/>
+            
+                <controls:ListView Name="IngredientsListview"
+                                   ItemsSource="{Binding Ingredients}"
+                                   Width="365"
+                                   MaxHeight="140"
+                                   IsSelectionEnabled="True">
+                    
+                    <controls:ListView.ItemTemplate>
+                        
+                        <DataTemplate>
+                            
+                            <controls:SimpleStackPanel Spacing="12"
+                                                       Orientation="Horizontal">
+                                
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                <TextBlock Text="{Binding Measure.Name}"></TextBlock>
+                                
+                            </controls:SimpleStackPanel>
+
+                            
+                        </DataTemplate>
+                        
+                    </controls:ListView.ItemTemplate>
+                    
+                </controls:ListView>
+
+            </controls:SimpleStackPanel>
+            
+        </Grid>
+        
+        <Grid Name="CategoryTypeGrid"
+              Grid.Row="2"
+              Grid.Column="2">
+            
+            
+            <controls:SimpleStackPanel Spacing="5"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Orientation="Vertical">
+                
+                <TextBlock Text="Категория"
+                           FontSize="14"
+                           Margin="5"/>
+                
+                <TextBlock Text="{Binding Category.Name}"
+                           FontSize="14"
+                           Margin="5"/>
+                
+                <TextBlock Text="Тип рецепта"
+                           FontSize="14"
+                           Margin="5"/>
+                
+                <TextBlock Text="{Binding Type.Name}"
+                           FontSize="14"
+                           Margin="5"/>
+                
+            </controls:SimpleStackPanel>
+            
+            
+        </Grid>
+        
+        <Grid Name="TextGrid"
+              Grid.Row="3"
+              Grid.Column="0"
+              Grid.ColumnSpan="3">
+            
+            <controls:SimpleStackPanel VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="10">
+                
+                <TextBlock Text="Шаги приготовления"
+                           FontSize="14"></TextBlock>
+                
+                <TextBlock Text="{Binding Text}"
+                         Width="560"
+                         MinHeight="190"
+                         Margin="10"
+                         TextWrapping="Wrap"/>
+                
+            </controls:SimpleStackPanel>
+            
+        </Grid>
+            
+    </Grid>
     
 </UserControl>

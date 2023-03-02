@@ -17,7 +17,6 @@
             <recipe:EditRecipeView x:Name="EditRecipeView"
                                    Width="600"
                                    Height="1000"
-                                   RemoveIngredientFromListClicked="EditRecipeView_OnRemoveIngredientFromListClicked"
                                    AddRecipeTypeClicked="EditRecipeView_OnAddRecipeTypeClicked"
                                    AddCategoryClicked="EditRecipeView_OnAddCategoryClicked"
                                    NewIngredientClicked="EditRecipeView_OnNewIngredientClicked"

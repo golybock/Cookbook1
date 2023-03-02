@@ -68,24 +68,15 @@ public class RecipeService : IRecipeService
 
         
         recipe.RecipeStat = await recipeStat;
-        recipe.RecipeCategories = await recipeCategories;
         recipe.Reviews = await recipeReviews;
         recipe.RecipeIngredients = await recipeIngredients;
-        recipe.Rating = await recipeRating;
         recipe.Category = await category;
-
-        foreach (var recipeCategory in recipe.RecipeCategories)
-        {
-            recipe.Categories.Add(
-                (await _categoryService.GetCategoryAsync(recipeCategory.CategoryId))!
-                );
-        }
         
         foreach (var ingredient in recipe.RecipeIngredients)
         {
-            recipe.Ingredients.Add(
-                (await _ingredientService.GetIngredientAsync(ingredient.IngredientId))!
-            );
+            ingredient.Ingredient =
+                await _ingredientService.GetIngredientAsync(ingredient.IngredientId);
+
         }
         
         return recipe;
@@ -102,18 +93,9 @@ public class RecipeService : IRecipeService
 
         foreach (var recipe in recipes)
         {
-            recipe.Rating =
-                await _reviewService.GetAvgRatingByRecipe(recipe.Id);
-
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
             
-            foreach (var recipeCategory in recipe.RecipeCategories)
-            {
-                recipe.Categories.Add(
-                    await _categoryService.GetCategoryAsync(recipeCategory.CategoryId)
-                );
-            }
             
             if (_client.Id != 0)
             {
@@ -123,9 +105,9 @@ public class RecipeService : IRecipeService
             
             foreach (var ingredient in recipe.RecipeIngredients)
             {
-                recipe.Ingredients.Add(
-                    (await _ingredientService.GetIngredientAsync(ingredient.IngredientId))!
-                );
+                ingredient.Ingredient =
+                    await _ingredientService.GetIngredientAsync(ingredient.IngredientId);
+
             }
         }
 
@@ -161,19 +143,9 @@ public class RecipeService : IRecipeService
 
         foreach (var recipe in recipes)
         {
-            recipe.Rating =
-                await _reviewService.GetAvgRatingByRecipe(recipe.Id);
-
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
-            
-            foreach (var recipeCategory in recipe.RecipeCategories)
-            {
-                recipe.Categories.Add(
-                    await _categoryService.GetCategoryAsync(recipeCategory.CategoryId)
-                );
-            }
-            
+
             if (_client.Id != 0)
             {
                 var like = RecipeIsLiked(recipe.Id);
@@ -194,18 +166,8 @@ public class RecipeService : IRecipeService
         {
             var recipe = await GetRecipeAsync(favRecipe.RecipeId);
             
-            recipe.Rating =
-                await _reviewService.GetAvgRatingByRecipe(recipe.Id);
-
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
-            
-            foreach (var recipeCategory in recipe.RecipeCategories)
-            {
-                recipe.Categories.Add(
-                    await _categoryService.GetCategoryAsync(recipeCategory.CategoryId)
-                );
-            }
             
             if (_client.Id != 0)
             {
@@ -264,7 +226,7 @@ public class RecipeService : IRecipeService
             {
                 var recipeStats = AddRecipeStatsAsync(outRecipe);
                 var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
-                var recipeCategories = AddRecipeCategoriesAsync(outRecipe);
+                // var recipeCategories = AddRecipeCategoriesAsync(outRecipe);
                 var recipeImages = AddRecipeImagesAsync(outRecipe);
                 var recipeText = WriteRecipeFileAsync(outRecipe);
                 var recipeImage = AddRecipeImageAsync(outRecipe);
@@ -272,7 +234,7 @@ public class RecipeService : IRecipeService
                 await recipeImages;
                 await recipeStats;
                 await recipeIngredients;
-                await recipeCategories;
+                // await recipeCategories;
                 await recipeText;
                 await recipeImage;
                 
@@ -317,13 +279,13 @@ public class RecipeService : IRecipeService
             {
                 var recipeStats = _recipeStatsService.UpdateRecipeStatsAsync(recipe.RecipeStat);
                 var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
-                var recipeCategories = AddRecipeCategoriesAsync(outRecipe);
+                // var recipeCategory = AddRecipeCategoryAsync(outRecipe);
                 var recipeImages = AddRecipeImagesAsync(outRecipe);
 
                 await recipeImages;
                 await recipeStats;
                 await recipeIngredients;
-                await recipeCategories;
+                // await recipeCategory;
                 
                 commandResult = CommandResults.Successfully;
             }
@@ -395,17 +357,6 @@ public class RecipeService : IRecipeService
             CopyImageToDocuments(recipe.RecipeImage.ImagePath, recipe.Id);
         
         await _recipeImageService.AddRecipeImageAsync(recipe.RecipeImage);
-    }
-    
-    private async Task AddRecipeCategoriesAsync(RecipeModel recipe)
-    {
-        if (recipe.RecipeCategories.Count > 0)
-        {
-            foreach (var category in recipe.RecipeCategories)
-            {
-                await _recipeCategoryService.AddRecipeCategoryAsync(category);
-            }
-        }
     }
 
     private async Task AddRecipeIngredientsAsync(RecipeModel recipe)

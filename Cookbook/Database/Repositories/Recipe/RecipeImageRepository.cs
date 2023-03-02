@@ -30,7 +30,6 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
                 recipeImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipeImage.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
                 recipeImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
-                recipeImage.ImageNumber = reader.GetInt32(reader.GetOrdinal("image_number"));
             }
             
             return recipeImage;
@@ -65,7 +64,6 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
                 recipeImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipeImage.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
                 recipeImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
-                recipeImage.ImageNumber = reader.GetInt32(reader.GetOrdinal("image_number"));
             }
             
             return recipeImage;
@@ -100,7 +98,6 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
                 recipeImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipeImage.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
                 recipeImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
-                recipeImage.ImageNumber = reader.GetInt32(reader.GetOrdinal("image_number"));
                 recipeImages.Add(recipeImage);
             }
             
@@ -123,15 +120,14 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         con.Open();
         try
         {
-            string query = $"insert into recipe_images(recipe_id, image_path, image_number)" +
-                           $" values ($1, $2, $3) returning id";
+            string query = $"insert into recipe_images(recipe_id, image_path)" +
+                           $" values ($1, $2) returning id";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new() { Value = recipeImage.RecipeId },
-                    new() { Value = recipeImage.ImagePath },
-                    new() { Value = recipeImage.ImageNumber }
+                    new() { Value = recipeImage.ImagePath }
                 }
             }; 
             result = CommandResults.Successfully;
@@ -164,14 +160,13 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
         con.Open();
         try
         {
-            string query = $"update recipe_images set image_path = $2, image_number = $3 where id = $1";
+            string query = $"update recipe_images set image_path = $2 where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new() { Value = recipeImage.Id },
-                    new() { Value = recipeImage.ImagePath },
-                    new() { Value = recipeImage.ImageNumber }
+                    new() { Value = recipeImage.ImagePath }
                 }
             };
             result =

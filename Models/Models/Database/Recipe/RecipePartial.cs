@@ -1,22 +1,30 @@
 ﻿using System.ComponentModel;
-using Cookbook.Models.Database.Recipe;
+using System.Runtime.CompilerServices;
 
 namespace Models.Models.Database.Recipe;
 
 public partial class Recipe : INotifyPropertyChanged
 {
-    private string? _imagePath;
-    public string? ImagePath
-    {
-        get => String.IsNullOrEmpty(_imagePath) ?
-            "../../Resources/not_found_image.png" :
-            $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + _imagePath;
-        set => _imagePath = value;
-    }
+    // новый путь (если требуется установить путь)
+    private string? _newImagePath;
 
-    public RecipeImage RecipeImage { get; set; } = new RecipeImage();
+    public string? NewImagePath
+    {
+        get => _newImagePath;
+        set
+        {
+            _newImagePath = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    public string? ImagePath =>
+        RecipeImage.ImagePath;
+
+    public RecipeImage RecipeImage { get; set; }
     
     public Category? Category { get; set; }
+    
     private bool? _isLiked;
 
     public bool? IsLiked
@@ -25,20 +33,7 @@ public partial class Recipe : INotifyPropertyChanged
         set
         {
             _isLiked = value;
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiked"));
-        }
-    }
-    public decimal? Rating { get; set; }
-
-    // public TimeOnly Time => TimeOnly.Parse(new DateTime(0,0,0,0,CookingTime,0).ToString());
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    private void OnPropertyChanged(PropertyChangedEventArgs e)
-    {
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, e);
+            OnPropertyChanged();
         }
     }
     
@@ -47,6 +42,8 @@ public partial class Recipe : INotifyPropertyChanged
     private string GetText()
     {
         string text = "Нет рецепта";
+
+        string path = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + PathToTextFile;
         
         if (PathToTextFile != null)
             if (File.Exists(PathToTextFile))
@@ -54,4 +51,21 @@ public partial class Recipe : INotifyPropertyChanged
 
         return text;
     }
+
+    // для привзяки like
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
+    
 }
