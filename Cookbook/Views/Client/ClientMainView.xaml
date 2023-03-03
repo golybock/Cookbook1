@@ -109,7 +109,6 @@
                                    Grid.Column="1"
                                    x:Name="NothingShowView"
                                    Visibility="Collapsed"/>
-
             
         </Grid>
         

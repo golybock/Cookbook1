@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Client"
              xmlns:controls="http://schemas.modernwpf.com/2019"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignHeight="320" d:DesignWidth="700">
     <Grid>
@@ -32,7 +33,19 @@
                                   Grid.Column="0"
                                   Height="250"
                                   Width="250"
-                                  ProfilePicture="{Binding Client.ImagePath}"/>
+                                  AllowDrop="True"
+                                  ProfilePicture="{Binding ImagePath}">
+                    
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseDown">
+                            <b:InvokeCommandAction Command="{Binding EditImageCommand}" />
+                        </b:EventTrigger>
+                        <b:EventTrigger EventName="Drop">
+                            <b:InvokeCommandAction Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                    
+                </controls:PersonPicture>
                 
                 <controls:SimpleStackPanel Grid.Row="0"
                                      Grid.ColumnSpan="2"
@@ -40,15 +53,16 @@
                                      Spacing="14"
                                      Margin="25">
 
-                    <TextBlock Text="{Binding Client.Name, FallbackValue=Имя, TargetNullValue=Имя}"
-                               FontSize="26"
-                               FontWeight="Heavy"/>
+                    <TextBox Text="{Binding Client.Name, FallbackValue=Имя, TargetNullValue=Имя}"
+                               FontSize="20"
+                               controls:ControlHelper.Header="Имя"/>
                     
                        
-                    <TextBlock Text="{Binding Client.Description, FallbackValue=Описание, TargetNullValue=Описание}"
+                    <TextBox Text="{Binding Client.Description, FallbackValue=Описание, TargetNullValue=Описание}"
                                FontSize="20"
                                TextWrapping="Wrap"
-                               MaxHeight="75"></TextBlock>
+                               controls:ControlHelper.Header="Описание"
+                               MaxHeight="75"/>
                     
                 </controls:SimpleStackPanel>
 
@@ -76,13 +90,6 @@
                     Command="{Binding SaveCommand}"
                     Style="{DynamicResource AccentButtonStyle}"/>
             
-                
-            <Button Name="ClearButton"
-                    Content="Очистить"
-                    Width="125"
-                    ToolTip="Очистить все"
-                    Command="{Binding ClearCommand}"
-                    Margin="5"/>
             
         </controls:SimpleStackPanel>
         

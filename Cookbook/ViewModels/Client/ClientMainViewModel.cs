@@ -21,7 +21,6 @@ public class ClientMainViewModel : INotifyPropertyChanged
     {
         _frame = frame;
         Client = client;
-
         
         _recipesViewService = new RecipesViewService(Client);
         _recipeService = new RecipeService(Client);
@@ -97,12 +96,9 @@ public class ClientMainViewModel : INotifyPropertyChanged
     {
         if (_frame.NavigationService != null)
             _frame.NavigationService.Navigate(
-                new EditProfilePage(Client)
+                new EditProfilePage(Client, _frame)
             );
     }
-
-
-
 
     // Реализация inotify
     public event PropertyChangedEventHandler? PropertyChanged;

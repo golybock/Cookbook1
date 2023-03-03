@@ -11,7 +11,8 @@ public partial class ProfilePage : Page
     {
         InitializeComponent();
 
-        ClientMainView.DataContext = new ClientMainViewModel(client, frame);
+        ClientMainView.DataContext =
+            new ClientMainViewModel(client, frame);
     }
 
 }
