@@ -64,7 +64,7 @@
                                Width="150"
                                Height="32"
                                Content="Редактировать"
-                               Command="{Binding EditCommand}"/>
+                               Command="{Binding EditClientCommand}"/>
                     
                 </ui:SimpleStackPanel>
 
@@ -80,34 +80,36 @@
                 <RowDefinition Height="85*"/>
             </Grid.RowDefinitions>
             
-            <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
                     
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*"/>
-                    <ColumnDefinition Width="50*"/>
-                </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" 
+                   Content="Рецепты"
+                   FontSize="20"
+                   DockPanel.Dock="Left"
+                   HorizontalAlignment="Left"/>
                     
-                <Label Grid.Column="0" 
-                       Content="Рецепты"
-                       FontSize="20"
-                       DockPanel.Dock="Left"
-                       HorizontalAlignment="Left"/>
-                    
-                <Label Grid.Column="1" 
-                       Content="все рецепты >"
-                       FontSize="18"
-                       DockPanel.Dock="Right"
-                       HorizontalAlignment="Right"/>
+            <Label Grid.Row="0"
+                   Grid.Column="1" 
+                   Content="все рецепты >"
+                   FontSize="18"
+                   DockPanel.Dock="Right"
+                   HorizontalAlignment="Right"/>
                
-                <recipe:RecipesListView Grid.Column="1"
-                                        x:Name="RecipesListView"
-                                        Height="420"
-                                        Visibility="Visible"/>
+            <recipe:RecipesListView Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    x:Name="RecipesListView"
+                                    Height="420"
+                                    Visibility="Visible"/>
                 
-                <views:NothingShowView Grid.Column="1" x:Name="NothingShowView"
-                                       Visibility="Collapsed"/>
-                
-            </Grid>
+            <views:NothingShowView Grid.Row="1"
+                                   Grid.Column="1"
+                                   x:Name="NothingShowView"
+                                   Visibility="Collapsed"/>
+
             
         </Grid>
         

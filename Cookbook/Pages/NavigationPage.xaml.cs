@@ -59,19 +59,22 @@ public partial class NavigationPage : Page
     {
         if (pageName == "MainPage")
             return new MainPage(_client, MainFrame);
+        
         if (pageName == "FindPage")
             return new FindPage(_client);
+        
         if (pageName == "ProfilePage")
             if (_client.Id == -1)
                 return new UnavaliabalePage();
             else
-                return new ProfilePage(_client);
+                return new ProfilePage(_client, MainFrame);
         
         if (pageName == "AddPostPage")
             if (_client.Id == -1)
                 return new UnavaliabalePage();
             else
                 return new AddEditRecipePage(_client);
+        
         if (pageName == "FavoritePostsPage")
             if (_client.Id == -1)
                 return new UnavaliabalePage();

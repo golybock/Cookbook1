@@ -11,18 +11,12 @@
       xmlns:views="clr-namespace:Cookbook.Views"
       mc:Ignorable="d"
       Title="Профиль">
-    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
-        <Grid>
-            
-            <ui:SimpleStackPanel>
-                
-                <client:ClientMainView Name="ClientMainView"
-                                       Height="300"/>
-            
-                
-                
-            </ui:SimpleStackPanel>
-            
-        </Grid>
+    
+    <ScrollViewer VerticalScrollBarVisibility="Visible"
+                  HorizontalScrollBarVisibility="Disabled">
+        
+        <client:ClientMainView x:Name="ClientMainView"/>
+        
     </ScrollViewer>
+    
 </Page>
