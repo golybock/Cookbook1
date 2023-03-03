@@ -74,8 +74,8 @@
                                      Grid.Column="0"
                                      Spacing="14"
                                      Margin="25">
-                       <TextBlock 
-                            Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}"/>
+                    
+                    <TextBlock Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}"/>
                        
                        <TextBlock Text="{Binding Category.Name, FallbackValue=Без категории, TargetNullValue=Без категории}"
                                   FontSize="26"
