@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Database.Services;
 using Models.Models.Database.Client;
@@ -20,21 +17,26 @@ public class RecipeListViewModel : INotifyPropertyChanged
     {
         _recipeService = 
             new Database.Services.RecipeService(client);
+        
         _recipesViewService =
             new RecipesViewService(client);
-        _frame = frame;
         
-            GetRecipes();
-    }
+        Recipes = new List<RecipeModel>();
+        
+        _frame = frame;
 
+        GetRecipes();
+    }
     
+    // основная модель для привязки
+    public List<RecipeModel> Recipes { get; set; }
     
     private Frame _frame;
-    public List<RecipeModel> Recipes { get; set; }
 
     private readonly Database.Services.RecipeService _recipeService;
     private readonly RecipesViewService _recipesViewService;
     
+    // Команды для биндов
     public RelayCommand<Int32> OpenCommand =>
         new RelayCommand<int>(OpenClicked);
     
@@ -47,6 +49,7 @@ public class RecipeListViewModel : INotifyPropertyChanged
     public RelayCommand<Int32> EditCommand =>
         new RelayCommand<int>(EditClicked);
     
+    // сами команды
     private void OpenClicked(int id)
     {
         _recipesViewService.OpenClicked(id, Recipes, _frame.NavigationService);
@@ -77,7 +80,7 @@ public class RecipeListViewModel : INotifyPropertyChanged
         OnPropertyChanged("Recipes");
     }
     
-    
+    // реализация интерфейса iNotify
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

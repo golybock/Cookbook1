@@ -13,48 +13,48 @@ public partial class RecipeMediumView : UserControl
     public static readonly DependencyProperty DeleteProperty =
         DependencyProperty.Register(
             "Delete",
-            typeof(RelayCommand<Int32>),
+            typeof(ICommand),
             typeof(UserControl));
     
     public static readonly DependencyProperty EditProperty =
         DependencyProperty.Register(
             "Edit",
-            typeof(RelayCommand<Int32>),
+            typeof(ICommand),
             typeof(UserControl));
 
     public static readonly DependencyProperty OpenProperty =
         DependencyProperty.Register(
             "Open",
-            typeof(RelayCommand<Int32>),
+            typeof(ICommand),
             typeof(UserControl));
     
     public static readonly DependencyProperty LikeProperty =
         DependencyProperty.Register(
             "Like",
-            typeof(RelayCommand<Int32>),
+            typeof(ICommand),
             typeof(UserControl));
     
-    public RelayCommand<Int32> DeleteClicked
+    public ICommand Delete
     {
-        get => (RelayCommand<Int32>) GetValue(DeleteProperty);
+        get => (ICommand) GetValue(DeleteProperty);
         set => SetValue(DeleteProperty, value);
     }
 
-    public RelayCommand<Int32> EditClicked
+    public ICommand Edit
     {
-        get => (RelayCommand<Int32>) GetValue(EditProperty);
+        get => (ICommand) GetValue(EditProperty);
         set => SetValue(EditProperty, value);
     }
 
-    public RelayCommand<Int32> LikeClicked
+    public ICommand Like
     {
-        get => (RelayCommand<Int32>) GetValue(LikeProperty);
+        get => (ICommand) GetValue(LikeProperty);
         set => SetValue(LikeProperty, value);
     }
 
-    public RelayCommand<Int32> OpenClicked
+    public ICommand Open
     {
-        get => (RelayCommand<Int32>) GetValue(OpenProperty);
+        get => (ICommand) GetValue(OpenProperty);
         set => SetValue(OpenProperty, value);
     }
 
@@ -66,21 +66,21 @@ public partial class RecipeMediumView : UserControl
 
     private void OnLikeClicked(object sender, EventArgs e)
     {
-        LikeClicked.Execute(Int32.Parse(Id.Text));
+        Like.Execute(Int32.Parse(Id.Text));
     }
 
     private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
-        DeleteClicked.Execute(Int32.Parse(Id.Text));
+        Delete.Execute(Int32.Parse(Id.Text));
     }
 
     private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
-        EditClicked.Execute(Int32.Parse(Id.Text));
+        Edit.Execute(Int32.Parse(Id.Text));
     }
 
     private void RecipeMediumView_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        OpenClicked.Execute(Int32.Parse(Id.Text));;
+        Open.Execute(Int32.Parse(Id.Text));;
     }
 }

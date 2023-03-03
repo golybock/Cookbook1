@@ -17,7 +17,7 @@ public partial class NavigationPage : Page
     private readonly Client _client;
     private NavigationViewItem _lastItem;
     public Frame FirstFrame { get; set; }
-
+    
     public NavigationPage(Client client, Frame frame)
     {
         FirstFrame = frame;
@@ -27,7 +27,7 @@ public partial class NavigationPage : Page
 
     private void NavigationPage_OnLoaded(object sender, RoutedEventArgs e)
     {
-        MainFrame.NavigationService.Navigate(new MainPage(_client, FirstFrame));
+        MainFrame.NavigationService.Navigate(new MainPage(_client, MainFrame));
     }
 
     private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -59,7 +59,7 @@ public partial class NavigationPage : Page
     private Page? GetPage(string pageName)
     {
         if (pageName == "MainPage")
-            return new MainPage(_client, FirstFrame);
+            return new MainPage(_client, MainFrame);
         if (pageName == "FindPage")
             return new FindPage(_client);
         if (pageName == "ProfilePage")
@@ -67,8 +67,7 @@ public partial class NavigationPage : Page
                 return new UnavaliabalePage();
             else
                 return new ProfilePage(_client);
-        // if (pageName == "SubsPage")
-        //     return new SubsPage(_client);
+        
         if (pageName == "AddPostPage")
             if (_client.Id == -1)
                 return new UnavaliabalePage();

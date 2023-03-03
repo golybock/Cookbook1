@@ -26,7 +26,7 @@
             </ui:NavigationView.MenuItems>
             
             <ui:NavigationView.Content>
-                <Frame x:Name="MainFrame"
+                <ui:Frame x:Name="MainFrame"
                        NavigationUIVisibility="Hidden"/>
             </ui:NavigationView.Content>
             

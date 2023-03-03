@@ -33,10 +33,11 @@
                                 
                                 <local:RecipeMediumView Name="RecipeMediumView"
                                                         Height="400"
-                                                        OpenClicked="{Binding Path=DataContext.OpenCommand, ElementName=this}"
-                                                        LikeClicked="{Binding Path=DataContext.LikeCommand, ElementName=this}"
-                                                        DeleteClicked="{Binding Path=DataContext.DeleteCommand, ElementName=this}"
-                                                        EditClicked="{Binding Path=DataContext.EditCommand, ElementName=this}"/>
+                                                        Width="250"
+                                                        Open="{Binding Path=DataContext.OpenCommand, ElementName=this}"
+                                                        Like="{Binding Path=DataContext.LikeCommand, ElementName=this}"
+                                                        Delete="{Binding Path=DataContext.DeleteCommand, ElementName=this}"
+                                                        Edit="{Binding Path=DataContext.EditCommand, ElementName=this}"/>
                             </Border.Child>
                             
                         </Border>

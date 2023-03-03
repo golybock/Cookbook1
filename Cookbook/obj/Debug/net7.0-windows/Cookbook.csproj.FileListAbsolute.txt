@@ -360,8 +360,6 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\tr\Moder
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\zh-Hans\ModernWpf.MahApps.resources.dll
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\zh-Hant\ModernWpf.MahApps.resources.dll
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.csproj.AssemblyReference.cache
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\LoginPage.g.cs
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\RegisterPage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\ProfilePage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\AddEditRecipePage.g.cs
@@ -372,8 +370,6 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_MarkupCompile.cache
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_MarkupCompile.lref
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\App.baml
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\LoginPage.baml
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\LoginRegister\RegisterPage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\ProfilePage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\AddEditRecipePage.baml
@@ -403,10 +399,8 @@ C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\Rec
 C:\Coding\C#\Finally\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Models.dll
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Models.pdb
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.g.cs
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeSmallView.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.baml
@@ -693,3 +687,7 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\LoginPage.g.c
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\LoginView.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\LoginPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\LoginView.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\LoginPage.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\LoginView.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\LoginPage.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\LoginView.baml

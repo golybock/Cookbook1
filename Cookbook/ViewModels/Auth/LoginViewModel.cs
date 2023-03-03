@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows;
 using Cookbook.Command;
 using Cookbook.Database.Services;
 using Cookbook.Pages;
-using Cookbook.Views.Recipe;
+using Cookbook.Pages.Auth;
 using Models.Models.Database.Client;
 using Models.Models.Login;
 using ModernWpf.Controls;
@@ -95,6 +93,9 @@ public class LoginViewModel : INotifyPropertyChanged
     public CommandHandler GuestCommand =>
         new CommandHandler(OnGuest);
 
+    public CommandHandler RegisterCommand =>
+        new CommandHandler(OnRegistration);
+    
     // приватные атрибуты
     private bool _loginValid;
     private bool _passwordValid;
@@ -142,6 +143,27 @@ public class LoginViewModel : INotifyPropertyChanged
                 .Navigate(
                     new NavigationPage(guest, _firstFrame)
                 );
+    }
+
+    private void OnRegistration()
+    {
+        if (Login != String.Empty)
+        {
+            if (_firstFrame.NavigationService != null) 
+                _firstFrame
+                    .NavigationService
+                    .Navigate(
+                        new RegistrationPage(Login ,_firstFrame)
+                    );
+        }
+        
+        else
+            if (_firstFrame.NavigationService != null) 
+                _firstFrame
+                    .NavigationService
+                    .Navigate(
+                        new RegistrationPage(Login ,_firstFrame)
+                    );
     }
 
     private void ValidateError(LoginResult result)
