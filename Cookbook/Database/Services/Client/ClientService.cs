@@ -52,13 +52,7 @@ public class ClientService : IClientService
     {
         if(client.Id <= 0)
             return CommandResults.BadRequest;
-
-        if(string.IsNullOrWhiteSpace(client.Login))
-            return CommandResults.BadRequest;
         
-        if(string.IsNullOrWhiteSpace(client.Password))
-            return CommandResults.BadRequest;
-            
         if(string.IsNullOrWhiteSpace(client.Name))
             return CommandResults.BadRequest;
         

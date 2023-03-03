@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Cookbook.Command;
+using Cookbook.Database.Services.Client;
 using Microsoft.Win32;
+using Models.Models.Database;
 using ModernWpf.Controls;
 using ClientModel = Models.Models.Database.Client.Client;
 
@@ -14,6 +16,8 @@ public class ClientEditViewModel : INotifyPropertyChanged
 {
     public ClientEditViewModel(ClientModel client, Frame frame)
     {
+        _clientService = new ClientService();
+        
         Client = client;
         Frame = frame;
         
@@ -30,8 +34,24 @@ public class ClientEditViewModel : INotifyPropertyChanged
         }
     }
     
+    public string Error
+    {
+        get => _error;
+        set
+        {
+            _error = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    public bool HasError =>
+        !string.IsNullOrEmpty(Error);
+    
     public ClientModel Client { get; set; }
     private Frame Frame;
+    private string _error;
+
+    private ClientService _clientService;
 
     public CommandHandler CancelCommand =>
         new CommandHandler(ShowAcceptDialog);
@@ -91,7 +111,25 @@ public class ClientEditViewModel : INotifyPropertyChanged
 
     private async void SaveClient()
     {
+        var result = await _clientService.UpdateClientAsync(Client);
+
+        if (result.Result)
+            SuccesfullyEdit();
+
+        else
+            ShowError(result);
+    }
+
+    private void ShowError(CommandResult commandResult)
+    {
         
+    }
+    
+    private void SuccesfullyEdit()
+    {
+        Frame
+            .NavigationService?
+            .GoBack();
     }
     
     private void ChooseImage()

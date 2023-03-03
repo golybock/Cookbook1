@@ -181,16 +181,14 @@ public class ClientRepository : MainDbClass, IClientRepository
         con.Open();
         try
         {
-            string query = $"update client set login = $2, password = $3, name = $4, description = $5 where id = $1";
+            string query = $"update client set name = $2, description = $3 where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new() { Value = client.Id },
-                    new() { Value = client.Login },
-                    new() { Value = client.Password },
-                    new() { Value = client.Name },
-                    new() { Value = client.Description }
+                    new() { Value = client.Name == null ? DBNull.Value : client.Name },
+                    new() { Value = client.Description == null ? DBNull.Value : client.Description }
                 }
             };
             

@@ -6,8 +6,15 @@
              xmlns:local="clr-namespace:Cookbook.Views.Client"
              xmlns:controls="http://schemas.modernwpf.com/2019"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converters="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
              d:DesignHeight="320" d:DesignWidth="700">
+    
+    <UserControl.Resources>
+        <converters:BoolToVisabilityConverter x:Key="BoolToVisabilityConverter"/>
+        <converters:ErrorBoolToColorConverter x:Key="ErrorBoolToColorConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         
         <Grid.RowDefinitions>
@@ -53,16 +60,42 @@
                                      Spacing="14"
                                      Margin="25">
 
-                    <TextBox Text="{Binding Client.Name, FallbackValue=Имя, TargetNullValue=Имя}"
-                               FontSize="20"
-                               controls:ControlHelper.Header="Имя"/>
-                    
+                    <Border Name="NameBorder"
+                            CornerRadius="4"
+                            BorderBrush="{Binding HasError, 
+                                    Converter={StaticResource ErrorBoolToColorConverter},
+                                    UpdateSourceTrigger=PropertyChanged}"
+                            BorderThickness="1.5">
+                        
+                        <TextBox Text="{Binding Client.Name, FallbackValue=Имя, TargetNullValue=Имя}"
+                                 FontSize="20"
+                                 controls:ControlHelper.Header="Имя"/>
+                            
+                    </Border>
                        
-                    <TextBox Text="{Binding Client.Description, FallbackValue=Описание, TargetNullValue=Описание}"
-                               FontSize="20"
+                    <Border Name="DescriptionBorder"
+                            CornerRadius="4"
+                            BorderBrush="{Binding HasError, 
+                                    Converter={StaticResource ErrorBoolToColorConverter},
+                                    UpdateSourceTrigger=PropertyChanged}"
+                            BorderThickness="1.5">
+                        
+                        <TextBox Text="{Binding Client.Description}"
+                                 FontSize="20"
+                                 TextWrapping="Wrap"
+                                 controls:ControlHelper.Header="Описание"
+                                 MaxHeight="75"/>
+                        
+                    </Border>
+                    
+                    <TextBlock Name="ErrorTextBlock"
+                               Foreground="Red"
                                TextWrapping="Wrap"
-                               controls:ControlHelper.Header="Описание"
-                               MaxHeight="75"/>
+                               Text="{Binding Error,
+                                    UpdateSourceTrigger=PropertyChanged}"
+                               Visibility="{Binding HasError,
+                                    Converter={StaticResource BoolToVisabilityConverter},
+                                    UpdateSourceTrigger=PropertyChanged}"/>
                     
                 </controls:SimpleStackPanel>
 
