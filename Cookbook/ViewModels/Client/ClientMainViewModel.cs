@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Cookbook.Command;
 using Cookbook.Database.Services;
 using Cookbook.Pages.Profile;
 using ModernWpf.Controls;
 using ClientModel = Models.Models.Database.Client.Client;
+using ClientService = Cookbook.Database.Services.Client.ClientService;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.ViewModels.Client;
@@ -16,10 +16,12 @@ public class ClientMainViewModel : INotifyPropertyChanged
 {
     public ClientMainViewModel(ClientModel client, Frame frame)
     {
-        _frame = frame;
+        Frame = frame;
+
         Client = client;
         
         _recipesViewService = new RecipesViewService(Client);
+        _clientService = new ClientService();
         _recipeService = new RecipeService(Client);
         Recipes = new List<RecipeModel>();
 
@@ -55,7 +57,7 @@ public class ClientMainViewModel : INotifyPropertyChanged
     // сами команды
     private void OpenClicked(int id)
     {
-        _recipesViewService.OpenClicked(id, Recipes, _frame.NavigationService);
+        _recipesViewService.OpenClicked(id, Recipes, Frame.NavigationService);
         OnPropertyChanged("Recipes");
     }
 
@@ -73,27 +75,36 @@ public class ClientMainViewModel : INotifyPropertyChanged
 
     private void EditClicked(int id)
     {
-        _recipesViewService.EditClicked(id, Recipes, _frame.NavigationService);
+        _recipesViewService.EditClicked(id, Recipes, Frame.NavigationService);
         OnPropertyChanged("Recipes");
     }
     
     
     // приватные атрибуты
-    private Frame _frame { get; set; } // навигация на страницу редактирования
+    private Frame Frame { get; set; } // навигация на страницу редактирования
     private readonly RecipeService _recipeService; // получение списка рецептов
     private readonly RecipesViewService _recipesViewService;
+    private readonly ClientService _clientService;
     
     public CommandHandler EditClientCommand =>
         new CommandHandler(OnEditClient);
     
-    private async Task LoadClientRecipes() =>
+    private async void LoadClientRecipes() =>
         Recipes = await _recipeService.GetClientRecipes(Client.Id);
 
+    private async void SetEventToUpdateClient()
+    {
+        Frame.Navigated += async (sender, args) =>
+        {
+            Client = (await _clientService.GetClientAsync(Client.Id))!;
+        };
+    }
+    
     private void OnEditClient()
     {
-        if (_frame.NavigationService != null)
-            _frame.NavigationService.Navigate(
-                new EditProfilePage(Client, _frame)
+        if (Frame.NavigationService != null)
+            Frame.NavigationService.Navigate(
+                new EditProfilePage(Client, Frame)
             );
     }
 
@@ -111,5 +122,10 @@ public class ClientMainViewModel : INotifyPropertyChanged
         field = value;
         OnPropertyChanged(propertyName);
         return true;
+    }
+
+    public void Deconstruct()
+    {
+        // Frame.Navigated -= 
     }
 }

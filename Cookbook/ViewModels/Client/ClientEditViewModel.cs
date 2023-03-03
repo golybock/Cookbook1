@@ -122,7 +122,7 @@ public class ClientEditViewModel : INotifyPropertyChanged
 
     private void ShowError(CommandResult commandResult)
     {
-        
+        // вывод ошибки
     }
     
     private void SuccesfullyEdit()
