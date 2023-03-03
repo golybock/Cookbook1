@@ -17,6 +17,7 @@
             <Setter Property="FontSize" Value="24"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
         </Style>
+    
     </UserControl.Resources>
     
     <Grid Name="MainGrid"
@@ -82,8 +83,7 @@
         <Grid Name="TitleGrid"
               Grid.Row="0"
               Grid.Column="0"
-              Grid.ColumnSpan="3"
-              DataContext="{Binding Recipe}">
+              Grid.ColumnSpan="3">
             
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40*"/>
@@ -102,19 +102,16 @@
                                  HorizontalAlignment="Center"
                                  Spacing="6">
                 
-                <Label Content="Заголовок"
-                       FontSize="22"
-                       Foreground="Black"/>
+                <TextBlock Text="{Binding Name}"
+                           TextWrapping="Wrap"
+                           Height="40"
+                           FontSize="30"
+                           FontWeight="Heavy"/>
                 
-                <TextBox Text="{Binding Name}">
-                    
-                </TextBox>
-                
-                <Label Content="Краткое описание"
-                       FontSize="22"
-                       Foreground="Black"/>
-                
-                <TextBox Text="{Binding Description}"/>
+                <TextBlock Text="{Binding Description}"
+                           TextWrapping="Wrap"
+                           Height="160"
+                           FontSize="30"/>
                 
             </controls:SimpleStackPanel>
             
@@ -122,8 +119,7 @@
         
         <Grid Name="TimePortionsGrid"
               Grid.Row="1"
-              Grid.Column="0"
-              DataContext="{Binding Recipe}">
+              Grid.Column="0">
             
                 <controls:SimpleStackPanel Spacing="0"
                                      VerticalAlignment="Center"
@@ -163,7 +159,7 @@
               Grid.Row="1"
               Grid.Column="1"
               Grid.ColumnSpan="2"
-              DataContext="{Binding Recipe.RecipeStat}">
+              DataContext="{Binding RecipeStat}">
             
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*"/>
@@ -257,18 +253,17 @@
                                        Spacing="0"
                                        VerticalAlignment="Top"
                                        HorizontalAlignment="Left"
-                                       Margin="20,10,20,0"
-                                       DataContext="{Binding Recipe}">
+                                       Margin="20,10,20,0">
                     
                 <TextBlock Text="Ингридиенты"
                            Margin="5"
                            FontSize="14"/>
             
                 <controls:ListView Name="IngredientsListview"
-                                   ItemsSource="{Binding Ingredients}"
-                                   Width="365"
+                                   ItemsSource="{Binding RecipeIngredients}"
+                                   Width="350"
                                    MaxHeight="140"
-                                   IsSelectionEnabled="True">
+                                   IsSelectionEnabled="False">
                     
                     <controls:ListView.ItemTemplate>
                         
@@ -277,8 +272,12 @@
                             <controls:SimpleStackPanel Spacing="12"
                                                        Orientation="Horizontal">
                                 
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                                <TextBlock Text="{Binding Measure.Name}"></TextBlock>
+                                <TextBlock Text="{Binding Ingredient.Name}"
+                                           Foreground="Black"/>
+                                <TextBlock Text="{Binding Count}"
+                                           Foreground="Black"/>
+                                <TextBlock Text="{Binding Ingredient.Measure.Name}"
+                                           Foreground="Black"/>
                                 
                             </controls:SimpleStackPanel>
 
@@ -303,7 +302,7 @@
                                        HorizontalAlignment="Center"
                                        Orientation="Vertical">
                 
-                <TextBlock Text="Категория"
+                <TextBlock Text="Категория: "
                            FontSize="14"
                            Margin="5"/>
                 
@@ -311,11 +310,11 @@
                            FontSize="14"
                            Margin="5"/>
                 
-                <TextBlock Text="Тип рецепта"
+                <TextBlock Text="Тип рецепта: "
                            FontSize="14"
                            Margin="5"/>
                 
-                <TextBlock Text="{Binding Type.Name}"
+                <TextBlock Text="{Binding RecipeType.Name, TargetNullValue=Нет типа}"
                            FontSize="14"
                            Margin="5"/>
                 
@@ -334,9 +333,9 @@
                                        Margin="10">
                 
                 <TextBlock Text="Шаги приготовления"
-                           FontSize="14"></TextBlock>
+                           FontSize="14"/>
                 
-                <TextBlock Text="{Binding Text}"
+                <TextBlock Text="{Binding Text, TargetNullValue=Нет рецепта}"
                          Width="560"
                          MinHeight="190"
                          Margin="10"

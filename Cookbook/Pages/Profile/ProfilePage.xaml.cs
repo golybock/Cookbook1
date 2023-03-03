@@ -68,49 +68,5 @@ public partial class ProfilePage : Page
         }
         DataContext = _client;
     }
-
-    private void RecipesListView_OnDeleteClicked(int id)
-    {
-        ShowAcceptDialog(id);
-    }
-
-    private void RecipesListView_OnEditClicked(int id)
-    {
-        var recipe = _client.Recipes.FirstOrDefault(c => c.Id == id);
-
-        if (NavigationService != null)
-            if (recipe != null)
-                NavigationService.Navigate(
-                    new AddEditRecipePage(recipe, _client)
-                );
-    }
-
-    private void RecipesListView_OnOpenClicked(int id)
-    {
-        var recipe = _client.Recipes.FirstOrDefault(c => c.Id == id);
-
-        if (NavigationService != null)
-            if (recipe != null)
-                NavigationService.Navigate(
-                    new RecipePage(recipe, _client)
-                );
-    }
-
-    private void RecipesListView_OnLikeClicked(int id)
-    {
-        var recipe = _client.Recipes.FirstOrDefault(c => c.Id == id);
-
-        if (recipe!.IsLiked == true)
-        {
-            recipe.IsLiked = false;
-            _recipeService.DeleteFavRecipes(id, _client.Id);
-        }
-        else
-        {
-            recipe.IsLiked = true;
-            _recipeService.AddRecipeToFav(new FavoriteRecipe() {ClientId = _client.Id, RecipeId = id});
-        }
-
-        DataContext = _client;
-    }
+    
 }

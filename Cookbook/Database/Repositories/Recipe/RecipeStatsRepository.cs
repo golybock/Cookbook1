@@ -14,12 +14,13 @@ namespace Cookbook.Database.Repositories.Recipe;
 
 public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
 {
-    public async Task<RecipeStats?> GetRecipeStatsAsync(int id)
+    public async Task<RecipeStats> GetRecipeStatsAsync(int id)
     {
         var con = GetConnection();
         RecipeStats? recipeStats = new RecipeStats();
         try
         {
+            con.Open();
             string query = $"select * from recipe_stats where recipe_id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -40,7 +41,7 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
         }
         catch
         {
-            return null;
+            return new RecipeStats();
         }
         finally
         {

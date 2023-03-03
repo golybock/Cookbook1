@@ -16,10 +16,10 @@ public class RecipeStatsService : IRecipeStatsService
         _recipeStatsRepository = new RecipeStatsRepository();
     }
     
-    public async Task<RecipeStats?> GetRecipeStatsAsync(int id)
+    public async Task<RecipeStats> GetRecipeStatsAsync(int id)
     {
         if (id > 0)
-            return null;
+            return new RecipeStats();
 
         return await _recipeStatsRepository.GetRecipeStatsAsync(id);
     }

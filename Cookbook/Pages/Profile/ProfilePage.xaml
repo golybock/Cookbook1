@@ -16,36 +16,10 @@
             
             <ui:SimpleStackPanel>
                 
-                <client:ClientMainView x:Name="ClientMainView"
+                <client:ClientMainView Name="ClientMainView"
                                        Height="300"/>
             
-                <Grid Margin="12">
-                    
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="50*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Label Grid.Column="0" 
-                           Content="Рецепты"
-                           FontSize="20"
-                           DockPanel.Dock="Left"
-                           HorizontalAlignment="Left"/>
-                    
-                    <Label Grid.Column="1" 
-                           Content="все рецепты >"
-                           FontSize="18"
-                           DockPanel.Dock="Right"
-                           HorizontalAlignment="Right"/>
-                    
-                </Grid>
                 
-                <recipe:RecipesListView x:Name="RecipesListView"
-                                        Height="420"
-                                        Visibility="Visible"/>
-                
-                <views:NothingShowView x:Name="NothingShowView"
-                                       Visibility="Collapsed"/>
                 
             </ui:SimpleStackPanel>
             

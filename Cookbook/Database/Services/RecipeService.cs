@@ -54,10 +54,8 @@ public class RecipeService : IRecipeService
         var recipe = await _recipeService.GetRecipeAsync(id);
         
         var recipeStat = _recipeStatsService.GetRecipeStatsAsync(id);
-        var recipeCategories = _recipeCategoryService.GetRecipeCategoriesAsync(id);
         var recipeReviews = _reviewService.GetReviewsAsync(id);
         var recipeIngredients = _recipeIngredientService.GetRecipeIngredientByRecipeAsync(id);
-        var recipeRating = _reviewService.GetAvgRatingByRecipe(id);
         var category = GetRecipeMainCategoryAsync(id);
          
         if (_client.Id != 0)
@@ -71,14 +69,7 @@ public class RecipeService : IRecipeService
         recipe.Reviews = await recipeReviews;
         recipe.RecipeIngredients = await recipeIngredients;
         recipe.Category = await category;
-        
-        foreach (var ingredient in recipe.RecipeIngredients)
-        {
-            ingredient.Ingredient =
-                await _ingredientService.GetIngredientAsync(ingredient.IngredientId);
 
-        }
-        
         return recipe;
     }
 

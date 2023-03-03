@@ -7,8 +7,12 @@
       mc:Ignorable="d"
       Title="{Binding Name}">
     <ScrollViewer>
+        
         <Grid>
-            <recipe:RecipeMainView x:Name="RecipeMainView"/>
+            <recipe:RecipeMainView Width="600"
+                                   MinHeight="900"
+                                   x:Name="RecipeMainView"/>
         </Grid>
+        
     </ScrollViewer>
 </Page>

@@ -7,7 +7,7 @@ using Cookbook.Command;
 using Cookbook.Database.Services;
 using Cookbook.Pages;
 using Microsoft.Win32;
-using Models.Models.Database.Client;
+using ClientModel = Models.Models.Database.Client.Client;
 using Models.Models.Register;
 using ModernWpf.Controls;
 using Frame = ModernWpf.Controls.Frame;
@@ -24,7 +24,7 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
         _firstFrame = frame;
         
         // создаем объект
-        Client = new Client();
+        Client = new ClientModel();
     }
 
     public RegistrationViewModel(string login, Frame frame)
@@ -35,7 +35,7 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
         _firstFrame = frame;
 
         // создаем объект
-        Client = new Client();
+        Client = new ClientModel();
         
         // задаем логи по умолчанию
         Login = login;
@@ -50,7 +50,7 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     }
 
     // основная модель данных
-    private Client Client { get; set; }
+    private ClientModel Client { get; set; }
     
     // данные для приязки
     public string Password 

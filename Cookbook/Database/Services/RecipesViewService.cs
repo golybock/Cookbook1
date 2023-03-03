@@ -39,15 +39,14 @@ public class RecipesViewService
         }
     }
 
-    public void OpenClicked(int id, List<RecipeModel> recipes, NavigationService? navigationService)
+    public async void OpenClicked(int id, List<RecipeModel> recipes, NavigationService? navigationService)
     {
-        var recipe = recipes.FirstOrDefault(c => c.Id == id);
+        var recipe = await GetRecipe(id);
 
         if (navigationService != null)
-            if (recipe != null)
-                navigationService.Navigate(
-                    new RecipePage(_client, id)
-                );
+            navigationService.Navigate(
+                new RecipePage(recipe)
+            );
     }
     
     private async void ShowAcceptDialog(int id, List<RecipeModel> recipes)
@@ -95,5 +94,10 @@ public class RecipesViewService
                 navigationService.Navigate(
                     new AddEditRecipePage(recipe, _client)
                 );
+    }
+    
+    private async Task<RecipeModel> GetRecipe(int recipeId)
+    {
+        return await _recipeService.GetRecipeAsync(recipeId);;
     }
 }

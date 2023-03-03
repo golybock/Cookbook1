@@ -9,7 +9,6 @@ using ModernWpf.Controls;
 using Client = Models.Models.Database.Client.Client;
 using Page = System.Windows.Controls.Page;
 
-
 namespace Cookbook.Pages;
 
 public partial class NavigationPage : Page

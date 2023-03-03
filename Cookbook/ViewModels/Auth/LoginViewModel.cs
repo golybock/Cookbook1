@@ -6,7 +6,7 @@ using Cookbook.Command;
 using Cookbook.Database.Services;
 using Cookbook.Pages;
 using Cookbook.Pages.Auth;
-using Models.Models.Database.Client;
+using ClientModel = Models.Models.Database.Client.Client;
 using Models.Models.Login;
 using ModernWpf.Controls;
 
@@ -17,7 +17,7 @@ public class LoginViewModel : INotifyPropertyChanged
     public LoginViewModel(Frame frame)
     {
         _loginService = new LoginService();
-        Client = new Client();
+        Client = new ClientModel();
         
         _firstFrame = frame;
 
@@ -33,7 +33,7 @@ public class LoginViewModel : INotifyPropertyChanged
     }
     
     // основная модель данных
-    private Client Client { get; set; }
+    private ClientModel Client { get; set; }
     
     // данные для приязки
     public string Password 
@@ -135,7 +135,7 @@ public class LoginViewModel : INotifyPropertyChanged
 
     private void OnGuest()
     {
-        Client guest = new Client() {Id = -1, Name = "Гость"};
+        ClientModel guest = new ClientModel() {Id = -1, Name = "Гость"};
         
         if (_firstFrame.NavigationService != null) 
             _firstFrame

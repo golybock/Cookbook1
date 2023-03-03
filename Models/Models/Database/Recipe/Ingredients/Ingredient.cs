@@ -10,8 +10,6 @@ public partial class Ingredient
 
     public string Name { get; set; } = null!;
 
-    public string? ImagePath { get; set; }
-
     public Measure? Measure { get; set; } = new Measure();
     
 }

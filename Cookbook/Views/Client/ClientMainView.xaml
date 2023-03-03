@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cookbook.Views.Client"
              xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
+             xmlns:views="clr-namespace:Cookbook.Views"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="700">
- <UserControl.Resources>
+             d:DesignHeight="600" d:DesignWidth="700">
+    
+    <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe ui"></Setter>
             <Setter Property="FontSize" Value="24"></Setter>
@@ -17,6 +20,11 @@
     
     <Grid>
     
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        
         <Border CornerRadius="15"
                 BorderBrush="Transparent"
                 BorderThickness="3"
@@ -27,15 +35,14 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40*"/>
                     <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                
                 
                 <ui:PersonPicture Grid.Row="0"
                        Grid.Column="0"
                        Height="250"
                        Width="250"
-                       ProfilePicture="{Binding ImagePath}"/>
+                       ProfilePicture="{Binding Client.ImagePath}"/>
                 
                 <ui:SimpleStackPanel Grid.Row="0"
                                      Grid.ColumnSpan="2"
@@ -43,22 +50,67 @@
                                      Spacing="14"
                                      Margin="25">
 
-                       <TextBlock Text="{Binding Name, FallbackValue=Имя, TargetNullValue=Имя}"
+                       <TextBlock Text="{Binding Client.Name, FallbackValue=Имя, TargetNullValue=Имя}"
                                   FontSize="26"
                                   FontWeight="Heavy"/>
                     
-                       <TextBlock Text="{Binding DateOfRegistration, FallbackValue=Дата регистрации, TargetNullValue=Дата регистрации}"
-                                  FontSize="20"/>
                        
-                       <TextBlock Text="{Binding Description, FallbackValue=Описание, TargetNullValue=Описание}"
+                       <TextBlock Text="{Binding Client.Description, FallbackValue=Описание, TargetNullValue=Описание}"
                                   FontSize="20"
                                   TextWrapping="Wrap"
-                                  MaxHeight="75"></TextBlock>
+                                  MaxHeight="75"/>
+                       
+                       <Button Name="EditButton"
+                               Width="150"
+                               Height="32"
+                               Content="Редактировать"
+                               Command="{Binding EditCommand}"/>
                     
                 </ui:SimpleStackPanel>
 
             </Grid>
             
         </Border>
+        
+        <Grid Grid.Row="1"
+              Margin="12">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="85*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0">
+                    
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                    
+                <Label Grid.Column="0" 
+                       Content="Рецепты"
+                       FontSize="20"
+                       DockPanel.Dock="Left"
+                       HorizontalAlignment="Left"/>
+                    
+                <Label Grid.Column="1" 
+                       Content="все рецепты >"
+                       FontSize="18"
+                       DockPanel.Dock="Right"
+                       HorizontalAlignment="Right"/>
+               
+                <recipe:RecipesListView Grid.Column="1"
+                                        x:Name="RecipesListView"
+                                        Height="420"
+                                        Visibility="Visible"/>
+                
+                <views:NothingShowView Grid.Column="1" x:Name="NothingShowView"
+                                       Visibility="Collapsed"/>
+                
+            </Grid>
+            
+        </Grid>
+        
     </Grid>
+    
 </UserControl>

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
+using Cookbook.Database.Services.Recipe.Ingredients;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
@@ -12,9 +13,11 @@ namespace Cookbook.Database.Services.Recipe;
 public class RecipeIngredientService : IRecipeIngredientService
 {
     private readonly RecipeIngredientRepository _recipeIngredientRepository;
+    private readonly IngredientService _ingredientService;
 
     public RecipeIngredientService()
     {
+        _ingredientService = new IngredientService();
         _recipeIngredientRepository = new RecipeIngredientRepository();
     }
     
@@ -29,9 +32,15 @@ public class RecipeIngredientService : IRecipeIngredientService
     public async Task<List<RecipeIngredient>> GetRecipeIngredientByRecipeAsync(int recipeId)
     {
         if (recipeId <= 0)
-            return new List<RecipeIngredient>(); 
-        
-        return await _recipeIngredientRepository.GetRecipeIngredientByRecipeAsync(recipeId);
+            return new List<RecipeIngredient>();
+
+        List<RecipeIngredient> recipeIngredients =
+            await _recipeIngredientRepository.GetRecipeIngredientByRecipeAsync(recipeId);
+
+        foreach (var recipeIngredient in recipeIngredients)
+            recipeIngredient.Ingredient = await _ingredientService.GetIngredientAsync(recipeIngredient.IngredientId);
+
+        return recipeIngredients;
     }
 
     public Task<List<RecipeIngredient>> GetRecipeIngredientsAsync()

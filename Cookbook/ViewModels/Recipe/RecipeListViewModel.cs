@@ -4,16 +4,16 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Cookbook.Command;
 using Cookbook.Database.Services;
-using Models.Models.Database.Client;
 using Frame = ModernWpf.Controls.Frame;
 using RecipeService = Cookbook.Database.Services.Recipe;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
+using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.ViewModels.Recipe;
 
 public class RecipeListViewModel : INotifyPropertyChanged
 {
-    public RecipeListViewModel(Client client, Frame frame)
+    public RecipeListViewModel(ClientModel client, Frame frame)
     {
         _recipeService = 
             new Database.Services.RecipeService(client);

@@ -19,6 +19,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         
         try
         {
+            con.Open();
             Ingredient ingredient = new Ingredient();
             string query = $"select * from ingredient where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
@@ -32,8 +33,6 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
                 ingredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 ingredient.MeasureId = reader.GetInt32(reader.GetOrdinal("measure_id"));
                 ingredient.Name = reader.GetString(reader.GetOrdinal("name"));
-                var imagePath = reader.GetValue(reader.GetOrdinal("image_path"));
-                ingredient.ImagePath = imagePath == DBNull.Value ? null : imagePath.ToString();
             }
             
             return ingredient;
@@ -64,10 +63,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
                 ingredient.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 ingredient.MeasureId = reader.GetInt32(reader.GetOrdinal("measure_id"));
                 ingredient.Name = reader.GetString(reader.GetOrdinal("name"));
-                
-                var imagePath = reader.GetValue(reader.GetOrdinal("image_path"));
-                ingredient.ImagePath = imagePath == DBNull.Value ? null : imagePath.ToString();
-                
+
                 ingredients.Add(ingredient);
             }
             
@@ -133,15 +129,14 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         
         try
         {
-            string query = $"update ingredient set measure_id = $2, name = $3, image_path = $4 where id = $1";
+            string query = $"update ingredient set measure_id = $2, name = $3 where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new() { Value = ingredient.Id },
                     new() { Value = ingredient.MeasureId },
-                    new() { Value = ingredient.Name },
-                    new() { Value = ingredient.ImagePath }
+                    new() { Value = ingredient.Name }
                 }
             };
             
