@@ -581,7 +581,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\ProfilePage.g.cs
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\SubsPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\AddEditRecipePage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Settings\SettingsPage.g.cs
@@ -597,7 +596,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\ProfilePage.baml
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\SubsPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\AddEditRecipePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Settings\SettingsPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.baml
@@ -617,10 +615,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipesList
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipesListView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\NothingShowView.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\NothingShowView.baml
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientMediumView.baml
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientMediumView.g.cs
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientsListView.g.cs
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientsListView.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\NothingShowView.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMainView.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipesListView.g.cs
@@ -689,3 +683,7 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Pr
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientEditView.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\EditProfilePage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientEditView.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\EditProfilePage.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientEditView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\EditProfilePage.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientEditView.baml

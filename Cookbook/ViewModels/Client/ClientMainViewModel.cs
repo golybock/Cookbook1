@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Database.Services;
 using Cookbook.Pages.Profile;
@@ -40,7 +41,7 @@ public class ClientMainViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     // Команды для биндов
     public RelayCommand<Int32> OpenCommand =>
         new RelayCommand<int>(OpenClicked);
@@ -91,14 +92,6 @@ public class ClientMainViewModel : INotifyPropertyChanged
     
     private async void LoadClientRecipes() =>
         Recipes = await _recipeService.GetClientRecipes(Client.Id);
-
-    private async void SetEventToUpdateClient()
-    {
-        Frame.Navigated += async (sender, args) =>
-        {
-            Client = (await _clientService.GetClientAsync(Client.Id))!;
-        };
-    }
     
     private void OnEditClient()
     {

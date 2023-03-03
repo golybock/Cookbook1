@@ -19,7 +19,6 @@ public class ClientService : IClientService
     private readonly ReviewService _reviewService;
     private readonly ClientImageService _clientImageService;
     private readonly ClientFavService _clientFavService;
-    private readonly ClientSubService _clientSubService;
 
     public ClientService()
     {
@@ -28,7 +27,6 @@ public class ClientService : IClientService
         _clientImageService = new ClientImageService();
         _reviewService = new ReviewService();
         _clientFavService = new ClientFavService();
-        _clientSubService = new ClientSubService();
         _clientService = new Client.ClientService();
     }
     
@@ -39,7 +37,6 @@ public class ClientService : IClientService
         _clientImageService = new ClientImageService();
         _reviewService = new ReviewService();
         _clientFavService = new ClientFavService();
-        _clientSubService = new ClientSubService();
         _clientService = new Client.ClientService();
     }
     
@@ -47,62 +44,7 @@ public class ClientService : IClientService
     {
         List<ClientModel> clients = await _clientService.GetClientsAsync();
 
-        foreach (var client in clients)
-        {
-            client.IsLiked =
-                await _clientSubService.ClientIsLiked(_client.Id, client.Id);
-        }
-        
         return clients;
-    }
-    
-    public async Task<List<ClientModel>> GetClientSubs(int clientId)
-    {
-        List<ClientModel> clients = new List<ClientModel>();
-
-        var subs = await _clientSubService.GetClientSubsAsync(clientId);
-
-        foreach (var sub in subs)
-        {
-            ClientModel? client = await _clientService.GetClientAsync(sub.ClientId);
-            
-            if (client != null)
-                clients.Add(client);
-        }
-
-        return clients;
-    }
-
-    public Task<CommandResult> AddClientToSub(int clientId)
-    {
-        return
-            _clientSubService
-                .AddClientSubAsync(
-                    new ClientSub 
-                        { 
-                            ClientId = _client.Id,
-                            Sub = clientId
-                        }
-                    );
-    }
-    
-    // unused
-    // ReSharper disable once UnusedMember.Global
-    public async Task<CommandResult> DeleteClientFromSub(int clientId)
-    {
-        var sub = await _clientSubService.GetClientSubAsync(_client.Id, clientId);
-
-        if (sub != null)
-            return await _clientSubService.DeleteClientSubAsync(sub.Id);
-        
-        return CommandResults.BadRequest;
-    }
-    
-
-    
-    public async Task<CommandResult> DeleteSub(int subId)
-    {
-        return await _clientSubService.DeleteClientSubAsync(_client.Id, subId);
     }
 
     private async Task GetClientInfo(ClientModel client)
@@ -111,18 +53,10 @@ public class ClientService : IClientService
         {
             var recipes = _recipeService.GetClientRecipes(client.Id);
             var image =  _clientImageService.GetClientImageByClientIdAsync(client.Id);
-            var reviews = _reviewService.GetClientReviewAsync(client.Id);
-            var clientImages = _clientImageService.GetClientImagesAsync(client.Id);
-            var favRecipes = _clientFavService.GetFavoriteRecipesAsync(client.Id);
-            var clientSubOn = _clientSubService.GetClientSubsAsync(client.Id);
-            var clientSubs = _clientSubService.GetSubsClientAsync(client.Id);
+            var favRecipes = _clientFavService.GetFavoriteRecipesAsync(client.Id); ;
             
             client.Recipes = await recipes;
-            client.Reviews = await reviews;
-            client.ClientImages = await clientImages;
             client.FavoriteRecipes = await favRecipes;
-            client.ClientSubOnClients = await clientSubOn;
-            client.ClientSubs = await clientSubs;
             client.ClientImage = (await image)!;
         }
     }

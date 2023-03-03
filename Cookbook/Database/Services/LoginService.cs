@@ -60,8 +60,6 @@ public class LoginService : ILoginService
             var favRecipes = _clientFavService.GetFavoriteRecipesAsync(client.Id);
 
             client.Recipes = await recipes;
-            client.Reviews = await reviews;
-            client.ClientImages = await clientImages;
             client.FavoriteRecipes = await favRecipes;
             client.ClientImage = (await image)!;
         }

@@ -19,9 +19,12 @@ public partial class ClientImage : INotifyPropertyChanged
             _imagePath = value;
             OnPropertyChanged();
         }
-    } 
+    }
 
-    public DateTime DateOfAdded { get; set; }
+    public string? GetImagePath()
+    {
+        return _imagePath;
+    }
     
     public event PropertyChangedEventHandler? PropertyChanged;
 

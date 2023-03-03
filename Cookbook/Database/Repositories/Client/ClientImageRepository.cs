@@ -31,7 +31,6 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
                 clientImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 clientImage.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
                 clientImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
-                clientImage.DateOfAdded = reader.GetDateTime(reader.GetOrdinal("date_of_added"));
             }
 
             return clientImage;
@@ -53,7 +52,7 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
         ClientImage clientImage = new ClientImage();
         try
         {
-            string query = $"select * from client_images where client_id = $1 limit 1";
+            string query = $"select * from client_images where client_id = $1 order by id desc limit 1 ";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = clientId} }
@@ -65,7 +64,6 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
                 clientImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 clientImage.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
                 clientImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
-                clientImage.DateOfAdded = reader.GetDateTime(reader.GetOrdinal("date_of_added"));
             }
 
             return clientImage;
@@ -100,7 +98,6 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
                 clientImage.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 clientImage.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
                 clientImage.ImagePath = reader.GetString(reader.GetOrdinal("image_path"));
-                clientImage.DateOfAdded = reader.GetDateTime(reader.GetOrdinal("date_of_added"));
                 clientImages.Add(clientImage);
             }
 
@@ -130,7 +127,7 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
                 Parameters =
                 {
                     new() { Value = clientImage.ClientId },
-                    new() { Value = clientImage.ImagePath },
+                    new() { Value = clientImage.GetImagePath() },
                 }
             }; 
             
@@ -170,7 +167,7 @@ public class ClientImageRepository : MainDbClass, IClientImageRepository
                 Parameters =
                 {
                     new() { Value = clientImage.Id },
-                    new() { Value = clientImage.ImagePath },
+                    new() { Value = clientImage.GetImagePath() },
                 }
             };
             

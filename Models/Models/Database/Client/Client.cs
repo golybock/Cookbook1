@@ -1,5 +1,4 @@
 ﻿using Cookbook.Models.Database.Client;
-using Cookbook.Models.Database.Recipe.Review;
 
 namespace Models.Models.Database.Client;
 
@@ -14,21 +13,33 @@ public partial class Client
 
     public string Password { get; set; } = null!;
 
-    public string? Name { get; set; } = string.Empty;
+    private string _name;
 
-    public string? Description { get; set; } = string.Empty;
+    public string? Name
+    {
+        get => _name;
+        set
+        {
+            _name = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _description;
+
+    public string? Description
+    {
+        get => _description;
+        set
+        {
+            _description = _name;
+            OnPropertyChanged();
+        }
+    }
 
     public DateTime DateOfRegistration { get; set; }
     
-    public List<ClientImage> ClientImages { get; set; } = new();
-
-    public List<ClientSub> ClientSubOnClients { get; set; } = new();
-
-    public List<ClientSub> ClientSubs { get; set; } = new();
-
     public List<FavoriteRecipe> FavoriteRecipes { get; set; } = new();
 
     public List<Recipe.Recipe> Recipes { get; set; } = new();
-
-    public List<Review> Reviews { get; set; } = new();
 }

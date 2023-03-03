@@ -21,7 +21,7 @@ public class ClientEditViewModel : INotifyPropertyChanged
         Client = client;
         Frame = frame;
         
-        Client.NewImagePath = Client.ImagePath;
+        Client.NewImagePath = Client.ClientImage.ImagePath;
     }
 
     public string? ImagePath
