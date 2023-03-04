@@ -61,11 +61,11 @@
                                      Spacing="14"
                                      Margin="25">
 
-                    <TextBox Text="{Binding Client.Name, TargetNullValue={x:Static sys:String.Empty}}"
+                    <TextBox Text="{Binding Client.Name}"
                              FontSize="20"
                              controls:ControlHelper.Header="Имя"/>
                        
-                    <TextBox Text="{Binding Client.Description, TargetNullValue=''}"
+                    <TextBox Text="{Binding Client.Description}"
                              FontSize="20"
                              TextWrapping="Wrap"
                              controls:ControlHelper.Header="Описание"/>

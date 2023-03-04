@@ -50,12 +50,12 @@
                                      Spacing="14"
                                      Margin="25">
 
-                       <TextBlock Text="{Binding Client.Name, FallbackValue=Имя, TargetNullValue=Имя, UpdateSourceTrigger=LostFocus}"
+                       <TextBlock Text="{Binding Client.Name, UpdateSourceTrigger=PropertyChanged}"
                                   FontSize="26"
                                   FontWeight="Heavy"/>
                     
                        
-                       <TextBlock Text="{Binding Client.Description, FallbackValue=Описание, TargetNullValue=Описание, UpdateSourceTrigger=LostFocus}"
+                       <TextBlock Text="{Binding Client.Description, UpdateSourceTrigger=PropertyChanged}"
                                   FontSize="20"
                                   TextWrapping="Wrap"
                                   MaxHeight="75"/>

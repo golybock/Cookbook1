@@ -17,14 +17,16 @@ public partial class Client
 
     public string? Name
     {
-        get => _name;
+        get
+        {
+            if (string.IsNullOrEmpty(_name))
+                return "Имя не указано";
+            
+            return _name;
+        }
         set
         {
-            // if (string.IsNullOrEmpty(value))
-            //     _name = null;
-            // else
-                _name = value;
-            
+            _name = value;
             OnPropertyChanged();
         }
     }
@@ -33,13 +35,16 @@ public partial class Client
 
     public string? Description
     {
-        get => _description;
+        get
+        { 
+            if (string.IsNullOrEmpty(_description))
+                return "Описание отсутствует";
+            
+            return _description;
+        }
         set
         {
-            // if (string.IsNullOrEmpty(value))
-            //     _description = null;
-            // else
-                _description = value;
+            _description = value;
 
             OnPropertyChanged();
         }
