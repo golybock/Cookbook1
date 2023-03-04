@@ -22,6 +22,7 @@ public class ClientEditViewModel : INotifyPropertyChanged
         Frame = frame;
         
         Client.NewImagePath = Client.ClientImage.ImagePath;
+        
     }
 
     public string? ImagePath
@@ -33,23 +34,9 @@ public class ClientEditViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
-    public string Error
-    {
-        get => _error;
-        set
-        {
-            _error = value;
-            OnPropertyChanged();
-        }
-    }
-    
-    public bool HasError =>
-        !string.IsNullOrEmpty(Error);
-    
+
     public ClientModel Client { get; set; }
     private Frame Frame;
-    private string _error;
 
     private ClientService _clientService;
 
@@ -115,15 +102,8 @@ public class ClientEditViewModel : INotifyPropertyChanged
 
         if (result.Result)
             SuccesfullyEdit();
-
-        else
-            ShowError(result);
     }
 
-    private void ShowError(CommandResult commandResult)
-    {
-        // вывод ошибки
-    }
     
     private void SuccesfullyEdit()
     {

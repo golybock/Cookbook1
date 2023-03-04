@@ -116,9 +116,4 @@ public class ClientMainViewModel : INotifyPropertyChanged
         OnPropertyChanged(propertyName);
         return true;
     }
-
-    public void Deconstruct()
-    {
-        // Frame.Navigated -= 
-    }
 }

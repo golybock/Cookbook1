@@ -5,9 +5,6 @@ namespace Models.Models.Database.Client;
 
 public partial class Client: INotifyPropertyChanged
 {
-    // public string? ImagePath =>
-    //     $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients\\" + ClientImage.ImagePath;
-    //
     public ClientImage ClientImage { get; set; }
     
     // новый путь (если требуется установить путь)

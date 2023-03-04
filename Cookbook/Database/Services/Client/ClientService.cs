@@ -59,9 +59,6 @@ public class ClientService : IClientService
         if(client.Id <= 0)
             return CommandResults.BadRequest;
         
-        if(string.IsNullOrWhiteSpace(client.Name))
-            return CommandResults.BadRequest;
-        
         CommandResult commandResult = await _clientRepository.UpdateClientAsync(client);
         
         if (commandResult.Result)

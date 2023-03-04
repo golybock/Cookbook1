@@ -20,7 +20,11 @@ public partial class Client
         get => _name;
         set
         {
-            _name = value;
+            // if (string.IsNullOrEmpty(value))
+            //     _name = null;
+            // else
+                _name = value;
+            
             OnPropertyChanged();
         }
     }
@@ -32,7 +36,11 @@ public partial class Client
         get => _description;
         set
         {
-            _description = _name;
+            // if (string.IsNullOrEmpty(value))
+            //     _description = null;
+            // else
+                _description = value;
+
             OnPropertyChanged();
         }
     }
