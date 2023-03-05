@@ -8,6 +8,7 @@ using Cookbook.Database.Services;
 using Models.Models.Database.Recipe;
 using ModernWpf.Controls;
 using ClientModel = Models.Models.Database.Client.Client;
+using Frame = ModernWpf.Controls.Frame;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 using Page = System.Windows.Controls.Page;
 
@@ -26,7 +27,7 @@ public partial class FindPage : Page
     public List<Category> Categories { get; set; } = null!;
     public List<RecipeModel> Recipes { get; set; } = null!;
 
-    public FindPage()
+    public FindPage(Frame frame)
     {
         var client = new ClientModel();
         
@@ -35,21 +36,21 @@ public partial class FindPage : Page
         _sort = "Default";
 
         _recipeService = new RecipeService(client);
-        _recipesViewService = new RecipesViewService(client);
+        _recipesViewService = new RecipesViewService(client, frame);
         
         LoadData();
         
         InitializeComponent();
     }
     
-    public FindPage(ClientModel client)
+    public FindPage(ClientModel client, Frame frame)
     {
         _filterCategory = _emptyCategory;
         _search = String.Empty;
         _sort = "Default";
         
         _recipeService = new RecipeService(client);
-        _recipesViewService = new RecipesViewService(client);
+        _recipesViewService = new RecipesViewService(client, frame);
         
         LoadData();
         

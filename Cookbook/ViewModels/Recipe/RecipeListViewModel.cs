@@ -19,7 +19,7 @@ public class RecipeListViewModel : INotifyPropertyChanged
             new Database.Services.RecipeService(client);
         
         _recipesViewService =
-            new RecipesViewService(client);
+            new RecipesViewService(client, frame);
         
         Recipes = new List<RecipeModel>();
         

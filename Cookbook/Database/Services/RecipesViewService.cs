@@ -15,9 +15,12 @@ public class RecipesViewService
 {
     private readonly RecipeService _recipeService;
     private readonly ClientModel _client;
-
-    public RecipesViewService(ClientModel client)
+    private readonly Frame _frame;
+    
+    public RecipesViewService(ClientModel client, Frame frame)
     {
+        _frame = frame;
+        
         _client = client;
 
         _recipeService = new RecipeService(_client);
@@ -92,7 +95,7 @@ public class RecipesViewService
         if (navigationService != null)
             if (recipe != null)
                 navigationService.Navigate(
-                    new EditRecipePage(recipe, _client)
+                    new EditRecipePage(recipe, _client, _frame)
                 );
     }
     

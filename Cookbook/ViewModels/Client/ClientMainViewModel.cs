@@ -21,7 +21,7 @@ public class ClientMainViewModel : INotifyPropertyChanged
 
         Client = client;
         
-        _recipesViewService = new RecipesViewService(Client);
+        _recipesViewService = new RecipesViewService(Client, frame);
         _clientService = new ClientService();
         _recipeService = new RecipeService(Client);
         Recipes = new List<RecipeModel>();

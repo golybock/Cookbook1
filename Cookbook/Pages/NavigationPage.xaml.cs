@@ -60,7 +60,7 @@ public partial class NavigationPage : Page
             return new MainPage(_client, MainFrame);
         
         if (pageName == "FindPage")
-            return new FindPage(_client);
+            return new FindPage(_client, MainFrame);
         
         if (pageName == "ProfilePage")
             if (_client.Id == -1)
