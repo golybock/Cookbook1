@@ -105,7 +105,7 @@
                 <Image Name="RecipeImage"
                        Grid.Column="0"
                        Margin="20"
-                       Source="{Binding RecipeImage.ImagePath, UpdateSourceTrigger=PropertyChanged}"
+                       Source="{Binding NewImagePath, UpdateSourceTrigger=PropertyChanged}"
                        AllowDrop="True">
                     
                     <b:Interaction.Triggers>
@@ -129,7 +129,7 @@
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Name}">
+                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}">
                         
                     </TextBox>
                     
@@ -137,7 +137,7 @@
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Description}"/>
+                    <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
                     
                 </controls:SimpleStackPanel>
                 
@@ -276,14 +276,14 @@
                                            VerticalAlignment="Top"
                                            HorizontalAlignment="Left"
                                            Margin="20,10,20,0"
-                                           DataContext="{Binding Recipe}">
+                                           DataContext="{Binding Recipe, UpdateSourceTrigger=PropertyChanged}">
                         
                     <TextBlock Text="Ингридиенты"
                                Margin="5"
                                FontSize="14"/>
                 
                     <controls:ListView Name="IngredientsListview"
-                                       ItemsSource="{Binding Ingredients}"
+                                       ItemsSource="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"
                                        Width="365"
                                        MaxHeight="140"
                                        IsSelectionEnabled="True">
@@ -335,7 +335,7 @@
                               Width="150"
                               DisplayMemberPath="Name"
                               ItemsSource="{Binding Ingredients}"
-                              SelectedItem="{Binding SelectedIngredient}"/>
+                              SelectedItem="{Binding SelectedIngredient, UpdateSourceTrigger=PropertyChanged}"/>
                         
                     <controls:NumberBox Name="IngredientCountNumberBox"
                                         Value="{Binding RecipeIngredient.Count}"
@@ -356,7 +356,7 @@
                             Width="150"
                             Style="{DynamicResource AccentButtonStyle}"
                             Content="Добавить"
-                            Command="{Binding AddIngredientButton}"
+                            Command="{Binding AddIngredientCommand}"
                             Margin="5"/>
                         
                 </controls:SimpleStackPanel>
@@ -387,7 +387,7 @@
                                   Height="32"
                                   ItemsSource="{Binding Categories}"
                                   DisplayMemberPath="Name"
-                                  SelectedItem="{Binding SelectedCategory}"/>
+                                  SelectedItem="{Binding SelectedCategory, UpdateSourceTrigger=PropertyChanged}"/>
                         
                         <Button Name="AddCategoryButton"
                                 Width="32"
@@ -411,7 +411,7 @@
                                   Height="32"
                                   DisplayMemberPath="Name"
                                   ItemsSource="{Binding RecipeTypes}"
-                                  SelectedItem="{Binding SelectedRecipeType}"/>
+                                  SelectedItem="{Binding SelectedRecipeType, UpdateSourceTrigger=PropertyChanged}"/>
                         
                         <Button Name="AddRecipeTypeButton"
                                 Width="32"
@@ -464,8 +464,6 @@
                              TextWrapping="Wrap"/>
                     
                 </controls:SimpleStackPanel>
-                
-
                 
             </Grid>
             

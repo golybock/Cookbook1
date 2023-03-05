@@ -10,16 +10,20 @@ public class RecipeImage : INotifyPropertyChanged
     public int RecipeId { get; set; }
 
     private string? _imagePath;
+
     public string? ImagePath
     {
-        get => String.IsNullOrEmpty(_imagePath) ?
-            "../../Resources/not_found_image.png" :
-            $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + _imagePath;
+        get => $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipe\\" + _imagePath;
         set
         {
             _imagePath = value;
-            OnPropertyChanged();   
+            OnPropertyChanged();
         }
+    }
+
+    public string? GetImagePath()
+    {
+        return _imagePath;
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;

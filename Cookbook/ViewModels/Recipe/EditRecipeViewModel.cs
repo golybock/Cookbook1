@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.ContentDialogs;
 using Cookbook.Database.Services;
-using Cookbook.Models.Database.Recipe.Ingredients;
 using Cookbook.Views.Recipe;
 using Microsoft.Win32;
 using Models.Models.Database.Recipe;
@@ -18,137 +19,189 @@ using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.ViewModels.Recipe;
 
-public class EditRecipeViewModel
+public class EditRecipeViewModel : INotifyPropertyChanged
 {
-    public RecipeIngredient SelectedIngredient { get; set; }
+    private readonly Ingredient _defaultIngredient =
+        new Ingredient { Id = -1, Name = "Выберите ингридиент" };
 
-    public Category SelectedCategory { get; set; }
-    public RecipeType SelectedRecipeType { get; set; }
+    private readonly Category _defaultCategory =
+        new Category() {Id = -1, Name = "Выберите категорию"};
+
+    private readonly RecipeType _defaultRecipeType =
+        new RecipeType { Id = -1, Name = "Выберите тип" };
+
+
+    public Ingredient SelectedIngredient
+    {
+        get => RecipeIngredient.Ingredient ?? Ingredients.ElementAt(0);
+        set
+        {
+            RecipeIngredient.Ingredient = value;
+            OnPropertyChanged();
+        } 
+    }
+
+    public Category SelectedCategory
+    {
+        get => Recipe.Category ?? Categories.ElementAt(0);
+        set
+        {
+            Recipe.Category =
+                Categories.FirstOrDefault(c => c.Id == value.Id);
+            
+            OnPropertyChanged();
+        }
+    }
+
+    public RecipeType SelectedRecipeType
+    {
+        get => Recipe.RecipeType ?? RecipeTypes.ElementAt(0);
+        set
+        {
+            Recipe.RecipeType =
+                RecipeTypes.FirstOrDefault(c => c.Id == value.Id)!;
+            
+            OnPropertyChanged();
+        } 
+    }
     
     private RecipeIngredient RecipeIngredient { get; set; }
     public RecipeModel Recipe { get; set; }
-    public List<Ingredient> Ingredients { get; set; }
-    public List<Category> Categories { get; set; }
-    public List<RecipeType> RecipeTypes { get; set; }
+
+    public List<Ingredient> Ingredients
+    {
+        get => _ingredients;
+        set
+        {
+            _ingredients = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public List<Category> Categories
+    {
+        get => _categories;
+        set
+        {
+            _categories = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    public List<RecipeType> RecipeTypes
+    {
+        get => _recipeTypes;
+        set
+        {
+            _recipeTypes = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private List<Ingredient> _ingredients;
+    private List<Category> _categories;
+    private List<RecipeType> _recipeTypes;
 
     private readonly RecipeService _recipeService;
 
     public EditRecipeViewModel(RecipeModel recipe, ClientModel client)  
     {
         RecipeIngredient = new RecipeIngredient();
-        
-        Ingredients =
-            new List<Ingredient>
-            {
-                new Ingredient
-                {
-                    Id = -1,
-                    Name = "Выберите ингридиент"
-                }
-            };
-        
-        Categories =
-            new List<Category>
-            {
-                new Category
-                {
-                    Id = -1, Name = "Выберите категорию"
-                }
-            };
-        
-        RecipeTypes =
-            new List<RecipeType>
-            {
-                new RecipeType
-                {
-                    Id = -1, Name = "Выберите тип"
-                }
-            };
-        
+
+        _ingredients = new List<Ingredient> {_defaultIngredient};
+        _categories = new List<Category> {_defaultCategory};
+        _recipeTypes = new List<RecipeType> {_defaultRecipeType};
         
         Recipe = recipe;
+
+        Recipe.NewImagePath =
+            Recipe.RecipeImage.ImagePath;
+        
+        Recipe.Category =
+            Categories.FirstOrDefault(c => c.Id == Recipe.Category!.Id);
+        
+        Recipe.RecipeType =
+            RecipeTypes.FirstOrDefault(c => c.Id == Recipe.RecipeType.Id)!;
+
+        SelectedIngredient = Ingredients.ElementAt(0); 
+        
+        RecipeIngredient = new RecipeIngredient(){Ingredient = Ingredients.ElementAt(0)};
         
         _recipeService = new RecipeService(client);
     }
 
     public EditRecipeViewModel(ClientModel client)
     {
-        Ingredients =
-            new List<Ingredient>
-            {
-                new Ingredient
-                {
-                    Id = -1,
-                    Name = "Выберите ингридиент"
-                }
-            };
-        
-        Categories =
-            new List<Category>
-            {
-                new Category
-                {
-                    Id = -1, Name = "Выберите категорию"
-                }
-            };
-        
-        RecipeTypes =
-            new List<RecipeType>
-            {
-                new RecipeType
-                {
-                    Id = -1, Name = "Выберите тип"
-                }
-            };
+        RecipeIngredient = new RecipeIngredient();
+
+        _ingredients = new List<Ingredient> {_defaultIngredient};
+        _categories = new List<Category> {_defaultCategory};
+        _recipeTypes = new List<RecipeType> {_defaultRecipeType};
         
         Recipe = new RecipeModel();
         
+        Recipe.Category =
+            Categories.FirstOrDefault(c => c.Id == Recipe.Category!.Id);
+        
+        Recipe.RecipeType =
+            RecipeTypes.FirstOrDefault(c => c.Id == Recipe.RecipeType.Id)!;
+
+        SelectedIngredient = Ingredients.ElementAt(0); 
+        
+        RecipeIngredient = new RecipeIngredient(){Ingredient = Ingredients.ElementAt(0)};
+        
         _recipeService = new RecipeService(client);
     }
-
-    
-    
-    
     
     public RelayCommand<DragEventArgs> DropCommand =>
         new RelayCommand<DragEventArgs>(OnDrop);
-    
+
+    public RelayCommand<int> RemoveIngredientFromListCommand =>
+        new RelayCommand<int>(OnRemoveIngredientFromList);
+
     public CommandHandler EditImageCommand =>
         new CommandHandler(ChooseImage);
-    
-    public async void GetAll()
-    {
 
-        
+    public CommandHandler AddIngredientCommand =>
+        new CommandHandler(OnAddIngredient);
+
+    public CommandHandler AddCategoryCommand =>
+        new CommandHandler(OnAddCategory);
+
+    public CommandHandler AddRecipeTypeCommand =>
+        new CommandHandler(OnAddRecipeType);
+
+    public CommandHandler NewIngredientCommand =>
+        new CommandHandler(OnNewIngredient);
+
+    public CommandHandler CancelCommand =>
+        new CommandHandler(OnCancel);
+
+    public CommandHandler SaveCommand =>
+        new CommandHandler(OnSave);
+
+    public CommandHandler ClearCommand =>
+        new CommandHandler(OnClear);
+    
+    private async void GetAll()
+    {
         Categories = await GetCategories();
         Ingredients = await GetIngredients();
         RecipeTypes = await GetRecipeTypes();
     }
 
-    private async Task<List<Category>> GetCategories()
-    {
-        return await _recipeService.GetCategoriesAsync();
-    } 
-    
-    private async Task<List<Ingredient>> GetIngredients()
-    {
-        return await _recipeService.GetIngredientsAsync();
-    }
+    private async Task<List<Category>> GetCategories() =>
+        await _recipeService.GetCategoriesAsync();
 
-    private async Task<List<RecipeType>> GetRecipeTypes()
-    {
-        return await _recipeService.GetRecipeTypes();
-    }
+    private async Task<List<Ingredient>> GetIngredients() =>
+        await _recipeService.GetIngredientsAsync();
 
-      private void ClearPage()
-    {
+    private async Task<List<RecipeType>> GetRecipeTypes() => 
+        await _recipeService.GetRecipeTypes();
+
+    private void ClearPage() =>
         Recipe = new RecipeModel();
-        
-        DataContext = null;
-        
-        DataContext = this;
-    }
-    
+
     private async void ShowAcceptDialog()
     {
         ContentDialog acceptDialog = new ContentDialog()
@@ -477,7 +530,21 @@ public class EditRecipeViewModel
     //         }
     //     }
     // }
-    
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
 }
 
 

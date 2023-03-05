@@ -1,4 +1,4 @@
-﻿namespace Cookbook.Models.Database.Recipe;
+﻿namespace Models.Models.Database.Recipe;
 
 public partial class RecipeCategory
 {
