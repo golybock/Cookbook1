@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
-using Cookbook.Database.Services.Recipe.Review;
 using Models.Models.Login;
 using ClientModel = Models.Models.Database.Client.Client;
 
@@ -11,7 +10,6 @@ public class LoginService : ILoginService
 {
     private readonly Client.ClientService _clientService;
     private readonly Recipe.RecipeService _recipeService;
-    private readonly ReviewService _reviewService;
     private readonly ClientImageService _clientImageService;
     private readonly ClientFavService _clientFavService;
 
@@ -19,7 +17,6 @@ public class LoginService : ILoginService
     {
         _recipeService = new Recipe.RecipeService();
         _clientImageService = new ClientImageService();
-        _reviewService = new ReviewService();
         _clientFavService = new ClientFavService();
         _clientService = new Client.ClientService();
     }
@@ -55,8 +52,6 @@ public class LoginService : ILoginService
         {
             var recipes = _recipeService.GetClientRecipesAsync(client.Id);
             var image =  _clientImageService.GetClientImageByClientIdAsync(client.Id);
-            var reviews = _reviewService.GetClientReviewAsync(client.Id);
-            var clientImages = _clientImageService.GetClientImagesAsync(client.Id);
             var favRecipes = _clientFavService.GetFavoriteRecipesAsync(client.Id);
 
             client.Recipes = await recipes;

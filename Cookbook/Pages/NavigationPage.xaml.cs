@@ -72,7 +72,7 @@ public partial class NavigationPage : Page
             if (_client.Id == -1)
                 return new UnavaliabalePage();
             else
-                return new AddEditRecipePage(_client);
+                return new EditRecipePage(_client);
         
         if (pageName == "FavoritePostsPage")
             if (_client.Id == -1)

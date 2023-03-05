@@ -7,7 +7,6 @@ using Cookbook.Database.Services.Client;
 using Cookbook.Database.Services.Interfaces;
 using Cookbook.Database.Services.Recipe;
 using Cookbook.Database.Services.Recipe.Ingredients;
-using Cookbook.Database.Services.Recipe.Review;
 using Cookbook.Models.Database.Client;
 using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
@@ -27,7 +26,6 @@ public class RecipeService : IRecipeService
     private readonly ClientFavService _clientFavService;
     private readonly RecipeStatsService _recipeStatsService;
     private readonly RecipeIngredientService _recipeIngredientService;
-    private readonly ReviewService _reviewService;
     private readonly CategoryService _categoryService;
     private readonly IngredientService _ingredientService;
     private readonly RecipeTypeService _recipeTypeService;
@@ -41,7 +39,6 @@ public class RecipeService : IRecipeService
         _recipeImageService = new RecipeImageService();
         _recipeStatsService = new RecipeStatsService();
         _recipeIngredientService = new RecipeIngredientService();
-        _reviewService = new ReviewService();
         _clientFavService = new ClientFavService();
         _categoryService = new CategoryService();
         _ingredientService = new IngredientService();
@@ -54,7 +51,6 @@ public class RecipeService : IRecipeService
         var recipe = await _recipeService.GetRecipeAsync(id);
         
         var recipeStat = _recipeStatsService.GetRecipeStatsAsync(id);
-        var recipeReviews = _reviewService.GetReviewsAsync(id);
         var recipeIngredients = _recipeIngredientService.GetRecipeIngredientByRecipeAsync(id);
         var category = GetRecipeMainCategoryAsync(id);
          
@@ -66,7 +62,6 @@ public class RecipeService : IRecipeService
 
         
         recipe.RecipeStat = await recipeStat;
-        recipe.Reviews = await recipeReviews;
         recipe.RecipeIngredients = await recipeIngredients;
         recipe.Category = await category;
 
@@ -375,13 +370,11 @@ public class RecipeService : IRecipeService
 
         try
         {
-            var delReviews = DeleteRecipeReviews(id);
             var delStats = DeleteRecipeStats(id);
             var delCategories = DeleteRecipeCategories(id);
             var delImages = DeleteRecipeImages(id);
             var delFavorites = DeleteFavRecipes(id, _client.Id);
             
-            await delReviews;
             await delStats;
             await delCategories;
             await delImages;
@@ -425,17 +418,6 @@ public class RecipeService : IRecipeService
         foreach (var recipeCategory in recipeCategories)
         {
             await _recipeCategoryService.DeleteRecipeCategoryAsync(recipeCategory.Id);
-        }
-    }
-    
-    // переписать под фунцию репозитория
-    private async Task DeleteRecipeReviews(int recipeId)
-    {
-        var recipeReviews = await _reviewService.GetReviewsAsync(recipeId);
-
-        foreach (var review in recipeReviews)
-        {
-            await _reviewService.DeleteReviewAsync(review.Id);
         }
     }
 

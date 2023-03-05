@@ -92,7 +92,7 @@ public class RecipesViewService
         if (navigationService != null)
             if (recipe != null)
                 navigationService.Navigate(
-                    new AddEditRecipePage(recipe, _client)
+                    new EditRecipePage(recipe, _client)
                 );
     }
     
