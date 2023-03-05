@@ -25,11 +25,9 @@ public class CommandHandler : ICommand
         add { CommandManager.RequerySuggested += value; }
         remove { CommandManager.RequerySuggested -= value; }
     }
-    
-    public bool CanExecute(object parameter)
-    {
-        return true;
-    }
+
+    public bool CanExecute(object parameter) =>
+        true;
 
     public void Execute(object? parameter)
     {

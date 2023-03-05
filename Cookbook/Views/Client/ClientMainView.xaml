@@ -91,18 +91,17 @@
                    DockPanel.Dock="Left"
                    HorizontalAlignment="Left"/>
                     
-            <Label Grid.Row="0"
-                   Grid.Column="1" 
-                   Content="все рецепты >"
-                   FontSize="18"
-                   DockPanel.Dock="Right"
-                   HorizontalAlignment="Right"/>
+            <!-- <Label Grid.Row="0" -->
+            <!--        Grid.Column="1"  -->
+            <!--        Content="все рецепты >" -->
+            <!--        FontSize="18" -->
+            <!--        DockPanel.Dock="Right" -->
+            <!--        HorizontalAlignment="Right"/> -->
                
             <recipe:RecipesListView Grid.Row="1"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
                                     x:Name="RecipesListView"
-                                    Height="420"
                                     Visibility="Visible"/>
                 
             <views:NothingShowView Grid.Row="1"

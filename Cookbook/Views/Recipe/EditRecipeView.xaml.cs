@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Cookbook.Command;
 using Models.Models.Database.Recipe;
 using Models.Models.Database.Recipe.Ingredients;
 
@@ -8,33 +9,102 @@ namespace Cookbook.Views.Recipe;
 
 public partial class EditRecipeView : UserControl
 {
-    public Category? SelectedCategory =>
-        CategoryComboBox.SelectedItem as Category;
-    public RecipeType? SelectedRecipeType =>
-        RecipeTypeComboBox.SelectedItem as RecipeType;
+    
+    public static readonly DependencyProperty RemoveIngredientFromListProperty =
+        DependencyProperty.Register(
+            "RemoveIngredientFromList",
+            typeof(RelayCommand<int>),
+            typeof(UserControl));
+    
+    public static readonly DependencyProperty AddRecipeTypeProperty =
+        DependencyProperty.Register(
+            "AddRecipeType",
+            typeof(CommandHandler),
+            typeof(UserControl));
 
-    public Ingredient? SelectedIngredient =>
-        IngredientsComboBox.SelectedItem as Ingredient;
+    public static readonly DependencyProperty AddCategoryProperty =
+        DependencyProperty.Register(
+            "AddCategory",
+            typeof(CommandHandler),
+            typeof(UserControl));
+    
+    public static readonly DependencyProperty ClearProperty =
+        DependencyProperty.Register(
+            "Clear",
+            typeof(CommandHandler),
+            typeof(UserControl));
+    
+    public static readonly DependencyProperty SaveProperty =
+        DependencyProperty.Register(
+            "Save",
+            typeof(CommandHandler),
+            typeof(UserControl));
+    
+    public static readonly DependencyProperty CancelProperty =
+        DependencyProperty.Register(
+            "Cancel",
+            typeof(CommandHandler),
+            typeof(UserControl));
 
-    public delegate void RemoveIngredientFromList(int id);
-    public delegate void AddRecipeType();
-    public delegate void AddCategory();
-    public delegate void NewIngredient();
-    public delegate void Clear();
-    public delegate void Save();
-    public delegate void Cancel();
-    public delegate void ChooseImage();
-    public delegate void ImageDrop(DragEventArgs e);
+    public static readonly DependencyProperty ChooseImageProperty =
+        DependencyProperty.Register(
+            "ChooseImage",
+            typeof(CommandHandler),
+            typeof(UserControl));
+    
+    public static readonly DependencyProperty ImageDropProperty =
+        DependencyProperty.Register(
+            "ImageDrop",
+            typeof(RelayCommand<int>),
+            typeof(UserControl));
 
-    public event RemoveIngredientFromList? RemoveIngredientFromListClicked;
-    public event AddRecipeType? AddRecipeTypeClicked;
-    public event AddCategory? AddCategoryClicked;
-    public event NewIngredient? NewIngredientClicked;
-    public event Clear? ClearClicked;
-    public event Save? SaveClicked;
-    public event Cancel? CancelClicked;
-    public event ChooseImage? ChooseImageCLicked;
-    public event ImageDrop? ImageDropped;
+    public RelayCommand<int> RemoveIngredientFromList
+    {
+        get => (RelayCommand<int>) GetValue(RemoveIngredientFromListProperty);
+        set => SetValue(RemoveIngredientFromListProperty, value);
+    }
+
+    public CommandHandler AddRecipeType
+    {
+        get => (CommandHandler) GetValue(AddRecipeTypeProperty);
+        set => SetValue(AddRecipeTypeProperty, value);
+    }
+
+    public CommandHandler AddCategory
+    {
+        get => (CommandHandler) GetValue(AddCategoryProperty);
+        set => SetValue(AddCategoryProperty, value);
+    }
+
+    public CommandHandler Clear
+    {
+        get => (CommandHandler) GetValue(ClearProperty);
+        set => SetValue(ClearProperty, value);
+    }
+
+    public CommandHandler Save
+    {
+        get => (CommandHandler) GetValue(SaveProperty);
+        set => SetValue(SaveProperty, value);
+    }
+
+    public CommandHandler Cancel
+    {
+        get => (CommandHandler) GetValue(CancelProperty);
+        set => SetValue(CancelProperty, value);
+    }
+
+    public CommandHandler ChooseImage
+    {
+        get => (CommandHandler) GetValue(ChooseImageProperty);
+        set => SetValue(ChooseImageProperty, value);
+    }
+
+    public RelayCommand<int> ImageDrop
+    {
+        get => (RelayCommand<int>) GetValue(ImageDropProperty);
+        set => SetValue(ImageDropProperty, value);
+    }
 
     public EditRecipeView()
     {
@@ -47,47 +117,42 @@ public partial class EditRecipeView : UserControl
     private void RemoveIngredientFromListButton_OnClick(object sender, RoutedEventArgs e)
     {
         if(IngredientsListview.SelectedItem is RecipeIngredient selectedItem)
-            RemoveIngredientFromListClicked?.Invoke(selectedItem.Id);
+            RemoveIngredientFromList.Execute(selectedItem.Id);
     }
 
     private void AddRecipeTypeButton_OnClick(object sender, RoutedEventArgs e)
     {
-        AddRecipeTypeClicked?.Invoke();
+        AddRecipeType.Execute(null);
     }
 
     private void AddCategoryButton_OnClick(object sender, RoutedEventArgs e)
     {
-        AddCategoryClicked?.Invoke();
-    }
-
-    private void NewIngredientButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        NewIngredientClicked?.Invoke();
+        AddCategory?.Execute(null);
     }
 
     private void ClearButton_OnClick(object sender, RoutedEventArgs e)
     {
-        ClearClicked?.Invoke();
+        Clear?.Execute(null);
     }
 
     private void SaveButton_OnClick(object sender, RoutedEventArgs e)
     {
-        SaveClicked?.Invoke();
+        Save.Execute(null);
     }
 
     private void CancelButton_OnClick(object sender, RoutedEventArgs e)
     {
-        CancelClicked?.Invoke();
+        Cancel.Execute(null);
     }
 
     private void RecipeImage_OnDrop(object sender, DragEventArgs e)
     {
-        ImageDropped?.Invoke(e);
+        ImageDrop.Execute(e);
     }
 
     private void RecipeImage_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        ChooseImageCLicked?.Invoke();
+        ChooseImage.Execute(null);
     }
 
 }
