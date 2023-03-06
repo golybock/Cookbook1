@@ -80,7 +80,6 @@ public class ClientMainViewModel : INotifyPropertyChanged
         OnPropertyChanged("Recipes");
     }
     
-    
     // приватные атрибуты
     private Frame Frame { get; set; } // навигация на страницу редактирования
     private readonly RecipeService _recipeService; // получение списка рецептов

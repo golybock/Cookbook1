@@ -4,6 +4,7 @@ using Cookbook.Pages.Auth;
 using Cookbook.Pages.Profile;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Search;
+using Cookbook.Views.Client;
 using ModernWpf.Controls;
 using Client = Models.Models.Database.Client.Client;
 using Page = System.Windows.Controls.Page;
@@ -78,7 +79,7 @@ public partial class NavigationPage : Page
             if (_client.Id == -1)
                 return new UnavaliabalePage();
             else
-                return new FavoritePostsPage(_client);
+                return new FavoriteRecipePage(_client, MainFrame);
 
         return null;
     }
