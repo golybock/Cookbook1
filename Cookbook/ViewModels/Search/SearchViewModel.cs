@@ -78,7 +78,7 @@ public class SearchViewModel : INotifyPropertyChanged
     private readonly RecipesViewService _recipesViewService;
     private readonly Category _emptyCategory = new() { Id = -1, Name = "Все категории" };
     
-    private bool _recipesVisability;
+    private bool _recipesVisability = true;
     private List<Category> _categories = new List<Category>();
     private List<RecipeModel> _recipes = new List<RecipeModel>();
     
@@ -87,11 +87,14 @@ public class SearchViewModel : INotifyPropertyChanged
         get => _recipesVisability;
         set
         {
-            if (value == _recipesVisability) return;
             _recipesVisability = value;
             OnPropertyChanged();
+            OnPropertyChanged("NothingShowVisability");
         }
     }
+
+    public bool NothingShowVisability =>
+        !_recipesVisability;
 
     public List<Category> Categories
     {

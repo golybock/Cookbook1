@@ -11,14 +11,13 @@ namespace Cookbook.Database.Repositories.Recipe;
 
 public class CategoryRepository : MainDbClass, ICategoryRepository
 {
-    public async Task<Category?> GetCategoryAsync(int id)
+    public async Task<Category> GetCategoryAsync(int id)
     {
         var con = GetConnection();
         con.Open();
         Category category = new Category();
         try
         {
-
             string query = $"select * from category where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
@@ -36,7 +35,7 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
         }
         catch
         {
-            return null;
+            return new();
         }
         finally
         {

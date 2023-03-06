@@ -16,7 +16,7 @@ public class BoolToVisabilityConverter : IValueConverter
             
         bool objValue = (bool)value;
             
-        if (objValue)
+        if (!objValue)
             return Visibility.Collapsed;
             
         return Visibility.Visible;

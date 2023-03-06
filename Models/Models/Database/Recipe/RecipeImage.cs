@@ -13,7 +13,13 @@ public class RecipeImage : INotifyPropertyChanged
 
     public string? ImagePath
     {
-        get => $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipe\\" + _imagePath;
+        get
+        {
+            if(_imagePath != null)
+                return $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipe\\" + _imagePath;
+
+            return "../../Resources/not_found_image.png";
+        }
         set
         {
             _imagePath = value;

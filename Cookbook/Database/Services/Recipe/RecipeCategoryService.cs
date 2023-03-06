@@ -17,10 +17,10 @@ public class RecipeCategoryService : IRecipeCategoryService
         _recipeCategoryRepository = new RecipeCategoryRepository();
     }
     
-    public async Task<RecipeCategory?> GetRecipeCategoryAsync(int id)
+    public async Task<RecipeCategory> GetRecipeCategoryAsync(int id)
     {
         if (id <= 0)
-            return null;
+            return new();
 
         return await _recipeCategoryRepository.GetRecipeCategoryAsync(id);
     }

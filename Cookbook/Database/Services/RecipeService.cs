@@ -180,11 +180,7 @@ public class RecipeService : IRecipeService
                                c.Id.ToString().Contains(searchString)).ToList();
 
         var secondFind =
-            recipes.Where(c => c.Category != null &&
-                                            c.Category.Name
-                                                .ToLower()
-                                                .Contains(searchString))
-            .ToList();
+            recipes.Where(c => c.Category.Name.ToLower().Contains(searchString)).ToList();
 
         var thirdFind =
             recipes.Where(c => c.Description != null &&

@@ -11,7 +11,7 @@ namespace Cookbook.Database.Repositories.Recipe;
 
 public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
 {
-    public async Task<RecipeCategory?> GetRecipeCategoryAsync(int id)
+    public async Task<RecipeCategory> GetRecipeCategoryAsync(int id)
     {
         var con = GetConnection();
         
@@ -39,7 +39,7 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         }
         catch
         {
-            return null;
+            return new();
         }
         finally
         {
@@ -83,7 +83,7 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         }
     }
 
-    public async Task<RecipeCategory?> GetRecipeMainCategoryAsync(int recipeId)
+    public async Task<RecipeCategory> GetRecipeMainCategoryAsync(int recipeId)
     {
         var con = GetConnection();
         
@@ -111,7 +111,7 @@ public class RecipeCategoryRepository : MainDbClass, IRecipeCategoryRepository
         }
         catch
         {
-            return null;
+            return new();
         }
         finally
         {
