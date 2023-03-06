@@ -90,6 +90,8 @@ public class RecipeService : IRecipeService
                 var like = RecipeIsLiked(recipe.Id);
                 recipe.IsLiked = await like;
             }
+
+            recipe.RecipeIngredients = await _recipeIngredientService.GetRecipeIngredientByRecipeAsync(recipe.Id);
             
             foreach (var ingredient in recipe.RecipeIngredients)
             {
@@ -209,7 +211,6 @@ public class RecipeService : IRecipeService
             {
                 var recipeStats = AddRecipeStatsAsync(outRecipe);
                 var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
-                // var recipeCategories = AddRecipeCategoriesAsync(outRecipe);
                 var recipeImages = AddRecipeImagesAsync(outRecipe);
                 var recipeText = WriteRecipeFileAsync(outRecipe);
                 var recipeImage = AddRecipeImageAsync(outRecipe);
@@ -239,7 +240,7 @@ public class RecipeService : IRecipeService
     {
         string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\";
 
-        string filePath = $"recipe_{recipe.Id}_{GetTimeStamp()}";
+        string filePath = $"recipe_{recipe.Id}_{App.GetTimeStamp()}";
 
         string outPath = documentsPath + filePath + ".txt";
 
@@ -289,7 +290,7 @@ public class RecipeService : IRecipeService
     {
         string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\";
 
-        string filePath = $"recipe_{recipeId}_{GetTimeStamp()}.png";
+        string filePath = $"recipe_{recipeId}_{App.GetTimeStamp()}.png";
 
         string writePath = documentsPath + filePath;
 
@@ -301,17 +302,7 @@ public class RecipeService : IRecipeService
 
         return null;
     }
-
-    private string GetTimeStamp()
-    {
-        return
-            Convert.ToString(
-                (int)DateTime.
-                    UtcNow.
-                    Subtract(new DateTime(1970, 1, 1)).
-                    TotalSeconds);
-    }
-
+    
     private async Task AddRecipeImagesAsync(RecipeModel recipe)
     {
         if (recipe.RecipeImages.Count > 0)

@@ -39,7 +39,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         }
         catch
         {
-            return null;
+            return new Ingredient();
         }
         finally
         {

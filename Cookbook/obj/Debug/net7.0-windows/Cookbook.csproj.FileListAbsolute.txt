@@ -573,7 +573,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.csproj.Assembly
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.g.cs
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\ProfilePage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.g.cs
@@ -586,7 +585,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook_MarkupCompile.l
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\App.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.baml
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\ProfilePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Windows\MainWindow.baml
@@ -617,8 +615,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientMainV
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMainView.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientMainView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMainView.baml
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Find\FindPage.g.cs
-C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Find\FindPage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\UnavaliabalePage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\UnavaliabalePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\UnavaliabalePage.g.cs
@@ -683,3 +679,11 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Cl
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoriteRecipePage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoriteRecipePage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\FavoriteRecipesView.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoriteRecipePage.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Search\SearchPage.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\FavoriteRecipesView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Search\SearchView.g.cs
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoriteRecipePage.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Search\SearchPage.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\FavoriteRecipesView.baml
+C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Search\SearchView.baml

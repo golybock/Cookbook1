@@ -37,7 +37,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         }
         catch
         {
-            return null;
+            return new Measure();
         }
         finally
         {

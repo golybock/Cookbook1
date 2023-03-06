@@ -156,9 +156,9 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         
         _recipeService = new RecipeService(client);
         
-        GetAll();
+        LoadComboboxes();
         
-        Recipe = new RecipeModel();
+        Recipe = new RecipeModel { Id = -1 };
 
         SelectedIngredient = Ingredients.ElementAt(0); 
         
@@ -169,6 +169,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         _navFrame = frame;
     }
     
+    // команды для биндингов 
     public RelayCommand<DragEventArgs> DropCommand =>
         new RelayCommand<DragEventArgs>(OnDrop);
     
@@ -198,7 +199,51 @@ public class EditRecipeViewModel : INotifyPropertyChanged
 
     public CommandHandler ClearCommand =>
         new CommandHandler(OnClear);
+    
+    
+    private void OnEditImage() =>
+        ChooseImage();
+    
+    private void OnAddCategory() =>
+        ShowAddRecipeCategoryDialog();
 
+    private void OnAddRecipeType() =>
+        ShowAddRecipeTypeDialog();
+
+    private void OnNewIngredient() =>
+        ShowAddIngredientDialog();
+
+    private void OnCancel() =>
+        ShowCancelDialog();
+
+    private void OnClear() =>
+        ShowClearDialog();
+
+    private void OnSave()
+    {
+        if(Recipe.Id == -1)
+            CreateRecipe();
+        
+        else
+            UpdateRecipe();
+    }
+
+    private void OnAddIngredient()
+    {
+        if (SelectedIngredient.Id != -1)
+        {
+            if (RecipeIngredient.Count > 0)
+            {
+                Recipe.RecipeIngredients.Add(RecipeIngredient);
+                RecipeIngredient = new RecipeIngredient();
+                return;
+            }
+        }
+        
+        
+        
+    }
+    
     private void OnDrop(DragEventArgs obj)
     {
         string[] files = (string[]) obj.Data.GetData(DataFormats.FileDrop);
@@ -219,34 +264,6 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             );
     }
 
-    private void OnEditImage() =>
-        ChooseImage();
-
-    private void OnAddIngredient()
-    {
-        throw new System.NotImplementedException();
-    }
-    
-    private void OnAddCategory() =>
-        ShowAddRecipeCategoryDialog();
-
-    private void OnAddRecipeType() =>
-        ShowAddRecipeTypeDialog();
-
-    private void OnNewIngredient() =>
-        ShowAddIngredientDialog();
-
-    private void OnCancel() =>
-        ShowCancelDialog();
-
-    private void OnSave()
-    {
-
-    }
-
-    private void OnClear() =>
-        ShowClearDialog();
-
     private async void CreateRecipe()
     {
         var createResult = await _recipeService.AddRecipeAsync(Recipe);
@@ -259,6 +276,11 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         {
             MessageBox.Show("ес");
         }
+    }
+
+    private async void UpdateRecipe()
+    {
+        
     }
 
     private async void LoadComboboxes()
@@ -279,8 +301,13 @@ public class EditRecipeViewModel : INotifyPropertyChanged
     private async Task GetAll()
     {
         _categories.AddRange(await GetCategories());
+        OnPropertyChanged("Categories");
+        
         _ingredients.AddRange(await GetIngredients());
+        OnPropertyChanged("Ingredients");
+        
         _recipeTypes.AddRange(await GetRecipeTypes());
+        OnPropertyChanged("RecipeTypes");
     }
 
     private async Task<List<Category>> GetCategories() =>
