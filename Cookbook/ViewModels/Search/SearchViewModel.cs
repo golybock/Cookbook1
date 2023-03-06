@@ -22,10 +22,10 @@ public class SearchViewModel : INotifyPropertyChanged
         _selectedCategory = _emptyCategory;
         _searchString = string.Empty;
         _selectedSortTypeIndex = 0;
-        
+
         _recipeService = new RecipeService(client);
         _recipesViewService = new RecipesViewService(client, frame);
-        
+
         LoadCategories();
         GetRecipes();
     }

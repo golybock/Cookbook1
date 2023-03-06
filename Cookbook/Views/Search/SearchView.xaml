@@ -39,7 +39,7 @@
                             <ui:Flyout>
                                 <ListView x:Name="SortTypeListView"
                                           SelectionMode="Single"
-                                          SelectedIndex="{Binding SelectedSortTypeIndex}">
+                                          SelectedIndex="{Binding SelectedSortTypeIndex, UpdateSourceTrigger=PropertyChanged}">
                                     
                                     <StackPanel Tag="Default" Orientation="Horizontal">
                                         <ui:BitmapIcon Height="32" Width="32" UriSource="../../Resources/MenuIcons/Sort/defaultsort.png"/>
