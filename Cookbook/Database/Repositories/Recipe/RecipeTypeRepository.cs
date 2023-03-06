@@ -16,6 +16,7 @@ public class RecipeTypeRepository : MainDbClass, IRecipeTypeRepository
         RecipeType recipeType = new RecipeType();
         try
         {
+            await con.OpenAsync();
             string query = $"select * from recipe_type where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {

@@ -18,8 +18,8 @@ public class RecipeTypeService : IRecipeTypeService
 
     public Task<RecipeType?> GetRecipeTypeAsync(int id)
     {
-        if (id <= 1)
-            return null!;
+        if (id <= 0)
+            return null;
 
         return _recipeTypeRepository.GetRecipeTypeAsync(id);
     }

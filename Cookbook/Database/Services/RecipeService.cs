@@ -53,6 +53,7 @@ public class RecipeService : IRecipeService
         var recipeStat = _recipeStatsService.GetRecipeStatsAsync(id);
         var recipeIngredients = _recipeIngredientService.GetRecipeIngredientByRecipeAsync(id);
         var category = GetRecipeMainCategoryAsync(id);
+        var recipeType = _recipeTypeService.GetRecipeTypeAsync(id);
          
         if (_client.Id != 0)
         {
@@ -60,7 +61,7 @@ public class RecipeService : IRecipeService
             recipe.IsLiked = await like;
         }
 
-        
+        recipe.RecipeType = await recipeType;
         recipe.RecipeStat = await recipeStat;
         recipe.RecipeIngredients = await recipeIngredients;
         recipe.Category = await category;
@@ -82,6 +83,7 @@ public class RecipeService : IRecipeService
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
             
+            recipe.RecipeType = (await  _recipeTypeService.GetRecipeTypeAsync(recipe.Id))!;
             
             if (_client.Id != 0)
             {

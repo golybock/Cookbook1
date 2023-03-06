@@ -22,8 +22,9 @@ public partial class Recipe : INotifyPropertyChanged
         RecipeImage.ImagePath;
 
     public RecipeImage RecipeImage { get; set; }
-    
-    public Category? Category { get; set; }
+
+    public Category Category { get; set; } = new();
+    // Recipe.Category.Name
     
     private bool? _isLiked;
 

@@ -362,7 +362,6 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\zh-Hant\
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.csproj.AssemblyReference.cache
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\ProfilePage.g.cs
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\AddEditRecipePage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Windows\MainWindow.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\App.g.cs
@@ -372,7 +371,6 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\App.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\NavigationPage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\ProfilePage.baml
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\AddEditRecipePage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Windows\MainWindow.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.g.resources
@@ -406,8 +404,6 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Ma
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMediumView.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoritePostsPage.baml
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Settings\SettingsPage.g.cs
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Settings\SettingsPage.baml
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Cookbook.exe
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\appsettings.json
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Cookbook.deps.json

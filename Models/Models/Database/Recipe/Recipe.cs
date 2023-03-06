@@ -29,6 +29,6 @@ public partial class Recipe
 
     public RecipeStats RecipeStat { get; set; } = new();
 
-    public RecipeType? RecipeType { get; set; } = new();
+    public RecipeType RecipeType { get; set; } = new();
     
 }

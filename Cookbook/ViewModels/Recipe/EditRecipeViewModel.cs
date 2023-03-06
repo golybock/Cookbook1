@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.ContentDialogs;
 using Cookbook.Database.Services;
 using Cookbook.Models.Database.Recipe.Ingredients;
-using Cookbook.Views.Recipe;
 using Microsoft.Win32;
 using Models.Models.Database.Recipe;
 using Models.Models.Database.Recipe.Ingredients;
 using ModernWpf.Controls;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 using ClientModel = Models.Models.Database.Client.Client;
-
 
 namespace Cookbook.ViewModels.Recipe;
 
@@ -45,11 +41,12 @@ public class EditRecipeViewModel : INotifyPropertyChanged
 
     public Category SelectedCategory
     {
-        get => Recipe.Category ?? Categories.ElementAt(0);
+        get => Categories
+                   .FirstOrDefault(c => c.Id == Recipe.Category.Id) ??
+               Categories.ElementAt(0);
         set
         {
-            Recipe.Category =
-                Categories.FirstOrDefault(c => c.Id == value.Id);
+            Recipe.Category = value ?? Categories.ElementAt(0);
             
             OnPropertyChanged();
         }
@@ -57,11 +54,12 @@ public class EditRecipeViewModel : INotifyPropertyChanged
 
     public RecipeType SelectedRecipeType
     {
-        get => Recipe.RecipeType ?? RecipeTypes.ElementAt(0);
+        get => RecipeTypes
+            .FirstOrDefault(c => c.Id == Recipe.RecipeType.Id) ??
+               RecipeTypes.ElementAt(0);
         set
         {
-            Recipe.RecipeType =
-                RecipeTypes.FirstOrDefault(c => c.Id == value.Id)!;
+            Recipe.RecipeType = value ?? RecipeTypes.ElementAt(0);
             
             OnPropertyChanged();
         } 
@@ -127,24 +125,20 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         _categories = new List<Category> {_defaultCategory};
         _recipeTypes = new List<RecipeType> {_defaultRecipeType};
         
+        _recipeService = new RecipeService(client);
+        
+        LoadComboboxes();
+        
         Recipe = recipe;
 
         _navFrame = frame;
         
         Recipe.NewImagePath =
             Recipe.RecipeImage.ImagePath;
-        
-        Recipe.Category =
-            Categories.FirstOrDefault(c => c.Id == Recipe.Category!.Id);
-        
-        Recipe.RecipeType =
-            RecipeTypes.FirstOrDefault(c => c.Id == Recipe.RecipeType.Id)!;
 
         SelectedIngredient = Ingredients.ElementAt(0); 
         
         RecipeIngredient = new RecipeIngredient(){Ingredient = Ingredients.ElementAt(0)};
-        
-        _recipeService = new RecipeService(client);
     }
 
     public EditRecipeViewModel(ClientModel client, Frame frame)
@@ -155,13 +149,11 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         _categories = new List<Category> {_defaultCategory};
         _recipeTypes = new List<RecipeType> {_defaultRecipeType};
         
+        _recipeService = new RecipeService(client);
+        
+        GetAll();
+        
         Recipe = new RecipeModel();
-        
-        Recipe.Category =
-            Categories.FirstOrDefault(c => c.Id == Recipe.Category!.Id);
-        
-        Recipe.RecipeType =
-            RecipeTypes.FirstOrDefault(c => c.Id == Recipe.RecipeType!.Id);
 
         SelectedIngredient = Ingredients.ElementAt(0); 
         
@@ -266,12 +258,27 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             MessageBox.Show("ес");
         }
     }
-    
-    private async void GetAll()
+
+    private async void LoadComboboxes()
     {
-        Categories = await GetCategories();
-        Ingredients = await GetIngredients();
-        RecipeTypes = await GetRecipeTypes();
+        await GetAll();
+        SetDefaultSelectedValues();
+    }
+    
+    private void SetDefaultSelectedValues()
+    {
+        SelectedCategory =
+            Categories.FirstOrDefault(c => c.Id == Recipe.Category!.Id)!;
+
+        SelectedRecipeType =
+            RecipeTypes.FirstOrDefault(c => c.Id == Recipe.RecipeType!.Id)!;
+    }
+    
+    private async Task GetAll()
+    {
+        _categories.AddRange(await GetCategories());
+        _ingredients.AddRange(await GetIngredients());
+        _recipeTypes.AddRange(await GetRecipeTypes());
     }
 
     private async Task<List<Category>> GetCategories() =>
