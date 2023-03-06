@@ -8,7 +8,7 @@ public partial class Ingredient
 
     public int MeasureId { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string Name { get; set; } = string.Empty;
 
     public Measure? Measure { get; set; } = new Measure();
     

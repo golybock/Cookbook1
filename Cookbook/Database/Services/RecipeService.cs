@@ -177,8 +177,7 @@ public class RecipeService : IRecipeService
         
         var firstFind =
             recipes.Where(c => c.Name.ToLower().Contains(searchString) || 
-                               c.Id.ToString().Contains(searchString))
-            .ToList();
+                               c.Id.ToString().Contains(searchString)).ToList();
 
         var secondFind =
             recipes.Where(c => c.Category != null &&

@@ -7,8 +7,15 @@
              xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:controls="http://schemas.modernwpf.com/2019"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converters="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
              d:DesignHeight="1000" d:DesignWidth="600">
+    
+    <UserControl.Resources>
+        <converters:BoolToVisabilityConverter x:Key="BoolToVisabilityConverter"/>
+        <converters:ErrorBoolToColorConverter x:Key="ErrorBoolToColorConverter"/>
+    </UserControl.Resources>    
+    
     <Grid>
         <Grid Name="MainGrid"
               ShowGridLines="False">
@@ -330,12 +337,21 @@
                                Margin="5,0,0,0"
                                FontSize="14"/>
                 
-                    <ComboBox Name="IngredientsComboBox"
-                              Margin="5"
-                              Width="150"
-                              DisplayMemberPath="Name"
-                              ItemsSource="{Binding Ingredients}"
-                              SelectedItem="{Binding SelectedIngredient, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Border Name="SelectedIngredientBorder"
+                            BorderThickness="1"
+                            BorderBrush="Red"
+                            Visibility="{Binding ErrorSelectedIngredient, Converter={StaticResource BoolToVisabilityConverter}}">
+                        
+                        <ComboBox Name="IngredientsComboBox"
+                                  Margin="5"
+                                  Width="150"
+                                  DisplayMemberPath="Name"
+                                  ItemsSource="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedItem="{Binding SelectedIngredient, UpdateSourceTrigger=PropertyChanged}"/>
+                        
+                    </Border>
+                    
+                    
                         
                     <controls:NumberBox Name="IngredientCountNumberBox"
                                         Value="{Binding RecipeIngredient.Count}"
@@ -385,7 +401,7 @@
                                   Margin="5"
                                   Width="110"
                                   Height="32"
-                                  ItemsSource="{Binding Categories}"
+                                  ItemsSource="{Binding Categories, UpdateSourceTrigger=PropertyChanged}"
                                   DisplayMemberPath="Name"
                                   SelectedItem="{Binding SelectedCategory, UpdateSourceTrigger=PropertyChanged}"/>
                         
@@ -410,7 +426,7 @@
                                   Width="110"
                                   Height="32"
                                   DisplayMemberPath="Name"
-                                  ItemsSource="{Binding RecipeTypes}"
+                                  ItemsSource="{Binding RecipeTypes, UpdateSourceTrigger=PropertyChanged}"
                                   SelectedItem="{Binding SelectedRecipeType, UpdateSourceTrigger=PropertyChanged}"/>
                         
                         <Button Name="AddRecipeTypeButton"

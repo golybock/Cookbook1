@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using Cookbook.Pages.Auth;
-using Cookbook.Pages.Find;
 using Cookbook.Pages.Profile;
 using Cookbook.Pages.Recipe;
+using Cookbook.Pages.Search;
 using ModernWpf.Controls;
 using Client = Models.Models.Database.Client.Client;
 using Page = System.Windows.Controls.Page;
@@ -60,7 +60,7 @@ public partial class NavigationPage : Page
             return new MainPage(_client, MainFrame);
         
         if (pageName == "FindPage")
-            return new FindPage(_client, MainFrame);
+            return new SearchPage(_client, MainFrame);
         
         if (pageName == "ProfilePage")
             if (_client.Id == -1)

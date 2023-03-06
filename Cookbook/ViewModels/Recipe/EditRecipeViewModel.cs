@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -23,7 +25,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         new Ingredient { Id = -1, Name = "Выберите ингридиент" };
 
     private readonly Category _defaultCategory =
-        new Category() {Id = -1, Name = "Выберите категорию"};
+        new Category() { Id = -1, Name = "Выберите категорию" };
 
     private readonly RecipeType _defaultRecipeType =
         new RecipeType { Id = -1, Name = "Выберите тип" };
@@ -64,46 +66,49 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         } 
     }
+
+    public bool ErrorSelectedIngredient { get; set; }
     
     private RecipeIngredient RecipeIngredient { get; set; }
+    
     public RecipeModel Recipe { get; set; }
 
-    public List<Ingredient> Ingredients
+    public ObservableCollection<Ingredient> Ingredients
     {
-        get => _ingredients;
+        get => new(_ingredients);
         set
         {
-            _ingredients = value;
+            _ingredients = new List<Ingredient>(value);
             OnPropertyChanged();
         }
     }
 
-    public List<Category> Categories
+    public ObservableCollection<Category> Categories
     {
-        get => _categories;
+        get => new(_categories);
         set
         {
-            _categories = value;
+            _categories = new(value);
             OnPropertyChanged();
         }
     }
     
-    public List<RecipeType> RecipeTypes
+    public ObservableCollection<RecipeType> RecipeTypes
     {
-        get => _recipeTypes;
+        get => new(_recipeTypes);
         set
         {
-            _recipeTypes = value;
+            _recipeTypes = new(value);
             OnPropertyChanged();
         }
     }
 
-    public List<Measure> Measures
+    public ObservableCollection<Measure> Measures
     {
-        get => _measures;
+        get => new(_measures);
         set
         {
-            _measures = value;
+            _measures = new(value);
             OnPropertyChanged();
         }
     }
@@ -206,7 +211,12 @@ public class EditRecipeViewModel : INotifyPropertyChanged
 
     private void OnRemoveIngredientFromList(int id)
     {
-        throw new System.NotImplementedException();
+        Recipe.RecipeIngredients
+            .Remove(
+                Recipe
+                    .RecipeIngredients
+                    .FirstOrDefault(c => c.Id == id)!
+            );
     }
 
     private void OnEditImage() =>
@@ -217,26 +227,18 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         throw new System.NotImplementedException();
     }
     
-    private void OnAddCategory()
-    {
+    private void OnAddCategory() =>
         ShowAddRecipeCategoryDialog();
-    }
-    
-    private void OnAddRecipeType()
-    {
+
+    private void OnAddRecipeType() =>
         ShowAddRecipeTypeDialog();
-    }
-    
-    private void OnNewIngredient()
-    {
+
+    private void OnNewIngredient() =>
         ShowAddIngredientDialog();
-    }
-    
-    private void OnCancel()
-    {
-        throw new System.NotImplementedException();
-    }
-    
+
+    private void OnCancel() =>
+        ShowCancelDialog();
+
     private void OnSave()
     {
 
@@ -330,8 +332,8 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             if (!string.IsNullOrWhiteSpace(category.Name))
             {
                 var commandResult = await _recipeService.AddRecipeCategoryAsync(category);
-                Categories.Add(category);
-                Categories = Categories;
+                _categories.Add(category);
+                Categories = new(_categories);
             }
             
         }
@@ -357,7 +359,8 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             if (!string.IsNullOrWhiteSpace(recipeType.Name))
             {
                 var commandResult = await _recipeService.AddRecipeTypeAsync(recipeType);
-                RecipeTypes.Add(recipeType);
+                _recipeTypes.Add(recipeType);
+                RecipeTypes = new(_recipeTypes);
             }
             
         }
@@ -386,7 +389,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         ContentDialog addDialog = new ContentDialog()
         {
             Title = "Создание ингридиента",
-            Content = new AddIngredientView(ingredient, Measures),
+            Content = new AddIngredientView(ingredient,  new(Measures)),
             CloseButtonText = "Отмена",
             PrimaryButtonText = "Добавить",
             DefaultButton = ContentDialogButton.Primary
@@ -404,6 +407,25 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             }
             
         }
+    }
+    
+    private async void ShowCancelDialog()
+    {
+        ContentDialog acceptDialog = new ContentDialog()
+        {
+            Title = "Отмена регистрации",
+            Content = "Вы уверены, что хотите отменить регистрацию?",
+            CloseButtonText = "Нет, отмена",
+            PrimaryButtonText = "Да, отменить",
+            DefaultButton = ContentDialogButton.Primary
+        };
+        
+        ContentDialogResult result = await acceptDialog.ShowAsync();
+    
+        if (result == ContentDialogResult.Primary)
+            _navFrame
+                .NavigationService?
+                .GoBack();
     }
     
     // для привязки данных, реализация InotifyPropertyChanged

@@ -7,9 +7,9 @@ public partial class RecipePage : Page
 {
     public RecipePage(RecipeModel recipe)
     {
-        DataContext = recipe;
-        
         InitializeComponent();
+        
+        DataContext = recipe;
     }
 
 }

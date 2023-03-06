@@ -621,8 +621,6 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientMainV
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Recipe\RecipeMainView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Find\FindPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Find\FindPage.baml
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Find\FindPage.g.cs
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Find\FindPage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\UnavaliabalePage.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\UnavaliabalePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\UnavaliabalePage.g.cs
@@ -679,3 +677,7 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\EditProfil
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientEditView.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\EditProfilePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\ClientEditView.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Search\SearchPage.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Search\SearchView.g.cs
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Search\SearchPage.baml
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Search\SearchView.baml
