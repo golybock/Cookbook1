@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Cookbook.Command;
 using Cookbook.Database.Services;
 using Models.Models.Database.Recipe;
+using SortType =  Models.Models.InterfacesExtensions.SortType;
+using SortTypes =  Models.Models.InterfacesExtensions.SortTypes;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 using ClientModel = Models.Models.Database.Client.Client;
 using Frame = ModernWpf.Controls.Frame;
@@ -21,7 +23,6 @@ public class SearchViewModel : INotifyPropertyChanged
 
         _selectedCategory = _emptyCategory;
         _searchString = string.Empty;
-        _selectedSortTypeIndex = 0;
 
         _recipeService = new RecipeService(client);
         _recipesViewService = new RecipesViewService(client, frame);
@@ -56,12 +57,12 @@ public class SearchViewModel : INotifyPropertyChanged
         } 
     }
     
-    public int SelectedSortTypeIndex
+    public SortType? SelectedSortType
     {
-        get => _selectedSortTypeIndex;
+        get => _selectedSortType ?? global::Models.Models.InterfacesExtensions.SortTypes.Default;
         set
         {
-            _selectedSortTypeIndex = value;
+            _selectedSortType = value;
             
             OnPropertyChanged();
             
@@ -71,7 +72,7 @@ public class SearchViewModel : INotifyPropertyChanged
     
     private string _searchString;
     private Category _selectedCategory;
-    private int _selectedSortTypeIndex;
+    private SortType? _selectedSortType;
     
     private readonly Frame _frame;
     private readonly RecipeService _recipeService;
@@ -118,6 +119,9 @@ public class SearchViewModel : INotifyPropertyChanged
         }
     }
 
+    public List<SortType> SortTypes { get; set; } =
+        global::Models.Models.InterfacesExtensions.SortTypes.SortTypesList;
+
     private async void LoadCategories()
     {
         // значение по умолчанию (без фильтрации)
@@ -137,7 +141,7 @@ public class SearchViewModel : INotifyPropertyChanged
     
     private void SortRecipes()
     {
-        if(_selectedSortTypeIndex == 2)
+        if (SelectedSortType?.Id == 2)
             Recipes.Reverse();
         
         OnPropertyChanged("Recipes");

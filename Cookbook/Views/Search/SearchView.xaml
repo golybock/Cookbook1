@@ -31,7 +31,8 @@
                                     Width="75">
                         
                         <ui:BitmapIcon x:Name="SortButtonBitmapIcon"
-                                       UriSource="{Binding ElementName=SortTypeListView, Path=SelectedItem.Children[0].UriSource, UpdateSourceTrigger=PropertyChanged}"
+                                       UriSource="{Binding SelectedSortType.IconPath,
+                                        UpdateSourceTrigger=PropertyChanged}"
                                        Height="32"
                                        Width="32"/>
                         
@@ -39,22 +40,25 @@
                             <ui:Flyout>
                                 <ListView x:Name="SortTypeListView"
                                           SelectionMode="Single"
-                                          SelectedIndex="{Binding SelectedSortTypeIndex, UpdateSourceTrigger=PropertyChanged}">
+                                          ItemsSource="{Binding SortTypes}"
+                                          SelectedItem="{Binding SelectedSortType,
+                                           UpdateSourceTrigger=PropertyChanged}">
                                     
-                                    <StackPanel Tag="Default" Orientation="Horizontal">
-                                        <ui:BitmapIcon Height="32" Width="32" UriSource="../../Resources/MenuIcons/Sort/defaultsort.png"/>
-                                        <TextBlock Text="По умолчанию" Margin="8"/>
-                                    </StackPanel>
-                                    
-                                    <StackPanel Tag="ByUpper" Orientation="Horizontal">
-                                        <ui:BitmapIcon Height="32" Width="32" UriSource="../../Resources/MenuIcons/Sort/lowerToUpperSort.png"/>
-                                        <TextBlock Text="По возрастанию" Margin="8"/>
-                                    </StackPanel>
-                                    
-                                    <StackPanel Tag="ByLower" Orientation="Horizontal">
-                                        <ui:BitmapIcon Height="32" Width="32" UriSource="../../Resources/MenuIcons/Sort/upperToLowerSort.png"/>
-                                        <TextBlock Text="По убывнаию" Margin="8"/>
-                                    </StackPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                      
+                                        <StackPanel Orientation="Horizontal">
+                                            
+                                            <ui:BitmapIcon UriSource="{Binding IconPath}"
+                                                           Width="32"
+                                                           Height="32"/>
+                                            
+                                            <TextBlock Text="{Binding Name}"/>
+                                            
+                                        </StackPanel>
+                                        
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
                                     
                                 </ListView>
                             </ui:Flyout>
