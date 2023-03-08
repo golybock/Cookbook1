@@ -211,11 +211,9 @@ public class RecipeService : IRecipeService
             {
                 var recipeStats = AddRecipeStatsAsync(outRecipe);
                 var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
-                var recipeImages = AddRecipeImagesAsync(outRecipe);
                 var recipeText = WriteRecipeFileAsync(outRecipe);
                 var recipeImage = AddRecipeImageAsync(outRecipe);
-
-                await recipeImages;
+                
                 await recipeStats;
                 await recipeIngredients;
                 // await recipeCategories;
@@ -264,9 +262,7 @@ public class RecipeService : IRecipeService
                 var recipeStats = _recipeStatsService.UpdateRecipeStatsAsync(recipe.RecipeStat);
                 var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
                 // var recipeCategory = AddRecipeCategoryAsync(outRecipe);
-                var recipeImages = AddRecipeImagesAsync(outRecipe);
-
-                await recipeImages;
+                
                 await recipeStats;
                 await recipeIngredients;
                 // await recipeCategory;
@@ -302,27 +298,7 @@ public class RecipeService : IRecipeService
 
         return null;
     }
-    
-    private async Task AddRecipeImagesAsync(RecipeModel recipe)
-    {
-        if (recipe.RecipeImages.Count > 0)
-        {
-            foreach (var image in recipe.RecipeImages)
-            {
-                try
-                {
-                    image.ImagePath = CopyImageToDocuments(image.ImagePath, recipe.Id);
-                    await _recipeImageService.AddRecipeImageAsync(image);
-                }
-                catch
-                {
-                    // skip
-                }
 
-            }
-        }
-    }
-    
     private async Task AddRecipeImageAsync(RecipeModel recipe)
     {
         recipe.RecipeImage.RecipeId = recipe.Id;

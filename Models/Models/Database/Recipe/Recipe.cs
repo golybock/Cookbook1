@@ -2,6 +2,8 @@
 
 public partial class Recipe
 {
+    private List<RecipeIngredient> _recipeIngredients = new();
+
     public Recipe() =>
         RecipeImage = new RecipeImage() {RecipeId = Id};
     
@@ -23,9 +25,16 @@ public partial class Recipe
 
     public int CookingTime { get; set; }
 
-    public List<RecipeIngredient> RecipeIngredients { get; set; } = new();
-
-    public List<RecipeImage> RecipeImages { get; set; } = new();
+    public List<RecipeIngredient> RecipeIngredients
+    {
+        get => _recipeIngredients;
+        set
+        {
+            if (Equals(value, _recipeIngredients)) return;
+            _recipeIngredients = value;
+            OnPropertyChanged();
+        }
+    }
 
     public RecipeStats RecipeStat { get; set; } = new();
 

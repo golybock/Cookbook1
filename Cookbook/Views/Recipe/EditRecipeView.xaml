@@ -282,15 +282,14 @@
                                            Spacing="0"
                                            VerticalAlignment="Top"
                                            HorizontalAlignment="Left"
-                                           Margin="20,10,20,0"
-                                           DataContext="{Binding Recipe, UpdateSourceTrigger=PropertyChanged}">
+                                           Margin="20,10,20,0">
                         
                     <TextBlock Text="Ингридиенты"
                                Margin="5"
                                FontSize="14"/>
                 
                     <controls:ListView Name="IngredientsListview"
-                                       ItemsSource="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"
+                                       ItemsSource="{Binding RecipeIngredients, UpdateSourceTrigger=PropertyChanged}"
                                        Width="365"
                                        MaxHeight="140"
                                        IsSelectionEnabled="True">
@@ -300,20 +299,23 @@
                             <DataTemplate>
                                 
                                 <controls:SimpleStackPanel Spacing="12"
-                                                           Orientation="Horizontal">
+                                                           Orientation="Horizontal"
+                                                           VerticalAlignment="Center">
                                     
-                                    <TextBlock Text="{Binding Name}"></TextBlock>
-                                    <TextBlock Text="{Binding Measure.Name}"></TextBlock>
+                                    <TextBlock Text="{Binding Ingredient.Name}"
+                                               Foreground="Black"/>
+                                    <TextBlock Text="{Binding Count}"
+                                               Foreground="Black"/>
+                                    <TextBlock Text="{Binding Ingredient.Measure.Name}"
+                                               Foreground="Black"/>
+                                    
                                     
                                     <Button Name="RemoveIngredientFromListButton"
                                             Width="32"
-                                            Height="32">
-                                        
-                                      <TextBlock Text="+">
-                                          <b:EventTrigger EventName="Click">
-                                              <b:InvokeCommandAction Command="{Binding DataContext.RemoveIngredientFromListCommand, ElementName=this}" CommandParameter="{Binding Id}" />
-                                          </b:EventTrigger>
-                                      </TextBlock>
+                                            Height="32"
+                                            Content="-"
+                                            Command="{Binding DataContext.RemoveIngredientFromListCommand, ElementName=this}"
+                                            CommandParameter="{Binding Id}">
                                         
                                     </Button>
                                     
@@ -339,8 +341,9 @@
                 
                     <Border Name="SelectedIngredientBorder"
                             BorderThickness="1"
-                            BorderBrush="Red"
-                            Visibility="{Binding ErrorSelectedIngredient, Converter={StaticResource BoolToVisabilityConverter}}">
+                            BorderBrush="{Binding ValidSelectedIngredient,
+                             Converter={StaticResource ErrorBoolToColorConverter},
+                             UpdateSourceTrigger=PropertyChanged}">
                         
                         <ComboBox Name="IngredientsComboBox"
                                   Margin="5"
@@ -354,7 +357,7 @@
                     
                         
                     <controls:NumberBox Name="IngredientCountNumberBox"
-                                        Value="{Binding RecipeIngredient.Count}"
+                                        Value="{Binding RecipeIngredientCount, UpdateSourceTrigger=PropertyChanged}"
                                         ValidationMode="InvalidInputOverwritten"
                                         Minimum="1"
                                         Margin="5"
@@ -368,11 +371,23 @@
                                            VerticalAlignment="Top"
                                            HorizontalAlignment="Center">
                         
+                    <TextBlock Text="Добавить ингридиент"
+                               Margin="5,0,0,0"
+                               FontSize="14"/>
+                    
                     <Button Name="AddIngredientButton"
                             Width="150"
                             Style="{DynamicResource AccentButtonStyle}"
                             Content="Добавить"
                             Command="{Binding AddIngredientCommand}"
+                            Margin="5"/>
+                    
+                    <Button Name="NewIngredientButton"
+                            Height="32"
+                            Width="150"
+                            Content="Новый ингридиент"
+                            Style="{DynamicResource AccentButtonStyle}"
+                            Command="{Binding NewIngredientCommand}"
                             Margin="5"/>
                         
                 </controls:SimpleStackPanel>
@@ -445,18 +460,6 @@
             <Grid Name="NewIngredientGrid"
                   Grid.Row="4"
                   Grid.Column="2">
-                
-                <controls:SimpleStackPanel VerticalAlignment="Center"
-                                           HorizontalAlignment="Center">
-                    
-                    <Button Name="NewIngredientButton"
-                            Height="32"
-                            Width="150"
-                            Content="Новый ингридиент"
-                            Style="{DynamicResource AccentButtonStyle}"
-                            Command="{Binding NewIngredientCommand}"/>
-                    
-                </controls:SimpleStackPanel>
                 
             </Grid>
             

@@ -30,7 +30,9 @@ public class EditRecipeViewModel : INotifyPropertyChanged
     private readonly RecipeType _defaultRecipeType =
         new RecipeType { Id = -1, Name = "Выберите тип" };
 
-
+    private readonly Measure _defaultMeasure =
+        new Measure() {Id = -1, Name = "Выберите меру измерения"};
+    
     public Ingredient SelectedIngredient
     {
         get => RecipeIngredient.Ingredient ?? Ingredients.ElementAt(0);
@@ -67,11 +69,41 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         } 
     }
 
-    public bool ErrorSelectedIngredient { get; set; }
-    
+    public bool ValidSelectedIngredient
+    {
+        get => _validSelectedIngredient;
+        set
+        {
+            if (value == _validSelectedIngredient) return;
+            _validSelectedIngredient = value;
+            OnPropertyChanged();
+        }
+    }
+
     private RecipeIngredient RecipeIngredient { get; set; }
-    
+
+    public decimal RecipeIngredientCount
+    {
+        get => RecipeIngredient.Count;
+        set
+        {
+            if (value == RecipeIngredient.Count) return;
+            RecipeIngredient.Count = value;
+            OnPropertyChanged();
+        }
+    }
+
     public RecipeModel Recipe { get; set; }
+
+    public ObservableCollection<RecipeIngredient> RecipeIngredients
+    {
+        get => new(Recipe.RecipeIngredients);
+        set
+        {
+            Recipe.RecipeIngredients = new(value);
+            OnPropertyChanged();
+        }
+    }
 
     public ObservableCollection<Ingredient> Ingredients
     {
@@ -121,6 +153,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
     private Frame _navFrame;
     
     private readonly RecipeService _recipeService;
+    private bool _validSelectedIngredient = true;
 
     public EditRecipeViewModel(RecipeModel recipe, ClientModel client, Frame frame)  
     {
@@ -129,6 +162,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         _ingredients = new List<Ingredient> {_defaultIngredient};
         _categories = new List<Category> {_defaultCategory};
         _recipeTypes = new List<RecipeType> {_defaultRecipeType};
+        _measures = new List<Measure> {_defaultMeasure};
         
         _recipeService = new RecipeService(client);
         
@@ -153,6 +187,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         _ingredients = new List<Ingredient> {_defaultIngredient};
         _categories = new List<Category> {_defaultCategory};
         _recipeTypes = new List<RecipeType> {_defaultRecipeType};
+        _measures = new List<Measure> {_defaultMeasure};
         
         _recipeService = new RecipeService(client);
         
@@ -230,18 +265,20 @@ public class EditRecipeViewModel : INotifyPropertyChanged
 
     private void OnAddIngredient()
     {
+        ValidSelectedIngredient = true;
+        
         if (SelectedIngredient.Id != -1)
         {
             if (RecipeIngredient.Count > 0)
             {
                 Recipe.RecipeIngredients.Add(RecipeIngredient);
+                OnPropertyChanged("RecipeIngredients");
                 RecipeIngredient = new RecipeIngredient();
                 return;
             }
         }
-        
-        
-        
+
+        ValidSelectedIngredient = false;
     }
     
     private void OnDrop(DragEventArgs obj)
@@ -262,6 +299,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
                     .RecipeIngredients
                     .FirstOrDefault(c => c.Id == id)!
             );
+        RecipeIngredients = new(Recipe.RecipeIngredients);
     }
 
     private async void CreateRecipe()
@@ -308,6 +346,9 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         
         _recipeTypes.AddRange(await GetRecipeTypes());
         OnPropertyChanged("RecipeTypes");
+        
+        _measures.AddRange(await GetMeasures());
+        OnPropertyChanged("Measures");
     }
 
     private async Task<List<Category>> GetCategories() =>
@@ -319,6 +360,9 @@ public class EditRecipeViewModel : INotifyPropertyChanged
     private async Task<List<RecipeType>> GetRecipeTypes() => 
         await _recipeService.GetRecipeTypes();
 
+    private async Task<List<Measure>> GetMeasures() =>
+        await _recipeService.GetMeasures();
+    
     private void ClearPage() =>
         Recipe = new RecipeModel();
 
@@ -429,8 +473,8 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             if (!string.IsNullOrWhiteSpace(ingredient.Name) && ingredient.Measure != null)
             {
                 var commandResult = await _recipeService.AddIngredient(ingredient);
-                Ingredients.Add(ingredient);
-                Ingredients = Ingredients;
+                _ingredients.Add(ingredient);
+                Ingredients = new(_ingredients);
             }
             
         }

@@ -8,7 +8,6 @@ using Cookbook.Command;
 using Cookbook.Database.Services;
 using Models.Models.Database.Recipe;
 using SortType =  Models.Models.InterfacesExtensions.SortType;
-using SortTypes =  Models.Models.InterfacesExtensions.SortTypes;
 using RecipeModel = Models.Models.Database.Recipe.Recipe;
 using ClientModel = Models.Models.Database.Client.Client;
 using Frame = ModernWpf.Controls.Frame;
@@ -116,7 +115,7 @@ public class SearchViewModel : INotifyPropertyChanged
             if (Equals(value, _recipes)) return;
             _recipes = value;
             OnPropertyChanged();
-        }
+        } 
     }
 
     public List<SortType> SortTypes { get; set; } =
@@ -142,11 +141,19 @@ public class SearchViewModel : INotifyPropertyChanged
     private void SortRecipes()
     {
         if (SelectedSortType?.Id == 2)
-            Recipes.Reverse();
-        
-        OnPropertyChanged("Recipes");
+            ReverseList();
     }
 
+    private void ReverseList()
+    {
+        List<RecipeModel> reversedRecipes = new List<RecipeModel>();
+        
+        for (int i = Recipes.Count - 1; i >= 0; i--)
+            reversedRecipes.Add(Recipes.ElementAt(i));
+
+        Recipes = reversedRecipes;
+    }
+    
     private async Task FilterRecipes()
     {
         if (_selectedCategory.Id != -1)

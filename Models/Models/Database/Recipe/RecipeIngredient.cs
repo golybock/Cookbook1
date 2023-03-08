@@ -11,7 +11,7 @@ public partial class RecipeIngredient
 
     public int IngredientId { get; set; }
 
-    public decimal Count { get; set; }
+    public decimal Count { get; set; } = 1;
     
     public Ingredient? Ingredient { get; set; } = new Ingredient();
 }
