@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Cookbook.Command;
 using Cookbook.Database.Services;
 using Frame = ModernWpf.Controls.Frame;
@@ -21,21 +22,31 @@ public class RecipeListViewModel : INotifyPropertyChanged
         _recipesViewService =
             new RecipesViewService(client, frame);
         
-        Recipes = new List<RecipeModel>();
+        _recipes = new List<RecipeModel>();
         
         _frame = frame;
 
         GetRecipes();
     }
-    
+
     // основная модель для привязки
-    public List<RecipeModel> Recipes { get; set; }
-    
+    public List<RecipeModel> Recipes
+    {
+        get => _recipes;
+        set
+        {
+            if (Equals(value, _recipes)) return;
+            _recipes = value;
+            OnPropertyChanged();
+        }
+    }
+
     private Frame _frame;
 
     private readonly Database.Services.RecipeService _recipeService;
     private readonly RecipesViewService _recipesViewService;
-    
+    private List<RecipeModel> _recipes;
+
     // Команды для биндов
     public RelayCommand<Int32> OpenCommand =>
         new RelayCommand<int>(OpenClicked);
@@ -62,11 +73,8 @@ public class RecipeListViewModel : INotifyPropertyChanged
         OnPropertyChanged("Recipes");
     }
 
-    private void DeleteClicked(int id)
-    {
-        _recipesViewService.DeleteClicked(id, Recipes);
-        OnPropertyChanged("Recipes");
-    }
+    private async void DeleteClicked(int id) =>
+        Recipes = new (await _recipesViewService.DeleteClicked(id, Recipes));
 
     private void EditClicked(int id)
     {

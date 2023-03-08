@@ -122,10 +122,15 @@ public class RecipeService : IRecipeService
     private async Task<Category> GetRecipeMainCategoryAsync(int recipeId)
     {
         var recipeCategory = await _recipeCategoryService.GetRecipeMainCategoryAsync(recipeId);
-        var category = await _categoryService.GetCategoryAsync(recipeCategory.CategoryId);
+        var category = await _categoryService.GetCategoryAsync(recipeCategory!.CategoryId);
 
         return category;
     }
+
+    private Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory) =>
+        _recipeCategoryService.AddRecipeCategoryAsync(recipeCategory);
+
+    
 
     public async Task<List<RecipeModel>> GetClientRecipes(int clientId)
     {
@@ -201,23 +206,27 @@ public class RecipeService : IRecipeService
 
     }
 
-    public async Task<CommandResult> AddRecipeAsync(RecipeModel? recipe)
+    public async Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
     {
         CommandResult commandResult = await _recipeService.AddRecipeAsync(recipe);
+     
+        var recipeText = WriteRecipeFileAsync(recipe);
+        recipe.PathToTextFile = await recipeText;
+        
+        CommandResult updateResult = await _recipeService.UpdateRecipeAsync(recipe);
         
         if (commandResult.Code == 100)
         {
             if (commandResult.Value is RecipeModel outRecipe)
             {
-                var recipeStats = AddRecipeStatsAsync(outRecipe);
+                var recipeStats = AddRecipeStatsAsync(outRecipe.RecipeStat);
+                var recipeCategory = AddRecipeCategoryAsync(new RecipeCategory(){RecipeId = outRecipe.Id, CategoryId = outRecipe.Category.Id});
                 var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
-                var recipeText = WriteRecipeFileAsync(outRecipe);
                 var recipeImage = AddRecipeImageAsync(outRecipe);
                 
                 await recipeStats;
+                await recipeCategory;
                 await recipeIngredients;
-                // await recipeCategories;
-                await recipeText;
                 await recipeImage;
                 
                 commandResult = CommandResults.Successfully;
@@ -252,20 +261,26 @@ public class RecipeService : IRecipeService
 
     public async Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe)
     {
-        CommandResult commandResult = await _recipeService.UpdateRecipeAsync(recipe);
+        var recipeText = WriteRecipeFileAsync(recipe);
+        recipe.PathToTextFile = await recipeText;
         
-                
+        CommandResult commandResult = await _recipeService.UpdateRecipeAsync(recipe);
+
+        await DeleteRecipeInfoAsync(recipe.Id);
+        
         if (commandResult.Code == 100)
         {
-            if (commandResult.Value is RecipeModel outRecipe)
+            if (commandResult.Result)
             {
-                var recipeStats = _recipeStatsService.UpdateRecipeStatsAsync(recipe.RecipeStat);
-                var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
-                // var recipeCategory = AddRecipeCategoryAsync(outRecipe);
+                var recipeStats = AddRecipeStatsAsync(recipe.RecipeStat);
+                var recipeCategory = AddRecipeCategoryAsync(new RecipeCategory(){RecipeId = recipe.Id, CategoryId = recipe.Category.Id});
+                var recipeIngredients = AddRecipeIngredientsAsync(recipe);
+                var recipeImage = AddRecipeImageAsync(recipe);
                 
                 await recipeStats;
+                await recipeCategory;
                 await recipeIngredients;
-                // await recipeCategory;
+                await recipeImage;
                 
                 commandResult = CommandResults.Successfully;
             }
@@ -304,7 +319,7 @@ public class RecipeService : IRecipeService
         recipe.RecipeImage.RecipeId = recipe.Id;
         
         recipe.RecipeImage.ImagePath =
-            CopyImageToDocuments(recipe.RecipeImage.ImagePath, recipe.Id);
+            CopyImageToDocuments(recipe.NewImagePath, recipe.Id);
         
         await _recipeImageService.AddRecipeImageAsync(recipe.RecipeImage);
     }
@@ -315,20 +330,16 @@ public class RecipeService : IRecipeService
         {
             foreach (var ingredient in recipe.RecipeIngredients)
             {
+                ingredient.RecipeId = recipe.Id;
                 await _recipeIngredientService.AddRecipeIngredientAsync(ingredient);
             }
         }
     }
 
-    private async Task AddRecipeStatsAsync(RecipeModel recipe)
-    {
-        if (recipe.RecipeStat != null)
-        {
-            await _recipeStatsService.AddRecipeStatsAsync(recipe.RecipeStat);
-        }
-    }
+    private Task AddRecipeStatsAsync(RecipeStats recipeStats) =>
+        _recipeStatsService.AddRecipeStatsAsync(recipeStats);
 
-    public async Task<CommandResult> DeleteRecipeAsync(int id)
+    public async Task<CommandResult> DeleteRecipeInfoAsync(int id)
     {
         CommandResult result;
 
@@ -337,13 +348,15 @@ public class RecipeService : IRecipeService
             var delStats = DeleteRecipeStats(id);
             var delCategories = DeleteRecipeCategories(id);
             var delImages = DeleteRecipeImages(id);
-            var delFavorites = DeleteFavRecipes(id, _client.Id);
+            var delFavorites = DeleteFavRecipes(id);
+            var deleteIngredients = DeleteRecipeIngredients(id);
             
             await delStats;
             await delCategories;
             await delImages;
             await delFavorites;
-            
+            await deleteIngredients;
+
             result = CommandResults.Successfully;
         }
         catch(Exception e)
@@ -355,58 +368,37 @@ public class RecipeService : IRecipeService
         return result;
     }
 
-    public async Task DeleteFavRecipes(int recipeId, int clientId)
-    {
-        await _clientFavService.DeleteFavoriteRecipeAsync(recipeId, clientId);
-    }
-    
-    // переписать под фунцию репозитория
-    private async Task DeleteRecipeImages(int recipeId)
-    {
-        var recipeImages = await _recipeImageService.GetRecipeImagesAsync(recipeId);
-        foreach (var recipeImage in recipeImages)
-        {
-            await _recipeImageService.DeleteRecipeImageAsync(recipeImage.Id);
-        }
-    }
+    public Task DeleteRecipe(int recipeId) =>
+        _recipeService.DeleteRecipeAsync(recipeId);
 
-    private async Task DeleteRecipeStats(int recipeId)
-    {
-        await _recipeStatsService.DeleteRecipeStatsAsync(recipeId);
-    }
+    private Task DeleteRecipeIngredients(int recipeId) =>
+        _recipeCategoryService.DeleteRecipeCategoriesAsync(recipeId);
+
+    public Task DeleteFavRecipes(int recipeId) =>
+        _clientFavService.DeleteFavoriteRecipeByRecipe(recipeId);
 
     // переписать под фунцию репозитория
-    private async Task DeleteRecipeCategories(int recipeId)
-    {
-        var recipeCategories = await _recipeCategoryService.GetRecipeCategoriesAsync(recipeId);
-        foreach (var recipeCategory in recipeCategories)
-        {
-            await _recipeCategoryService.DeleteRecipeCategoryAsync(recipeCategory.Id);
-        }
-    }
+    private Task DeleteRecipeImages(int recipeId) =>
+        _recipeImageService.DeleteRecipeImagesByRecipeAsync(recipeId); 
 
-    public async Task<List<Measure>> GetMeasures()
-    {
-        return await _measureService.GetMeasuresAsync();
-    }
+    private Task DeleteRecipeStats(int recipeId) => 
+        _recipeStatsService.DeleteRecipeStatsAsync(recipeId);
     
-    public async Task<CommandResult> AddRecipeToFav(FavoriteRecipe favoriteRecipe)
-    {
-        return await _clientFavService.AddFavoriteRecipeAsync(favoriteRecipe);
-    }
+    private Task DeleteRecipeCategories(int recipeId) =>
+        _recipeCategoryService.DeleteRecipeCategoriesAsync(recipeId);
 
-    public async Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType)
-    {
-        return await _recipeTypeService.AddRecipeTypeAsync(recipeType);
-    }
+    public Task<List<Measure>> GetMeasures() => 
+        _measureService.GetMeasuresAsync();
 
-    public async Task<CommandResult> AddRecipeCategoryAsync(Category category)
-    {
-        return await _categoryService.AddCategoryAsync(category);
-    }
+    public Task<CommandResult> AddRecipeToFav(FavoriteRecipe favoriteRecipe) =>
+        _clientFavService.AddFavoriteRecipeAsync(favoriteRecipe);
 
-    public async Task<CommandResult> AddIngredient(Ingredient ingredient)
-    {
-        return await _ingredientService.AddIngredientAsync(ingredient);
-    }
+    public Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType) =>
+        _recipeTypeService.AddRecipeTypeAsync(recipeType);
+
+    public Task<CommandResult> AddCategoryAsync(Category category) =>
+        _categoryService.AddCategoryAsync(category);
+
+    public Task<CommandResult> AddIngredient(Ingredient ingredient) =>
+        _ingredientService.AddIngredientAsync(ingredient);
 }

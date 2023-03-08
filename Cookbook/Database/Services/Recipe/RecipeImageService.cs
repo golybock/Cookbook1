@@ -70,6 +70,14 @@ public class RecipeImageService : IRecipeImageService
         return await _recipeImageRepository.UpdateRecipeImageAsync(recipeImage);
     }
 
+    public async Task<CommandResult> DeleteRecipeImagesByRecipeAsync(int id)
+    {
+        if (id <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeImageRepository.DeleteRecipeImagesByRecipeAsync(id);
+    }
+
     public async Task<CommandResult> DeleteRecipeImageAsync(int id)
     {
         if (id <= 0)

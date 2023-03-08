@@ -536,13 +536,13 @@
                 
                             </Button>
                 
-                            <Button Name="ClearButton"
-                                    Content="Очистить"
-                                    Width="125"
-                                    ToolTip="Очистить все"
-                                    Command="{Binding ClearCommand}"
-                                    Margin="5"/>
-                
+                            <!-- <Button Name="ClearButton" -->
+                            <!--         Content="Очистить" -->
+                            <!--         Width="125" -->
+                            <!--         ToolTip="Очистить все" -->
+                            <!--         Command="{Binding ClearCommand}" -->
+                            <!--         Margin="5"/> -->
+                            <!-- -->
                         </StackPanel>
         
                     </StackPanel>

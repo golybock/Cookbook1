@@ -62,11 +62,9 @@ public class RecipeCategoryService : IRecipeCategoryService
         return await _recipeCategoryRepository.UpdateRecipeCategoryAsync(recipeCategory);
     }
 
-    public async Task<CommandResult> DeleteRecipeCategoryAsync(int id)
-    {
-        if (id <= 0)
-            return CommandResults.BadRequest;
-        
-        return await _recipeCategoryRepository.DeleteRecipeCategoryAsync(id);
-    }
+    public Task<CommandResult> DeleteRecipeCategoryAsync(int id) =>
+        _recipeCategoryRepository.DeleteRecipeCategoryAsync(id);
+
+    public Task<CommandResult> DeleteRecipeCategoriesAsync(int id) =>
+        _recipeCategoryRepository.DeleteRecipeCategoriesAsync(id);
 }

@@ -198,12 +198,12 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
                 Parameters =
                 {
                     new() { Value = recipe.Id },
-                    new() { Value = recipe.RecipeTypeId },
-                    new() { Value = recipe.Name },
-                    new() { Value = recipe.Description },
-                    new() { Value = recipe.PathToTextFile },
-                    new() { Value = recipe.PortionCount },
-                    new() { Value = recipe.CookingTime }
+                    new() { Value = recipe.RecipeTypeId == 0 ? 1 : recipe.RecipeTypeId },
+                    new() { Value = recipe.Name == string.Empty ? "" : recipe.Name },
+                    new() { Value = recipe.Description == string.Empty ? "" : recipe.Description },
+                    new() { Value = recipe.PathToTextFile == string.Empty ? "" : recipe.PathToTextFile },
+                    new() { Value = recipe.PortionCount == 0 ? DBNull.Value : recipe.PortionCount },
+                    new() { Value = recipe.CookingTime == 0 ? DBNull.Value : recipe.CookingTime }
                 }
             };
             

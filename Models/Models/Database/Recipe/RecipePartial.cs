@@ -23,10 +23,19 @@ public partial class Recipe : INotifyPropertyChanged
 
     public RecipeImage RecipeImage { get; set; }
 
-    public Category Category { get; set; } = new();
+    public Category Category { get => _category;
+        set
+        {
+            _category = value;
+        } 
+    }
+
+    private Category _category = new Category();
     // Recipe.Category.Name
     
     private bool? _isLiked;
+    
+    private string _text = string.Empty;
 
     public bool? IsLiked
     {
@@ -37,18 +46,27 @@ public partial class Recipe : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
-    public string? Text { get; set; }
+
+    public string Text
+    {
+        get => _text;
+        set
+        {
+            if (value == _text) return;
+            _text = value;
+            OnPropertyChanged();
+        }
+    }
 
     private string GetText()
     {
-        string text = "Нет рецепта";
+        string text = "";
 
         string path = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + PathToTextFile;
         
         if (PathToTextFile != null)
-            if (File.Exists(PathToTextFile))
-                text = File.ReadAllText(PathToTextFile);
+            if (File.Exists(path))
+                text = File.ReadAllText(path);
 
         return text;
     }

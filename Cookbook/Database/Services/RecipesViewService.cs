@@ -33,7 +33,7 @@ public class RecipesViewService
         if (recipe!.IsLiked == true)
         {
             recipe.IsLiked = false;
-            _recipeService.DeleteFavRecipes(id, _client.Id);
+            _recipeService.DeleteFavRecipes(id);
         }
         else
         {
@@ -52,7 +52,7 @@ public class RecipesViewService
             );
     }
     
-    private async void ShowAcceptDialog(int id, List<RecipeModel> recipes)
+    private async Task<List<RecipeModel>> ShowAcceptDialog(int id, List<RecipeModel> recipes)
     {
         ContentDialog acceptDialog = new ContentDialog()
         {
@@ -66,27 +66,29 @@ public class RecipesViewService
         if (await acceptDialog.ShowAsync() == ContentDialogResult.Primary)
         {
 #pragma warning disable CS4014
-            DeleteRecipe(id, recipes);
+            return await DeleteRecipe(id, recipes);
 #pragma warning restore CS4014
         }
+
+        return recipes;
     }
     
-    private async Task DeleteRecipe(int id, List<RecipeModel> recipes)
+    private async Task<List<RecipeModel>> DeleteRecipe(int id, List<RecipeModel> recipes)
     {
         var recipe = recipes.FirstOrDefault(c => c.Id == id);
 
         if (recipe != null)
         {
-            await _recipeService.DeleteRecipeAsync(recipe.Id);
+            await _recipeService.DeleteRecipeInfoAsync(recipe.Id);
+            await _recipeService.DeleteRecipe(recipe.Id);
             recipes.Remove(recipe);
         }
-        
+
+        return recipes;
     }
 
-    public void DeleteClicked(int id, List<RecipeModel> recipes)
-    {
-        ShowAcceptDialog(id, recipes);
-    }
+    public async Task<List<RecipeModel>> DeleteClicked(int id, List<RecipeModel> recipes) =>
+        await ShowAcceptDialog(id, recipes);
 
     public void EditClicked(int id, List<RecipeModel> recipes, NavigationService? navigationService)
     {
@@ -98,9 +100,7 @@ public class RecipesViewService
                     new EditRecipePage(recipe, _client, _frame)
                 );
     }
-    
-    private async Task<RecipeModel> GetRecipe(int recipeId)
-    {
-        return await _recipeService.GetRecipeAsync(recipeId);;
-    }
+
+    private Task<RecipeModel> GetRecipe(int recipeId) =>
+         _recipeService.GetRecipeAsync(recipeId);
 }

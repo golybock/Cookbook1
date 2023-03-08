@@ -15,5 +15,6 @@ public interface IRecipeImageService
     public Task<List<RecipeImage>> GetRecipeImagesAsync(int recipeId);
     public Task<CommandResult> AddRecipeImageAsync(RecipeImage recipeImage);
     public Task<CommandResult> UpdateRecipeImageAsync(RecipeImage recipeImage);
+    public Task<CommandResult> DeleteRecipeImagesByRecipeAsync(int id);
     public Task<CommandResult> DeleteRecipeImageAsync(int id);
 }

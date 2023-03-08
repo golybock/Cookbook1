@@ -15,4 +15,5 @@ public interface IRecipeCategoryService
     public Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory);
     public Task<CommandResult> UpdateRecipeCategoryAsync(RecipeCategory recipeCategory);
     public Task<CommandResult> DeleteRecipeCategoryAsync(int id);
+    public Task<CommandResult> DeleteRecipeCategoriesAsync(int recipeId);
 }

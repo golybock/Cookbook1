@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 using Models.Models.Database.Recipe;
 using Npgsql;
@@ -187,6 +186,42 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
             await con.CloseAsync();
         }
     }
+
+    public async Task<CommandResult> DeleteRecipeImagesByRecipeAsync(int id)
+    {
+        CommandResult result;
+        
+        var connection = GetConnection();
+        
+        connection.Open();
+        try
+        {
+            string query = $"delete from recipe_images where recipe_id = $1";
+            
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            {
+                Parameters =
+                {
+                    new() { Value = id },
+                }
+            };
+            
+            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled; 
+            
+            return result;
+        }
+        catch(Exception e)
+        {
+            result = CommandResults.BadRequest;
+            result.Description = e.ToString();
+            return result;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+    }
+
 
     public async Task<CommandResult> DeleteRecipeImageAsync(int id)
     {

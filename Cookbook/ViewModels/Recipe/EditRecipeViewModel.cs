@@ -80,8 +80,6 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         }
     }
 
-    private RecipeIngredient RecipeIngredient { get; set; }
-
     public decimal RecipeIngredientCount
     {
         get => RecipeIngredient.Count;
@@ -94,6 +92,19 @@ public class EditRecipeViewModel : INotifyPropertyChanged
     }
 
     public RecipeModel Recipe { get; set; }
+    
+    private RecipeIngredient RecipeIngredient { get; set; }
+
+    public string RecipeText
+    {
+        get => Recipe.Text;
+        set
+        {
+            if (value == Recipe.Text) return;
+            Recipe.Text = value;
+            OnPropertyChanged();
+        }
+    }
 
     public ObservableCollection<RecipeIngredient> RecipeIngredients
     {
@@ -193,7 +204,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         
         LoadComboboxes();
         
-        Recipe = new RecipeModel { Id = -1 };
+        Recipe = new RecipeModel { Id = -1, ClientId = client.Id};
 
         SelectedIngredient = Ingredients.ElementAt(0); 
         
@@ -235,7 +246,6 @@ public class EditRecipeViewModel : INotifyPropertyChanged
     public CommandHandler ClearCommand =>
         new CommandHandler(OnClear);
     
-    
     private void OnEditImage() =>
         ChooseImage();
     
@@ -273,7 +283,6 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             {
                 Recipe.RecipeIngredients.Add(RecipeIngredient);
                 OnPropertyChanged("RecipeIngredients");
-                RecipeIngredient = new RecipeIngredient();
                 return;
             }
         }
@@ -299,6 +308,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
                     .RecipeIngredients
                     .FirstOrDefault(c => c.Id == id)!
             );
+        
         RecipeIngredients = new(Recipe.RecipeIngredients);
     }
 
@@ -313,11 +323,23 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         else
         {
             MessageBox.Show("ес");
+            _navFrame.NavigationService.GoBack();
         }
     }
 
     private async void UpdateRecipe()
     {
+        var updateResult = await _recipeService.UpdateRecipeAsync(Recipe);
+        
+        if (updateResult.Code != 100)
+        {
+            MessageBox.Show("Ошибка");
+        }
+        else
+        {
+            MessageBox.Show("ес");
+            _navFrame.NavigationService.GoBack();
+        }
         
     }
 
@@ -402,7 +424,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         {
             if (!string.IsNullOrWhiteSpace(category.Name))
             {
-                var commandResult = await _recipeService.AddRecipeCategoryAsync(category);
+                var commandResult = await _recipeService.AddCategoryAsync(category);
                 _categories.Add(category);
                 Categories = new(_categories);
             }

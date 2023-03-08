@@ -3,23 +3,35 @@
 public partial class Recipe
 {
     private List<RecipeIngredient> _recipeIngredients = new();
+    private string? _pathToTextFile;
 
     public Recipe() =>
         RecipeImage = new RecipeImage() {RecipeId = Id};
-    
+
+
     public int Id { get; set; }
 
     public int ClientId { get; set; }
 
     public int RecipeTypeId { get; set; }
-    
-    public string Name { get; set; }
+
+    public string Name { get; set; } = string.Empty;
 
     public DateTime DateOfCreation { get; set; }
 
     public string? Description { get; set; }
 
-    public string? PathToTextFile { get; set; }
+    public string? PathToTextFile
+    {
+        get => _pathToTextFile;
+        set
+        {
+            if (value == _pathToTextFile) return;
+            _pathToTextFile = value;
+            Text = GetText();
+            OnPropertyChanged();
+        }
+    }
 
     public int PortionCount { get; set; }
 
