@@ -318,11 +318,11 @@ public class EditRecipeViewModel : INotifyPropertyChanged
 
         if (createResult.Code != 100)
         {
-            MessageBox.Show("Ошибка");
+            ShowErrorDialog(createResult.Description!);
         }
         else
         {
-            MessageBox.Show("ес");
+            ShowSavedDialog();
             _navFrame.NavigationService.GoBack();
         }
     }
@@ -333,11 +333,11 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         
         if (updateResult.Code != 100)
         {
-            MessageBox.Show("Ошибка");
+            ShowErrorDialog(updateResult.Description!);
         }
         else
         {
-            MessageBox.Show("ес");
+            ShowSavedDialog();
             _navFrame.NavigationService.GoBack();
         }
         
@@ -457,6 +457,32 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             }
             
         }
+    }
+
+    private async void ShowSavedDialog()
+    {
+
+        ContentDialog addDialog = new ContentDialog()
+        {
+            Title = "Информация",
+            Content = "Сохранено!",
+            CloseButtonText = "Закрыть",
+        };
+        
+        await addDialog.ShowAsync();
+    }
+    
+    private async void ShowErrorDialog(string error)
+    {
+
+        ContentDialog addDialog = new ContentDialog()
+        {
+            Title = "Ошибка",
+            Content = $"Введенные данные не верны: {error}",
+            CloseButtonText = "Закрыть",
+        };
+        
+        await addDialog.ShowAsync();
     }
     
     private void SetImage(string path) => 

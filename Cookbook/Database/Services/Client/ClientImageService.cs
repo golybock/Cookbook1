@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Client;
 using Cookbook.Database.Services.Interfaces.ClientInterfaces;
-using Cookbook.Models.Database;
-using Cookbook.Models.Database.Client;
 using Models.Models.Database;
 using Models.Models.Database.Client;
 
@@ -14,23 +11,21 @@ public class ClientImageService : IClientImageService
 {
     private readonly ClientImageRepository _clientImageRepository;
 
-    public ClientImageService()
-    {
+    public ClientImageService() =>
         _clientImageRepository = new ClientImageRepository();
-    }
 
-    public async Task<ClientImage?> GetClientImageAsync(int id)
+    public async Task<ClientImage> GetClientImageAsync(int id)
     {
         if (id <= 0)
-            return null;
+            return new ClientImage();
 
         return await _clientImageRepository.GetClientImageAsync(id);
     }
 
-    public async Task<ClientImage?> GetClientImageByClientIdAsync(int clientId)
+    public async Task<ClientImage> GetClientImageByClientIdAsync(int clientId)
     {
         if (clientId <= 0)
-            return null;
+            return new ClientImage();
         
         return await _clientImageRepository.GetClientImageByClientIdAsync(clientId);
     }
@@ -64,10 +59,6 @@ public class ClientImageService : IClientImageService
         
         if(string.IsNullOrEmpty(clientImage.ImagePath))
             return CommandResults.BadRequest;
-
-        if (!File.Exists(clientImage.ImagePath))
-            return CommandResults.BadRequest;
-
         
         return await _clientImageRepository.UpdateClientImageAsync(clientImage);
     }

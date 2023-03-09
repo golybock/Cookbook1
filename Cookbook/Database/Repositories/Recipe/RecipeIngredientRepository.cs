@@ -218,4 +218,42 @@ public class RecipeIngredientRepository : MainDbClass, IRecipeIngredientReposito
 
     public async Task<CommandResult> DeleteRecipeIngredientAsync(int id) =>
         await DeleteAsync("recipe_ingredients", id);
+
+    public async Task<CommandResult> DeleteRecipeIngredientByRecipeAsync(int recipeId)
+    {
+        CommandResult result;
+
+        var connection = GetConnection();
+        
+        try
+        {
+            connection.Open();
+            
+            string query = $"delete from recipe_ingredients where recipe_id = $1";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            {
+                Parameters =
+                {
+                    new() { Value = recipeId },
+                }
+            };
+            
+            result = await cmd.ExecuteNonQueryAsync() > 0 ?
+                CommandResults.Successfully :
+                CommandResults.NotFulfilled;
+            
+            return result;
+        }
+        catch(Exception e)
+        {
+            result = CommandResults.BadRequest;
+            result.Description = e.ToString();
+            
+            return result;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+    }
 }

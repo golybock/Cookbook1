@@ -146,7 +146,7 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
                 Parameters =
                 {
                     new() { Value = recipeImage.RecipeId },
-                    new() { Value = recipeImage.ImagePath }
+                    new() { Value = recipeImage.GetImagePath() }
                 }
             }; 
             
@@ -191,7 +191,7 @@ public class RecipeImageRepository : MainDbClass, IRecipeImageRepository
                 Parameters =
                 {
                     new() { Value = recipeImage.Id },
-                    new() { Value = recipeImage.ImagePath }
+                    new() { Value = recipeImage.GetImagePath() }
                 }
             };
             

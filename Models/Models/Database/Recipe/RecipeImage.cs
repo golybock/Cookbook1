@@ -16,7 +16,7 @@ public class RecipeImage : INotifyPropertyChanged
         get
         {
             if(_imagePath != null)
-                return $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipe\\" + _imagePath;
+                return $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + _imagePath;
 
             return "../../Resources/not_found_image.png";
         }

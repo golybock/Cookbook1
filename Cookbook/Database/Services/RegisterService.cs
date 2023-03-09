@@ -105,9 +105,9 @@ public class RegisterService : IRegisterService
 
         string writePath = documentsPath + filePath;
 
-        if (File.Exists(clientImage.ImagePath))
+        if (File.Exists(clientImage.GetImagePath()))
         {
-            File.Copy(clientImage.ImagePath, writePath);
+            File.Copy(clientImage.GetImagePath(), writePath);
             return filePath;
         }
 

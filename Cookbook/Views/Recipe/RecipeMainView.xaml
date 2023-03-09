@@ -93,7 +93,8 @@
             <Image Name="RecipeImage"
                    Grid.Column="0"
                    Margin="20"
-                   Source="{Binding RecipeImage.ImagePath}"
+                   MaxHeight="200"
+                   Source="{Binding RecipeImage.ImagePath, UpdateSourceTrigger=PropertyChanged}"
                    AllowDrop="True"/>
             
             <controls:SimpleStackPanel Name="MainInfoStackPanel"

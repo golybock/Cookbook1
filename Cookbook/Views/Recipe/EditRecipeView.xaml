@@ -120,7 +120,7 @@
                             <b:InvokeCommandAction Command="{Binding DataContext.EditImageCommand, ElementName=this}" />
                         </b:EventTrigger>
                         <b:EventTrigger EventName="Drop">
-                            <b:InvokeCommandAction Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
+                            <b:InvokeCommandAction Command="{Binding DataContext.DropCommand, ElementName=this}" PassEventArgsToCommand="True" />
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
                     

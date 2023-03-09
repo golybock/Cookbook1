@@ -38,7 +38,8 @@ public class RecipeIngredientService : IRecipeIngredientService
             await _recipeIngredientRepository.GetRecipeIngredientByRecipeAsync(recipeId);
 
         foreach (var recipeIngredient in recipeIngredients)
-            recipeIngredient.Ingredient = await _ingredientService.GetIngredientAsync(recipeIngredient.IngredientId);
+            recipeIngredient.Ingredient =
+                await _ingredientService.GetIngredientAsync(recipeIngredient.IngredientId);
 
         return recipeIngredients;
     }
@@ -81,5 +82,13 @@ public class RecipeIngredientService : IRecipeIngredientService
             return CommandResults.BadRequest;
         
         return await _recipeIngredientRepository.DeleteRecipeIngredientAsync(id);
+    }
+
+    public async Task<CommandResult> DeleteRecipeIngredientByRecipeAsync(int recipeId)
+    {
+        if(recipeId <= 0)
+            return CommandResults.BadRequest;
+        
+        return await _recipeIngredientRepository.DeleteRecipeIngredientByRecipeAsync(recipeId);
     }
 }

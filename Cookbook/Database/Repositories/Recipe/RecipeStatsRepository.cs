@@ -139,4 +139,5 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
 
     public async Task<CommandResult> DeleteRecipeStatsAsync(int id) =>
         await DeleteAsync("recipe_stats", id);
+
 }

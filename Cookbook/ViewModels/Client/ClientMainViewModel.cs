@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Database.Services;
 using Cookbook.Pages.Profile;

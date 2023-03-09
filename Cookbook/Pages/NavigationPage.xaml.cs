@@ -4,7 +4,6 @@ using Cookbook.Pages.Auth;
 using Cookbook.Pages.Profile;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Search;
-using Cookbook.Views.Client;
 using ModernWpf.Controls;
 using Client = Models.Models.Database.Client.Client;
 using Page = System.Windows.Controls.Page;

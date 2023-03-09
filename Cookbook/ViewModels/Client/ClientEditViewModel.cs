@@ -6,7 +6,6 @@ using System.Windows;
 using Cookbook.Command;
 using Cookbook.Database.Services.Client;
 using Microsoft.Win32;
-using Models.Models.Database;
 using ModernWpf.Controls;
 using ClientModel = Models.Models.Database.Client.Client;
 

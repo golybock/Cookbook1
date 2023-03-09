@@ -60,6 +60,10 @@ public class RecipeService : IRecipeService
             var like = RecipeIsLiked(id);
             recipe.IsLiked = await like;
         }
+        
+        
+        recipe.RecipeImage =
+            await _recipeImageService.GetRecipeImageByRecipeAsync(recipe.Id);
 
         recipe.RecipeType = await recipeType;
         recipe.RecipeStat = await recipeStat;
@@ -69,11 +73,7 @@ public class RecipeService : IRecipeService
         return recipe;
     }
 
-    private Task<bool> RecipeIsLiked(int recipeId)
-    {
-        return _clientFavService.GetRecipeIsLiked(recipeId, _client.Id);
-    }
-    
+
     public async Task<List<RecipeModel>> GetRecipesAsync()
     {
         var recipes = await _recipeService.GetRecipesAsync();
@@ -99,24 +99,12 @@ public class RecipeService : IRecipeService
                     await _ingredientService.GetIngredientAsync(ingredient.IngredientId);
 
             }
+
+            recipe.RecipeImage =
+                await _recipeImageService.GetRecipeImageByRecipeAsync(recipe.Id);
         }
 
         return recipes;
-    }
-
-    public Task<List<Category>> GetCategoriesAsync()
-    {
-        return _categoryService.GetCategories();;
-    }
-
-    public Task<List<Ingredient>> GetIngredientsAsync()
-    {
-        return _ingredientService.GetIngredientsAsync();
-    }
-
-    public Task<List<RecipeType>> GetRecipeTypes()
-    {
-        return _recipeTypeService.GetRecipeTypesAsync();
     }
 
     private async Task<Category> GetRecipeMainCategoryAsync(int recipeId)
@@ -126,12 +114,7 @@ public class RecipeService : IRecipeService
 
         return category;
     }
-
-    private Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory) =>
-        _recipeCategoryService.AddRecipeCategoryAsync(recipeCategory);
-
     
-
     public async Task<List<RecipeModel>> GetClientRecipes(int clientId)
     {
         var recipes = await _recipeService.GetClientRecipesAsync(clientId);
@@ -202,8 +185,6 @@ public class RecipeService : IRecipeService
         result = result.Distinct();
         
         return result.ToList();
-
-
     }
 
     public async Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
@@ -262,6 +243,7 @@ public class RecipeService : IRecipeService
     public async Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe)
     {
         var recipeText = WriteRecipeFileAsync(recipe);
+        
         recipe.PathToTextFile = await recipeText;
         
         CommandResult commandResult = await _recipeService.UpdateRecipeAsync(recipe);
@@ -272,9 +254,19 @@ public class RecipeService : IRecipeService
         {
             if (commandResult.Result)
             {
+                recipe.RecipeStat.RecipeId = recipe.Id;
+                
                 var recipeStats = AddRecipeStatsAsync(recipe.RecipeStat);
-                var recipeCategory = AddRecipeCategoryAsync(new RecipeCategory(){RecipeId = recipe.Id, CategoryId = recipe.Category.Id});
+                
+                var recipeCategory = AddRecipeCategoryAsync(
+                    new RecipeCategory()
+                    {
+                        RecipeId = recipe.Id, CategoryId = recipe.Category.Id
+                    }
+                );
+                
                 var recipeIngredients = AddRecipeIngredientsAsync(recipe);
+                
                 var recipeImage = AddRecipeImageAsync(recipe);
                 
                 await recipeStats;
@@ -295,19 +287,18 @@ public class RecipeService : IRecipeService
         
         return commandResult;
     }
-
-
-    private string? CopyImageToDocuments(string? path, int recipeId)
+    
+    private string? CopyImageToDocuments(RecipeImage recipeImage)
     {
         string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\";
 
-        string filePath = $"recipe_{recipeId}_{App.GetTimeStamp()}.png";
+        string filePath = $"recipe_{recipeImage.RecipeId}_{App.GetTimeStamp()}.png";
 
         string writePath = documentsPath + filePath;
 
-        if (File.Exists(path))
+        if (File.Exists(recipeImage.GetImagePath()))
         {
-            File.Copy(path, writePath);
+            File.Copy(recipeImage.GetImagePath(), writePath);
             return filePath;
         }
 
@@ -317,9 +308,14 @@ public class RecipeService : IRecipeService
     private async Task AddRecipeImageAsync(RecipeModel recipe)
     {
         recipe.RecipeImage.RecipeId = recipe.Id;
-        
+
         recipe.RecipeImage.ImagePath =
-            CopyImageToDocuments(recipe.NewImagePath, recipe.Id);
+            CopyImageToDocuments(
+                new RecipeImage()
+                {
+                    ImagePath = recipe.NewImagePath, RecipeId = recipe.Id
+                }
+            );
         
         await _recipeImageService.AddRecipeImageAsync(recipe.RecipeImage);
     }
@@ -365,11 +361,14 @@ public class RecipeService : IRecipeService
         return result;
     }
 
+    private Task<bool> RecipeIsLiked(int recipeId) =>
+        _clientFavService.GetRecipeIsLiked(recipeId, _client.Id);
+    
     public Task DeleteRecipe(int recipeId) =>
         _recipeService.DeleteRecipeAsync(recipeId);
 
     private Task DeleteRecipeIngredients(int recipeId) =>
-        _recipeCategoryService.DeleteRecipeCategoriesAsync(recipeId);
+        _recipeIngredientService.DeleteRecipeIngredientByRecipeAsync(recipeId);
 
     public Task DeleteFavRecipes(int recipeId) =>
         _clientFavService.DeleteFavoriteRecipeByRecipe(recipeId);
@@ -382,7 +381,16 @@ public class RecipeService : IRecipeService
     
     private Task DeleteRecipeCategories(int recipeId) =>
         _recipeCategoryService.DeleteRecipeCategoriesAsync(recipeId);
+    
+    public Task<List<Category>> GetCategoriesAsync() =>
+        _categoryService.GetCategories();
 
+    public Task<List<Ingredient>> GetIngredientsAsync() =>
+        _ingredientService.GetIngredientsAsync();
+
+    public Task<List<RecipeType>> GetRecipeTypes() =>
+        _recipeTypeService.GetRecipeTypesAsync();
+    
     public Task<List<Measure>> GetMeasures() => 
         _measureService.GetMeasuresAsync();
 
@@ -392,6 +400,9 @@ public class RecipeService : IRecipeService
     public Task AddRecipeToFav(FavoriteRecipe favoriteRecipe) =>
         _clientFavService.AddFavoriteRecipeAsync(favoriteRecipe);
 
+    private Task<CommandResult> AddRecipeCategoryAsync(RecipeCategory recipeCategory) =>
+        _recipeCategoryService.AddRecipeCategoryAsync(recipeCategory);
+    
     public Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType) =>
         _recipeTypeService.AddRecipeTypeAsync(recipeType);
 

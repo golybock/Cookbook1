@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cookbook.Models.Database;
-using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 using Models.Models.Database.Recipe;
 
@@ -16,4 +14,5 @@ public interface IRecipeIngredientRepository
     public Task<CommandResult> AddRecipeIngredientAsync(RecipeIngredient recipeIngredient);
     public Task<CommandResult> UpdateRecipeIngredientAsync(RecipeIngredient recipeIngredient);
     public Task<CommandResult> DeleteRecipeIngredientAsync(int id);
+    public Task<CommandResult> DeleteRecipeIngredientByRecipeAsync(int recipeId);
 }

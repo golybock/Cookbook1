@@ -6,7 +6,6 @@ using Cookbook.Database.Repositories.Client;
 using Cookbook.Database.Services.Interfaces.ClientInterfaces;
 using Models.Models.Database;
 using Models.Models.Database.Client;
-using Models.Models.Register;
 using ClientModel = Models.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services.Client;
@@ -22,26 +21,24 @@ public class ClientService : IClientService
         _clientImageService = new ClientImageService();
     }
     
-    public async Task<ClientModel?> GetClientAsync(int id)
+    public async Task<ClientModel> GetClientAsync(int id)
     {
         if (id <= 0)
-            return null;
+            return new ClientModel();
         
         return await _clientRepository.GetClientAsync(id);
     }
 
-    public async Task<ClientModel?> GetClientAsync(string login)
+    public async Task<ClientModel> GetClientAsync(string login)
     {
         if (string.IsNullOrEmpty(login))
-            return null;
+            return new ClientModel();
 
         return await _clientRepository.GetClientAsync(login);
     }
 
-    public async Task<List<ClientModel>> GetClientsAsync()
-    {
-        return await _clientRepository.GetClientsAsync();
-    }
+    public async Task<List<ClientModel>> GetClientsAsync() =>
+        await _clientRepository.GetClientsAsync();
 
     public async Task<CommandResult> AddClientAsync(ClientModel client)
     {
@@ -59,26 +56,31 @@ public class ClientService : IClientService
         if(client.Id <= 0)
             return CommandResults.BadRequest;
         
-        CommandResult commandResult = await _clientRepository.UpdateClientAsync(client);
+        CommandResult commandResult =
+            await _clientRepository.UpdateClientAsync(client);
         
         if (commandResult.Result)
-        {
             if (client.NewImagePath != null)
             {
                 // save image to docs
-                ClientImage newClientImage = new ClientImage {ClientId = client.Id, ImagePath = client.NewImagePath};
+                ClientImage newClientImage =
+                    new ClientImage
+                    {
+                        ClientId = client.Id,
+                        ImagePath = client.NewImagePath
+                    };
 
                 client.ClientImage.ClientId = client.Id;
                 client.ClientImage.ImagePath = CopyImageToDocuments(newClientImage);
 
-                CommandResult cmdResult =  await _clientImageService.AddClientImageAsync(client.ClientImage);
+                CommandResult cmdResult =
+                    await _clientImageService.AddClientImageAsync(client.ClientImage);
 
                 if (cmdResult.Result)
                     client.ClientImage = (cmdResult.Value as ClientImage)!;
             
                 return CommandResults.Successfully;
             }
-        }
 
         return CommandResults.BadRequest;
     }
