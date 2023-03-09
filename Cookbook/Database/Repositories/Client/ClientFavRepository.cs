@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
-using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 using Npgsql;
 
@@ -14,21 +12,25 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
 {
     public async Task<FavoriteRecipe> GetFavoriteRecipeAsync(int id)
     {
-        var con = GetConnection();
-        con.Open();
         FavoriteRecipe favoriteRecipe = new FavoriteRecipe();
+        
+        var con = GetConnection();
+        
         try
         {
+            con.Open();
+            
             string query = $"select * from favorite_recipes where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id } }
             };
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
             {
-                
                 favoriteRecipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 favoriteRecipe.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
                 favoriteRecipe.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
@@ -39,7 +41,7 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         }
         catch
         {
-            return null;
+            return new FavoriteRecipe();
         }
         finally
         {
@@ -49,25 +51,31 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
 
     public async Task<List<FavoriteRecipe>> GetFavoriteRecipesAsync(int clientId)
     {
-        var con = GetConnection();
-        con.Open();
         List<FavoriteRecipe> favoriteRecipes = new List<FavoriteRecipe>();
+        
+        var con = GetConnection();
+
         try
         {
+            con.Open();
+            
             string query = $"select * from favorite_recipes where client_id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = clientId } }
             };
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
             {
                 FavoriteRecipe favoriteRecipe = new FavoriteRecipe();
+                
                 favoriteRecipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 favoriteRecipe.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
                 favoriteRecipe.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
-                favoriteRecipe.DateOfAdding = reader.GetDateTime(reader.GetOrdinal("date_of_adding"));
+
                 favoriteRecipes.Add(favoriteRecipe);
             }
 
@@ -75,7 +83,7 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         }
         catch
         {
-            return null;
+            return new List<FavoriteRecipe>();
         }
         finally
         {
@@ -120,13 +128,17 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
 
     public async Task<CommandResult> AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe)
     {
-        var con = GetConnection();
         CommandResult result;
-        con.Open();
+        
+        var con = GetConnection();
+        
         try
         {
+            con.Open();
+            
             string query = $"insert into favorite_recipes(recipe_id, client_id)" +
                            $" values ($1, $2) returning id";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -137,6 +149,7 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
             }; 
             
             result = CommandResults.Successfully;
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -150,6 +163,7 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -160,12 +174,16 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
 
     public async Task<CommandResult> UpdateFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe)
     {
-        var con = GetConnection();
         CommandResult result;
-        con.Open();
+        
+        var con = GetConnection();
+        
         try
         {
+            con.Open();
+            
             string query = $"update favorite_recipes set recipe_id = $2, client_id = $3 where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -187,6 +205,7 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -195,19 +214,21 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         }
     }
 
-    public Task<CommandResult> DeleteFavoriteRecipeAsync(int id)
-    {
-        return DeleteAsync("favorite_recipes", id);
-    }
+    public Task<CommandResult> DeleteFavoriteRecipeAsync(int id) => 
+        DeleteAsync("favorite_recipes", id);
 
     public async Task<CommandResult> DeleteFavoriteRecipeAsync(int recipeId, int clientId)
     {
-        var con = GetConnection();
         CommandResult result;
-        con.Open();
+        
+        var con = GetConnection();
+        
         try
         {
+            con.Open();
+            
             string query = $"delete from favorite_recipes where recipe_id = $1 and client_id = $2";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -228,6 +249,7 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -238,12 +260,16 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
 
     public async Task<CommandResult> DeleteFavoriteRecipeByRecipe(int recipeId)
     {
-        var con = GetConnection();
         CommandResult result;
-        con.Open();
+        
+        var con = GetConnection();
+        
         try
         {
+            con.Open();
+            
             string query = $"delete from favorite_recipes where recipe_id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -263,6 +289,7 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -273,12 +300,16 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
 
     public async Task<CommandResult> DeleteFavoriteRecipeByClient(int clientId)
     {
-        var con = GetConnection();
         CommandResult result;
-        con.Open();
+        
+        var con = GetConnection();
+        
         try
         {
+            con.Open();
+            
             string query = $"delete from favorite_recipes where client_id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -298,6 +329,7 @@ public class ClientFavRepository : MainDbClass, IClientFavoriteRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally

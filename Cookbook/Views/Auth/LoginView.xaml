@@ -65,33 +65,36 @@
                 
                 </Border>
                 
-            </ui:SimpleStackPanel>
-            
-            <TextBlock Name="ErrorTextBlock"
-                       Foreground="Red"
-                       TextWrapping="Wrap"
-                       Width="180"
-                       Text="{Binding Error,
+                <TextBlock Name="ErrorTextBlock"
+                           Foreground="Red"
+                           TextWrapping="Wrap"
+                           Width="170"
+                           Margin="5"
+                           Text="{Binding Error,
                                     UpdateSourceTrigger=PropertyChanged}"
-                       Visibility="{Binding HasError,
+                           Visibility="{Binding HasError,
                                     Converter={StaticResource BoolToVisabilityConverter},
                                     UpdateSourceTrigger=PropertyChanged}"/>
         
-            <ui:SimpleStackPanel Orientation="Horizontal"
-                                 HorizontalAlignment="Center"
-                                 Spacing="10">
+                <ui:SimpleStackPanel Orientation="Horizontal"
+                                     HorizontalAlignment="Center"
+                                     Spacing="10">
                 
-                <Button Name="LoginButton"
-                        Width="80"
-                        Command="{Binding LoginCommand}"
-                        Content="Войти"/>
+                    <Button Name="LoginButton"
+                            Width="80"
+                            Command="{Binding LoginCommand}"
+                            Content="Войти"/>
                 
-                <Button Name="GuestButton"
-                        Width="80"
-                        Command="{Binding GuestCommand}"
-                        Content="Гость"/>
+                    <Button Name="GuestButton"
+                            Width="80"
+                            Command="{Binding GuestCommand}"
+                            Content="Гость"/>
+                
+                </ui:SimpleStackPanel>
                 
             </ui:SimpleStackPanel>
+            
+            
             
             <TextBlock Name="RegistrationTextBlock"
                        Text="Регистрация"

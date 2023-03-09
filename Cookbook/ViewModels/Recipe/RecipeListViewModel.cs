@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Database.Services;
 using Frame = ModernWpf.Controls.Frame;
@@ -25,9 +26,14 @@ public class RecipeListViewModel : INotifyPropertyChanged
         _recipes = new List<RecipeModel>();
         
         _frame = frame;
+        
+        _frame.NavigationService.Navigated += NavigationServiceOnNavigated;
 
         GetRecipes();
     }
+
+    private void NavigationServiceOnNavigated(object sender, NavigationEventArgs e) =>
+        GetRecipes();
 
     // основная модель для привязки
     public List<RecipeModel> Recipes
@@ -64,7 +70,8 @@ public class RecipeListViewModel : INotifyPropertyChanged
     private void OpenClicked(int id)
     {
         _recipesViewService.OpenClicked(id, Recipes, _frame.NavigationService);
-        OnPropertyChanged("Recipes");
+        
+        GetRecipes();
     }
 
     private void LikeClicked(int id)
@@ -79,7 +86,8 @@ public class RecipeListViewModel : INotifyPropertyChanged
     private void EditClicked(int id)
     {
         _recipesViewService.EditClicked(id, Recipes, _frame.NavigationService);
-        OnPropertyChanged("Recipes");
+        
+        GetRecipes();
     }
 
     private async void GetRecipes()

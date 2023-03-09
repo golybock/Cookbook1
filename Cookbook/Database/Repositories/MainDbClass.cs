@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
-using Cookbook.Models.Database;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
 using Models.Models.Database;
 using Npgsql;
 
@@ -41,7 +39,6 @@ public class MainDbClass
         
         try
         {
-
             connection.Open();
             return true;
         }
@@ -59,12 +56,13 @@ public class MainDbClass
     protected async Task<CommandResult> DeleteAsync(string table, int id)
     {
         CommandResult result;
+
+        var connection = GetConnection();
         
-        var connection = new NpgsqlConnection(_connectionString);
-        
-        connection.Open();
         try
         {
+            connection.Open();
+            
             string query = $"delete from {table} where id = $1";
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
             {
@@ -73,13 +71,18 @@ public class MainDbClass
                     new() { Value = id },
                 }
             };
-            result = await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled; 
+            
+            result = await cmd.ExecuteNonQueryAsync() > 0 ?
+                CommandResults.Successfully :
+                CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally

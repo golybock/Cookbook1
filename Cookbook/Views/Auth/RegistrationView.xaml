@@ -112,9 +112,6 @@
                                TextWrapping="Wrap"
                                Width="150"
                                Text="{Binding Error,
-                                    UpdateSourceTrigger=PropertyChanged}"
-                               Visibility="{Binding HasError,
-                                    Converter={StaticResource BoolToVisabilityConverter},
                                     UpdateSourceTrigger=PropertyChanged}"/>
                     
                 </StackPanel>
