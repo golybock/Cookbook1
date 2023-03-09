@@ -687,3 +687,5 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Profile\FavoriteRe
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Search\SearchPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\FavoriteRecipesView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Search\SearchView.baml
+C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Xceed.Document.NET5.dll
+C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Xceed.Words.NET5.dll

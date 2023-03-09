@@ -76,7 +76,7 @@ public class RecipesViewService
     public async void GenerateFile(int id)
     {
         var recipe = await _recipeService.GetRecipeAsync(id);
-        RecipePdf.Generate(recipe);
+        RecipeDocx.Generate(recipe);
     }
     
     private async Task<List<RecipeModel>> DeleteRecipe(int id, List<RecipeModel> recipes)

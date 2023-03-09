@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="DocX" Version="2.4.0" />
       <PackageReference Include="MahApps.Metro" Version="2.4.9" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
@@ -55,6 +56,10 @@
       <Resource Include="Resources\MenuIcons\Sort\lowerToUpperSort.png" />
       <None Remove="Resources\MenuIcons\Sort\upper_to_lower_sort.png" />
       <Resource Include="Resources\MenuIcons\Sort\upperToLowerSort.png" />
+      <None Remove="Resources\MenuIcons\pdf.png" />
+      <Resource Include="Resources\MenuIcons\pdf.png" />
+      <None Remove="Resources\MenuIcons\download.png" />
+      <Resource Include="Resources\MenuIcons\download.png" />
     </ItemGroup>
 
     <ItemGroup>

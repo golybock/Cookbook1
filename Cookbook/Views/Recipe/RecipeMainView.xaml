@@ -117,10 +117,29 @@
                 <controls:SimpleStackPanel Name="ToolsPanel"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Left"
+                                           Orientation="Horizontal"
                                            Spacing="6">
                     
                     <Button Name="PrintButton"
-                            Command="{Binding GenerateFileCommand}"></Button>
+                            Width="32"
+                            Height="32"
+                            Command="{Binding GenerateFileCommand}">
+                        <Image Source="../../Resources/MenuIcons/download.png"/>
+                    </Button>
+                    
+                    <Button Name="EditButton"
+                            Width="32"
+                            Height="32"
+                            Command="{Binding EditCommand}">
+                        <Image Source="../../Resources/MenuIcons/EditIcon.png"/>
+                    </Button>
+                    
+                    <Button Name="DeleteButton"
+                            Width="32"
+                            Height="32"
+                            Command="{Binding DeleteCommand}">
+                        <Image Source="../../Resources/MenuIcons/DeleteIcon.png"/>
+                    </Button>
                     
                 </controls:SimpleStackPanel>
                 

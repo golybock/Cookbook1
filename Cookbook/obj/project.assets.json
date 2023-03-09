@@ -22,6 +22,21 @@
           "Microsoft.WindowsDesktop.App.WPF"
         ]
       },
+      "DocX/2.4.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Drawing.Common": "[5.0.2]",
+          "System.IO.Packaging": "[4.5.0]"
+        },
+        "compile": {
+          "lib/net5.0/Xceed.Document.NET5.dll": {},
+          "lib/net5.0/Xceed.Words.NET5.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Xceed.Document.NET5.dll": {},
+          "lib/net5.0/Xceed.Words.NET5.dll": {}
+        }
+      },
       "MahApps.Metro/2.4.9": {
         "type": "package",
         "dependencies": {
@@ -826,6 +841,17 @@
           }
         }
       },
+      "System.IO.Packaging/4.5.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/System.IO.Packaging.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.IO.Packaging.dll": {}
+        }
+      },
       "System.Text.Encodings.Web/7.0.0": {
         "type": "package",
         "compile": {
@@ -870,6 +896,9 @@
       "Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "DocX": "2.4.0"
+        },
         "compile": {
           "bin/placeholder/Models.dll": {}
         },
@@ -902,6 +931,25 @@
         "lib/netcoreapp3.1/ControlzEx.pdb",
         "lib/netcoreapp3.1/ControlzEx.xml",
         "logo-mini.png"
+      ]
+    },
+    "DocX/2.4.0": {
+      "sha512": "c02FW0keXYEWJGqA0+5z10lm/GFYsutnXaiDC34l9mwHliAXc1y5NO3q4cawGfY34wgAhMgS1vC2mOi6zgGUqA==",
+      "type": "package",
+      "path": "docx/2.4.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "Xceed_Logo_Retina-400x400.png",
+        "docx.2.4.0.nupkg.sha512",
+        "docx.nuspec",
+        "lib/net40/Xceed.Document.NET.dll",
+        "lib/net40/Xceed.Words.NET.dll",
+        "lib/net5.0/Xceed.Document.NET5.dll",
+        "lib/net5.0/Xceed.Words.NET5.dll",
+        "tools/install.ps1"
       ]
     },
     "MahApps.Metro/2.4.9": {
@@ -2060,6 +2108,30 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "System.IO.Packaging/4.5.0": {
+      "sha512": "OjtW5pGp1E7KE3ontBrzy+nSFJCM6pcbVDdo3gg4DauTfdtZKdeKvMVlADF4fSY+OfXWUp4qCvOSxIltt37LbA==",
+      "type": "package",
+      "path": "system.io.packaging/4.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net46/System.IO.Packaging.dll",
+        "lib/netstandard1.3/System.IO.Packaging.dll",
+        "lib/netstandard2.0/System.IO.Packaging.dll",
+        "ref/net46/System.IO.Packaging.dll",
+        "ref/net46/System.IO.Packaging.xml",
+        "ref/netstandard1.3/System.IO.Packaging.dll",
+        "ref/netstandard1.3/System.IO.Packaging.xml",
+        "ref/netstandard2.0/System.IO.Packaging.dll",
+        "ref/netstandard2.0/System.IO.Packaging.xml",
+        "system.io.packaging.4.5.0.nupkg.sha512",
+        "system.io.packaging.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
     "System.Text.Encodings.Web/7.0.0": {
       "sha512": "OP6umVGxc0Z0MvZQBVigj4/U31Pw72ITihDWP9WiWDm+q5aoe0GaJivsfYGq53o6dxH7DcXWiCTl7+0o2CGdmg==",
       "type": "package",
@@ -2170,6 +2242,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0-windows7.0": [
+      "DocX >= 2.4.0",
       "MahApps.Metro >= 2.4.9",
       "Microsoft.Extensions.Configuration >= 7.0.0",
       "Microsoft.Extensions.Configuration.FileExtensions >= 7.0.0",
@@ -2184,23 +2257,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\arshi\\.nuget\\packages\\": {},
+    "C:\\Users\\teplo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Cookbook\\Cookbook.csproj",
+      "projectUniqueName": "C:\\Coding\\C#\\Cookbook\\Cookbook\\Cookbook.csproj",
       "projectName": "Cookbook",
-      "projectPath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Cookbook\\Cookbook.csproj",
-      "packagesPath": "C:\\Users\\arshi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Cookbook\\obj\\",
+      "projectPath": "C:\\Coding\\C#\\Cookbook\\Cookbook\\Cookbook.csproj",
+      "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+      "outputPath": "C:\\Coding\\C#\\Cookbook\\Cookbook\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\arshi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2209,15 +2282,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "projectReferences": {
-            "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Models\\Models.csproj": {
-              "projectPath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Models\\Models.csproj"
+            "C:\\Coding\\C#\\Cookbook\\Models\\Models.csproj": {
+              "projectPath": "C:\\Coding\\C#\\Cookbook\\Models\\Models.csproj"
             }
           }
         }
@@ -2232,6 +2304,10 @@
       "net7.0-windows7.0": {
         "targetAlias": "net7.0-windows",
         "dependencies": {
+          "DocX": {
+            "target": "Package",
+            "version": "[2.4.0, )"
+          },
           "MahApps.Metro": {
             "target": "Package",
             "version": "[2.4.9, )"
@@ -2292,11 +2368,21 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   },
   "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package version outside of dependency constraint: DocX 2.4.0 requires System.Drawing.Common (= 5.0.2) but version System.Drawing.Common 7.0.0 was resolved.",
+      "libraryId": "System.Drawing.Common",
+      "targetGraphs": [
+        "net7.0-windows7.0"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",
