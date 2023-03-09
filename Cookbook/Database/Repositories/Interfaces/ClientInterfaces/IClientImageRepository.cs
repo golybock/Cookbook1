@@ -9,8 +9,8 @@ namespace Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
 
 public interface IClientImageRepository
 {
-    public Task<ClientImage?> GetClientImageAsync(int id);
-    public Task<ClientImage?> GetClientImageByClientIdAsync(int clientId);
+    public Task<ClientImage> GetClientImageAsync(int id);
+    public Task<ClientImage> GetClientImageByClientIdAsync(int clientId);
     public Task<List<ClientImage>> GetClientImagesAsync(int clientId);
     public Task<CommandResult> AddClientImageAsync(ClientImage clientImage);
     public Task<CommandResult> UpdateClientImageAsync(ClientImage clientImage);

@@ -12,18 +12,22 @@ namespace Cookbook.Database.Repositories.Client;
 
 public class ClientRepository : MainDbClass, IClientRepository
 {
-    public async Task<ClientModel?> GetClientAsync(int id)
+    public async Task<ClientModel> GetClientAsync(int id)
     {
+        ClientModel client = new ClientModel();
+        
         var con = GetConnection();
-        con.Open();
         try
         {
-            ClientModel client = new ClientModel();
+            con.Open();
+            
             string query = $"select * from client where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -35,14 +39,13 @@ public class ClientRepository : MainDbClass, IClientRepository
                 client.Name = name == DBNull.Value ? null : name.ToString();
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 client.Description = description == DBNull.Value ? null : description.ToString();
-                client.DateOfRegistration = reader.GetDateTime(reader.GetOrdinal("date_of_registration"));
             }
             
             return client;
         }
         catch
         {
-            return null;
+            return new ClientModel();
         }
         finally
         {
@@ -50,18 +53,23 @@ public class ClientRepository : MainDbClass, IClientRepository
         }
     }
 
-    public async Task<ClientModel?> GetClientAsync(string login)
+    public async Task<ClientModel> GetClientAsync(string login)
     {
+        ClientModel client = new ClientModel();
+        
         var con = GetConnection();
-        con.Open();
+        
         try
         {
-            ClientModel client = new ClientModel();
+            con.Open();
+            
             string query = $"select * from client where login = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = login == string.Empty ? DBNull.Value : login  } }
             };
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -73,14 +81,13 @@ public class ClientRepository : MainDbClass, IClientRepository
                 client.Name = name == DBNull.Value ? null : name.ToString();
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 client.Description = description == DBNull.Value ? null : description.ToString();
-                client.DateOfRegistration = reader.GetDateTime(reader.GetOrdinal("date_of_registration"));
             }
             
             return client;
         }
         catch(Exception e)
         {
-            return null;
+            return new ClientModel();
         }
         finally
         {
@@ -90,13 +97,18 @@ public class ClientRepository : MainDbClass, IClientRepository
 
     public async Task<List<ClientModel>> GetClientsAsync()
     {
+        List<ClientModel> clients = new List<ClientModel>();
+        
         var con = GetConnection();
-        con.Open();
+        
         try
         {
-            List<ClientModel> clients = new List<ClientModel>();
+            con.Open();
+            
             string query = $"select * from client";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -110,8 +122,7 @@ public class ClientRepository : MainDbClass, IClientRepository
                 client.Name = name == DBNull.Value ? null : name.ToString();
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 client.Description = description == DBNull.Value ? null : description.ToString();
-                client.DateOfRegistration = reader.GetDateTime(reader.GetOrdinal("date_of_registration"));
-                
+
                 clients.Add(client);
             }
             
@@ -129,10 +140,10 @@ public class ClientRepository : MainDbClass, IClientRepository
 
     public async Task<CommandResult> AddClientAsync(ClientModel client)
     {
-        var con = GetConnection();
-        
         CommandResult result;
 
+        var con = GetConnection();
+        
         try
         {
             con.Open();
@@ -166,6 +177,7 @@ public class ClientRepository : MainDbClass, IClientRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -176,12 +188,16 @@ public class ClientRepository : MainDbClass, IClientRepository
 
     public async Task<CommandResult> UpdateClientAsync(ClientModel client)
     {
-        var con = GetConnection();
         CommandResult result;
-        con.Open();
+        
+        var con = GetConnection();
+        
         try
         {
+            con.Open();
+            
             string query = $"update client set name = $2, description = $3 where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -203,6 +219,7 @@ public class ClientRepository : MainDbClass, IClientRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -213,12 +230,16 @@ public class ClientRepository : MainDbClass, IClientRepository
 
     public async Task<CommandResult> DeleteClientAsync(int id)
     {
-        var con = GetConnection();
         CommandResult result;
-        con.Open();
+        
+        var con = GetConnection();
+
         try
         {
+            con.Open();
+            
             string query = $"delete from client where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -238,6 +259,7 @@ public class ClientRepository : MainDbClass, IClientRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
