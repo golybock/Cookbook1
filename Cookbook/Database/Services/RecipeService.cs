@@ -335,10 +335,7 @@ public class RecipeService : IRecipeService
             }
         }
     }
-
-    private Task AddRecipeStatsAsync(RecipeStats recipeStats) =>
-        _recipeStatsService.AddRecipeStatsAsync(recipeStats);
-
+    
     public async Task<CommandResult> DeleteRecipeInfoAsync(int id)
     {
         CommandResult result;
@@ -376,8 +373,7 @@ public class RecipeService : IRecipeService
 
     public Task DeleteFavRecipes(int recipeId) =>
         _clientFavService.DeleteFavoriteRecipeByRecipe(recipeId);
-
-    // переписать под фунцию репозитория
+    
     private Task DeleteRecipeImages(int recipeId) =>
         _recipeImageService.DeleteRecipeImagesByRecipeAsync(recipeId); 
 
@@ -390,7 +386,10 @@ public class RecipeService : IRecipeService
     public Task<List<Measure>> GetMeasures() => 
         _measureService.GetMeasuresAsync();
 
-    public Task<CommandResult> AddRecipeToFav(FavoriteRecipe favoriteRecipe) =>
+    private Task AddRecipeStatsAsync(RecipeStats recipeStats) =>
+        _recipeStatsService.AddRecipeStatsAsync(recipeStats);
+    
+    public Task AddRecipeToFav(FavoriteRecipe favoriteRecipe) =>
         _clientFavService.AddFavoriteRecipeAsync(favoriteRecipe);
 
     public Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType) =>

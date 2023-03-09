@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Navigation;
 using Cookbook.Models.Database.Client;
 using Cookbook.Pages.Recipe;

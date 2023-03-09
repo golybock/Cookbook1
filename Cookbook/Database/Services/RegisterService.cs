@@ -97,7 +97,6 @@ public class RegisterService : IRegisterService
 
     }
     
-    
     private string? CopyImageToDocuments(ClientImage clientImage)
     {
         string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients\\";
@@ -115,30 +114,20 @@ public class RegisterService : IRegisterService
         return null;
     }
 
-    private bool PasswordNotNull(string password)
-    {
-        return !string.IsNullOrEmpty(password);
-    }
+    private bool PasswordNotNull(string password) =>
+        !string.IsNullOrEmpty(password);
 
-    private bool PasswordHasDigit(string password)
-    {
-        return password.Any(char.IsDigit);
-    }
+    private bool PasswordHasDigit(string password) =>
+        password.Any(char.IsDigit);
 
-    private bool PasswordHasUpper(string password)
-    {
-        return password.Any(char.IsUpper);
-    }
+    private bool PasswordHasUpper(string password) =>
+        password.Any(char.IsUpper);
 
-    private bool PasswordLengthValid(string password)
-    {
-        return password.Length >= 8;
-    }
+    private bool PasswordLengthValid(string password) =>
+        password.Length >= 8;
 
-    private bool PasswordHasSymbol(string password)
-    {
-        return password.Any(char.IsPunctuation);
-    }
+    private bool PasswordHasSymbol(string password) =>
+        password.Any(char.IsPunctuation);
 
     private async Task<bool> LoginValid(string login)
     {
