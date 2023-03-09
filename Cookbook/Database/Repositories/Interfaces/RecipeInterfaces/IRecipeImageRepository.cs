@@ -8,8 +8,8 @@ namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
 public interface IRecipeImageRepository
 {
     
-    public Task<RecipeImage?> GetRecipeImageAsync(int id);
-    public Task<RecipeImage?> GetRecipeImageByRecipeAsync(int recipeId);
+    public Task<RecipeImage> GetRecipeImageAsync(int id);
+    public Task<RecipeImage> GetRecipeImageByRecipeAsync(int recipeId);
     public Task<List<RecipeImage>> GetRecipeImagesAsync(int recipeId);
     public Task<CommandResult> AddRecipeImageAsync(RecipeImage recipeImage);
     public Task<CommandResult> UpdateRecipeImageAsync(RecipeImage recipeImage);

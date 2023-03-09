@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.IngredientsInterfaces;
-using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
 using Npgsql;
@@ -11,20 +10,23 @@ namespace Cookbook.Database.Repositories.Recipe.Ingredients;
 
 public class MeasureRepository : MainDbClass, IMeasureRepository
 {
-    public async Task<Measure?> GetMeasureAsync(int id)
+    public async Task<Measure> GetMeasureAsync(int id)
     {
+        Measure measure = new Measure();
+        
         var con = GetConnection();
-        
-        con.Open();
-        
+
         try
         {
-            Measure measure = new Measure();
+            con.Open();
+            
             string query = $"select * from measure where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -47,14 +49,20 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
 
     public async Task<List<Measure>> GetMeasuresAsync()
     {
-        var con = GetConnection();
         List<Measure> measures = new List<Measure>();
+        
+        var con = GetConnection();
+     
         try
         {
             con.Open();
+            
             string query = $"select * from measure";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
             while(await reader.ReadAsync())
             {
                 Measure measure = new Measure();
@@ -77,14 +85,16 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
 
     public async Task<CommandResult> AddMeasureAsync(Measure measure)
     {
-        var con = GetConnection();
-        
         CommandResult result;
         
+        var con = GetConnection();
+
         try
         {
             con.Open();
+            
             string query = $"insert into measure(name) values ($1) returning id";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -95,6 +105,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
             };
             
             result = CommandResults.Successfully;
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -108,6 +119,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -124,7 +136,10 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         
         try
         {
+            await con.OpenAsync();
+            
             string query = $"update measure set name = $2 where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -145,6 +160,7 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -153,8 +169,6 @@ public class MeasureRepository : MainDbClass, IMeasureRepository
         }
     }
 
-    public async Task<CommandResult> DeleteMeasureAsync(int id)
-    {
-        return await DeleteAsync("measure", id);
-    }
+    public async Task<CommandResult> DeleteMeasureAsync(int id) =>
+        await DeleteAsync("measure", id);
 }

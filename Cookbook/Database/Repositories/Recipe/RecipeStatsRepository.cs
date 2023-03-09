@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database;
-using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 using Models.Models.Database.Recipe;
 using Npgsql;
@@ -16,16 +11,21 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
 {
     public async Task<RecipeStats> GetRecipeStatsAsync(int id)
     {
+        RecipeStats recipeStats = new RecipeStats();
+        
         var con = GetConnection();
-        RecipeStats? recipeStats = new RecipeStats();
+        
         try
         {
-            con.Open();
+            await con.OpenAsync();
+            
             string query = $"select * from recipe_stats where recipe_id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -51,13 +51,17 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
 
     public async Task<CommandResult> AddRecipeStatsAsync(RecipeStats recipeStats)
     {
-        var con = GetConnection();
         CommandResult result;
-        con.Open();
+        
+        var con = GetConnection();
+        
         try
         {
+            con.Open();
+            
             string query = $"insert into recipe_stats(recipe_id, squirrels, fats, carbohydrates, kilocalories)" +
                            $" values ($1, $2, $3, $4, $5)";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -69,6 +73,7 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
                     new() { Value = recipeStats.Kilocalories }
                 }
             }; 
+            
             result = CommandResults.Successfully;
 
             await cmd.ExecuteNonQueryAsync();
@@ -79,6 +84,7 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -89,12 +95,16 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
 
     public async Task<CommandResult> UpdateRecipeStatsAsync(RecipeStats recipeStats)
     {
-        var con = GetConnection();
         CommandResult result;
-        con.Open();
+        
+        var con = GetConnection();
+        
         try
         {
+            con.Open();
+            
             string query = $"update recipe_stats set squirrels = $2, fats = $3, carbohydrates = $4, kilocalories = $5 where recipe_id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -118,6 +128,7 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -126,8 +137,6 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
         }
     }
 
-    public async Task<CommandResult> DeleteRecipeStatsAsync(int id)
-    {
-        return await DeleteAsync("recipe_stats", id);
-    }
+    public async Task<CommandResult> DeleteRecipeStatsAsync(int id) =>
+        await DeleteAsync("recipe_stats", id);
 }

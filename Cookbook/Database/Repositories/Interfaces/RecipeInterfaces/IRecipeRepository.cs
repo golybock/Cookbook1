@@ -11,7 +11,7 @@ namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
 
 public interface IRecipeRepository
 {
-    public Task<RecipeModel?> GetRecipeAsync(int id);
+    public Task<RecipeModel> GetRecipeAsync(int id);
     public Task<List<RecipeModel>> GetRecipesAsync();
     public Task<List<RecipeModel>> GetClientRecipesAsync(int clientId);
     public Task<CommandResult> AddRecipeAsync(RecipeModel recipe);

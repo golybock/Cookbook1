@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.IngredientsInterfaces;
-using Cookbook.Models.Database;
-using Cookbook.Models.Database.Recipe.Ingredients;
 using Models.Models.Database;
 using Models.Models.Database.Recipe.Ingredients;
 using Npgsql;
@@ -15,17 +12,21 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
 {
     public async Task<Ingredient?> GetIngredientAsync(int id)
     {
+        Ingredient ingredient = new Ingredient();
+        
         var con = GetConnection();
         
         try
         {
             con.Open();
-            Ingredient ingredient = new Ingredient();
+            
             string query = $"select * from ingredient where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -49,14 +50,20 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
 
     public async Task<List<Ingredient>> GetIngredientsAsync()
     {
-        var con = GetConnection();
         List<Ingredient> ingredients = new List<Ingredient>();
+        
+        var con = GetConnection();
+        
         try
         {
-           con.Open();
+            con.Open();
+           
             string query = $"select * from ingredient";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+            
             while(await reader.ReadAsync())
             {
                 Ingredient ingredient = new Ingredient();
@@ -81,15 +88,17 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
 
     public async Task<CommandResult> AddIngredientAsync(Ingredient ingredient)
     {
-        var con = GetConnection();
-        
         CommandResult result;
         
+        var con = GetConnection();
+
         try
         {
             con.Open();
+            
             string query = $"insert into ingredient(measure_id, name)" +
                            $" values ($1, $2) returning id";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -100,6 +109,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
             }; 
             
             result = CommandResults.Successfully;
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -113,6 +123,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -123,13 +134,16 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
 
     public async Task<CommandResult> UpdateIngredientAsync(Ingredient ingredient)
     {
-        var con = GetConnection();
-        
         CommandResult result;
         
+        var con = GetConnection();
+
         try
         {
+            await con.OpenAsync();
+            
             string query = $"update ingredient set measure_id = $2, name = $3 where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -151,6 +165,7 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -159,8 +174,6 @@ public class IngredientRepository : MainDbClass, IIngredientRepository
         }
     }
 
-    public async Task<CommandResult> DeleteIngredientAsync(int id)
-    {
-        return await DeleteAsync("ingredient", id);
-    }
+    public async Task<CommandResult> DeleteIngredientAsync(int id) =>
+        await DeleteAsync("ingredient", id);
 }

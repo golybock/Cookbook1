@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
-using Cookbook.Models.Database.Recipe;
 using Models.Models.Database;
 using Models.Models.Database.Recipe;
 using Npgsql;
@@ -13,16 +12,21 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
 {
     public async Task<Category> GetCategoryAsync(int id)
     {
-        var con = GetConnection();
-        con.Open();
         Category category = new Category();
+        
+        var con = GetConnection();
+
         try
         {
+            con.Open();
+            
             string query = $"select * from category where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters = { new() { Value = id} }
             };
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
@@ -45,22 +49,27 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
 
     public async Task<List<Category>> GetCategoriesAsync()
     {
+        List<Category> categories = new List<Category>();
+        
         var con = GetConnection();
         
-        con.Open();
-        
-        List<Category> categories = new List<Category>();
         try
         {
+            con.Open();
+            
             string query = $"select * from category";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
+            
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
             
             while(await reader.ReadAsync())
             {
                 Category category = new Category();
+                
                 category.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 category.Name = reader.GetString(reader.GetOrdinal("name"));
+                
                 categories.Add(category);
             }
             
@@ -79,19 +88,23 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
     public async Task<CommandResult> AddCategoryAsync(Category category)
     {
         CommandResult result;
+        
         var con = GetConnection();
         
-        con.Open();
         try
         {
+            con.Open();
+            
             string query = $"insert into category(name) values ($1) returning id";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
                     new() { Value = category.Name },
                 }
-            }; 
+            };
+            
             result = CommandResults.Successfully;
             
             await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
@@ -107,6 +120,7 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -118,12 +132,15 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
     public async Task<CommandResult> UpdateCategoryAsync(Category category)
     {
         CommandResult result;
+        
         var con = GetConnection();
         
-        con.Open();
         try
         {
+            con.Open();
+            
             string query = $"update category set name = $2 where id = $1";
+            
             await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
@@ -132,16 +149,19 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
                     new() { Value = category.Name }
                 }
             };
+            
             result =
                 await cmd.ExecuteNonQueryAsync() > 0 ?
                     CommandResults.Successfully :
                     CommandResults.NotFulfilled;
+            
             return result;
         }
         catch(Exception e)
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
+            
             return result;
         }
         finally
@@ -150,9 +170,6 @@ public class CategoryRepository : MainDbClass, ICategoryRepository
         }
     }
 
-    public async Task<CommandResult> DeleteCategoryAsync(int id)
-    {
-        return await DeleteAsync("category", id);
-    }
-    
+    public async Task<CommandResult> DeleteCategoryAsync(int id) =>
+        await DeleteAsync("category", id);
 }
