@@ -37,7 +37,8 @@
                                                         Open="{Binding Path=DataContext.OpenCommand, ElementName=this}"
                                                         Like="{Binding Path=DataContext.LikeCommand, ElementName=this}"
                                                         Delete="{Binding Path=DataContext.DeleteCommand, ElementName=this}"
-                                                        Edit="{Binding Path=DataContext.EditCommand, ElementName=this}"/>
+                                                        Edit="{Binding Path=DataContext.EditCommand, ElementName=this}"
+                                                        Print="{Binding Path=DataContext.PrintCommand, ElementName=this}"/>
                             </Border.Child>
                             
                         </Border>

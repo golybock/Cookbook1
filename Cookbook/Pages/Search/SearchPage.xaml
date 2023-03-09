@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Cookbook.Pages.Search"
       xmlns:search="clr-namespace:Cookbook.Views.Search"
       mc:Ignorable="d"
-      Title="SearchPage">
+      Title="Поиск">
       
       <ScrollViewer>
             

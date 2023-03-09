@@ -62,7 +62,7 @@ public partial class Recipe : INotifyPropertyChanged
     {
         string text = "";
 
-        string path = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + PathToTextFile;
+        string path = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + PathToTextFile + ".txt";
         
         if (PathToTextFile != null)
             if (File.Exists(path))

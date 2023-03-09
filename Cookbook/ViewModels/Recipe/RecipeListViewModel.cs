@@ -65,7 +65,10 @@ public class RecipeListViewModel : INotifyPropertyChanged
     
     public RelayCommand<Int32> EditCommand =>
         new RelayCommand<int>(EditClicked);
-    
+
+    public RelayCommand<Int32> PrintCommand =>
+        new RelayCommand<int>(GenerateFileClicked);
+
     // сами команды
     private void OpenClicked(int id)
     {
@@ -79,7 +82,12 @@ public class RecipeListViewModel : INotifyPropertyChanged
         _recipesViewService.LikeClicked(id, Recipes);
         OnPropertyChanged("Recipes");
     }
-
+    
+    private void GenerateFileClicked(int obj)
+    {
+        _recipesViewService.GenerateFile(obj);
+    }
+    
     private async void DeleteClicked(int id) =>
         Recipes = new (await _recipesViewService.DeleteClicked(id, Recipes));
 

@@ -235,7 +235,7 @@ public class RecipeService : IRecipeService
 
         await using StreamWriter sw = new StreamWriter(outPath);
         
-        await sw.WriteAsync(recipe.Text);
+        await sw.WriteLineAsync(recipe.Text);
 
         await sw.DisposeAsync();
 

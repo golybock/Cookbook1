@@ -114,6 +114,16 @@
                            Height="160"
                            FontSize="30"/>
                 
+                <controls:SimpleStackPanel Name="ToolsPanel"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           Spacing="6">
+                    
+                    <Button Name="PrintButton"
+                            Command="{Binding GenerateFileCommand}"></Button>
+                    
+                </controls:SimpleStackPanel>
+                
             </controls:SimpleStackPanel>
             
         </Grid>

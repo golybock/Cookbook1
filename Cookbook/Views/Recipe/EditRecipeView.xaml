@@ -340,13 +340,14 @@
                                FontSize="14"/>
                 
                     <Border Name="SelectedIngredientBorder"
-                            BorderThickness="1"
+                            BorderThickness="1.5"
+                            CornerRadius="4"
+                            Margin="5"
                             BorderBrush="{Binding ValidSelectedIngredient,
                              Converter={StaticResource ErrorBoolToColorConverter},
                              UpdateSourceTrigger=PropertyChanged}">
                         
                         <ComboBox Name="IngredientsComboBox"
-                                  Margin="5"
                                   Width="150"
                                   DisplayMemberPath="Name"
                                   ItemsSource="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"
@@ -371,7 +372,7 @@
                                            VerticalAlignment="Top"
                                            HorizontalAlignment="Center">
                         
-                    <TextBlock Text="Добавить ингридиент"
+                    <TextBlock Text=""
                                Margin="5,0,0,0"
                                FontSize="14"/>
                     
@@ -382,15 +383,29 @@
                             Command="{Binding AddIngredientCommand}"
                             Margin="5"/>
                     
-                    <Button Name="NewIngredientButton"
-                            Height="32"
+                    <Button Name="ClearIngredientsButton"
                             Width="150"
-                            Content="Новый ингридиент"
                             Style="{DynamicResource AccentButtonStyle}"
-                            Command="{Binding NewIngredientCommand}"
+                            Content="Очистить"
+                            Command="{Binding ClearIngredientsCommand}"
                             Margin="5"/>
                         
                 </controls:SimpleStackPanel>
+                
+            </Grid>
+            
+            <Grid Grid.Row="4"
+                  Grid.Column="2">
+                
+                <Button Name="NewIngredientButton"
+                        Height="32"
+                        Width="150"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Content="Новый ингридиент"
+                        Style="{DynamicResource AccentButtonStyle}"
+                        Command="{Binding NewIngredientCommand}"
+                        Margin="5"/>
                 
             </Grid>
             

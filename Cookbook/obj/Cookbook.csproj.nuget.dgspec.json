@@ -84,6 +84,10 @@
             "PDFsharp": {
               "target": "Package",
               "version": "[1.50.5147, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             }
           },
           "imports": [

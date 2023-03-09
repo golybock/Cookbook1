@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
+using Cookbook.FIleGenerating;
 using Cookbook.Models.Database.Client;
 using Cookbook.Pages.Recipe;
 using ModernWpf.Controls;
@@ -70,6 +71,12 @@ public class RecipesViewService
         }
 
         return recipes;
+    }
+
+    public async void GenerateFile(int id)
+    {
+        var recipe = await _recipeService.GetRecipeAsync(id);
+        RecipePdf.Generate(recipe);
     }
     
     private async Task<List<RecipeModel>> DeleteRecipe(int id, List<RecipeModel> recipes)

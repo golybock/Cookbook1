@@ -186,9 +186,9 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         Recipe.NewImagePath =
             Recipe.RecipeImage.ImagePath;
 
-        SelectedIngredient = Ingredients.ElementAt(0); 
+        RecipeIngredient = new RecipeIngredient();
         
-        RecipeIngredient = new RecipeIngredient(){Ingredient = Ingredients.ElementAt(0)};
+        SelectedIngredient = Ingredients.ElementAt(0);
     }
 
     public EditRecipeViewModel(ClientModel client, Frame frame)
@@ -205,10 +205,10 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         LoadComboboxes();
         
         Recipe = new RecipeModel { Id = -1, ClientId = client.Id};
-
-        SelectedIngredient = Ingredients.ElementAt(0); 
         
-        RecipeIngredient = new RecipeIngredient(){Ingredient = Ingredients.ElementAt(0)};
+        RecipeIngredient = new RecipeIngredient();
+        
+        SelectedIngredient = Ingredients.ElementAt(0);
         
         _recipeService = new RecipeService(client);
 
@@ -227,6 +227,9 @@ public class EditRecipeViewModel : INotifyPropertyChanged
 
     public CommandHandler AddIngredientCommand =>
         new CommandHandler(OnAddIngredient);
+
+    public CommandHandler ClearIngredientsCommand =>
+        new CommandHandler(OnClearIngredients);
 
     public CommandHandler AddCategoryCommand =>
         new CommandHandler(OnAddCategory);
@@ -263,7 +266,10 @@ public class EditRecipeViewModel : INotifyPropertyChanged
 
     private void OnClear() =>
         ShowClearDialog();
-
+    
+    private void OnClearIngredients() =>
+        RecipeIngredients = new();
+    
     private void OnSave()
     {
         if(Recipe.Id == -1)
@@ -282,6 +288,12 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             if (RecipeIngredient.Count > 0)
             {
                 Recipe.RecipeIngredients.Add(RecipeIngredient);
+                
+                RecipeIngredient = new RecipeIngredient();
+        
+                SelectedIngredient = Ingredients.ElementAt(0);
+                RecipeIngredientCount = 1;
+                
                 OnPropertyChanged("RecipeIngredients");
                 return;
             }
@@ -317,9 +329,8 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         var createResult = await _recipeService.AddRecipeAsync(Recipe);
 
         if (createResult.Code != 100)
-        {
             ShowErrorDialog(createResult.Description!);
-        }
+        
         else
         {
             ShowSavedDialog();
@@ -332,9 +343,8 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         var updateResult = await _recipeService.UpdateRecipeAsync(Recipe);
         
         if (updateResult.Code != 100)
-        {
             ShowErrorDialog(updateResult.Description!);
-        }
+        
         else
         {
             ShowSavedDialog();

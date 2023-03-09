@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Cookbook.Pages.Recipe"
       xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
       mc:Ignorable="d"
-      Title="EditRecipePage" >
+      Title="Редактирование рецепта" >
     <Grid>
         
         <ScrollViewer VerticalScrollBarVisibility="Visible"

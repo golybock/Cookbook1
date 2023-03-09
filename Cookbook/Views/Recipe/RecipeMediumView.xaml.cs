@@ -34,6 +34,12 @@ public partial class RecipeMediumView : UserControl
             typeof(ICommand),
             typeof(UserControl));
     
+    public static readonly DependencyProperty PrintProperty =
+        DependencyProperty.Register(
+            "Print",
+            typeof(ICommand),
+            typeof(UserControl));
+    
     public ICommand Delete
     {
         get => (ICommand) GetValue(DeleteProperty);
@@ -58,29 +64,30 @@ public partial class RecipeMediumView : UserControl
         set => SetValue(OpenProperty, value);
     }
 
+    public ICommand Print
+    {
+        get => (ICommand) GetValue(PrintProperty);
+        set => SetValue(PrintProperty, value);
+    }
+    
     public RecipeMediumView()
     {
         InitializeComponent();
         LikeButton.MouseDown += OnLikeClicked;
     }
 
-    private void OnLikeClicked(object sender, EventArgs e)
-    {
+    private void OnLikeClicked(object sender, EventArgs e) =>
         Like.Execute(Int32.Parse(Id.Text));
-    }
 
-    private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
-    {
+    private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e) =>
         Delete.Execute(Int32.Parse(Id.Text));
-    }
 
-    private void EditMenuItem_OnClick(object sender, RoutedEventArgs e)
-    {
+    private void EditMenuItem_OnClick(object sender, RoutedEventArgs e) =>
         Edit.Execute(Int32.Parse(Id.Text));
-    }
 
-    private void RecipeMediumView_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        Open.Execute(Int32.Parse(Id.Text));;
-    }
+    private void RecipeMediumView_OnMouseDown(object sender, MouseButtonEventArgs e) => 
+        Open.Execute(Int32.Parse(Id.Text));
+
+    private void PrintMenuItem_OnClick(object sender, RoutedEventArgs e) =>
+        Print.Execute(Int32.Parse(Id.Text));
 }
