@@ -72,14 +72,15 @@ public class RecipeService : IRecipeService
 
         return recipe;
     }
-
-
+    
     public async Task<List<RecipeModel>> GetRecipesAsync()
     {
         var recipes = await _recipeService.GetRecipesAsync();
 
         foreach (var recipe in recipes)
         {
+            recipe.RecipeStat = await _recipeStatsService.GetRecipeStatsAsync(recipe.Id);
+            
             recipe.Category =
                 await GetRecipeMainCategoryAsync(recipe.Id);
             
@@ -232,10 +233,11 @@ public class RecipeService : IRecipeService
 
         string outPath = documentsPath + filePath + ".txt";
 
-        await using (StreamWriter sw = new StreamWriter(outPath))
-        {
-            await sw.WriteAsync(recipe.Text);
-        }
+        await using StreamWriter sw = new StreamWriter(outPath);
+        
+        await sw.WriteAsync(recipe.Text);
+
+        await sw.DisposeAsync();
 
         return filePath;
     }

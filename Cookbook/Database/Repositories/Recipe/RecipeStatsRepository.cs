@@ -31,7 +31,7 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
             while(await reader.ReadAsync())
             {
                 recipeStats.RecipeId = reader.GetInt32(reader.GetOrdinal("recipe_id"));
-                recipeStats.Squirrels = reader.GetDecimal(reader.GetOrdinal("squirrls"));
+                recipeStats.Squirrels = reader.GetDecimal(reader.GetOrdinal("squirrels"));
                 recipeStats.Fats = reader.GetDecimal(reader.GetOrdinal("fats"));
                 recipeStats.Carbohydrates = reader.GetDecimal(reader.GetOrdinal("carbohydrates"));
                 recipeStats.Kilocalories = reader.GetDecimal(reader.GetOrdinal("kilocalories"));
@@ -39,7 +39,7 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
             
             return recipeStats;
         }
-        catch
+        catch(Exception e)
         {
             return new RecipeStats();
         }
@@ -137,7 +137,42 @@ public class RecipeStatsRepository : MainDbClass, IRecipeStatsRepository
         }
     }
 
-    public async Task<CommandResult> DeleteRecipeStatsAsync(int id) =>
-        await DeleteAsync("recipe_stats", id);
+    public async Task<CommandResult> DeleteRecipeStatsAsync(int id)
+    { 
+        CommandResult result;
+
+        var connection = GetConnection();
+        
+        try
+        {
+            connection.Open();
+            
+            string query = $"delete from recipe_stats where recipe_id = $1";
+            await using NpgsqlCommand cmd = new NpgsqlCommand(query, connection)
+            {
+                Parameters =
+                {
+                    new() { Value = id },
+                }
+            };
+            
+            result = await cmd.ExecuteNonQueryAsync() > 0 ?
+                CommandResults.Successfully :
+                CommandResults.NotFulfilled;
+            
+            return result;
+        }
+        catch(Exception e)
+        {
+            result = CommandResults.BadRequest;
+            result.Description = e.ToString();
+            
+            return result;
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+    }
 
 }

@@ -336,7 +336,7 @@
                 <TextBlock Text="Шаги приготовления"
                            FontSize="14"/>
                 
-                <TextBlock Text="{Binding Text, TargetNullValue=Нет рецепта}"
+                <TextBlock Text="{Binding Text, TargetNullValue=Нет рецепта, UpdateSourceTrigger=PropertyChanged}"
                          Width="560"
                          MinHeight="190"
                          Margin="10"

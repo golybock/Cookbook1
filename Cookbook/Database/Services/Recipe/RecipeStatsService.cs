@@ -18,15 +18,15 @@ public class RecipeStatsService : IRecipeStatsService
     
     public async Task<RecipeStats> GetRecipeStatsAsync(int id)
     {
-        if (id > 0)
+        if (id < 0)
             return new RecipeStats();
 
         return await _recipeStatsRepository.GetRecipeStatsAsync(id);
     }
 
-    public async Task<CommandResult> AddRecipeStatsAsync(RecipeStats? recipeStats)
+    public async Task<CommandResult> AddRecipeStatsAsync(RecipeStats recipeStats)
     {
-        if (recipeStats == null)
+        if (recipeStats.RecipeId == 0)
             return CommandResults.BadRequest; 
         
         return await _recipeStatsRepository.AddRecipeStatsAsync(recipeStats);
@@ -42,7 +42,7 @@ public class RecipeStatsService : IRecipeStatsService
 
     public async Task<CommandResult> DeleteRecipeStatsAsync(int id)
     {
-        if (id > 0)
+        if (id < 0)
             return CommandResults.BadRequest;
         
         return await _recipeStatsRepository.DeleteRecipeStatsAsync(id);
