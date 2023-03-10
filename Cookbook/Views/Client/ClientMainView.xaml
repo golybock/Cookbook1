@@ -3,114 +3,113 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.Views.Client"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
              xmlns:views="clr-namespace:Cookbook.Views"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="700">
-    
+
     <UserControl.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe ui"></Setter>
-            <Setter Property="FontSize" Value="24"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Segoe ui" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Foreground" Value="Black" />
         </Style>
     </UserControl.Resources>
-    
+
     <Grid>
-    
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*" />
+            <RowDefinition Height="50*" />
         </Grid.RowDefinitions>
-        
+
         <Border CornerRadius="15"
                 BorderBrush="Transparent"
                 BorderThickness="3"
                 Background="Thistle">
-        
+
             <Grid ShowGridLines="False">
-                
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40*"/>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                
+
                 <ui:PersonPicture Grid.Row="0"
-                       Grid.Column="0"
-                       Height="250"
-                       Width="250"
-                       ProfilePicture="{Binding Client.ClientImage.ImagePath, UpdateSourceTrigger=PropertyChanged}"/>
-                
+                                  Grid.Column="0"
+                                  Height="250"
+                                  Width="250"
+                                  ProfilePicture="{Binding Client.ClientImage.ImagePath, UpdateSourceTrigger=PropertyChanged}" />
+
                 <ui:SimpleStackPanel Grid.Row="0"
                                      Grid.ColumnSpan="2"
                                      Grid.Column="1"
                                      Spacing="14"
                                      Margin="25">
 
-                       <TextBlock Text="{Binding Client.Name, UpdateSourceTrigger=PropertyChanged}"
-                                  FontSize="26"
-                                  FontWeight="Heavy"/>
-                    
-                       
-                       <TextBlock Text="{Binding Client.Description, UpdateSourceTrigger=PropertyChanged}"
-                                  FontSize="20"
-                                  TextWrapping="Wrap"
-                                  MaxHeight="75"/>
-                       
-                       <Button Name="EditButton"
-                               Width="150"
-                               Height="32"
-                               Content="Редактировать"
-                               Command="{Binding EditClientCommand}"/>
-                    
+                    <TextBlock Text="{Binding Client.Name, UpdateSourceTrigger=PropertyChanged}"
+                               FontSize="26"
+                               FontWeight="Heavy" />
+
+
+                    <TextBlock Text="{Binding Client.Description, UpdateSourceTrigger=PropertyChanged}"
+                               FontSize="20"
+                               TextWrapping="Wrap"
+                               MaxHeight="75" />
+
+                    <Button Name="EditButton"
+                            Width="150"
+                            Height="32"
+                            Content="Редактировать"
+                            Command="{Binding EditClientCommand}" />
+
                 </ui:SimpleStackPanel>
 
             </Grid>
-            
+
         </Border>
-        
+
         <Grid Grid.Row="1"
               Margin="12">
-            
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="85*"/>
+                <RowDefinition Height="15*" />
+                <RowDefinition Height="85*" />
             </Grid.RowDefinitions>
-            
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="50*" />
             </Grid.ColumnDefinitions>
-                    
-            <Label Grid.Column="0" 
+
+            <Label Grid.Column="0"
                    Content="Рецепты"
                    FontSize="20"
                    DockPanel.Dock="Left"
-                   HorizontalAlignment="Left"/>
-                    
+                   HorizontalAlignment="Left" />
+
             <!-- <Label Grid.Row="0" -->
             <!--        Grid.Column="1"  -->
             <!--        Content="все рецепты >" -->
             <!--        FontSize="18" -->
             <!--        DockPanel.Dock="Right" -->
             <!--        HorizontalAlignment="Right"/> -->
-               
+
             <recipe:RecipesListView Grid.Row="1"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
                                     x:Name="RecipesListView"
-                                    Visibility="Visible"/>
-                
+                                    Visibility="Visible" />
+
             <views:NothingShowView Grid.Row="1"
                                    Grid.Column="1"
                                    x:Name="NothingShowView"
-                                   Visibility="Collapsed"/>
-            
+                                   Visibility="Collapsed" />
+
         </Grid>
-        
+
     </Grid>
-    
+
 </UserControl>

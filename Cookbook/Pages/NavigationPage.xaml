@@ -8,65 +8,65 @@
       Title="NavigationPage"
       Loaded="NavigationPage_OnLoaded">
     <Grid>
-        
+
         <ui:NavigationView x:Name="NavigationView"
                            IsBackButtonVisible="Collapsed"
                            PaneDisplayMode="LeftCompact"
                            ItemInvoked="NavigationView_OnItemInvoked"
                            IsSettingsVisible="False">
-            
+
             <ui:NavigationView.MenuItems>
-                
+
                 <ui:NavigationViewItem Tag="MainPage"
                                        Content="Рецепты"
                                        Icon="Home"
-                                       IsSelected="True"/>
-                
+                                       IsSelected="True" />
+
                 <ui:NavigationViewItem Tag="FindPage"
                                        Content="Поиск"
-                                       Icon="Find"/>
-                
+                                       Icon="Find" />
+
                 <ui:NavigationViewItem Tag="ProfilePage"
                                        Content="Профиль"
-                                       Icon="Contact"/>
-                
+                                       Icon="Contact" />
+
                 <ui:NavigationViewItem Tag="FavoritePostsPage"
                                        Content="Понравившиеся"
-                                       Icon="Favorite"/>
-                
+                                       Icon="Favorite" />
+
                 <ui:NavigationViewItem Tag="AddPostPage"
                                        Content="Создать"
-                                       Icon="Add"/>
-                
+                                       Icon="Add" />
+
             </ui:NavigationView.MenuItems>
-            
+
             <ui:NavigationView.Content>
-                
+
                 <ui:Frame x:Name="MainFrame"
-                          NavigationUIVisibility="Hidden"/>
+                          NavigationUIVisibility="Hidden" />
             </ui:NavigationView.Content>
-            
-            
+
+
             <ui:NavigationView.Header>
-                
+
                 <Label Content="{Binding Path=Content.Title, ElementName=MainFrame}"
                        FontSize="24"
-                       VerticalContentAlignment="Center"/>
-                
+                       VerticalContentAlignment="Center" />
+
             </ui:NavigationView.Header>
-            
+
             <ui:NavigationView.PaneFooter>
-                
-                <ui:NavigationViewItem Name="ExitButton" 
+
+                <ui:NavigationViewItem Name="ExitButton"
                                        Tag="Exit"
                                        Content="Выйти"
                                        Icon="Back"
-                                       MouseDown="ExitButton_OnMouseDown"/>
-                                       
+                                       MouseDown="ExitButton_OnMouseDown" />
+
             </ui:NavigationView.PaneFooter>
-            
+
         </ui:NavigationView>
 
     </Grid>
-    
+
 </Page>

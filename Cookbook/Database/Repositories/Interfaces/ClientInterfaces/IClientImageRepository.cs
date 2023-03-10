@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
-using Models.Models.Database;
-using Models.Models.Database.Client;
 
 namespace Cookbook.Database.Repositories.Interfaces.ClientInterfaces;
 

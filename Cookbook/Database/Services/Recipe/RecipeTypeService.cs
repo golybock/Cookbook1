@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
-using Models.Models.Database;
-using Models.Models.Database.Recipe;
+using Cookbook.Models.Database;
+using Cookbook.Models.Database.Recipe;
 
 namespace Cookbook.Database.Services.Recipe;
 
@@ -16,12 +16,12 @@ public class RecipeTypeService : IRecipeTypeService
         _recipeTypeRepository = new RecipeTypeRepository();
     }
 
-    public Task<RecipeType?> GetRecipeTypeAsync(int id)
+    public async Task<RecipeType> GetRecipeTypeAsync(int id)
     {
         if (id <= 0)
-            return null;
+            return new();
 
-        return _recipeTypeRepository.GetRecipeTypeAsync(id);
+        return await _recipeTypeRepository.GetRecipeTypeAsync(id);
     }
 
     public Task<List<RecipeType>> GetRecipeTypesAsync()

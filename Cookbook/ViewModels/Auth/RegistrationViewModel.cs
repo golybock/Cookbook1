@@ -1,28 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Cookbook.Command;
 using Cookbook.Database.Services;
+using Cookbook.Models.Register;
 using Cookbook.Pages;
 using Microsoft.Win32;
-using ClientModel = Models.Models.Database.Client.Client;
-using Models.Models.Register;
 using ModernWpf.Controls;
-using Frame = ModernWpf.Controls.Frame;
+using ClientModel = Cookbook.Models.Database.Client.Client;
 
 namespace Cookbook.ViewModels.Auth;
 
 public sealed class RegistrationViewModel : INotifyPropertyChanged
 {
+    private string _error = null!;
+    private readonly Frame _firstFrame;
+
+    // приватные атрибуты
+    private bool _loginValid;
+    private bool _passwordValid;
+
+    private readonly RegisterService _registerService;
+
     public RegistrationViewModel(Frame frame)
     {
         OnCreated();
-        
+
         _registerService = new RegisterService();
         _firstFrame = frame;
-        
+
         // создаем объект
         Client = new ClientModel();
     }
@@ -30,33 +37,25 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
     public RegistrationViewModel(string login, Frame frame)
     {
         OnCreated();
-        
+
         _registerService = new RegisterService();
         _firstFrame = frame;
 
         // создаем объект
         Client = new ClientModel();
-        
+
         // задаем логи по умолчанию
         Login = login;
     }
 
-    // задаем дефолтные значения при инициализации 
-    private void OnCreated()
-    {
-        // логин и пароль валидны при создании в любом случае
-        LoginValid = true;
-        PasswordValid = true;
-    }
-
     // основная модель данных
-    private ClientModel Client { get; set; }
-    
+    private ClientModel Client { get; }
+
     // данные для приязки
-    public string Password 
-    { 
+    public string Password
+    {
         get => Client.Password;
-        set 
+        set
         {
             Client.Password = value;
             OnPropertyChanged();
@@ -123,60 +122,69 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
         }
     }
 
-    // приватные атрибуты
-    private bool _loginValid;
-    private bool _passwordValid;
-    private string _error = null!;
-    
-    private RegisterService _registerService;
-    private Frame _firstFrame;
-    
-    public RelayCommand<DragEventArgs> DropCommand =>
-        new RelayCommand<DragEventArgs>(OnDrop);
-    
-    public CommandHandler EditImageCommand =>
-        new CommandHandler(ChooseImage);
+    public RelayCommand<DragEventArgs> DropCommand => new(OnDrop);
 
-    public CommandHandler CancelCommand =>
-        new CommandHandler(CancelRegistration);
+    public CommandHandler EditImageCommand => new(ChooseImage);
 
-    public CommandHandler RegisterCommand =>
-        new CommandHandler(Registration);
+    public CommandHandler CancelCommand => new(CancelRegistration);
+
+    public CommandHandler RegisterCommand => new(Registration);
 
     public bool HasError =>
         !string.IsNullOrEmpty(Error);
-    
-    // приватные короткие функции
-    private void CancelRegistration() =>
-        ShowAcceptDialog();
-    
-    private void SetImage(string path) =>
-        ImagePath = path;
-    
-    private void ShowError(string error) =>
-        Error = error;
-    
-    private void SetLoginInvalid() =>
-        LoginValid = false;
 
-    private void SetPasswordInvalid() =>
+    // PropertyChanged for bindings
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    // задаем дефолтные значения при инициализации 
+    private void OnCreated()
+    {
+        // логин и пароль валидны при создании в любом случае
+        LoginValid = true;
+        PasswordValid = true;
+    }
+
+    // приватные короткие функции
+    private void CancelRegistration()
+    {
+        ShowAcceptDialog();
+    }
+
+    private void SetImage(string path)
+    {
+        ImagePath = path;
+    }
+
+    private void ShowError(string error)
+    {
+        Error = error;
+    }
+
+    private void SetLoginInvalid()
+    {
+        LoginValid = false;
+    }
+
+    private void SetPasswordInvalid()
+    {
         PasswordValid = false;
-    
+    }
+
     // основные функции
     private void OnDrop(DragEventArgs e)
     {
         if (e.Data.GetDataPresent(DataFormats.FileDrop))
         {
             var data = e.Data.GetData(DataFormats.FileDrop);
-            
+
             if (data != null)
             {
                 var files = (string[]) data;
 
                 if (files.Length > 0)
                 {
-                    string file = files[0];
-                
+                    var file = files[0];
+
                     if (file.EndsWith(".png") || file.EndsWith(".jpg"))
                         SetImage(file);
                 }
@@ -186,7 +194,7 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
 
     private async void ShowAcceptDialog()
     {
-        ContentDialog acceptDialog = new ContentDialog()
+        var acceptDialog = new ContentDialog
         {
             Title = "Отмена регистрации",
             Content = "Вы уверены, что хотите отменить регистрацию?",
@@ -194,9 +202,9 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
             PrimaryButtonText = "Да, отменить",
             DefaultButton = ContentDialogButton.Primary
         };
-        
-        ContentDialogResult result = await acceptDialog.ShowAsync();
-    
+
+        var result = await acceptDialog.ShowAsync();
+
         if (result == ContentDialogResult.Primary)
             _firstFrame
                 .NavigationService?
@@ -205,7 +213,7 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
 
     private async void Registration()
     {
-        RegisterResult result = await _registerService.Register(Client);
+        var result = await _registerService.Register(Client);
 
         if (result.Result)
             SuccessfullyRegistration();
@@ -219,14 +227,14 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
         if (result.Code == 101)
         {
             SetLoginInvalid();
-                
+
             if (result.Description != null)
                 ShowError(result.Description);
         }
         else if (result.Code == 102)
         {
             SetPasswordInvalid();
-                
+
             if (result.PasswordResult?.Description != null)
                 ShowError(result.PasswordResult.Description);
         }
@@ -243,10 +251,10 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
             ShowError("Неизвестная ошибка");
         }
     }
-    
+
     private void SuccessfullyRegistration()
     {
-        if (_firstFrame.NavigationService != null) 
+        if (_firstFrame.NavigationService != null)
             _firstFrame
                 .NavigationService
                 .Navigate(
@@ -256,27 +264,26 @@ public sealed class RegistrationViewModel : INotifyPropertyChanged
 
     private void ChooseImage()
     {
-        string dir = "C:\\";
-        string filter = "Image files (*.png)|*.png|All files (*.*)|*.*";
-        
+        var dir = "C:\\";
+        var filter = "Image files (*.png)|*.png|All files (*.*)|*.*";
+
         // открываем диалог выбора файла
-        OpenFileDialog openFileDialog = new OpenFileDialog();
+        var openFileDialog = new OpenFileDialog();
 
         openFileDialog.InitialDirectory = dir;
         openFileDialog.Filter = filter;
 
-            // если показан
+        // если показан
         if (openFileDialog.ShowDialog() == true)
             // если есть выбранный файл
-            if (openFileDialog.FileName != String.Empty)
+            if (openFileDialog.FileName != string.Empty)
                 SetImage(openFileDialog.FileName);
     }
-    
-    // PropertyChanged for bindings
-    public event PropertyChangedEventHandler? PropertyChanged;
 
-    private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {

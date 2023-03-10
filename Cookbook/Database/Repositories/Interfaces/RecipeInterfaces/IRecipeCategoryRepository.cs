@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models.Models.Database;
-using Models.Models.Database.Recipe;
+using Cookbook.Models.Database;
+using Cookbook.Models.Database.Recipe;
 
 namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
 

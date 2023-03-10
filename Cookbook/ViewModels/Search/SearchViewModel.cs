@@ -1,21 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Cookbook.Command;
 using Cookbook.Database.Services;
-using Models.Models.Database.Recipe;
-using SortType =  Models.Models.InterfacesExtensions.SortType;
-using RecipeModel = Models.Models.Database.Recipe.Recipe;
-using ClientModel = Models.Models.Database.Client.Client;
-using Frame = ModernWpf.Controls.Frame;
+using Cookbook.Models.Database.Recipe;
+using Cookbook.Models.InterfacesExtensions;
+using ModernWpf.Controls;
+using ClientModel = Cookbook.Models.Database.Client.Client;
+using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.ViewModels.Search;
 
 public class SearchViewModel : INotifyPropertyChanged
 {
+    private readonly Category _emptyCategory = new() {Id = -1, Name = "Все категории"};
+
+    private readonly Frame _frame;
+    private readonly RecipeService _recipeService;
+    private readonly RecipesViewService _recipesViewService;
+    private List<Category> _categories = new();
+    private List<RecipeModel> _recipes = new();
+
+    private bool _recipesVisability = true;
+
+    private string _searchString;
+    private Category _selectedCategory;
+    private SortType? _selectedSortType;
+
     public SearchViewModel(ClientModel client, Frame frame)
     {
         _frame = frame;
@@ -36,52 +49,39 @@ public class SearchViewModel : INotifyPropertyChanged
         set
         {
             _searchString = value;
-            
+
             OnPropertyChanged();
-            
+
             ShowRecipes();
-        } 
+        }
     }
-    
+
     public Category SelectedCategory
     {
         get => _selectedCategory;
         set
         {
             _selectedCategory = value;
-            
+
             OnPropertyChanged();
-            
+
             ShowRecipes();
-        } 
+        }
     }
-    
+
     public SortType? SelectedSortType
     {
-        get => _selectedSortType ?? global::Models.Models.InterfacesExtensions.SortTypes.Default;
+        get => _selectedSortType ?? Models.InterfacesExtensions.SortTypes.Default;
         set
         {
             _selectedSortType = value;
-            
+
             OnPropertyChanged();
-            
+
             ShowRecipes();
-        } 
+        }
     }
-    
-    private string _searchString;
-    private Category _selectedCategory;
-    private SortType? _selectedSortType;
-    
-    private readonly Frame _frame;
-    private readonly RecipeService _recipeService;
-    private readonly RecipesViewService _recipesViewService;
-    private readonly Category _emptyCategory = new() { Id = -1, Name = "Все категории" };
-    
-    private bool _recipesVisability = true;
-    private List<Category> _categories = new List<Category>();
-    private List<RecipeModel> _recipes = new List<RecipeModel>();
-    
+
     public bool RecipesVisability
     {
         get => _recipesVisability;
@@ -115,29 +115,48 @@ public class SearchViewModel : INotifyPropertyChanged
             if (Equals(value, _recipes)) return;
             _recipes = value;
             OnPropertyChanged();
-        } 
+        }
     }
 
     public List<SortType> SortTypes { get; set; } =
-        global::Models.Models.InterfacesExtensions.SortTypes.SortTypesList;
+        Models.InterfacesExtensions.SortTypes.SortTypesList;
+
+    // Команды для биндов
+    public RelayCommand<int> OpenCommand => new(OpenClicked);
+
+    public RelayCommand<int> LikeCommand => new(LikeClicked);
+
+    public RelayCommand<int> DeleteCommand => new(DeleteClicked);
+
+    public RelayCommand<int> EditCommand => new(EditClicked);
+
+    public RelayCommand<int> PrintCommand => new(GenerateFileClicked);
+
+
+    // реализация INotifyPropertyChanged 
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     private async void LoadCategories()
     {
         // значение по умолчанию (без фильтрации)
         Categories.Add(_emptyCategory);
-    
+
         // Загружаем все остальные категории
         Categories.AddRange(await GetCategories());
-        
+
         OnPropertyChanged("Categories");
     }
 
-    private async void GetRecipes() =>
+    private async void GetRecipes()
+    {
         Recipes = await _recipeService.GetRecipesAsync();
+    }
 
-    private async Task<List<Category>> GetCategories() =>
-        await _recipeService.GetCategoriesAsync();
-    
+    private async Task<List<Category>> GetCategories()
+    {
+        return await _recipeService.GetCategoriesAsync();
+    }
+
     private void SortRecipes()
     {
         if (SelectedSortType?.Id == 2)
@@ -146,14 +165,14 @@ public class SearchViewModel : INotifyPropertyChanged
 
     private void ReverseList()
     {
-        List<RecipeModel> reversedRecipes = new List<RecipeModel>();
-        
-        for (int i = Recipes.Count - 1; i >= 0; i--)
+        var reversedRecipes = new List<RecipeModel>();
+
+        for (var i = Recipes.Count - 1; i >= 0; i--)
             reversedRecipes.Add(Recipes.ElementAt(i));
 
         Recipes = reversedRecipes;
     }
-    
+
     private async Task FilterRecipes()
     {
         if (_selectedCategory.Id != -1)
@@ -162,12 +181,12 @@ public class SearchViewModel : INotifyPropertyChanged
                 .Where(
                     c => c.Category.Name == _selectedCategory.Name
                 ).ToList();
-            
+
             SetRecipesVisability();
 
             return;
-        } 
-        
+        }
+
         await FindRecipes();
     }
 
@@ -177,43 +196,29 @@ public class SearchViewModel : INotifyPropertyChanged
             Recipes = await _recipeService.FindRecipesAsync(_searchString);
         else
             Recipes = await _recipeService.GetRecipesAsync();
-        
+
         SetRecipesVisability();
         OnPropertyChanged("Recipes");
     }
 
-    private void SetRecipesVisability() => 
+    private void SetRecipesVisability()
+    {
         RecipesVisability = Recipes.Count > 0;
+    }
 
     private async void ShowRecipes()
     {
         // получаем рецепты
         await FindRecipes();
-        
+
         // фильтруем по категориям
         await FilterRecipes();
 
         // сортируем
         SortRecipes();
-        
+
         OnPropertyChanged("Recipes");
     }
-
-    // Команды для биндов
-    public RelayCommand<Int32> OpenCommand =>
-        new RelayCommand<int>(OpenClicked);
-    
-    public RelayCommand<Int32> LikeCommand =>
-        new RelayCommand<int>(LikeClicked);
-    
-    public RelayCommand<Int32> DeleteCommand =>
-        new RelayCommand<int>(DeleteClicked);
-    
-    public RelayCommand<Int32> EditCommand =>
-        new RelayCommand<int>(EditClicked);
-    
-    public RelayCommand<Int32> PrintCommand =>
-        new RelayCommand<int>(GenerateFileClicked);
 
     // сами команды
     private void OpenClicked(int id)
@@ -238,16 +243,12 @@ public class SearchViewModel : INotifyPropertyChanged
     {
         _recipesViewService.GenerateFile(obj);
     }
-    
+
     private void EditClicked(int id)
     {
         _recipesViewService.EditClicked(id, Recipes, _frame.NavigationService);
         OnPropertyChanged("Recipes");
     }
-
-    
-    // реализация INotifyPropertyChanged 
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

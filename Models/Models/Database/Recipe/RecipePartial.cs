@@ -30,9 +30,8 @@ public partial class Recipe : INotifyPropertyChanged
         } 
     }
 
-    private Category _category = new Category();
-    // Recipe.Category.Name
-    
+    private Category _category = new ();
+
     private bool? _isLiked;
     
     private string _text = string.Empty;
@@ -71,10 +70,23 @@ public partial class Recipe : INotifyPropertyChanged
         return text;
     }
 
-    // для привзяки like
+    public override string ToString()
+    {
+        string firstLines = $"{Name}\n{Description}\n";
+
+        string secondLines = $"{Category}\n{RecipeType}\n";
+
+        string thirdLines = $"{RecipeStat}";
+
+        string fourthLines = $"{Text}";
+        
+        return firstLines + secondLines + thirdLines + fourthLines;
+    }
+
+    // реализация INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

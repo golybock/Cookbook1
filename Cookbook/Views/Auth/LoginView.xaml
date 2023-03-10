@@ -3,69 +3,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.Views.Auth"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:converters="clr-namespace:Cookbook.Converters"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    
+
     <UserControl.Resources>
-        <converters:ErrorBoolToColorConverter x:Key="ErrorBoolToColorConverter"/>
+        <converters:ErrorBoolToColorConverter x:Key="ErrorBoolToColorConverter" />
     </UserControl.Resources>
-    
+
     <StackPanel Orientation="Vertical"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
-        
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+
         <Label HorizontalContentAlignment="Center"
                VerticalContentAlignment="Center"
                FontSize="36"
                VerticalAlignment="Center"
                Margin="10"
                HorizontalAlignment="Center"
-               Content="Авторизация"/>
-        
+               Content="Авторизация" />
+
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-        
+
             <ui:SimpleStackPanel Orientation="Vertical"
                                  Spacing="5">
-                
+
                 <Label FontSize="14"
-                       Content="Логин"/>
-            
+                       Content="Логин" />
+
                 <Border Name="LoginBorder"
                         CornerRadius="4"
                         BorderBrush="{Binding LoginValid, 
                                     Converter={StaticResource ErrorBoolToColorConverter},
                                     UpdateSourceTrigger=PropertyChanged}"
                         BorderThickness="1.5">
-                
+
                     <TextBox Name="LoginTextBox"
                              TextChanged="DataChanged"
                              Text="{Binding Login}"
-                             Width="170"/>
-                
+                             Width="170" />
+
                 </Border>
-            
+
                 <Label FontSize="14"
-                       Content="Пароль"/>
-            
+                       Content="Пароль" />
+
                 <Border Name="PasswordBorder"
                         CornerRadius="4"
                         BorderBrush="{Binding PasswordValid,
                                     Converter={StaticResource ErrorBoolToColorConverter},
                                     UpdateSourceTrigger=PropertyChanged}"
                         BorderThickness="1.5">
-                
+
                     <PasswordBox Name="PasswordBox"
                                  PasswordChanged="PasswordChanged"
-                                 Width="170"/>
-                
+                                 Width="170" />
+
                 </Border>
-                
+
                 <TextBlock Name="ErrorTextBlock"
                            Foreground="Red"
                            TextWrapping="Wrap"
@@ -73,70 +72,69 @@
                            Margin="5"
                            Text="{Binding Error,
                                     UpdateSourceTrigger=PropertyChanged}">
-                    
+
                     <TextBlock.Style>
-                        
-                    <Style TargetType="TextBlock">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=ErrorTextBlock}" Value="">
-                                <Setter Property="TextBlock.Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>    
-                    </Style>
-                        
+
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=ErrorTextBlock}" Value="">
+                                    <Setter Property="TextBlock.Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+
                     </TextBlock.Style>
 
                 </TextBlock>
-        
+
                 <ui:SimpleStackPanel Orientation="Horizontal"
                                      HorizontalAlignment="Center"
                                      Spacing="10">
-                
+
                     <Button Name="LoginButton"
                             Width="80"
                             Command="{Binding LoginCommand}"
-                            Content="Войти"/>
-                
+                            Content="Войти" />
+
                     <Button Name="GuestButton"
                             Width="80"
                             Command="{Binding GuestCommand}"
-                            Content="Гость"/>
-                
+                            Content="Гость" />
+
                 </ui:SimpleStackPanel>
-                
+
             </ui:SimpleStackPanel>
-            
-            
-            
+
+
             <TextBlock Name="RegistrationTextBlock"
                        Text="Регистрация"
                        Margin="10">
-                
+
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="MouseDown">
                         <b:InvokeCommandAction Command="{Binding RegisterCommand}" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
-                
+
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
-                        <Setter Property="Foreground" Value="Blue"></Setter>
-                        <Setter Property="ToolTip" Value="Регистрация нового аккаунта"></Setter>
-                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                        <Setter Property="FontSize" Value="12"></Setter>
+                        <Setter Property="Foreground" Value="Blue" />
+                        <Setter Property="ToolTip" Value="Регистрация нового аккаунта" />
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="FontSize" Value="12" />
                         <Style.Triggers>
                             <Trigger Property="TextBlock.IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="DodgerBlue"></Setter>
-                                <Setter Property="TextDecorations" Value="Underline"></Setter>
+                                <Setter Property="Foreground" Value="DodgerBlue" />
+                                <Setter Property="TextDecorations" Value="Underline" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
-                
+
             </TextBlock>
-        
+
         </StackPanel>
 
     </StackPanel>
-    
+
 </UserControl>

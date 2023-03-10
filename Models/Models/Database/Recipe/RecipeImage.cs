@@ -27,11 +27,11 @@ public class RecipeImage : INotifyPropertyChanged
         }
     }
 
-    public string? GetImagePath()
-    {
-        return _imagePath;
-    }
-    
+    // только имя файл
+    public string? GetImagePath() =>
+        _imagePath;
+
+    // реализация INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

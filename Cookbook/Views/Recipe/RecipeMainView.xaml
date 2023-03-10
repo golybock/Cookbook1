@@ -8,36 +8,35 @@
              xmlns:converters="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="600">
-    
+
     <UserControl.Resources>
-     
-    <converters:BoolToColorBrushConverter x:Key="ToColorBrushConverter"/>
-    <converters:StringToIntConverter x:Key="StringToIntConverter"/>     
-    
+
+        <converters:StringToIntConverter x:Key="StringToIntConverter" />
+
         <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe ui"></Setter>
-            <Setter Property="FontSize" Value="24"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Segoe ui" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Foreground" Value="Black" />
         </Style>
-    
+
     </UserControl.Resources>
-    
+
     <Grid Name="MainGrid"
           ShowGridLines="False">
-            
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="25*"/>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="16*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="20*" />
+            <RowDefinition Height="16*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-            
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
+
         <Border Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
@@ -45,16 +44,16 @@
                 Background="{StaticResource PurpleBrush}"
                 BorderBrush="{StaticResource PurpleBrush}"
                 CornerRadius="10"
-                BorderThickness="1"/>
-        
+                BorderThickness="1" />
+
         <Border Grid.Row="1"
                 Grid.Column="0"
                 Margin="3"
                 Background="{StaticResource PurpleBrush}"
                 BorderBrush="{StaticResource PurpleBrush}"
                 CornerRadius="10"
-                BorderThickness="1"/>
-        
+                BorderThickness="1" />
+
         <Border Grid.Row="1"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
@@ -62,8 +61,8 @@
                 Background="{StaticResource PurpleBrush}"
                 BorderBrush="{StaticResource PurpleBrush}"
                 CornerRadius="10"
-                BorderThickness="1"/>
-        
+                BorderThickness="1" />
+
         <Border Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
@@ -71,8 +70,8 @@
                 Background="{StaticResource PurpleBrush}"
                 BorderBrush="{StaticResource PurpleBrush}"
                 CornerRadius="10"
-                BorderThickness="1"/>
-        
+                BorderThickness="1" />
+
         <Border Grid.Row="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
@@ -80,151 +79,151 @@
                 Background="{StaticResource PurpleBrush}"
                 BorderBrush="{StaticResource PurpleBrush}"
                 CornerRadius="10"
-                BorderThickness="1"/>
-        
+                BorderThickness="1" />
+
         <TextBlock Name="Id"
                    Text="{Binding Recipe.Id}"
-                   Visibility="Collapsed"/>
-        
+                   Visibility="Collapsed" />
+
         <Grid Name="TitleGrid"
               Grid.Row="0"
               Grid.Column="0"
               Grid.ColumnSpan="3"
               DataContext="{Binding Recipe}">
-            
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40*"/>
-                <ColumnDefinition Width="60*"/>
+                <ColumnDefinition Width="40*" />
+                <ColumnDefinition Width="60*" />
             </Grid.ColumnDefinitions>
-            
+
             <Image Name="RecipeImage"
                    Grid.Column="0"
                    Margin="20"
                    MaxHeight="200"
                    Source="{Binding RecipeImage.ImagePath, UpdateSourceTrigger=PropertyChanged}"
-                   AllowDrop="True"/>
-            
+                   AllowDrop="True" />
+
             <controls:SimpleStackPanel Name="MainInfoStackPanel"
-                                 Grid.Column="1"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Center"
-                                 Spacing="6">
-                
+                                       Grid.Column="1"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Spacing="6">
+
                 <TextBlock Text="{Binding Name}"
                            TextWrapping="Wrap"
                            MaxHeight="80"
                            MaxWidth="200"
                            FontSize="30"
-                           FontWeight="Heavy"/>
-                
+                           FontWeight="Heavy" />
+
                 <TextBlock Text="{Binding Description}"
                            TextWrapping="Wrap"
                            MaxHeight="120"
                            MaxWidth="200"
-                           FontSize="30"/>
-                
+                           FontSize="30" />
+
                 <controls:SimpleStackPanel Name="ToolsPanel"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Left"
                                            Orientation="Horizontal"
                                            Spacing="6">
-                    
+
                     <Button Name="PrintButton"
                             Width="32"
                             Height="32"
                             Command="{Binding DataContext.GenerateFileCommand, ElementName=this}"
                             CommandParameter="{Binding ElementName=Id, Path=Text, Converter={StaticResource StringToIntConverter}}">
-                        <Image Source="../../Resources/MenuIcons/download.png"/>
+                        <Image Source="../../Resources/MenuIcons/download.png" />
                     </Button>
-                    
+
                     <Button Name="EditButton"
                             Width="32"
                             Height="32"
                             Command="{Binding DataContext.EditCommand, ElementName=this}"
                             CommandParameter="{Binding ElementName=Id, Path=Text, Converter={StaticResource StringToIntConverter}}">
-                        <Image Source="../../Resources/MenuIcons/EditIcon.png"/>
+                        <Image Source="../../Resources/MenuIcons/EditIcon.png" />
                     </Button>
-                    
+
                     <Button Name="DeleteButton"
                             Width="32"
                             Height="32"
                             Command="{Binding DataContext.DeleteCommand, ElementName=this}"
                             CommandParameter="{Binding ElementName=Id, Path=Text, Converter={StaticResource StringToIntConverter}}">
-                        <Image Source="../../Resources/MenuIcons/DeleteIcon.png"/>
+                        <Image Source="../../Resources/MenuIcons/DeleteIcon.png" />
                     </Button>
-                    
+
                     <Button Name="LikeButton"
                             Width="32"
                             Height="32"
                             Command="{Binding DataContext.LikeCommand, ElementName=this}"
                             CommandParameter="{Binding ElementName=Id, Path=Text, Converter={StaticResource StringToIntConverter}}">
-                        <Image Source="../../Resources/MenuIcons/LikeIcon.png"/>
+                        <Image Source="../../Resources/MenuIcons/LikeIcon.png" />
                     </Button>
-                    
+
                 </controls:SimpleStackPanel>
-                
+
             </controls:SimpleStackPanel>
-            
+
         </Grid>
-        
+
         <Grid Name="TimePortionsGrid"
               Grid.Row="1"
               Grid.Column="0"
               DataContext="{Binding Recipe}">
-            
-                <controls:SimpleStackPanel Spacing="0"
-                                     VerticalAlignment="Center"
-                                     HorizontalAlignment="Center">
-                    
-                    <TextBlock Text="Время приготовления"
-                               Margin="5"
-                               FontSize="14"/>
-            
-                    <controls:NumberBox Name="CookingTimeNumberBox"
-                                  Value="{Binding CookingTime}"
-                                  ValidationMode="InvalidInputOverwritten"
-                                  Minimum="1"
-                                  Margin="5"
-                                  Width="150"
-                                  IsEnabled="False"
-                                  SpinButtonPlacementMode="Hidden"/>
-            
-                    <TextBlock Text="Порций"
-                               Margin="5"
-                               FontSize="14"/>
-            
-                    <controls:NumberBox Name="PortionsNumberBox"
-                                  Value="{Binding PortionCount}"
-                                  ValidationMode="InvalidInputOverwritten"
-                                  Minimum="1"
-                                  Margin="5"
-                                  Width="150"
-                                  IsEnabled="False"
-                                  SpinButtonPlacementMode="Hidden"/>
-                    
-                </controls:SimpleStackPanel>
-            
+
+            <controls:SimpleStackPanel Spacing="0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center">
+
+                <TextBlock Text="Время приготовления"
+                           Margin="5"
+                           FontSize="14" />
+
+                <controls:NumberBox Name="CookingTimeNumberBox"
+                                    Value="{Binding CookingTime}"
+                                    ValidationMode="InvalidInputOverwritten"
+                                    Minimum="1"
+                                    Margin="5"
+                                    Width="150"
+                                    IsEnabled="False"
+                                    SpinButtonPlacementMode="Hidden" />
+
+                <TextBlock Text="Порций"
+                           Margin="5"
+                           FontSize="14" />
+
+                <controls:NumberBox Name="PortionsNumberBox"
+                                    Value="{Binding PortionCount}"
+                                    ValidationMode="InvalidInputOverwritten"
+                                    Minimum="1"
+                                    Margin="5"
+                                    Width="150"
+                                    IsEnabled="False"
+                                    SpinButtonPlacementMode="Hidden" />
+
+            </controls:SimpleStackPanel>
+
         </Grid>
-        
+
         <Grid Name="StatsGrid"
               Grid.Row="1"
               Grid.Column="1"
               Grid.ColumnSpan="2"
               DataContext="{Binding Recipe.RecipeStat}">
-            
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="50*" />
             </Grid.ColumnDefinitions>
-            
+
             <controls:SimpleStackPanel Grid.Column="0" Spacing="0"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
-                    
+
                 <TextBlock Text="Белки"
                            Margin="5"
-                           FontSize="14"/>
-                
+                           FontSize="14" />
+
                 <controls:NumberBox Name="SquirrelsNumberBox"
                                     Value="{Binding Squirrels}"
                                     ValidationMode="InvalidInputOverwritten"
@@ -232,12 +231,12 @@
                                     Margin="5"
                                     Width="150"
                                     IsEnabled="False"
-                                    SpinButtonPlacementMode="Hidden"/>
-            
+                                    SpinButtonPlacementMode="Hidden" />
+
                 <TextBlock Text="Жиры"
                            Margin="5"
-                           FontSize="14"/>
-            
+                           FontSize="14" />
+
                 <controls:NumberBox Name="FatsNumberBox"
                                     Value="{Binding Fats}"
                                     ValidationMode="InvalidInputOverwritten"
@@ -245,18 +244,18 @@
                                     Margin="5"
                                     Width="150"
                                     IsEnabled="False"
-                                    SpinButtonPlacementMode="Hidden"/>
-                    
+                                    SpinButtonPlacementMode="Hidden" />
+
             </controls:SimpleStackPanel>
-            
+
             <controls:SimpleStackPanel Grid.Column="1" Spacing="0"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
-                    
+
                 <TextBlock Text="Углеводы"
                            Margin="5"
-                           FontSize="14"/>
-            
+                           FontSize="14" />
+
                 <controls:NumberBox Name="CarbohydratesNumberBox"
                                     Value="{Binding Carbohydrates}"
                                     ValidationMode="InvalidInputOverwritten"
@@ -264,12 +263,12 @@
                                     Margin="5"
                                     Width="150"
                                     IsEnabled="False"
-                                    SpinButtonPlacementMode="Hidden"/>
-            
+                                    SpinButtonPlacementMode="Hidden" />
+
                 <TextBlock Text="Ккал"
                            Margin="5"
-                           FontSize="14"/>
-            
+                           FontSize="14" />
+
                 <controls:NumberBox Name="KilocaloriesNumberBox"
                                     Value="{Binding Kilocalories}"
                                     ValidationMode="InvalidInputOverwritten"
@@ -277,127 +276,127 @@
                                     Margin="5"
                                     Width="150"
                                     IsEnabled="False"
-                                    SpinButtonPlacementMode="Hidden"/>
-                    
+                                    SpinButtonPlacementMode="Hidden" />
+
             </controls:SimpleStackPanel>
-            
+
         </Grid>
-        
+
         <Grid Name="IngredientsGrid"
               Grid.Row="2"
               Grid.Column="0"
               Grid.ColumnSpan="2"
               DataContext="{Binding Recipe}">
-            
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="60*"/>
-                <RowDefinition Height="40*"/>
+                <RowDefinition Height="60*" />
+                <RowDefinition Height="40*" />
             </Grid.RowDefinitions>
-            
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="50*" />
             </Grid.ColumnDefinitions>
-            
+
             <controls:SimpleStackPanel Grid.Row="0"
                                        Grid.Column="0"
-                                       Grid.ColumnSpan="2" 
+                                       Grid.ColumnSpan="2"
                                        Spacing="0"
                                        VerticalAlignment="Top"
                                        HorizontalAlignment="Left"
                                        Margin="20,10,20,0">
-                    
+
                 <TextBlock Text="Ингридиенты"
                            Margin="5"
-                           FontSize="14"/>
-            
+                           FontSize="14" />
+
                 <controls:ListView Name="IngredientsListview"
                                    ItemsSource="{Binding RecipeIngredients}"
                                    Width="350"
                                    MaxHeight="140"
                                    IsSelectionEnabled="False">
-                    
+
                     <controls:ListView.ItemTemplate>
-                        
+
                         <DataTemplate>
-                            
+
                             <controls:SimpleStackPanel Spacing="12"
                                                        Orientation="Horizontal">
-                                
+
                                 <TextBlock Text="{Binding Ingredient.Name}"
-                                           Foreground="Black"/>
+                                           Foreground="Black" />
                                 <TextBlock Text="{Binding Count}"
-                                           Foreground="Black"/>
+                                           Foreground="Black" />
                                 <TextBlock Text="{Binding Ingredient.Measure.Name}"
-                                           Foreground="Black"/>
-                                
+                                           Foreground="Black" />
+
                             </controls:SimpleStackPanel>
 
-                            
+
                         </DataTemplate>
-                        
+
                     </controls:ListView.ItemTemplate>
-                    
+
                 </controls:ListView>
 
             </controls:SimpleStackPanel>
-            
+
         </Grid>
-        
+
         <Grid Name="CategoryTypeGrid"
               Grid.Row="2"
               Grid.Column="2"
               DataContext="{Binding Recipe}">
-            
+
             <controls:SimpleStackPanel Spacing="5"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
                                        Orientation="Vertical">
-                
+
                 <TextBlock Text="Категория: "
                            FontSize="14"
-                           Margin="5"/>
-                
+                           Margin="5" />
+
                 <TextBlock Text="{Binding Category.Name}"
                            FontSize="14"
-                           Margin="5"/>
-                
+                           Margin="5" />
+
                 <TextBlock Text="Тип рецепта: "
                            FontSize="14"
-                           Margin="5"/>
-                
+                           Margin="5" />
+
                 <TextBlock Text="{Binding RecipeType.Name, TargetNullValue=Нет типа}"
                            FontSize="14"
-                           Margin="5"/>
-                
+                           Margin="5" />
+
             </controls:SimpleStackPanel>
-            
-            
+
+
         </Grid>
-        
+
         <Grid Name="TextGrid"
               Grid.Row="3"
               Grid.Column="0"
               Grid.ColumnSpan="3"
               DataContext="{Binding Recipe}">
-            
+
             <controls:SimpleStackPanel VerticalAlignment="Top"
                                        HorizontalAlignment="Left"
                                        Margin="10">
-                
+
                 <TextBlock Text="Шаги приготовления"
-                           FontSize="14"/>
-                
+                           FontSize="14" />
+
                 <TextBlock Text="{Binding Text, TargetNullValue=Нет рецепта, UpdateSourceTrigger=PropertyChanged}"
-                         Width="560"
-                         MinHeight="190"
-                         Margin="10"
-                         TextWrapping="Wrap"/>
-                
+                           Width="560"
+                           MinHeight="190"
+                           Margin="10"
+                           TextWrapping="Wrap" />
+
             </controls:SimpleStackPanel>
-            
+
         </Grid>
-            
+
     </Grid>
-    
+
 </UserControl>

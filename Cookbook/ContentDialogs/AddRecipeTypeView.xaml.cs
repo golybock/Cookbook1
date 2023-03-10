@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using Models.Models.Database.Recipe;
+using Cookbook.Models.Database.Recipe;
 
 namespace Cookbook.ContentDialogs;
 

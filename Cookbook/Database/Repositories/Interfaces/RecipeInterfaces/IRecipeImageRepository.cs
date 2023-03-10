@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models.Models.Database;
-using Models.Models.Database.Recipe;
+using Cookbook.Models.Database;
+using Cookbook.Models.Database.Recipe;
 
 namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
 
 public interface IRecipeImageRepository
 {
-    
     public Task<RecipeImage> GetRecipeImageAsync(int id);
     public Task<RecipeImage> GetRecipeImageByRecipeAsync(int recipeId);
     public Task<List<RecipeImage>> GetRecipeImagesAsync(int recipeId);

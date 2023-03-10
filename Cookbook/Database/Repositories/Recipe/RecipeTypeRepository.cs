@@ -2,39 +2,39 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
-using Models.Models.Database;
-using Models.Models.Database.Recipe;
+using Cookbook.Models.Database;
+using Cookbook.Models.Database.Recipe;
 using Npgsql;
 
 namespace Cookbook.Database.Repositories.Recipe;
 
-public class RecipeTypeRepository : MainDbClass, IRecipeTypeRepository
+public class RecipeTypeRepository : RepositoryBase, IRecipeTypeRepository
 {
-    public async Task<RecipeType?> GetRecipeTypeAsync(int id)
+    public async Task<RecipeType> GetRecipeTypeAsync(int id)
     {
         var con = GetConnection();
-        RecipeType recipeType = new RecipeType();
+        var recipeType = new RecipeType();
         try
         {
             await con.OpenAsync();
-            string query = $"select * from recipe_type where id = $1";
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            var query = "select * from recipe_type where id = $1";
+            await using var cmd = new NpgsqlCommand(query, con)
             {
-                Parameters = { new() { Value = id} }
+                Parameters = {new NpgsqlParameter {Value = id}}
             };
-            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
-            
-            while(await reader.ReadAsync())
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
             {
                 recipeType.Id = id;
                 recipeType.Name = reader.GetString(reader.GetOrdinal("name"));
             }
-            
+
             return recipeType;
         }
         catch
         {
-            return null;
+            return new();
         }
         finally
         {
@@ -45,24 +45,24 @@ public class RecipeTypeRepository : MainDbClass, IRecipeTypeRepository
     public async Task<List<RecipeType>> GetRecipeTypesAsync()
     {
         var con = GetConnection();
-        List<RecipeType> recipeTypes = new List<RecipeType>();
+        var recipeTypes = new List<RecipeType>();
         try
         {
             await con.OpenAsync();
-            string query = $"select * from recipe_type";
-            
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
-            
-            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
-            
-            while(await reader.ReadAsync())
+            var query = "select * from recipe_type";
+
+            await using var cmd = new NpgsqlCommand(query, con);
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
             {
-                RecipeType recipeType = new RecipeType();
+                var recipeType = new RecipeType();
                 recipeType.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipeType.Name = reader.GetString(reader.GetOrdinal("name"));
                 recipeTypes.Add(recipeType);
             }
-            
+
             return recipeTypes;
         }
         catch
@@ -77,30 +77,27 @@ public class RecipeTypeRepository : MainDbClass, IRecipeTypeRepository
 
     public async Task<CommandResult> AddRecipeTypeAsync(RecipeType recipeType)
     {
-        CommandResult commandResult = CommandResults.Successfully;
-        
+        var commandResult = CommandResults.Successfully;
+
         var con = GetConnection();
-        
+
         try
         {
             await con.OpenAsync();
-            string query = $"insert into recipe_type(name) values($1) returning id";
-            
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+            var query = "insert into recipe_type(name) values($1) returning id";
+
+            await using var cmd = new NpgsqlCommand(query, con)
             {
-                Parameters = { new(){Value = recipeType.Name}}
+                Parameters = {new NpgsqlParameter {Value = recipeType.Name}}
             };
-            
-            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
-            
-            while(await reader.ReadAsync())
-            {
-                recipeType.Id = reader.GetInt32(reader.GetOrdinal("id"));
-            }
-            
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync()) recipeType.Id = reader.GetInt32(reader.GetOrdinal("id"));
+
             return commandResult;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             commandResult = CommandResults.BadRequest;
             commandResult.Description = e.ToString();

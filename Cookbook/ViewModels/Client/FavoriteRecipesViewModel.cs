@@ -1,29 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Database.Services;
-using Cookbook.Views;
-using Cookbook.Views.Recipe;
 using ModernWpf.Controls;
-using RecipeModel = Models.Models.Database.Recipe.Recipe;
-using ClientModel = Models.Models.Database.Client.Client;
+using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
+using ClientModel = Cookbook.Models.Database.Client.Client;
 using RecipeService = Cookbook.Database.Services.Recipe;
 
 namespace Cookbook.ViewModels.Client;
 
 public class FavoriteRecipesViewModel : INotifyPropertyChanged
 {
-    private readonly Frame _frame;
     private readonly ClientModel _client;
+    private readonly Frame _frame;
     private readonly Database.Services.RecipeService _recipeService;
     private readonly RecipesViewService _recipesViewService;
+    private bool _nothingShowVisability;
     private List<RecipeModel> _recipes;
-    private bool _nothingShowVisability = false;
     private bool _recipesVisability = true;
+
+    public FavoriteRecipesViewModel(ClientModel client, Frame frame)
+    {
+        _frame = frame;
+        _client = client;
+        
+        _recipeService = new Database.Services.RecipeService(client);
+        _recipesViewService = new RecipesViewService(client, frame);
+        Recipes = new List<RecipeModel>();
+
+        _frame = frame;
+
+        _frame.NavigationService.Navigated += NavigationServiceOnNavigated;
+
+        GetRecipes();
+    }
+    
+    public void Deconstruct() =>
+        _frame.NavigationService.Navigated -= NavigationServiceOnNavigated;
+
+    private void NavigationServiceOnNavigated(object sender, NavigationEventArgs e) =>
+        GetRecipes();
 
     public List<RecipeModel> Recipes
     {
@@ -34,17 +53,6 @@ public class FavoriteRecipesViewModel : INotifyPropertyChanged
             _recipes = value;
             OnPropertyChanged();
         }
-    }
-
-    public FavoriteRecipesViewModel(ClientModel client, Frame frame)
-    {
-        _frame = frame;
-        _client = client;
-        _recipeService = new Database.Services.RecipeService(client);
-        _recipesViewService = new RecipesViewService(client, frame);
-        Recipes = new List<RecipeModel>();
-
-        GetRecipes();
     }
 
     public bool NothingShowVisability
@@ -70,29 +78,24 @@ public class FavoriteRecipesViewModel : INotifyPropertyChanged
         }
     }
 
+
+    // Команды для биндов
+    public RelayCommand<int> OpenCommand => new(OpenClicked);
+
+    public RelayCommand<int> LikeCommand => new(LikeClicked);
+
+    public RelayCommand<int> DeleteCommand => new(DeleteClicked);
+
+    public RelayCommand<int> EditCommand => new(EditClicked);
+
+    public RelayCommand<int> PrintCommand => new(GenerateFileClicked);
+
     private async Task GetRecipes()
     {
         Recipes = await _recipeService.GetClientFavRecipes(_client.Id);
         if (Recipes.Count > 0)
             RecipesVisability = true;
     }
-    
-    
-    // Команды для биндов
-    public RelayCommand<Int32> OpenCommand =>
-        new RelayCommand<int>(OpenClicked);
-    
-    public RelayCommand<Int32> LikeCommand =>
-        new RelayCommand<int>(LikeClicked);
-    
-    public RelayCommand<Int32> DeleteCommand =>
-        new RelayCommand<int>(DeleteClicked);
-    
-    public RelayCommand<Int32> EditCommand =>
-        new RelayCommand<int>(EditClicked);
-    
-    public RelayCommand<Int32> PrintCommand =>
-        new RelayCommand<int>(GenerateFileClicked);
 
     // сами команды
     private void OpenClicked(int id)
@@ -118,15 +121,15 @@ public class FavoriteRecipesViewModel : INotifyPropertyChanged
         _recipesViewService.EditClicked(id, Recipes, _frame.NavigationService);
         OnPropertyChanged("Recipes");
     }
-    
+
     private void GenerateFileClicked(int obj)
     {
         _recipesViewService.GenerateFile(obj);
     }
-    
+
     // реализация INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
-
+    
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -1,7 +1,7 @@
-﻿using Cookbook.ViewModels.Client;
-using ModernWpf.Controls;
-using Client = Models.Models.Database.Client.Client;
-using Page = System.Windows.Controls.Page;
+﻿using System.Windows.Controls;
+using Cookbook.Models.Database.Client;
+using Cookbook.ViewModels.Client;
+using Frame = ModernWpf.Controls.Frame;
 
 namespace Cookbook.Pages.Profile;
 
@@ -14,5 +14,4 @@ public partial class ProfilePage : Page
         ClientMainView.DataContext =
             new ClientMainViewModel(client, frame);
     }
-
 }

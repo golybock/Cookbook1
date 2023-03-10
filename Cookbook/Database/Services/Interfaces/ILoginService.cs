@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Models.Models.Login;
+using Cookbook.Models.Login;
 
 namespace Cookbook.Database.Services.Interfaces;
 

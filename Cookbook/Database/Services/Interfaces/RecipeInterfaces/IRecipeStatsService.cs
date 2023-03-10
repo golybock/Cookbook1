@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe;
-using Models.Models.Database;
-using Models.Models.Database.Recipe;
 
 namespace Cookbook.Database.Services.Interfaces.RecipeInterfaces;
 

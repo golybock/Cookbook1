@@ -7,7 +7,7 @@ public class CommandHandler : ICommand
 {
     private readonly Action _action;
     private Func<bool> _canExecute;
-    
+
     public CommandHandler(Action action, Func<bool> canExecute)
     {
         _action = action;
@@ -22,12 +22,14 @@ public class CommandHandler : ICommand
 
     public event EventHandler CanExecuteChanged
     {
-        add { CommandManager.RequerySuggested += value; }
-        remove { CommandManager.RequerySuggested -= value; }
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
     }
 
-    public bool CanExecute(object parameter) =>
-        true;
+    public bool CanExecute(object parameter)
+    {
+        return true;
+    }
 
     public void Execute(object? parameter)
     {

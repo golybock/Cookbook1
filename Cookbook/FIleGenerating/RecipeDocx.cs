@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using Models.Models.Database.Recipe;
+using Cookbook.Models.Database.Recipe;
 using ModernWpf.Controls;
-using Xceed.Document.NET;
 using Xceed.Words.NET;
 
 namespace Cookbook.FIleGenerating;
@@ -11,23 +10,20 @@ public class RecipeDocx
 {
     public static void Generate(Recipe recipe)
     {
-        string path = $"C:\\Users\\{Environment.UserName}\\Documents\\";
+        var fileName = recipe.Name + ".docx";
 
-        string fileName = recipe.Name + ".docx";
-
-        string fullPath = path + fileName;
+        var fullPath = App.DocumentsPath + fileName;
 
         try
         {
             using var doc = DocX.Create(fullPath);
-            
-            doc.InsertParagraph(recipe.Name).FontSize(20d).SpacingAfter(20d).Bold().Alignment = Alignment.left;
 
+            // добавляем фото рецепта(если есть)
             try
             {
                 var image = doc.AddImage(recipe.ImagePath);
-                var pic = image.CreatePicture(250f, 250f);
-                
+                var pic = image.CreatePicture(300f, 300f);
+
                 var p = doc.InsertParagraph("");
                 p.AppendPicture(pic);
             }
@@ -36,58 +32,34 @@ public class RecipeDocx
                 // ignored
             }
 
-            doc.InsertParagraph(GenerateRecipeString(recipe));
+            doc.InsertParagraph(recipe.ToString()).FontSize(20);
 
             doc.Save();
-            
+
             ShowDialog(fullPath);
         }
         catch (Exception e)
         {
             ShowErrorDialog("Ошибка генерации файла");
         }
-        
     }
 
-    private static string GenerateRecipeString(Recipe recipe)
-    {
-        string category = recipe.Category.Name == String.Empty ?
-            "Нет катeгории" :
-            recipe.Category.Name;
-        
-        string categoryString = $"Категория: {category}";
-
-        string recipeType = recipe.RecipeType.Name == string.Empty ?
-            "Нет типа" :
-            recipe.RecipeType.Name;
-
-        string recipeTypeString = $"Тип: {recipeType}";
-
-        string recipeText = string.IsNullOrWhiteSpace(recipe.Text) ?
-            "Нет шагов приготовлния" :
-            recipe.Text;
-
-        string text = $"Шаги приготовления: \n \t{recipeText}";
-
-        return $"{categoryString}\n{recipeTypeString}\n{text}";
-    }
-    
     private static async void ShowErrorDialog(string error)
     {
-        ContentDialog addDialog = new ContentDialog()
+        var addDialog = new ContentDialog
         {
             Title = "Ошибка",
             Content = error,
-            CloseButtonText = "Закрыть",
+            CloseButtonText = "Закрыть"
         };
-        
+
         await addDialog.ShowAsync();
     }
 
-    
+
     private static async void ShowDialog(string path)
     {
-        ContentDialog acceptDialog = new ContentDialog()
+        var acceptDialog = new ContentDialog
         {
             Title = "Файл готов",
             Content = "Открыть файл?",
@@ -95,13 +67,13 @@ public class RecipeDocx
             PrimaryButtonText = "Открыть",
             DefaultButton = ContentDialogButton.Primary
         };
-        
-        ContentDialogResult result = await acceptDialog.ShowAsync();
-    
+
+        var result = await acceptDialog.ShowAsync();
+
         if (result == ContentDialogResult.Primary)
             ShowFileInExplorer(path);
     }
-    
+
     private static void ShowFileInExplorer(string path)
     {
         Process.Start(new ProcessStartInfo

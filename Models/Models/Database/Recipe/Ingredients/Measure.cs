@@ -1,4 +1,4 @@
-﻿namespace Cookbook.Models.Database.Recipe.Ingredients;
+﻿namespace Models.Models.Database.Recipe.Ingredients;
 
 public partial class Measure
 {

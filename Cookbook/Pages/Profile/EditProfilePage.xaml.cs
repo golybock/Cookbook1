@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
+using Cookbook.Models.Database.Client;
 using Cookbook.ViewModels.Client;
-using Models.Models.Database.Client;
 using Frame = ModernWpf.Controls.Frame;
 
 namespace Cookbook.Pages.Profile;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models.Models.Database;
-using Models.Models.Database.Client;
+using Cookbook.Models.Database;
+using Cookbook.Models.Database.Client;
 
 namespace Cookbook.Database.Services.Interfaces.ClientInterfaces;
 

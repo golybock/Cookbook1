@@ -3,23 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.ContentDialogs"
              mc:Ignorable="d"
              xmlns:controls="http://schemas.modernwpf.com/2019"
              d:DesignHeight="300" d:DesignWidth="300">
-            <Grid>
-                <controls:SimpleStackPanel Spacing="5"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left">
-                    
-                    <Label FontSize="16"
-                           Content="Наименование"/>
-                    
-                    <TextBox Name="NameTextBox"
-                             Text="{Binding Name}"
-                             Width="270"
-                             Height="32"/>
-                    
-                </controls:SimpleStackPanel>
-            </Grid>
+    <Grid>
+        <controls:SimpleStackPanel Spacing="5"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left">
+
+            <Label FontSize="16"
+                   Content="Наименование" />
+
+            <TextBox Name="NameTextBox"
+                     Text="{Binding Name}"
+                     Width="270"
+                     Height="32" />
+
+        </controls:SimpleStackPanel>
+    </Grid>
 </UserControl>

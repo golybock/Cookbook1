@@ -4,28 +4,28 @@ using System.IO;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Client;
 using Cookbook.Database.Services.Interfaces.ClientInterfaces;
-using Models.Models.Database;
-using Models.Models.Database.Client;
-using ClientModel = Models.Models.Database.Client.Client;
+using Cookbook.Models.Database;
+using Cookbook.Models.Database.Client;
+using ClientModel = Cookbook.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services.Client;
 
 public class ClientService : IClientService
 {
-    private readonly ClientRepository _clientRepository;
     private readonly ClientImageService _clientImageService;
-    
+    private readonly ClientRepository _clientRepository;
+
     public ClientService()
     {
         _clientRepository = new ClientRepository();
         _clientImageService = new ClientImageService();
     }
-    
+
     public async Task<ClientModel> GetClientAsync(int id)
     {
         if (id <= 0)
             return new ClientModel();
-        
+
         return await _clientRepository.GetClientAsync(id);
     }
 
@@ -37,15 +37,17 @@ public class ClientService : IClientService
         return await _clientRepository.GetClientAsync(login);
     }
 
-    public async Task<List<ClientModel>> GetClientsAsync() =>
-        await _clientRepository.GetClientsAsync();
+    public async Task<List<ClientModel>> GetClientsAsync()
+    {
+        return await _clientRepository.GetClientsAsync();
+    }
 
     public async Task<CommandResult> AddClientAsync(ClientModel client)
     {
-        if(string.IsNullOrWhiteSpace(client.Login))
+        if (string.IsNullOrWhiteSpace(client.Login))
             return CommandResults.BadRequest;
-        
-        if(string.IsNullOrWhiteSpace(client.Password))
+
+        if (string.IsNullOrWhiteSpace(client.Password))
             return CommandResults.BadRequest;
 
         return await _clientRepository.AddClientAsync(client);
@@ -53,17 +55,17 @@ public class ClientService : IClientService
 
     public async Task<CommandResult> UpdateClientAsync(ClientModel client)
     {
-        if(client.Id <= 0)
+        if (client.Id <= 0)
             return CommandResults.BadRequest;
-        
-        CommandResult commandResult =
+
+        var commandResult =
             await _clientRepository.UpdateClientAsync(client);
-        
+
         if (commandResult.Result)
             if (client.NewImagePath != null)
             {
                 // save image to docs
-                ClientImage newClientImage =
+                var newClientImage =
                     new ClientImage
                     {
                         ClientId = client.Id,
@@ -73,12 +75,12 @@ public class ClientService : IClientService
                 client.ClientImage.ClientId = client.Id;
                 client.ClientImage.ImagePath = CopyImageToDocuments(newClientImage);
 
-                CommandResult cmdResult =
+                var cmdResult =
                     await _clientImageService.AddClientImageAsync(client.ClientImage);
 
                 if (cmdResult.Result)
                     client.ClientImage = (cmdResult.Value as ClientImage)!;
-            
+
                 return CommandResults.Successfully;
             }
 
@@ -92,11 +94,11 @@ public class ClientService : IClientService
 
     private string? CopyImageToDocuments(ClientImage clientImage)
     {
-        string documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients\\";
+        var documentsPath = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Clients\\";
 
-        string filePath = $"client_{clientImage.ClientId}_{App.GetTimeStamp()}.png";
+        var filePath = $"client_{clientImage.ClientId}_{App.GetTimeStamp()}.png";
 
-        string writePath = documentsPath + filePath;
+        var writePath = documentsPath + filePath;
 
         if (File.Exists(clientImage.GetImagePath()))
         {

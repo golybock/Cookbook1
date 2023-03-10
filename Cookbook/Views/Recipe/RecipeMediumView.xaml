@@ -3,114 +3,113 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.Views.Recipe"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:c="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="250"
              MouseDoubleClick="RecipeMediumView_OnMouseDown"
              Background="Transparent">
-    
+
     <UserControl.Resources>
-        
-        <c:BoolToColorBrushConverter x:Key="ToColorBrushConverter"/>
-        
+
+        <c:BoolToColorBrushConverter x:Key="ToColorBrushConverter" />
+
         <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe ui"></Setter>
-            <Setter Property="FontSize" Value="24"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Segoe ui" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Foreground" Value="Black" />
         </Style>
     </UserControl.Resources>
-    
-    <Border CornerRadius="15" 
+
+    <Border CornerRadius="15"
             BorderBrush="Transparent"
             BorderThickness="3"
             Background="PapayaWhip">
-            
-            <Border.ContextMenu>
-                                    
-                <ContextMenu>
-                                        
-                    <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick">
-                        <MenuItem.Icon>
-                            <Image Source="../../Resources/MenuIcons/DeleteIcon.png"/>
-                        </MenuItem.Icon>
 
-                    </MenuItem>
-                                
-                    <MenuItem Header="Изменить" Name="EditMenuItem" Click="EditMenuItem_OnClick">
-                        <MenuItem.Icon>
-                            <Image Source="../../Resources/MenuIcons/EditIcon.png"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    
-                    <MenuItem Header="Печать" Name="PrintMenuItem" Click="PrintMenuItem_OnClick">
-                        <MenuItem.Icon>
-                            <Image Source="../../Resources/MenuIcons/pdf.png"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
+        <Border.ContextMenu>
 
-                </ContextMenu>
+            <ContextMenu>
 
-            </Border.ContextMenu>
-        
-            <Grid>
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="35*"/>
-                    <RowDefinition Height="15*"/>
-                </Grid.RowDefinitions>
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                
-                
-                <Image Grid.Row="0"
-                       Grid.Column="0"
-                       Grid.ColumnSpan="2"
-                       Height="250"
-                       Margin="5"
-                       Width="250"
-                       Source="{Binding ImagePath}"/>
-                
-                <ui:SimpleStackPanel Grid.Row="1"
-                                     Grid.ColumnSpan="2"
-                                     Grid.Column="0"
-                                     Spacing="14"
-                                     Margin="25">
-                    
-                    <TextBlock Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}"/>
-                       
-                       <TextBlock Text="{Binding Category.Name, FallbackValue=Без категории, TargetNullValue=Без категории}"
-                                  FontSize="26"
-                                  FontWeight="Heavy"/>
-                    
-                </ui:SimpleStackPanel>
-                
-                <TextBlock Name="Id"
-                           Text="{Binding Id}"
-                           Visibility="Collapsed"/>
-                
-                <Border Name="LikeButton"
-                        Grid.Column="1"
-                        Grid.Row="2"
-                        CornerRadius="50"
-                        Background="{Binding IsLiked, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ToColorBrushConverter}}"
-                        BorderThickness="1"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Width="40"
-                        Height="40"
-                        Margin="10">
-                        <Image Margin="10"
-                               Source="../../Resources/MenuIcons/heart256.png"/>
-                </Border>
+                <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="../../Resources/MenuIcons/DeleteIcon.png" />
+                    </MenuItem.Icon>
 
-            </Grid>
-            
+                </MenuItem>
+
+                <MenuItem Header="Изменить" Name="EditMenuItem" Click="EditMenuItem_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="../../Resources/MenuIcons/EditIcon.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Печать" Name="PrintMenuItem" Click="PrintMenuItem_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="../../Resources/MenuIcons/pdf.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+            </ContextMenu>
+
+        </Border.ContextMenu>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="35*" />
+                <RowDefinition Height="15*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+
+            <Image Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Height="250"
+                   Margin="5"
+                   Width="250"
+                   Source="{Binding ImagePath}" />
+
+            <ui:SimpleStackPanel Grid.Row="1"
+                                 Grid.ColumnSpan="2"
+                                 Grid.Column="0"
+                                 Spacing="14"
+                                 Margin="25">
+
+                <TextBlock Text="{Binding Name, FallbackValue=Название, TargetNullValue=Название}" />
+
+                <TextBlock Text="{Binding Category.Name, FallbackValue=Без категории, TargetNullValue=Без категории}"
+                           FontSize="26"
+                           FontWeight="Heavy" />
+
+            </ui:SimpleStackPanel>
+
+            <TextBlock Name="Id"
+                       Text="{Binding Id}"
+                       Visibility="Collapsed" />
+
+            <Border Name="LikeButton"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    CornerRadius="50"
+                    Background="{Binding IsLiked, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ToColorBrushConverter}}"
+                    BorderThickness="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Width="40"
+                    Height="40"
+                    Margin="10">
+                <Image Margin="10"
+                       Source="../../Resources/MenuIcons/heart256.png" />
+            </Border>
+
+        </Grid>
+
     </Border>
-    
+
 </UserControl>

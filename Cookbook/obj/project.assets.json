@@ -865,19 +865,6 @@
         "build": {
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
-      },
-      "Models/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "DocX": "2.4.0"
-        },
-        "compile": {
-          "bin/placeholder/Models.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Models.dll": {}
-        }
       }
     }
   },
@@ -2189,11 +2176,6 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
-    },
-    "Models/1.0.0": {
-      "type": "project",
-      "path": "../Models/Models.csproj",
-      "msbuildProject": "../Models/Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -2204,7 +2186,6 @@
       "Microsoft.Extensions.Configuration.FileExtensions >= 7.0.0",
       "Microsoft.Extensions.Configuration.Json >= 7.0.0",
       "Microsoft.Extensions.DependencyInjection >= 7.0.0",
-      "Models >= 1.0.0",
       "ModernWpfUI >= 0.9.6",
       "ModernWpfUI.MahApps >= 0.9.5",
       "Npgsql >= 7.0.1",
@@ -2212,23 +2193,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\arshi\\.nuget\\packages\\": {},
+    "C:\\Users\\teplo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Cookbook\\Cookbook.csproj",
+      "projectUniqueName": "C:\\Coding\\C#\\Cookbook\\Cookbook\\Cookbook.csproj",
       "projectName": "Cookbook",
-      "projectPath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Cookbook\\Cookbook.csproj",
-      "packagesPath": "C:\\Users\\arshi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Cookbook\\obj\\",
+      "projectPath": "C:\\Coding\\C#\\Cookbook\\Cookbook\\Cookbook.csproj",
+      "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
+      "outputPath": "C:\\Coding\\C#\\Cookbook\\Cookbook\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\arshi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2237,17 +2218,12 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
-          "projectReferences": {
-            "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Models\\Models.csproj": {
-              "projectPath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Models\\Models.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -2320,7 +2296,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   },

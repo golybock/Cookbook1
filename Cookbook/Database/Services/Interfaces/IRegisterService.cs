@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Models.Models.Register;
+using Cookbook.Models.Register;
 using Models.Models.Register.Password;
-using ClientModel = Models.Models.Database.Client.Client;
+using ClientModel = Cookbook.Models.Database.Client.Client;
 
 namespace Cookbook.Database.Services.Interfaces;
 

@@ -3,120 +3,119 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Cookbook.Views.Search"
              xmlns:views="clr-namespace:Cookbook.Views"
              xmlns:recipe="clr-namespace:Cookbook.Views.Recipe"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:converters="clr-namespace:Cookbook.Converters"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
-    
+
     <UserControl.Resources>
-        <converters:BoolToVisabilityConverter x:Key="BoolToVisabilityConverter"/>
-    </UserControl.Resources>    
-    
+        <converters:BoolToVisabilityConverter x:Key="BoolToVisabilityConverter" />
+    </UserControl.Resources>
+
     <Grid>
-            
-            <ui:SimpleStackPanel Orientation="Vertical"
+
+        <ui:SimpleStackPanel Orientation="Vertical"
+                             Spacing="12">
+
+            <ui:SimpleStackPanel x:Name="SearchSettingsPanel"
+                                 Orientation="Horizontal"
+                                 VerticalAlignment="Top"
+                                 HorizontalAlignment="Center"
                                  Spacing="12">
-                
-                <ui:SimpleStackPanel x:Name="SearchSettingsPanel"
-                                     Orientation="Horizontal"
-                                     VerticalAlignment="Top"
-                                     HorizontalAlignment="Center"
-                                     Spacing="12">
-                
-                    <ui:SplitButton x:Name="SortButton"
-                                    Height="45"
-                                    Width="75">
-                        
-                        <ui:BitmapIcon x:Name="SortButtonBitmapIcon"
-                                       UriSource="{Binding SelectedSortType.IconPath,
+
+                <ui:SplitButton x:Name="SortButton"
+                                Height="45"
+                                Width="75">
+
+                    <ui:BitmapIcon x:Name="SortButtonBitmapIcon"
+                                   UriSource="{Binding SelectedSortType.IconPath,
                                         UpdateSourceTrigger=PropertyChanged}"
-                                       Height="32"
-                                       Width="32"/>
-                        
-                        <ui:SplitButton.Flyout>
-                            <ui:Flyout>
-                                <ListView x:Name="SortTypeListView"
-                                          SelectionMode="Single"
-                                          ItemsSource="{Binding SortTypes}"
-                                          SelectedItem="{Binding SelectedSortType,
+                                   Height="32"
+                                   Width="32" />
+
+                    <ui:SplitButton.Flyout>
+                        <ui:Flyout>
+                            <ListView x:Name="SortTypeListView"
+                                      SelectionMode="Single"
+                                      ItemsSource="{Binding SortTypes}"
+                                      SelectedItem="{Binding SelectedSortType,
                                            UpdateSourceTrigger=PropertyChanged}">
-                                    
+
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                      
+
                                         <StackPanel Orientation="Horizontal">
-                                            
+
                                             <ui:BitmapIcon UriSource="{Binding IconPath}"
                                                            Width="32"
-                                                           Height="32"/>
-                                            
-                                            <TextBlock Text="{Binding Name}"/>
-                                            
+                                                           Height="32" />
+
+                                            <TextBlock Text="{Binding Name}" />
+
                                         </StackPanel>
-                                        
+
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
-                                    
-                                </ListView>
-                            </ui:Flyout>
-                        </ui:SplitButton.Flyout>
-                        
-                    </ui:SplitButton>
-                    
-                    <ui:SplitButton x:Name="FilterButton"
-                                    Height="45"
-                                    Width="200">
-                        
-                        <TextBlock x:Name="FilterButtonTextBlock"
-                                   FontSize="16"
-                                   Text="{Binding SelectedCategory.Name, UpdateSourceTrigger=PropertyChanged}" />
 
-                        
-                        <ui:SplitButton.Flyout>
-                            <ui:Flyout>
-                                <ListView x:Name="FilterListView"
-                                          SelectedItem="{Binding SelectedCategory}"
-                                          SelectionMode="Single"
-                                          ItemsSource="{Binding Categories}">
-                                        
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            
-                                            <StackPanel Orientation="Horizontal">
-                                                
-                                                <TextBlock Text="{Binding Name}"
-                                                           Margin="8"/>
-                                            </StackPanel>
-                                            
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                    
-                                </ListView>
-                            </ui:Flyout>
-                        </ui:SplitButton.Flyout>
-                        
-                    </ui:SplitButton>
-                    
-                    <TextBox Name="SearchBox"
-                                       Height="45"
-                                       Width="250"
-                                       FontSize="16"
-                                       VerticalContentAlignment="Center"
-                                       HorizontalContentAlignment="Left"
-                                       Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"/>
-                    
-                </ui:SimpleStackPanel>
-                
-                <recipe:RecipesListView x:Name="RecipesListView"
-                                        Visibility="{Binding RecipesVisability, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisabilityConverter}}"/>
-                
-                <views:NothingShowView x:Name="NothingShowView"
-                                       Visibility="{Binding NothingShowVisability, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisabilityConverter}}"/>
-                
+                            </ListView>
+                        </ui:Flyout>
+                    </ui:SplitButton.Flyout>
+
+                </ui:SplitButton>
+
+                <ui:SplitButton x:Name="FilterButton"
+                                Height="45"
+                                Width="200">
+
+                    <TextBlock x:Name="FilterButtonTextBlock"
+                               FontSize="16"
+                               Text="{Binding SelectedCategory.Name, UpdateSourceTrigger=PropertyChanged}" />
+
+
+                    <ui:SplitButton.Flyout>
+                        <ui:Flyout>
+                            <ListView x:Name="FilterListView"
+                                      SelectedItem="{Binding SelectedCategory}"
+                                      SelectionMode="Single"
+                                      ItemsSource="{Binding Categories}">
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <TextBlock Text="{Binding Name}"
+                                                       Margin="8" />
+                                        </StackPanel>
+
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+
+                            </ListView>
+                        </ui:Flyout>
+                    </ui:SplitButton.Flyout>
+
+                </ui:SplitButton>
+
+                <TextBox Name="SearchBox"
+                         Height="45"
+                         Width="250"
+                         FontSize="16"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Left"
+                         Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" />
+
             </ui:SimpleStackPanel>
-            
-        </Grid>
+
+            <recipe:RecipesListView x:Name="RecipesListView"
+                                    Visibility="{Binding RecipesVisability, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisabilityConverter}}" />
+
+            <views:NothingShowView x:Name="NothingShowView"
+                                   Visibility="{Binding NothingShowVisability, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisabilityConverter}}" />
+
+        </ui:SimpleStackPanel>
+
+    </Grid>
 </UserControl>

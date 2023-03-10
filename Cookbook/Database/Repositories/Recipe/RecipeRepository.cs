@@ -2,34 +2,34 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Interfaces.RecipeInterfaces;
-using Models.Models.Database;
-using RecipeModel = Models.Models.Database.Recipe.Recipe;
+using Cookbook.Models.Database;
 using Npgsql;
+using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.Database.Repositories.Recipe;
 
-public class RecipeRepository : MainDbClass, IRecipeRepository
+public class RecipeRepository : RepositoryBase, IRecipeRepository
 {
     public async Task<RecipeModel> GetRecipeAsync(int id)
     {
-        RecipeModel recipe = new RecipeModel();
-        
+        var recipe = new RecipeModel();
+
         var con = GetConnection();
-        
+
         try
         {
             con.Open();
-            
-            string query = $"select * from recipe where id = $1";
-            
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+
+            var query = "select * from recipe where id = $1";
+
+            await using var cmd = new NpgsqlCommand(query, con)
             {
-                Parameters = { new() { Value = id} }
+                Parameters = {new NpgsqlParameter {Value = id}}
             };
-            
-            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
-            
-            while(await reader.ReadAsync())
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
             {
                 recipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipe.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
@@ -38,14 +38,14 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
 
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 recipe.Description = description == DBNull.Value ? null : description.ToString();
-                
+
                 var pathToTextFile = reader.GetValue(reader.GetOrdinal("path_to_text_file"));
                 recipe.PathToTextFile = pathToTextFile == DBNull.Value ? null : pathToTextFile.ToString();
-                
+
                 recipe.PortionCount = reader.GetInt32(reader.GetOrdinal("portion_count"));
                 recipe.CookingTime = reader.GetInt32(reader.GetOrdinal("cooking_time"));
             }
-            
+
             return recipe;
         }
         catch
@@ -60,41 +60,41 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
 
     public async Task<List<RecipeModel>> GetRecipesAsync()
     {
-        List<RecipeModel> recipes = new List<RecipeModel>();
-        
+        var recipes = new List<RecipeModel>();
+
         var con = GetConnection();
-        
+
         try
         {
             con.Open();
-            
-            string query = $"select * from recipe";
-            
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con);
-            
-            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
-            
-            while(await reader.ReadAsync())
+
+            var query = "select * from recipe";
+
+            await using var cmd = new NpgsqlCommand(query, con);
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
             {
-                RecipeModel recipe = new RecipeModel();
-                
+                var recipe = new RecipeModel();
+
                 recipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipe.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
                 recipe.RecipeTypeId = reader.GetInt32(reader.GetOrdinal("recipe_type_id"));
                 recipe.Name = reader.GetString(reader.GetOrdinal("name"));
-                
+
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 recipe.Description = description == DBNull.Value ? null : description.ToString();
-                
+
                 var pathToTextFile = reader.GetValue(reader.GetOrdinal("path_to_text_file"));
                 recipe.PathToTextFile = pathToTextFile == DBNull.Value ? null : pathToTextFile.ToString();
-                
+
                 recipe.PortionCount = reader.GetInt32(reader.GetOrdinal("portion_count"));
                 recipe.CookingTime = reader.GetInt32(reader.GetOrdinal("cooking_time"));
-                
+
                 recipes.Add(recipe);
             }
-            
+
             return recipes;
         }
         catch
@@ -109,44 +109,44 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
 
     public async Task<List<RecipeModel>> GetClientRecipesAsync(int clientId)
     {
-        List<RecipeModel> recipes = new List<RecipeModel>();
-        
+        var recipes = new List<RecipeModel>();
+
         var con = GetConnection();
 
         try
         {
             con.Open();
-            
-            string query = $"select * from recipe where client_id = $1";
-            
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+
+            var query = "select * from recipe where client_id = $1";
+
+            await using var cmd = new NpgsqlCommand(query, con)
             {
-                Parameters = { new() { Value = clientId } }
+                Parameters = {new NpgsqlParameter {Value = clientId}}
             };
-            
-            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
-            
-            while(await reader.ReadAsync())
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
             {
-                RecipeModel recipe = new RecipeModel();
-                
+                var recipe = new RecipeModel();
+
                 recipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipe.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
                 recipe.RecipeTypeId = reader.GetInt32(reader.GetOrdinal("recipe_type_id"));
                 recipe.Name = reader.GetString(reader.GetOrdinal("name"));
-                
+
                 var description = reader.GetValue(reader.GetOrdinal("description"));
                 recipe.Description = description == DBNull.Value ? null : description.ToString();
-                
+
                 var pathToTextFile = reader.GetValue(reader.GetOrdinal("path_to_text_file"));
                 recipe.PathToTextFile = pathToTextFile == DBNull.Value ? null : pathToTextFile.ToString();
-                
+
                 recipe.PortionCount = reader.GetInt32(reader.GetOrdinal("portion_count"));
                 recipe.CookingTime = reader.GetInt32(reader.GetOrdinal("cooking_time"));
-                
+
                 recipes.Add(recipe);
             }
-            
+
             return recipes;
         }
         catch
@@ -158,41 +158,41 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
             await con.CloseAsync();
         }
     }
-    
+
     public async Task<CommandResult> AddRecipeAsync(RecipeModel recipe)
     {
         CommandResult result;
-        
+
         var con = GetConnection();
-        
+
         try
         {
             con.Open();
-            
-            string query = $"insert into recipe(client_id, recipe_type_id, name," +
-                           $" description, path_to_text_file, portion_count, cooking_time)" +
-                           $" VALUES ($1, $2, $3, $4, $5, $6, $7)" +
-                           $" returning id";
-            
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+
+            var query = "insert into recipe(client_id, recipe_type_id, name," +
+                        " description, path_to_text_file, portion_count, cooking_time)" +
+                        " VALUES ($1, $2, $3, $4, $5, $6, $7)" +
+                        " returning id";
+
+            await using var cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
-                    new() { Value = recipe.ClientId },
-                    new() { Value = recipe.RecipeTypeId == 0 ? 1 : recipe.RecipeTypeId },
-                    new() { Value = recipe.Name },
-                    new() { Value = recipe.Description == null ? DBNull.Value : recipe.Description },
-                    new() { Value = recipe.PathToTextFile == null ? DBNull.Value : recipe.PathToTextFile },
-                    new() { Value = recipe.CookingTime == 0 ? 1 : recipe.CookingTime },
-                    new() { Value = recipe.PortionCount == 0 ? 1 : recipe.PortionCount}
+                    new NpgsqlParameter {Value = recipe.ClientId},
+                    new NpgsqlParameter {Value = recipe.RecipeTypeId == 0 ? 1 : recipe.RecipeTypeId},
+                    new NpgsqlParameter {Value = recipe.Name},
+                    new NpgsqlParameter {Value = recipe.Description == null ? DBNull.Value : recipe.Description},
+                    new NpgsqlParameter {Value = recipe.PathToTextFile == null ? DBNull.Value : recipe.PathToTextFile},
+                    new NpgsqlParameter {Value = recipe.CookingTime == 0 ? 1 : recipe.CookingTime},
+                    new NpgsqlParameter {Value = recipe.PortionCount == 0 ? 1 : recipe.PortionCount}
                 }
-            }; 
-            
+            };
+
             result = CommandResults.Successfully;
-            
-            await using NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
-            
-            while(await reader.ReadAsync())
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
             {
                 recipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 result.Value = recipe;
@@ -200,11 +200,11 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
 
             return result;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
-            
+
             return result;
         }
         finally
@@ -216,44 +216,42 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
     public async Task<CommandResult> UpdateRecipeAsync(RecipeModel recipe)
     {
         CommandResult result;
-        
+
         var con = GetConnection();
-        
+
         try
         {
             con.Open();
-            
-            string query = $"update recipe set recipe_type_id = $2, name = $3," +
-                           $" description = $4, path_to_text_file = $5," +
-                           $" portion_count = $6, cooking_time = $7" +
-                           $" where id = $1";
-            
-            await using NpgsqlCommand cmd = new NpgsqlCommand(query, con)
+
+            var query = "update recipe set recipe_type_id = $2, name = $3," +
+                        " description = $4, path_to_text_file = $5," +
+                        " portion_count = $6, cooking_time = $7" +
+                        " where id = $1";
+
+            await using var cmd = new NpgsqlCommand(query, con)
             {
                 Parameters =
                 {
-                    new() { Value = recipe.Id },
-                    new() { Value = recipe.RecipeTypeId == 0 ? 1 : recipe.RecipeTypeId },
-                    new() { Value = recipe.Name == string.Empty ? "" : recipe.Name },
-                    new() { Value = recipe.Description == string.Empty ? "" : recipe.Description },
-                    new() { Value = recipe.PathToTextFile == string.Empty ? "" : recipe.PathToTextFile },
-                    new() { Value = recipe.PortionCount == 0 ? DBNull.Value : recipe.PortionCount },
-                    new() { Value = recipe.CookingTime == 0 ? DBNull.Value : recipe.CookingTime }
+                    new NpgsqlParameter {Value = recipe.Id},
+                    new NpgsqlParameter {Value = recipe.RecipeTypeId == 0 ? 1 : recipe.RecipeTypeId},
+                    new NpgsqlParameter {Value = recipe.Name == string.Empty ? "" : recipe.Name},
+                    new NpgsqlParameter {Value = recipe.Description == string.Empty ? "" : recipe.Description},
+                    new NpgsqlParameter {Value = recipe.PathToTextFile == string.Empty ? "" : recipe.PathToTextFile},
+                    new NpgsqlParameter {Value = recipe.PortionCount == 0 ? DBNull.Value : recipe.PortionCount},
+                    new NpgsqlParameter {Value = recipe.CookingTime == 0 ? DBNull.Value : recipe.CookingTime}
                 }
             };
-            
+
             result =
-                await cmd.ExecuteNonQueryAsync() > 0 ?
-                    CommandResults.Successfully :
-                    CommandResults.NotFulfilled;
-            
+                await cmd.ExecuteNonQueryAsync() > 0 ? CommandResults.Successfully : CommandResults.NotFulfilled;
+
             return result;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             result = CommandResults.BadRequest;
             result.Description = e.ToString();
-            
+
             return result;
         }
         finally
@@ -262,6 +260,8 @@ public class RecipeRepository : MainDbClass, IRecipeRepository
         }
     }
 
-    public async Task<CommandResult> DeleteRecipeAsync(int id) =>
-        await DeleteAsync("recipe", id);
+    public async Task<CommandResult> DeleteRecipeAsync(int id)
+    {
+        return await DeleteAsync("recipe", id);
+    }
 }

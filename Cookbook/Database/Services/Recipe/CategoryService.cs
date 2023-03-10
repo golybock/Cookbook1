@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Recipe;
 using Cookbook.Database.Services.Interfaces.RecipeInterfaces;
-using Models.Models.Database;
-using Models.Models.Database.Recipe;
+using Cookbook.Models.Database;
+using Cookbook.Models.Database.Recipe;
 
 namespace Cookbook.Database.Services.Recipe;
 
@@ -15,7 +15,7 @@ public class CategoryService : ICategoryService
     {
         _categoryRepository = new CategoryRepository();
     }
-    
+
     public Task<Category> GetCategoryAsync(int id)
     {
         return _categoryRepository.GetCategoryAsync(id);

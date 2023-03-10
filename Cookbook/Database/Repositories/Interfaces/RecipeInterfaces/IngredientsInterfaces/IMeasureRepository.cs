@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Cookbook.Models.Database;
 using Cookbook.Models.Database.Recipe.Ingredients;
-using Models.Models.Database;
 
 namespace Cookbook.Database.Repositories.Interfaces.RecipeInterfaces.IngredientsInterfaces;
 

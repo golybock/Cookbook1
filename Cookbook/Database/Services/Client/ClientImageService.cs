@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Client;
 using Cookbook.Database.Services.Interfaces.ClientInterfaces;
-using Models.Models.Database;
-using Models.Models.Database.Client;
+using Cookbook.Models.Database;
+using Cookbook.Models.Database.Client;
 
 namespace Cookbook.Database.Services.Client;
 
@@ -11,8 +11,10 @@ public class ClientImageService : IClientImageService
 {
     private readonly ClientImageRepository _clientImageRepository;
 
-    public ClientImageService() =>
+    public ClientImageService()
+    {
         _clientImageRepository = new ClientImageRepository();
+    }
 
     public async Task<ClientImage> GetClientImageAsync(int id)
     {
@@ -26,7 +28,7 @@ public class ClientImageService : IClientImageService
     {
         if (clientId <= 0)
             return new ClientImage();
-        
+
         return await _clientImageRepository.GetClientImageByClientIdAsync(clientId);
     }
 
@@ -34,16 +36,16 @@ public class ClientImageService : IClientImageService
     {
         if (clientId <= 0)
             return new List<ClientImage>();
-        
+
         return await _clientImageRepository.GetClientImagesAsync(clientId);
     }
 
     public async Task<CommandResult> AddClientImageAsync(ClientImage clientImage)
     {
-        if(clientImage.ClientId == 0)
+        if (clientImage.ClientId == 0)
             return CommandResults.BadRequest;
-        
-        if(string.IsNullOrEmpty(clientImage.ImagePath))
+
+        if (string.IsNullOrEmpty(clientImage.ImagePath))
             return CommandResults.BadRequest;
 
         return await _clientImageRepository.AddClientImageAsync(clientImage);
@@ -51,15 +53,15 @@ public class ClientImageService : IClientImageService
 
     public async Task<CommandResult> UpdateClientImageAsync(ClientImage clientImage)
     {
-        if(clientImage.Id <= 0)
+        if (clientImage.Id <= 0)
             return CommandResults.BadRequest;
-        
-        if(clientImage.ClientId <= 0)
+
+        if (clientImage.ClientId <= 0)
             return CommandResults.BadRequest;
-        
-        if(string.IsNullOrEmpty(clientImage.ImagePath))
+
+        if (string.IsNullOrEmpty(clientImage.ImagePath))
             return CommandResults.BadRequest;
-        
+
         return await _clientImageRepository.UpdateClientImageAsync(clientImage);
     }
 

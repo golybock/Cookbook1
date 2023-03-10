@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Cookbook.Database.Repositories.Client;
 using Cookbook.Database.Services.Interfaces.ClientInterfaces;
+using Cookbook.Models.Database;
 using Cookbook.Models.Database.Client;
-using Models.Models.Database;
 
 namespace Cookbook.Database.Services.Client;
 
@@ -15,12 +15,12 @@ public class ClientFavService : IClientFavService
     {
         _clientFavRepository = new ClientFavRepository();
     }
-    
+
     public async Task<FavoriteRecipe?> GetFavoriteRecipeAsync(int id)
     {
         if (id <= 0)
             return null;
-        
+
         return await _clientFavRepository.GetFavoriteRecipeAsync(id);
     }
 
@@ -36,14 +36,14 @@ public class ClientFavService : IClientFavService
     {
         if (recipeId <= 0 || clientId <= 0)
             return false;
-        
+
         return await _clientFavRepository.GetRecipeIsLiked(recipeId, clientId);
     }
 
     public async Task<CommandResult> AddFavoriteRecipeAsync(FavoriteRecipe favoriteRecipe)
     {
-        if(favoriteRecipe.RecipeId <= 0 ||
-           favoriteRecipe.ClientId <= 0)
+        if (favoriteRecipe.RecipeId <= 0 ||
+            favoriteRecipe.ClientId <= 0)
             return CommandResults.BadRequest;
 
         return await _clientFavRepository.AddFavoriteRecipeAsync(favoriteRecipe);
@@ -53,11 +53,11 @@ public class ClientFavService : IClientFavService
     {
         if (favoriteRecipe.Id <= 0)
             return CommandResults.BadRequest;
-        
-        if(favoriteRecipe.RecipeId <= 0 ||
-           favoriteRecipe.ClientId <= 0)
+
+        if (favoriteRecipe.RecipeId <= 0 ||
+            favoriteRecipe.ClientId <= 0)
             return CommandResults.BadRequest;
-        
+
         return await _clientFavRepository.UpdateFavoriteRecipeAsync(favoriteRecipe);
     }
 
@@ -65,16 +65,16 @@ public class ClientFavService : IClientFavService
     {
         if (id <= 0)
             return CommandResults.BadRequest;
-        
+
         return await _clientFavRepository.DeleteFavoriteRecipeAsync(id);
     }
 
     public async Task<CommandResult> DeleteFavoriteRecipeAsync(int recipeId, int clientId)
     {
-        if(recipeId <= 0 ||
-           clientId <= 0)
+        if (recipeId <= 0 ||
+            clientId <= 0)
             return CommandResults.BadRequest;
-        
+
         return await _clientFavRepository.DeleteFavoriteRecipeAsync(recipeId, clientId);
     }
 
@@ -82,7 +82,7 @@ public class ClientFavService : IClientFavService
     {
         if (recipeId <= 0)
             return CommandResults.BadRequest;
-        
+
         return await _clientFavRepository.DeleteFavoriteRecipeByRecipe(recipeId);
     }
 
@@ -90,7 +90,7 @@ public class ClientFavService : IClientFavService
     {
         if (clientId <= 0)
             return CommandResults.BadRequest;
-        
+
         return await _clientFavRepository.DeleteFavoriteRecipeByClient(clientId);
     }
 }

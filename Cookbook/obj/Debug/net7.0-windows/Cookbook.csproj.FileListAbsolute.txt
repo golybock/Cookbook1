@@ -567,8 +567,6 @@ C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\ru\ModernWpf.MahApps.res
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\tr\ModernWpf.MahApps.resources.dll
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\zh-Hans\ModernWpf.MahApps.resources.dll
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\zh-Hant\ModernWpf.MahApps.resources.dll
-C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Models.dll
-C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Models.pdb
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Cookbook.csproj.AssemblyReference.cache
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Recipe\RecipePage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\MainPage.g.cs
@@ -645,10 +643,6 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Au
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\RegistrationView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\RegistrationPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\RegistrationView.g.cs
-C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\PdfSharp.Charting.dll
-C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\PdfSharp.dll
-C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.Charting.resources.dll
-C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.resources.dll
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\RegistrationPage.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\RegistrationView.baml
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\LoginPage.g.cs

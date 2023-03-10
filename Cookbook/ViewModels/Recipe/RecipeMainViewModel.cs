@@ -1,18 +1,17 @@
-﻿using System;
+﻿using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Database.Services;
 using ModernWpf.Controls;
-using ClientModel = Models.Models.Database.Client.Client;
-using RecipeModel = Models.Models.Database.Recipe.Recipe;
+using ClientModel = Cookbook.Models.Database.Client.Client;
+using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.ViewModels.Recipe;
 
 public class RecipeMainViewModel
 {
-    private readonly RecipesViewService _recipesViewService;
-    private readonly RecipeService _recipeService;
     private readonly Frame _frame;
-    public RecipeModel Recipe { get; set; }
+    private readonly RecipeService _recipeService;
+    private readonly RecipesViewService _recipesViewService;
 
     public RecipeMainViewModel(RecipeModel recipe, ClientModel client, Frame frame)
     {
@@ -23,25 +22,33 @@ public class RecipeMainViewModel
         _recipesViewService = new RecipesViewService(client, frame);
 
 
-        _frame.Navigated += async (sender, args) =>
-        {
-            Recipe = await _recipeService.GetRecipeAsync(Recipe.Id);
-        };
-        
+        _frame.Navigated += FrameOnNavigated;
     }
 
-    // Команды для биндов
-    public RelayCommand<Int32> LikeCommand =>
-        new RelayCommand<int>(LikeClicked);
-    
-    public RelayCommand<Int32> DeleteCommand =>
-        new RelayCommand<int>(DeleteClicked);
-    
-    public RelayCommand<Int32> EditCommand =>
-        new RelayCommand<int>(EditClicked);
+    private async void FrameOnNavigated(object sender, NavigationEventArgs e) =>
+        Recipe = await _recipeService.GetRecipeAsync(Recipe.Id);
 
-    public RelayCommand<Int32> GenerateFileCommand =>
-        new RelayCommand<int>(GenerateFileClicked);
+    
+    
+    public void Deconstruct()
+    {
+        _frame.Navigated -= FrameOnNavigated;
+    }
+
+    public RecipeModel Recipe { get; set; }
+
+    // Команды для биндов
+    public RelayCommand<int> LikeCommand =>
+        new(LikeClicked);
+
+    public RelayCommand<int> DeleteCommand =>
+        new(DeleteClicked);
+
+    public RelayCommand<int> EditCommand =>
+        new(EditClicked);
+
+    public RelayCommand<int> GenerateFileCommand =>
+        new(GenerateFileClicked);
 
     // сами команды
     private async void LikeClicked(int id) =>
@@ -53,6 +60,6 @@ public class RecipeMainViewModel
     private async void DeleteClicked(int id) =>
         await _recipesViewService.DeleteClicked(id);
 
-    private async void EditClicked(int id) =>
-        await _recipesViewService.EditClicked(id, _frame.NavigationService);
+    private void EditClicked(int id) =>
+        _recipesViewService.EditClicked(Recipe, _frame.NavigationService);
 }

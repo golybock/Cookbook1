@@ -3,15 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:Cookbook.Pages.Profile"
       xmlns:client="clr-namespace:Cookbook.Views.Client"
       mc:Ignorable="d"
       Title="EditProfilePage">
-    
+
     <Grid>
-        
-        <client:ClientEditView x:Name="ClientEditView"/>
-        
+
+        <client:ClientEditView x:Name="ClientEditView" />
+
     </Grid>
-    
+
 </Page>

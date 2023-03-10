@@ -11,7 +11,7 @@ public partial class RegistrationPage : Page
         InitializeComponent();
         DataContext = new RegistrationViewModel(frame);
     }
-    
+
     public RegistrationPage(string login, Frame frame)
     {
         InitializeComponent();

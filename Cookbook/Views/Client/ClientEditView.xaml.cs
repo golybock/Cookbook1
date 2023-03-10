@@ -9,9 +9,11 @@ public partial class ClientEditView : UserControl
     {
         InitializeComponent();
     }
-    
-    private void DataChanged(object sender, RoutedEventArgs e) =>
+
+    private void DataChanged(object sender, RoutedEventArgs e)
+    {
         DataChanged();
+    }
 
     private void DataChanged()
     {

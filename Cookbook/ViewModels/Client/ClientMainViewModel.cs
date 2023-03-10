@@ -1,32 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Database.Services;
+using Cookbook.Database.Services.Client;
 using Cookbook.Pages.Profile;
 using ModernWpf.Controls;
-using ClientModel = Models.Models.Database.Client.Client;
-using ClientService = Cookbook.Database.Services.Client.ClientService;
-using RecipeModel = Models.Models.Database.Recipe.Recipe;
+using ClientModel = Cookbook.Models.Database.Client.Client;
+using RecipeModel = Cookbook.Models.Database.Recipe.Recipe;
 
 namespace Cookbook.ViewModels.Client;
 
 public class ClientMainViewModel : INotifyPropertyChanged
 {
+    private readonly ClientService _clientService;
+    private readonly RecipeService _recipeService; // получение списка рецептов
+    private readonly RecipesViewService _recipesViewService;
+
     public ClientMainViewModel(ClientModel client, Frame frame)
     {
         Frame = frame;
 
         Client = client;
-        
+
         _recipesViewService = new RecipesViewService(Client, frame);
         _clientService = new ClientService();
         _recipeService = new RecipeService(Client);
         Recipes = new List<RecipeModel>();
 
+        Frame.NavigationService.Navigated += NavigationServiceOnNavigated;
+        
         LoadClientRecipes();
     }
+
+    public void Deconstruct() =>
+        Frame.NavigationService.Navigated -= NavigationServiceOnNavigated;
+
     
     // основные модели
     public ClientModel Client { get; set; }
@@ -41,22 +51,27 @@ public class ClientMainViewModel : INotifyPropertyChanged
         }
     }
 
+    private void NavigationServiceOnNavigated(object sender, NavigationEventArgs e) => LoadClientRecipes();
+    
     // Команды для биндов
-    public RelayCommand<Int32> OpenCommand =>
-        new RelayCommand<int>(OpenClicked);
-    
-    public RelayCommand<Int32> LikeCommand =>
-        new RelayCommand<int>(LikeClicked);
-    
-    public RelayCommand<Int32> DeleteCommand =>
-        new RelayCommand<int>(DeleteClicked);
-    
-    public RelayCommand<Int32> EditCommand =>
-        new RelayCommand<int>(EditClicked);
-    
-    public RelayCommand<Int32> PrintCommand =>
-        new RelayCommand<int>(GenerateFileClicked);
-    
+    public RelayCommand<int> OpenCommand => new(OpenClicked);
+
+    public RelayCommand<int> LikeCommand => new(LikeClicked);
+
+    public RelayCommand<int> DeleteCommand => new(DeleteClicked);
+
+    public RelayCommand<int> EditCommand => new(EditClicked);
+
+    public RelayCommand<int> PrintCommand => new(GenerateFileClicked);
+
+    // приватные атрибуты
+    private Frame Frame { get; } // навигация на страницу редактирования
+
+    public CommandHandler EditClientCommand => new(OnEditClient);
+
+    // Реализация inotify
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     // сами команды
     private void OpenClicked(int id)
     {
@@ -81,22 +96,17 @@ public class ClientMainViewModel : INotifyPropertyChanged
         _recipesViewService.EditClicked(id, Recipes, Frame.NavigationService);
         OnPropertyChanged("Recipes");
     }
-    
-    private void GenerateFileClicked(int obj) =>
-        _recipesViewService.GenerateFile(obj);
 
-    // приватные атрибуты
-    private Frame Frame { get; set; } // навигация на страницу редактирования
-    private readonly RecipeService _recipeService; // получение списка рецептов
-    private readonly RecipesViewService _recipesViewService;
-    private readonly ClientService _clientService;
-    
-    public CommandHandler EditClientCommand =>
-        new CommandHandler(OnEditClient);
-    
-    private async void LoadClientRecipes() =>
+    private void GenerateFileClicked(int obj)
+    {
+        _recipesViewService.GenerateFile(obj);
+    }
+
+    private async void LoadClientRecipes()
+    {
         Recipes = await _recipeService.GetClientRecipes(Client.Id);
-    
+    }
+
     private void OnEditClient()
     {
         if (Frame.NavigationService != null)
@@ -104,9 +114,6 @@ public class ClientMainViewModel : INotifyPropertyChanged
                 new EditProfilePage(Client, Frame)
             );
     }
-
-    // Реализация inotify
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

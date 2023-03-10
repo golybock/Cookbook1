@@ -1,6 +1,4 @@
-﻿using Cookbook.Models.Database.Recipe.Ingredients;
-
-namespace Models.Models.Database.Recipe.Ingredients;
+﻿namespace Models.Models.Database.Recipe.Ingredients;
 
 public partial class Ingredient
 {
@@ -10,6 +8,8 @@ public partial class Ingredient
 
     public string Name { get; set; } = string.Empty;
 
-    public Measure? Measure { get; set; } = new Measure();
-    
+    public Measure? Measure { get; set; } = new ();
+
+    public override string ToString() =>
+        $"{Name} \t {Measure?.Name}";
 }

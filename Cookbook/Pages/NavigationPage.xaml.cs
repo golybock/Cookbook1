@@ -1,11 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using Cookbook.Models.Database.Client;
 using Cookbook.Pages.Auth;
 using Cookbook.Pages.Profile;
 using Cookbook.Pages.Recipe;
 using Cookbook.Pages.Search;
 using ModernWpf.Controls;
-using Client = Models.Models.Database.Client.Client;
 using Page = System.Windows.Controls.Page;
 
 namespace Cookbook.Pages;
@@ -14,14 +14,15 @@ public partial class NavigationPage : Page
 {
     private readonly Client _client;
     private NavigationViewItem _lastItem;
-    public Frame FirstFrame { get; set; }
-    
+
     public NavigationPage(Client client, Frame frame)
     {
         FirstFrame = frame;
-        _client = client; 
+        _client = client;
         InitializeComponent();
     }
+
+    public Frame FirstFrame { get; set; }
 
     private void NavigationPage_OnLoaded(object sender, RoutedEventArgs e)
     {
@@ -30,17 +31,14 @@ public partial class NavigationPage : Page
 
     private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
-        NavigationViewItem? item = args.InvokedItemContainer as NavigationViewItem;
+        var item = args.InvokedItemContainer as NavigationViewItem;
 
-        if (item == null || item == _lastItem)
-        {
-            return;    
-        }
+        if (item == null || item == _lastItem) return;
 
         var clickedView = item.Tag?.ToString();
-        
+
         if (!NavigateView(clickedView)) return;
-        
+
         _lastItem = item;
     }
 
@@ -48,9 +46,9 @@ public partial class NavigationPage : Page
     {
         if (string.IsNullOrWhiteSpace(view))
             return false;
-        
+
         MainFrame.Navigate(GetPage(view));
-        
+
         return true;
     }
 
@@ -58,22 +56,22 @@ public partial class NavigationPage : Page
     {
         if (pageName == "MainPage")
             return new MainPage(_client, MainFrame);
-        
+
         if (pageName == "FindPage")
             return new SearchPage(_client, MainFrame);
-        
+
         if (pageName == "ProfilePage")
             if (_client.Id == -1)
                 return new UnavaliabalePage();
             else
                 return new ProfilePage(_client, MainFrame);
-        
+
         if (pageName == "AddPostPage")
             if (_client.Id == -1)
                 return new UnavaliabalePage();
             else
                 return new EditRecipePage(_client, MainFrame);
-        
+
         if (pageName == "FavoritePostsPage")
             if (_client.Id == -1)
                 return new UnavaliabalePage();

@@ -1,45 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Cookbook.Command;
 using Cookbook.Database.Services;
+using Cookbook.Models.Login;
 using Cookbook.Pages;
 using Cookbook.Pages.Auth;
-using ClientModel = Models.Models.Database.Client.Client;
-using Models.Models.Login;
 using ModernWpf.Controls;
+using ClientModel = Cookbook.Models.Database.Client.Client;
 
 namespace Cookbook.ViewModels.Auth;
 
 public class LoginViewModel : INotifyPropertyChanged
 {
+    private string _error = null!;
+    private readonly Frame _firstFrame;
+
+    private readonly LoginService _loginService;
+
+    // приватные атрибуты
+    private bool _loginValid;
+    private bool _passwordValid;
+
     public LoginViewModel(Frame frame)
     {
         _loginService = new LoginService();
         Client = new ClientModel();
-        
+
         _firstFrame = frame;
 
         OnCreated();
     }
-    
-    // задаем дефолтные значения при инициализации 
-    private void OnCreated()
-    {
-        // логин и пароль валидны при создании в любом случае
-        LoginValid = true;
-        PasswordValid = true;
-    }
-    
+
     // основная модель данных
     private ClientModel Client { get; set; }
-    
+
     // данные для приязки
-    public string Password 
-    { 
+    public string Password
+    {
         get => Client.Password;
-        set 
+        set
         {
             Client.Password = value;
             OnPropertyChanged();
@@ -55,7 +55,7 @@ public class LoginViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     public bool LoginValid
     {
         get => _loginValid;
@@ -85,59 +85,67 @@ public class LoginViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     // команды
-    public CommandHandler LoginCommand =>
-        new CommandHandler(OnLogin);
+    public CommandHandler LoginCommand => new(OnLogin);
 
-    public CommandHandler GuestCommand =>
-        new CommandHandler(OnGuest);
+    public CommandHandler GuestCommand => new(OnGuest);
 
-    public CommandHandler RegisterCommand =>
-        new CommandHandler(OnRegistration);
-    
-    // приватные атрибуты
-    private bool _loginValid;
-    private bool _passwordValid;
-    private string _error = null!;
+    public CommandHandler RegisterCommand => new(OnRegistration);
 
-    private LoginService _loginService;
-    private Frame _firstFrame;
-    
-    // приватные короткие функции
-    private void ShowError(string error) =>
-        Error = error;
-    
     public bool HasError =>
         !string.IsNullOrEmpty(Error);
-    
-    private void SetLoginInvalid() =>
-        LoginValid = false;
 
-    private void SetPasswordInvalid() =>
+    // PropertyChanged for bindings
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    // задаем дефолтные значения при инициализации 
+    private void OnCreated()
+    {
+        // логин и пароль валидны при создании в любом случае
+        LoginValid = true;
+        PasswordValid = true;
+    }
+
+    // приватные короткие функции
+    private void ShowError(string error)
+    {
+        Error = error;
+    }
+
+    private void SetLoginInvalid()
+    {
+        LoginValid = false;
+    }
+
+    private void SetPasswordInvalid()
+    {
         PasswordValid = false;
-    
+    }
+
     private async void OnLogin()
     {
-        LoginResult result = await _loginService.Login(Login, Password);
+        var result = await _loginService.Login(Login, Password);
 
         if (result.Result)
         {
-            if (result.Client != null) 
+            if (result.Client != null)
                 Client = result.Client;
-            
+
             SuccessfullyLogin();
         }
-        
+
         else
+        {
             ValidateError(result);
+        }
     }
 
     private void OnGuest()
     {
-        ClientModel guest = new ClientModel() {Id = -1, Name = "Гость"};
-        
-        if (_firstFrame.NavigationService != null) 
+        var guest = new ClientModel {Id = -1, Name = "Гость"};
+
+        if (_firstFrame.NavigationService != null)
             _firstFrame
                 .NavigationService
                 .Navigate(
@@ -147,23 +155,24 @@ public class LoginViewModel : INotifyPropertyChanged
 
     private void OnRegistration()
     {
-        if (Login != String.Empty)
+        if (Login != string.Empty)
         {
-            if (_firstFrame.NavigationService != null) 
+            if (_firstFrame.NavigationService != null)
                 _firstFrame
                     .NavigationService
                     .Navigate(
-                        new RegistrationPage(Login ,_firstFrame)
+                        new RegistrationPage(Login, _firstFrame)
                     );
         }
-        
-        else
-            if (_firstFrame.NavigationService != null) 
-                _firstFrame
-                    .NavigationService
-                    .Navigate(
-                        new RegistrationPage(Login ,_firstFrame)
-                    );
+
+        else if (_firstFrame.NavigationService != null)
+        {
+            _firstFrame
+                .NavigationService
+                .Navigate(
+                    new RegistrationPage(Login, _firstFrame)
+                );
+        }
     }
 
     private void ValidateError(LoginResult result)
@@ -171,14 +180,14 @@ public class LoginViewModel : INotifyPropertyChanged
         if (result.Code == 101 || result.Code == 201)
         {
             SetLoginInvalid();
-                
+
             if (result.Description != null)
                 ShowError(result.Description);
         }
         else if (result.Code == 102 || result.Code == 202)
         {
             SetPasswordInvalid();
-                
+
             if (result.Description != null)
                 ShowError(result.Description);
         }
@@ -186,7 +195,7 @@ public class LoginViewModel : INotifyPropertyChanged
         {
             SetPasswordInvalid();
             SetLoginInvalid();
-        
+
             if (result.Description != null)
                 ShowError(result.Description);
         }
@@ -195,19 +204,16 @@ public class LoginViewModel : INotifyPropertyChanged
             ShowError("Неизвестная ошибка");
         }
     }
-    
+
     private void SuccessfullyLogin()
     {
-        if (_firstFrame.NavigationService != null) 
+        if (_firstFrame.NavigationService != null)
             _firstFrame
                 .NavigationService
                 .Navigate(
                     new NavigationPage(Client, _firstFrame)
                 );
     }
-    
-    // PropertyChanged for bindings
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

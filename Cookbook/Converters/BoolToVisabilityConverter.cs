@@ -9,19 +9,6 @@ namespace Cookbook.Converters;
 [ValueConversion(typeof(bool), typeof(TextBlock))]
 public class BoolToVisabilityConverter : IValueConverter
 {
-    private object GetVisibility(object value)
-    {
-        if (!(value is bool))
-            return Visibility.Collapsed;
-            
-        bool objValue = (bool)value;
-            
-        if (!objValue)
-            return Visibility.Collapsed;
-            
-        return Visibility.Visible;
-    }
-
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return GetVisibility(value);
@@ -30,5 +17,18 @@ public class BoolToVisabilityConverter : IValueConverter
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
+    }
+
+    private object GetVisibility(object value)
+    {
+        if (!(value is bool))
+            return Visibility.Collapsed;
+
+        var objValue = (bool) value;
+
+        if (!objValue)
+            return Visibility.Collapsed;
+
+        return Visibility.Visible;
     }
 }

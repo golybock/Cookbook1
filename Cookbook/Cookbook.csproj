@@ -8,70 +8,66 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="DocX" Version="2.4.0" />
-      <PackageReference Include="MahApps.Metro" Version="2.4.9" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-      <PackageReference Include="ModernWpfUI" Version="0.9.6" />
-      <PackageReference Include="ModernWpfUI.MahApps" Version="0.9.5" />
-      <PackageReference Include="Npgsql" Version="7.0.1" />
-      <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+        <PackageReference Include="DocX" Version="2.4.0" />
+        <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="ModernWpfUI" Version="0.9.6" />
+        <PackageReference Include="ModernWpfUI.MahApps" Version="0.9.5" />
+        <PackageReference Include="Npgsql" Version="7.0.1" />
+        <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Page Update="Windows\MainWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
+        <Page Update="Windows\MainWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
+        </Page>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Resources\Icon\Icon512.ico" />
-      <Resource Include="Resources\Icon\Icon512.ico" />
-      <None Remove="Resources\Icon\Icon512.png" />
-      <Resource Include="Resources\Icon\Icon512.png" />
-      <None Remove="Resources\MenuIcons\DeleteIcon.png" />
-      <Resource Include="Resources\MenuIcons\DeleteIcon.png" />
-      <None Remove="Resources\MenuIcons\EditIcon.png" />
-      <Resource Include="Resources\MenuIcons\EditIcon.png" />
-      <None Remove="Resources\not_found_image.png" />
-      <Resource Include="Resources\MenuIcons\heart256.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\not_found_image.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
-      <None Remove="Resources\heart256.png" />
-      <None Remove="Resources\sirniki.png" />
-      <Resource Include="Resources\sirniki.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Resource>
-      <None Remove="Resources\MenuIcons\Sort\defaultsort.png" />
-      <Resource Include="Resources\MenuIcons\Sort\defaultsort.png" />
-      <None Remove="Resources\MenuIcons\Sort\lower_to_upper_sort.png" />
-      <Resource Include="Resources\MenuIcons\Sort\lowerToUpperSort.png" />
-      <None Remove="Resources\MenuIcons\Sort\upper_to_lower_sort.png" />
-      <Resource Include="Resources\MenuIcons\Sort\upperToLowerSort.png" />
-      <None Remove="Resources\MenuIcons\pdf.png" />
-      <Resource Include="Resources\MenuIcons\pdf.png" />
-      <None Remove="Resources\MenuIcons\download.png" />
-      <Resource Include="Resources\MenuIcons\download.png" />
-      <None Remove="Resources\MenuIcons\LikeIcon.png" />
-      <Resource Include="Resources\MenuIcons\LikeIcon.png" />
+        <None Remove="Resources\Icon\Icon512.ico" />
+        <Resource Include="Resources\Icon\Icon512.ico" />
+        <None Remove="Resources\Icon\Icon512.png" />
+        <Resource Include="Resources\Icon\Icon512.png" />
+        <None Remove="Resources\MenuIcons\DeleteIcon.png" />
+        <Resource Include="Resources\MenuIcons\DeleteIcon.png" />
+        <None Remove="Resources\MenuIcons\EditIcon.png" />
+        <Resource Include="Resources\MenuIcons\EditIcon.png" />
+        <None Remove="Resources\not_found_image.png" />
+        <Resource Include="Resources\MenuIcons\heart256.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Resource>
+        <Resource Include="Resources\not_found_image.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Resource>
+        <None Remove="Resources\heart256.png" />
+        <None Remove="Resources\sirniki.png" />
+        <Resource Include="Resources\sirniki.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Resource>
+        <None Remove="Resources\MenuIcons\Sort\defaultsort.png" />
+        <Resource Include="Resources\MenuIcons\Sort\defaultsort.png" />
+        <None Remove="Resources\MenuIcons\Sort\lower_to_upper_sort.png" />
+        <Resource Include="Resources\MenuIcons\Sort\lowerToUpperSort.png" />
+        <None Remove="Resources\MenuIcons\Sort\upper_to_lower_sort.png" />
+        <Resource Include="Resources\MenuIcons\Sort\upperToLowerSort.png" />
+        <None Remove="Resources\MenuIcons\pdf.png" />
+        <Resource Include="Resources\MenuIcons\pdf.png" />
+        <None Remove="Resources\MenuIcons\download.png" />
+        <Resource Include="Resources\MenuIcons\download.png" />
+        <None Remove="Resources\MenuIcons\LikeIcon.png" />
+        <Resource Include="Resources\MenuIcons\LikeIcon.png" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="appsettings.json" />
-      <Content Include="appsettings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Models\Models.csproj" />
+        <None Remove="appsettings.json" />
+        <Content Include="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>
