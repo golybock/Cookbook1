@@ -29,6 +29,7 @@
             <RowDefinition Height="20*" />
             <RowDefinition Height="16*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -73,6 +74,15 @@
                 BorderThickness="1" />
 
         <Border Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="3"
+                Background="{StaticResource PurpleBrush}"
+                BorderBrush="{StaticResource PurpleBrush}"
+                CornerRadius="10"
+                BorderThickness="1" />
+        
+        <Border Grid.Row="4"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 Margin="3"
@@ -396,6 +406,15 @@
             </controls:SimpleStackPanel>
 
         </Grid>
+        
+        <Button Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Content="Назад"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="580"
+                Command="{Binding BackCommand}"/>
 
     </Grid>
 

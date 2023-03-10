@@ -60,6 +60,14 @@ public class RecipeMainViewModel : INotifyPropertyChanged
     public RelayCommand<int> GenerateFileCommand =>
         new(GenerateFileClicked);
 
+    public CommandHandler BackCommand =>
+        new CommandHandler(OnBack);
+
+    private void OnBack()
+    {
+        _frame.GoBack();
+    }
+
     // сами команды
     private async void LikeClicked(int id) =>
         await _recipesViewService.LikeClicked(id);
