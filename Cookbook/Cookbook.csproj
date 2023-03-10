@@ -2,9 +2,14 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net7.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <ApplicationIcon>Resources\Icon\CookBookIcon.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,26 +34,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Resources\Icon\Icon512.ico" />
-        <Resource Include="Resources\Icon\Icon512.ico" />
         <None Remove="Resources\Icon\Icon512.png" />
-        <Resource Include="Resources\Icon\Icon512.png" />
         <None Remove="Resources\MenuIcons\DeleteIcon.png" />
         <Resource Include="Resources\MenuIcons\DeleteIcon.png" />
         <None Remove="Resources\MenuIcons\EditIcon.png" />
         <Resource Include="Resources\MenuIcons\EditIcon.png" />
         <None Remove="Resources\not_found_image.png" />
-        <Resource Include="Resources\MenuIcons\heart256.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Resource>
-        <Resource Include="Resources\not_found_image.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Resource>
+        <Resource Include="Resources\MenuIcons\heart256.png" />
+        <Resource Include="Resources\not_found_image.png" />
         <None Remove="Resources\heart256.png" />
         <None Remove="Resources\sirniki.png" />
-        <Resource Include="Resources\sirniki.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Resource>
+        <Resource Include="Resources\sirniki.png" />
         <None Remove="Resources\MenuIcons\Sort\defaultsort.png" />
         <Resource Include="Resources\MenuIcons\Sort\defaultsort.png" />
         <None Remove="Resources\MenuIcons\Sort\lower_to_upper_sort.png" />
@@ -61,6 +57,7 @@
         <Resource Include="Resources\MenuIcons\download.png" />
         <None Remove="Resources\MenuIcons\LikeIcon.png" />
         <Resource Include="Resources\MenuIcons\LikeIcon.png" />
+        <None Remove="Icon512.ico" />
     </ItemGroup>
 
     <ItemGroup>
@@ -68,6 +65,7 @@
         <Content Include="appsettings.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <None Remove="Resources\Icon\Icon512.ico" />
     </ItemGroup>
 
 </Project>
