@@ -13,20 +13,16 @@ namespace Cookbook.Pages;
 public partial class NavigationPage : Page
 {
     private readonly Client _client;
+    private readonly Frame _firstFrame;
     private NavigationViewItem _lastItem;
 
     public NavigationPage(Client client, Frame frame)
     {
-        FirstFrame = frame;
+        _firstFrame = frame;
         _client = client;
         InitializeComponent();
-    }
-
-    public Frame FirstFrame { get; set; }
-
-    private void NavigationPage_OnLoaded(object sender, RoutedEventArgs e)
-    {
-        MainFrame.NavigationService.Navigate(new MainPage(_client, MainFrame));
+        
+        MainFrame.NavigationService.Navigate(new MainPage(_client, _firstFrame));
     }
 
     private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -47,7 +43,10 @@ public partial class NavigationPage : Page
         if (string.IsNullOrWhiteSpace(view))
             return false;
 
-        MainFrame.Navigate(GetPage(view));
+        var page = GetPage(view);
+        
+        if(page != null)
+            MainFrame.Navigate(page);
 
         return true;
     }
@@ -55,22 +54,28 @@ public partial class NavigationPage : Page
     private Page? GetPage(string pageName)
     {
         if (pageName == "MainPage")
-            return new MainPage(_client, MainFrame);
+            return new MainPage(_client, _firstFrame);
 
         if (pageName == "FindPage")
-            return new SearchPage(_client, MainFrame);
+            return new SearchPage(_client, _firstFrame);
 
         if (pageName == "ProfilePage")
             if (_client.Id == -1)
                 return new UnavaliabalePage();
             else
-                return new ProfilePage(_client, MainFrame);
+                return new ProfilePage(_client, _firstFrame);
 
         if (pageName == "AddPostPage")
+        {
             if (_client.Id == -1)
                 return new UnavaliabalePage();
             else
-                return new EditRecipePage(_client, MainFrame);
+            {
+                _firstFrame.Navigate(new EditRecipePage(_client, _firstFrame));
+                return null;
+            }
+        }
+
 
         if (pageName == "FavoritePostsPage")
             if (_client.Id == -1)
@@ -83,6 +88,6 @@ public partial class NavigationPage : Page
 
     private void ExitButton_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        FirstFrame.Navigate(new LoginPage(FirstFrame));
+        _firstFrame.Navigate(new LoginPage(_firstFrame));
     }
 }
