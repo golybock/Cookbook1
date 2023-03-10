@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "scliFzo6TRUmKDqibGDGFImuBUJrQgs7Fkq+CHGaIkGVAUoC4iGwo/hG0/Pt5Tgwyvi7yAmPVz2hZblSA4c5bQ==",
+  "dgSpecHash": "EdA5d2pvzYJkpRe5ldsF18Jr4n8A5JiPwjtN3uCGWYpysosYSm0r68UI3swIXzYuWw09jxM0kh38Uwoc2q157g==",
   "success": true,
   "projectFilePath": "C:\\Coding\\C#\\Cookbook\\Cookbook\\Cookbook.csproj",
   "expectedPackageFiles": [
@@ -26,17 +26,21 @@
     "C:\\Users\\teplo\\.nuget\\packages\\system.drawing.common\\7.0.0\\system.drawing.common.7.0.0.nupkg.sha512",
     "C:\\Users\\teplo\\.nuget\\packages\\system.io.packaging\\4.5.0\\system.io.packaging.4.5.0.nupkg.sha512",
     "C:\\Users\\teplo\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
-    "C:\\Users\\teplo\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
+    "C:\\Users\\teplo\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
+    "C:\\Users\\teplo\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\7.0.3\\microsoft.netcore.app.runtime.win-x64.7.0.3.nupkg.sha512",
+    "C:\\Users\\teplo\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\7.0.3\\microsoft.windowsdesktop.app.runtime.win-x64.7.0.3.nupkg.sha512",
+    "C:\\Users\\teplo\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\7.0.3\\microsoft.aspnetcore.app.runtime.win-x64.7.0.3.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: DocX 2.4.0 requires System.Drawing.Common (= 5.0.2) but version System.Drawing.Common 7.0.0 was resolved.",
+      "message": "Версия обнаруженного пакета нарушает ограничение зависимости: DocX 2.4.0 требуется System.Drawing.Common (= 5.0.2), но в результате разрешения получена версия System.Drawing.Common 7.0.0.",
       "libraryId": "System.Drawing.Common",
       "targetGraphs": [
-        "net7.0-windows7.0"
+        "net7.0-windows7.0",
+        "net7.0-windows7.0/win-x64"
       ]
     }
   ]
