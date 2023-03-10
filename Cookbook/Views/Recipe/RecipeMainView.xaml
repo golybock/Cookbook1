@@ -89,7 +89,7 @@
               Grid.Row="0"
               Grid.Column="0"
               Grid.ColumnSpan="3"
-              DataContext="{Binding Recipe}">
+              DataContext="{Binding Recipe, UpdateSourceTrigger=PropertyChanged}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40*" />
@@ -109,14 +109,14 @@
                                        HorizontalAlignment="Center"
                                        Spacing="6">
 
-                <TextBlock Text="{Binding Name}"
+                <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                            TextWrapping="Wrap"
                            MaxHeight="80"
                            MaxWidth="200"
                            FontSize="30"
                            FontWeight="Heavy" />
 
-                <TextBlock Text="{Binding Description}"
+                <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
                            TextWrapping="Wrap"
                            MaxHeight="120"
                            MaxWidth="200"
@@ -311,7 +311,7 @@
                            FontSize="14" />
 
                 <controls:ListView Name="IngredientsListview"
-                                   ItemsSource="{Binding RecipeIngredients}"
+                                   ItemsSource="{Binding RecipeIngredients, UpdateSourceTrigger=PropertyChanged}"
                                    Width="350"
                                    MaxHeight="140"
                                    IsSelectionEnabled="False">
