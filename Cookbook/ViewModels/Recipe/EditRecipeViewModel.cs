@@ -573,5 +573,3 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         return true;
     }
 }
-
-

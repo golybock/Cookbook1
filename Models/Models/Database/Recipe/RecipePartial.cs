@@ -60,7 +60,7 @@ public partial class Recipe : INotifyPropertyChanged
 
     private string GetText()
     {
-        string text = "";
+        string text = "Нет текста рецепта";
 
         string path = $"C:\\Users\\{Environment.UserName}\\Documents\\Images\\Recipes\\" + PathToTextFile + ".txt";
         

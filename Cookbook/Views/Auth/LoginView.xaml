@@ -11,7 +11,6 @@
              d:DesignHeight="300" d:DesignWidth="300">
     
     <UserControl.Resources>
-        <converters:BoolToVisabilityConverter x:Key="BoolToVisabilityConverter"/>
         <converters:ErrorBoolToColorConverter x:Key="ErrorBoolToColorConverter"/>
     </UserControl.Resources>
     
@@ -46,7 +45,8 @@
                 
                     <TextBox Name="LoginTextBox"
                              TextChanged="DataChanged"
-                             Text="{Binding Login}"/>
+                             Text="{Binding Login}"
+                             Width="170"/>
                 
                 </Border>
             
@@ -61,20 +61,32 @@
                         BorderThickness="1.5">
                 
                     <PasswordBox Name="PasswordBox"
-                                 PasswordChanged="PasswordChanged"/>
+                                 PasswordChanged="PasswordChanged"
+                                 Width="170"/>
                 
                 </Border>
                 
                 <TextBlock Name="ErrorTextBlock"
                            Foreground="Red"
                            TextWrapping="Wrap"
-                           Width="170"
+                           Width="160"
                            Margin="5"
                            Text="{Binding Error,
-                                    UpdateSourceTrigger=PropertyChanged}"
-                           Visibility="{Binding HasError,
-                                    Converter={StaticResource BoolToVisabilityConverter},
-                                    UpdateSourceTrigger=PropertyChanged}"/>
+                                    UpdateSourceTrigger=PropertyChanged}">
+                    
+                    <TextBlock.Style>
+                        
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=ErrorTextBlock}" Value="">
+                                <Setter Property="TextBlock.Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>    
+                    </Style>
+                        
+                    </TextBlock.Style>
+
+                </TextBlock>
         
                 <ui:SimpleStackPanel Orientation="Horizontal"
                                      HorizontalAlignment="Center"

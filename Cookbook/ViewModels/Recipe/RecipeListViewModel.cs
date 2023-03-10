@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Navigation;
 using Cookbook.Command;
 using Cookbook.Database.Services;
@@ -72,7 +71,7 @@ public class RecipeListViewModel : INotifyPropertyChanged
     // сами команды
     private void OpenClicked(int id)
     {
-        _recipesViewService.OpenClicked(id, Recipes, _frame.NavigationService);
+        _recipesViewService.OpenClicked(id, _frame.NavigationService);
         
         GetRecipes();
     }
@@ -83,11 +82,9 @@ public class RecipeListViewModel : INotifyPropertyChanged
         OnPropertyChanged("Recipes");
     }
     
-    private void GenerateFileClicked(int obj)
-    {
+    private void GenerateFileClicked(int obj) =>
         _recipesViewService.GenerateFile(obj);
-    }
-    
+
     private async void DeleteClicked(int id) =>
         Recipes = new (await _recipesViewService.DeleteClicked(id, Recipes));
 

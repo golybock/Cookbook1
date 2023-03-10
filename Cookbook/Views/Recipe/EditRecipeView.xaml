@@ -136,7 +136,10 @@
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox Text="{Binding Name,
+                             UpdateSourceTrigger=PropertyChanged}"
+                             MaxWidth="180"
+                             MaxHeight="60">
                         
                     </TextBox>
                     
@@ -144,7 +147,11 @@
                            FontSize="22"
                            Foreground="Black"/>
                     
-                    <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding Description,
+                             UpdateSourceTrigger=PropertyChanged}"
+                             MaxWidth="180"
+                             MaxHeight="80"
+                             TextWrapping="Wrap"/>
                     
                 </controls:SimpleStackPanel>
                 
@@ -493,6 +500,7 @@
                     <TextBox Text="{Binding Recipe.Text}"
                              Width="560"
                              MinHeight="190"
+                             MaxHeight="190"
                              controls:ControlHelper.PlaceholderText="Начните ввод"
                              Margin="10"
                              TextWrapping="Wrap"/>
@@ -550,14 +558,7 @@
                                 </Button.ToolTip>
                 
                             </Button>
-                
-                            <!-- <Button Name="ClearButton" -->
-                            <!--         Content="Очистить" -->
-                            <!--         Width="125" -->
-                            <!--         ToolTip="Очистить все" -->
-                            <!--         Command="{Binding ClearCommand}" -->
-                            <!--         Margin="5"/> -->
-                            <!-- -->
+                            
                         </StackPanel>
         
                     </StackPanel>

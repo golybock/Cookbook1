@@ -212,10 +212,13 @@ public class SearchViewModel : INotifyPropertyChanged
     public RelayCommand<Int32> EditCommand =>
         new RelayCommand<int>(EditClicked);
     
+    public RelayCommand<Int32> PrintCommand =>
+        new RelayCommand<int>(GenerateFileClicked);
+
     // сами команды
     private void OpenClicked(int id)
     {
-        _recipesViewService.OpenClicked(id, Recipes, _frame.NavigationService);
+        _recipesViewService.OpenClicked(id, _frame.NavigationService);
         OnPropertyChanged("Recipes");
     }
 
@@ -231,6 +234,11 @@ public class SearchViewModel : INotifyPropertyChanged
         OnPropertyChanged("Recipes");
     }
 
+    private void GenerateFileClicked(int obj)
+    {
+        _recipesViewService.GenerateFile(obj);
+    }
+    
     private void EditClicked(int id)
     {
         _recipesViewService.EditClicked(id, Recipes, _frame.NavigationService);

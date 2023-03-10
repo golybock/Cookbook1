@@ -54,10 +54,13 @@ public class ClientMainViewModel : INotifyPropertyChanged
     public RelayCommand<Int32> EditCommand =>
         new RelayCommand<int>(EditClicked);
     
+    public RelayCommand<Int32> PrintCommand =>
+        new RelayCommand<int>(GenerateFileClicked);
+    
     // сами команды
     private void OpenClicked(int id)
     {
-        _recipesViewService.OpenClicked(id, Recipes, Frame.NavigationService);
+        _recipesViewService.OpenClicked(id, Frame.NavigationService);
         OnPropertyChanged("Recipes");
     }
 
@@ -79,6 +82,9 @@ public class ClientMainViewModel : INotifyPropertyChanged
         OnPropertyChanged("Recipes");
     }
     
+    private void GenerateFileClicked(int obj) =>
+        _recipesViewService.GenerateFile(obj);
+
     // приватные атрибуты
     private Frame Frame { get; set; } // навигация на страницу редактирования
     private readonly RecipeService _recipeService; // получение списка рецептов

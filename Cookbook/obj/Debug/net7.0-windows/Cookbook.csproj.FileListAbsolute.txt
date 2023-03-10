@@ -643,10 +643,6 @@ C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Au
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\RegistrationView.g.cs
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\RegistrationPage.baml
 C:\Users\arshi\RiderProjects\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\RegistrationView.baml
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\PdfSharp.Charting.dll
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\PdfSharp.dll
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.Charting.resources.dll
-C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\de\PdfSharp.resources.dll
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Pages\Auth\RegistrationPage.g.cs
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Auth\RegistrationView.g.cs
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\PdfSharp.Charting.dll
@@ -689,3 +685,5 @@ C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Client\FavoriteRec
 C:\Coding\C#\Cookbook\Cookbook\obj\Debug\net7.0-windows\Views\Search\SearchView.baml
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Xceed.Document.NET5.dll
 C:\Coding\C#\Cookbook\Cookbook\bin\Debug\net7.0-windows\Xceed.Words.NET5.dll
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Xceed.Document.NET5.dll
+C:\Users\arshi\RiderProjects\Cookbook\Cookbook\bin\Debug\net7.0-windows\Xceed.Words.NET5.dll

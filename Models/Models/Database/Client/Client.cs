@@ -19,9 +19,6 @@ public partial class Client
     {
         get
         {
-            if (string.IsNullOrEmpty(_name))
-                return "Имя не указано";
-            
             return _name;
         }
         set

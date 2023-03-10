@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Cookbook.Pages.Profile"
       xmlns:client="clr-namespace:Cookbook.Views.Client"
       mc:Ignorable="d"
-      Title="FavoriteRecipePage">
+      Title="Понравившиеся">
     <Grid>
         
         <client:FavoriteRecipesView x:Name="FavoriteRecipesView"/>

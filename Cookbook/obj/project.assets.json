@@ -789,33 +789,6 @@
           }
         }
       },
-      "PDFsharp/1.50.5147": {
-        "type": "package",
-        "compile": {
-          "lib/net20/PdfSharp.Charting.dll": {
-            "related": ".xml"
-          },
-          "lib/net20/PdfSharp.dll": {
-            "related": ".Charting.xml;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net20/PdfSharp.Charting.dll": {
-            "related": ".xml"
-          },
-          "lib/net20/PdfSharp.dll": {
-            "related": ".Charting.xml;.xml"
-          }
-        },
-        "resource": {
-          "lib/net20/de/PdfSharp.Charting.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net20/de/PdfSharp.resources.dll": {
-            "locale": "de"
-          }
-        }
-      },
       "System.Drawing.Common/7.0.0": {
         "type": "package",
         "dependencies": {
@@ -2054,23 +2027,6 @@
         "postgresql.png"
       ]
     },
-    "PDFsharp/1.50.5147": {
-      "sha512": "vr5KBIqcXu2hqZ43UTwPR+jqHgMrT5tsPtJvEF+mORKoBNMh3bRWgAwic0U1sT2IVb4PR5m0GyQxnmCz8jBHWg==",
-      "type": "package",
-      "path": "pdfsharp/1.50.5147",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net20/PdfSharp.Charting.dll",
-        "lib/net20/PdfSharp.Charting.xml",
-        "lib/net20/PdfSharp.dll",
-        "lib/net20/PdfSharp.xml",
-        "lib/net20/de/PdfSharp.Charting.resources.dll",
-        "lib/net20/de/PdfSharp.resources.dll",
-        "pdfsharp.1.50.5147.nupkg.sha512",
-        "pdfsharp.nuspec"
-      ]
-    },
     "System.Drawing.Common/7.0.0": {
       "sha512": "KIX+oBU38pxkKPxvLcLfIkOV5Ien8ReN78wro7OF5/erwcmortzeFx+iBswlh2Vz6gVne0khocQudGwaO1Ey6A==",
       "type": "package",
@@ -2252,28 +2208,27 @@
       "ModernWpfUI >= 0.9.6",
       "ModernWpfUI.MahApps >= 0.9.5",
       "Npgsql >= 7.0.1",
-      "PDFsharp >= 1.50.5147",
       "System.Drawing.Common >= 7.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\teplo\\.nuget\\packages\\": {},
+    "C:\\Users\\arshi\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Coding\\C#\\Cookbook\\Cookbook\\Cookbook.csproj",
+      "projectUniqueName": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Cookbook\\Cookbook.csproj",
       "projectName": "Cookbook",
-      "projectPath": "C:\\Coding\\C#\\Cookbook\\Cookbook\\Cookbook.csproj",
-      "packagesPath": "C:\\Users\\teplo\\.nuget\\packages\\",
-      "outputPath": "C:\\Coding\\C#\\Cookbook\\Cookbook\\obj\\",
+      "projectPath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Cookbook\\Cookbook.csproj",
+      "packagesPath": "C:\\Users\\arshi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Cookbook\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\teplo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\arshi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2282,14 +2237,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "projectReferences": {
-            "C:\\Coding\\C#\\Cookbook\\Models\\Models.csproj": {
-              "projectPath": "C:\\Coding\\C#\\Cookbook\\Models\\Models.csproj"
+            "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Models\\Models.csproj": {
+              "projectPath": "C:\\Users\\arshi\\RiderProjects\\Cookbook\\Models\\Models.csproj"
             }
           }
         }
@@ -2340,10 +2296,6 @@
             "target": "Package",
             "version": "[7.0.1, )"
           },
-          "PDFsharp": {
-            "target": "Package",
-            "version": "[1.50.5147, )"
-          },
           "System.Drawing.Common": {
             "target": "Package",
             "version": "[7.0.0, )"
@@ -2368,7 +2320,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -2379,16 +2331,6 @@
       "warningLevel": 1,
       "message": "Detected package version outside of dependency constraint: DocX 2.4.0 requires System.Drawing.Common (= 5.0.2) but version System.Drawing.Common 7.0.0 was resolved.",
       "libraryId": "System.Drawing.Common",
-      "targetGraphs": [
-        "net7.0-windows7.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'PDFsharp 1.50.5147' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0-windows7.0'. This package may not be fully compatible with your project.",
-      "libraryId": "PDFsharp",
       "targetGraphs": [
         "net7.0-windows7.0"
       ]
