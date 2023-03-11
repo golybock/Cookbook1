@@ -62,9 +62,6 @@
 
     <ItemGroup>
         <None Remove="appsettings.json" />
-        <Content Include="appsettings.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Resources\Icon\Icon512.ico" />
     </ItemGroup>
 

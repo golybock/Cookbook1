@@ -21,14 +21,8 @@ public class RepositoryBase
         return new NpgsqlConnection(_connectionString);
     }
 
-    private void GetConnectionString()
-    {
-        var configBuilder = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-
-        var configSection = configBuilder.GetSection("ConnectionStrings");
-
-        _connectionString = configSection["CookbookDB"] ?? null;
-    }
+    private void GetConnectionString() =>
+        _connectionString = "host=127.0.0.1;port=5432;Username=admin;Password=admin;Database=Cookbook;";
 
     public bool TrustConnection()
     {
