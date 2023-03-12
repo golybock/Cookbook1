@@ -51,20 +51,15 @@ public class FavoriteRecipesViewModel : INotifyPropertyChanged
         {
             if (Equals(value, _recipes)) return;
             _recipes = value;
+            
+            RecipesListNotVisible = _recipes.Count < 1;
+            
+            OnPropertyChanged("RecipesListNotVisible");
             OnPropertyChanged();
         }
     }
 
-    public bool NothingShowVisability
-    {
-        get => _nothingShowVisability = false;
-        set
-        {
-            if (value == _nothingShowVisability) return;
-            _nothingShowVisability = value;
-            OnPropertyChanged();
-        }
-    }
+    public bool RecipesListNotVisible { get; set; } = false;
 
     public bool RecipesVisability
     {

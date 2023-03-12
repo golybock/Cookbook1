@@ -47,9 +47,8 @@ public class RecipeListViewModel : INotifyPropertyChanged
         {
             if (Equals(value, _recipes)) return;
             _recipes = value;
-
-            if (_recipes.Count < 1)
-                RecipesListNotVisible = true;
+            
+            RecipesListNotVisible = _recipes.Count < 1;
             
             OnPropertyChanged("RecipesListNotVisible");
             OnPropertyChanged();

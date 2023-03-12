@@ -46,10 +46,17 @@ public class ClientMainViewModel : INotifyPropertyChanged
         get => Client.Recipes;
         set
         {
+            if (Equals(value, Client.Recipes)) return;
             Client.Recipes = value;
+            
+            RecipesListNotVisible = Client.Recipes.Count < 1;
+            
+            OnPropertyChanged("RecipesListNotVisible");
             OnPropertyChanged();
         }
     }
+
+    public bool RecipesListNotVisible { get; set; } = false;
 
     private void NavigationServiceOnNavigated(object sender, NavigationEventArgs e) => LoadClientRecipes();
     

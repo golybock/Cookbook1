@@ -82,20 +82,8 @@ public class SearchViewModel : INotifyPropertyChanged
         }
     }
 
-    public bool RecipesVisability
-    {
-        get => _recipesVisability;
-        set
-        {
-            _recipesVisability = value;
-            OnPropertyChanged();
-            OnPropertyChanged("NothingShowVisability");
-        }
-    }
-
-    public bool NothingShowVisability =>
-        !_recipesVisability;
-
+    public bool RecipesListNotVisible { get; set; } = false;
+    
     public List<Category> Categories
     {
         get => _categories;
@@ -115,7 +103,9 @@ public class SearchViewModel : INotifyPropertyChanged
             if (Equals(value, _recipes)) return;
             _recipes = value;
             
-            RecipesVisability = _recipes.Count > 0;
+            RecipesListNotVisible = _recipes.Count < 1;
+            
+            OnPropertyChanged("RecipesListNotVisible");
             
             OnPropertyChanged();
         }
@@ -185,8 +175,6 @@ public class SearchViewModel : INotifyPropertyChanged
                     c => c.Category.Name == _selectedCategory.Name
                 ).ToList();
 
-            SetRecipesVisability();
-
             return;
         }
 
@@ -199,14 +187,8 @@ public class SearchViewModel : INotifyPropertyChanged
             Recipes = await _recipeService.FindRecipesAsync(_searchString);
         else
             Recipes = await _recipeService.GetRecipesAsync();
-
-        SetRecipesVisability();
+        
         OnPropertyChanged("Recipes");
-    }
-
-    private void SetRecipesVisability()
-    {
-        RecipesVisability = Recipes.Count > 0;
     }
 
     private async void ShowRecipes()

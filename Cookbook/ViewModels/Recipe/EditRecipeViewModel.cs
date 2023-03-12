@@ -277,8 +277,22 @@ public class EditRecipeViewModel : INotifyPropertyChanged
         if (SelectedIngredient.Id != -1)
             if (RecipeIngredient.Count > 0)
             {
-                Recipe.RecipeIngredients.Add(RecipeIngredient);
+                var existedIngredient = RecipeIngredients.FirstOrDefault(c => c.IngredientId == SelectedIngredient.Id);
 
+                if (existedIngredient != null)
+                {
+                    RecipeIngredients
+                            .FirstOrDefault(
+                                c => c.IngredientId == SelectedIngredient.Id
+                                )!
+                            .Count
+                        += RecipeIngredient.Count;
+                }
+                else
+                {
+                    Recipe.RecipeIngredients.Add(RecipeIngredient);
+                }
+                
                 RecipeIngredient = new RecipeIngredient() { Count = RecipeIngredientCount};
 
                 SelectedIngredient = Ingredients.ElementAt(0);
