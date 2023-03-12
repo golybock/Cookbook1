@@ -162,11 +162,6 @@ public class RecipeService : IRecipeService
                 
                 var recipeImage = AddRecipeImageAsync(outRecipe);
 
-                 recipeStats.Start();
-                 recipeCategory.Start();
-                 recipeIngredients.Start();
-                 recipeImage.Start();
-                
                 await recipeStats;
                 await recipeCategory;
                 await recipeIngredients;

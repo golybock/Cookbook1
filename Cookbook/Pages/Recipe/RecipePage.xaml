@@ -10,7 +10,7 @@
 
         <Grid>
             <recipe:RecipeMainView Width="600"
-                                   MinHeight="900"
+                                   MinHeight="1000"
                                    x:Name="RecipeMainView" />
         </Grid>
 
