@@ -151,12 +151,22 @@ public class RecipeService : IRecipeService
         {
             if (commandResult.Value is RecipeModel outRecipe)
             {
+                recipe.RecipeStat.RecipeId = recipe.Id;
+                
                 var recipeStats = AddRecipeStatsAsync(outRecipe.RecipeStat);
+                
                 var recipeCategory = AddRecipeCategoryAsync(new RecipeCategory
                     {RecipeId = outRecipe.Id, CategoryId = outRecipe.Category.Id});
+                
                 var recipeIngredients = AddRecipeIngredientsAsync(outRecipe);
+                
                 var recipeImage = AddRecipeImageAsync(outRecipe);
 
+                 recipeStats.Start();
+                 recipeCategory.Start();
+                 recipeIngredients.Start();
+                 recipeImage.Start();
+                
                 await recipeStats;
                 await recipeCategory;
                 await recipeIngredients;

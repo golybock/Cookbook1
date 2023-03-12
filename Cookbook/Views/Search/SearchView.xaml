@@ -111,10 +111,7 @@
 
             <recipe:RecipesListView x:Name="RecipesListView"
                                     Visibility="{Binding RecipesVisability, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisabilityConverter}}" />
-
-            <views:NothingShowView x:Name="NothingShowView"
-                                   Visibility="{Binding NothingShowVisability, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisabilityConverter}}" />
-
+            
         </ui:SimpleStackPanel>
 
     </Grid>
