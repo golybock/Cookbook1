@@ -306,7 +306,7 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             .Remove(
                 Recipe
                     .RecipeIngredients
-                    .FirstOrDefault(c => c.Id == id)!
+                    .FirstOrDefault(c => c.IngredientId == id)!
             );
 
         RecipeIngredients = new ObservableCollection<RecipeIngredient>(Recipe.RecipeIngredients);

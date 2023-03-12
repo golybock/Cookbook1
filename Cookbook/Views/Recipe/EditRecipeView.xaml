@@ -316,14 +316,13 @@
                                     <TextBlock Text="{Binding Ingredient.Measure.Name}"
                                                MaxWidth="100"
                                                Foreground="Black" />
-
-
+                                    
                                     <Button Name="RemoveIngredientFromListButton"
                                             Width="32"
                                             Height="32"
                                             Content="-"
                                             Command="{Binding DataContext.RemoveIngredientFromListCommand, ElementName=this}"
-                                            CommandParameter="{Binding Id}" />
+                                            CommandParameter="{Binding Ingredient.Id}" />
 
                                 </controls:SimpleStackPanel>
 
