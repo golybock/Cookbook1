@@ -47,9 +47,16 @@ public class RecipeListViewModel : INotifyPropertyChanged
         {
             if (Equals(value, _recipes)) return;
             _recipes = value;
+
+            if (_recipes.Count < 1)
+                RecipesListNotVisible = true;
+            
+            OnPropertyChanged("RecipesListNotVisible");
             OnPropertyChanged();
         }
     }
+
+    public bool RecipesListNotVisible { get; set; } = false;
 
     // Команды для биндов
     public RelayCommand<int> OpenCommand => new(OpenClicked);
@@ -61,8 +68,7 @@ public class RecipeListViewModel : INotifyPropertyChanged
     public RelayCommand<int> EditCommand => new(EditClicked);
 
     public RelayCommand<int> PrintCommand => new(GenerateFileClicked);
-
-
+    
     private void NavigationServiceOnNavigated(object sender, NavigationEventArgs e) => GetRecipes();
 
     // сами команды

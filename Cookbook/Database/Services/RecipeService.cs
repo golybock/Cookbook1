@@ -98,7 +98,7 @@ public class RecipeService : IRecipeService
 
         recipe.Category = await GetRecipeMainCategoryAsync(recipe.Id);
 
-        recipe.RecipeType = await _recipeTypeService.GetRecipeTypeAsync(recipe.Id);
+        recipe.RecipeType = await _recipeTypeService.GetRecipeTypeAsync(recipe.RecipeTypeId);
 
         recipe.IsLiked = await RecipeIsLiked(recipe.Id);
 
@@ -164,7 +164,7 @@ public class RecipeService : IRecipeService
 
                 commandResult = CommandResults.Successfully;
             }
-            else
+            else 
             {
                 commandResult = CommandResults.BadRequest;
             }
@@ -275,7 +275,7 @@ public class RecipeService : IRecipeService
 
         await sw.WriteLineAsync(recipe.Text);
 
-        await sw.DisposeAsync();
+        sw.Close();
 
         return filePath;
     }

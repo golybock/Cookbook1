@@ -17,7 +17,7 @@ public partial class Recipe
 
     public int ClientId { get; set; }
 
-    public int RecipeTypeId { get; set; }
+    public int RecipeTypeId => RecipeType.Id;
 
     public string Name { get; set; } = string.Empty;
 

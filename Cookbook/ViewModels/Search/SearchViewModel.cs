@@ -114,6 +114,9 @@ public class SearchViewModel : INotifyPropertyChanged
         {
             if (Equals(value, _recipes)) return;
             _recipes = value;
+            
+            RecipesVisability = _recipes.Count > 0;
+            
             OnPropertyChanged();
         }
     }

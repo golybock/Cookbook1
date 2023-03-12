@@ -309,10 +309,12 @@
                                                            VerticalAlignment="Center">
 
                                     <TextBlock Text="{Binding Ingredient.Name}"
+                                               MaxWidth="100"
                                                Foreground="Black" />
                                     <TextBlock Text="{Binding Count}"
                                                Foreground="Black" />
                                     <TextBlock Text="{Binding Ingredient.Measure.Name}"
+                                               MaxWidth="100"
                                                Foreground="Black" />
 
 
@@ -491,7 +493,7 @@
                     <TextBlock Text="Шаги приготовления"
                                FontSize="14" />
 
-                    <TextBox Text="{Binding Recipe.Text}"
+                    <TextBox Text="{Binding RecipeText}"
                              Width="560"
                              MinHeight="190"
                              MaxHeight="190"

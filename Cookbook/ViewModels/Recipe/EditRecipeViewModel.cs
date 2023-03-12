@@ -279,10 +279,9 @@ public class EditRecipeViewModel : INotifyPropertyChanged
             {
                 Recipe.RecipeIngredients.Add(RecipeIngredient);
 
-                RecipeIngredient = new RecipeIngredient();
+                RecipeIngredient = new RecipeIngredient() { Count = RecipeIngredientCount};
 
                 SelectedIngredient = Ingredients.ElementAt(0);
-                RecipeIngredientCount = 1;
 
                 OnPropertyChanged("RecipeIngredients");
                 return;

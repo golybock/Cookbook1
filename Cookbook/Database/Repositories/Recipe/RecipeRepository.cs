@@ -33,7 +33,7 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
             {
                 recipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipe.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
-                recipe.RecipeTypeId = reader.GetInt32(reader.GetOrdinal("recipe_type_id"));
+                recipe.RecipeType.Id = reader.GetInt32(reader.GetOrdinal("recipe_type_id"));
                 recipe.Name = reader.GetString(reader.GetOrdinal("name"));
 
                 var description = reader.GetValue(reader.GetOrdinal("description"));
@@ -80,7 +80,7 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
 
                 recipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipe.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
-                recipe.RecipeTypeId = reader.GetInt32(reader.GetOrdinal("recipe_type_id"));
+                recipe.RecipeType.Id = reader.GetInt32(reader.GetOrdinal("recipe_type_id"));
                 recipe.Name = reader.GetString(reader.GetOrdinal("name"));
 
                 var description = reader.GetValue(reader.GetOrdinal("description"));
@@ -132,7 +132,7 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
 
                 recipe.Id = reader.GetInt32(reader.GetOrdinal("id"));
                 recipe.ClientId = reader.GetInt32(reader.GetOrdinal("client_id"));
-                recipe.RecipeTypeId = reader.GetInt32(reader.GetOrdinal("recipe_type_id"));
+                recipe.RecipeType.Id = reader.GetInt32(reader.GetOrdinal("recipe_type_id"));
                 recipe.Name = reader.GetString(reader.GetOrdinal("name"));
 
                 var description = reader.GetValue(reader.GetOrdinal("description"));
@@ -179,12 +179,12 @@ public class RecipeRepository : RepositoryBase, IRecipeRepository
                 Parameters =
                 {
                     new NpgsqlParameter {Value = recipe.ClientId},
-                    new NpgsqlParameter {Value = recipe.RecipeTypeId == 0 ? 1 : recipe.RecipeTypeId},
+                    new NpgsqlParameter {Value = recipe.RecipeTypeId == -1 ? DBNull.Value : recipe.RecipeTypeId},
                     new NpgsqlParameter {Value = recipe.Name},
                     new NpgsqlParameter {Value = recipe.Description == null ? DBNull.Value : recipe.Description},
                     new NpgsqlParameter {Value = recipe.PathToTextFile == null ? DBNull.Value : recipe.PathToTextFile},
-                    new NpgsqlParameter {Value = recipe.CookingTime == 0 ? 1 : recipe.CookingTime},
-                    new NpgsqlParameter {Value = recipe.PortionCount == 0 ? 1 : recipe.PortionCount}
+                    new NpgsqlParameter {Value = recipe.CookingTime},
+                    new NpgsqlParameter {Value = recipe.PortionCount}
                 }
             };
 
